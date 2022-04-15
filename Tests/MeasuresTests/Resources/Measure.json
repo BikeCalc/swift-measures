@@ -1,0 +1,9 @@
+{
+	"value" : 1,
+	"unit" : {
+		"constant" : 0,
+		"coefficient" : 1,
+		"symbol" : "s",
+		"name" : "second"
+	}
+}
