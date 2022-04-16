@@ -7,18 +7,6 @@
 	
 extension ThermodynamicTemperature {
 	
-	// MARK: - Customary and Imperial Units
-	
-	// TODO: fahrenheit
-	/// The fahrenheit unit of thermodynamic temperature.
-	@available(swift 9999)
-	internal static let fahrenheit: Self = .init(
-		coefficient: 9/5,
-		constant: 32,
-		symbol: "°F",
-		name: "fahrenheit"
-	)
-	
 	// MARK: - Metric Units
 	
 	/// Creates a new instance with the specified metric prefix.

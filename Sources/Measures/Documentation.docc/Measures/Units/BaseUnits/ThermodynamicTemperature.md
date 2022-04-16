@@ -16,10 +16,6 @@
 
 - ``base``
 
-### Customary and Imperial Units
-
-- ``fahrenheit``
-
 ### Metric Units
 
 - ``yottakelvin``

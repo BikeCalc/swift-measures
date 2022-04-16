@@ -7,45 +7,6 @@
 	
 extension Volume {
 	
-	// MARK: - Customary and Imperial Units
-
-	// TODO: add units
-	/// The bushel unit of volume.
-//	public static let bushel .init(coefficient: 3.6368719713-2, symbol: "bus")
-	
-	/// The quart unit of volume.
-//	public static let quart .init(coefficient: 1.13652249e-3, symbol: "qt")
-	
-	/// The gallon unit of volume.
-//	public static let gallon .init(coefficient: 4.54608996e-3, symbol: "gal")
-	
-	/// The peck unit of volume.
-//	public static let peck .init(coefficient: 9.09217992e-3, symbol: "pec")
-	
-	/// The gill unit of volume.
-//	public static let gill .init(coefficient: 1.4206531e-4, symbol: "gi")
-	
-	/// The pint unit of volume.
-//	public static let pint .init(coefficient: 1.4206531e-4, symbol: "pt")
-	
-	/// The fluidOunce unit of volume.
-//	public static let fluidOunce .init(coefficient: 2.841306e-5, symbol: "floz")
-	
-	/// The fluidScruple unit of volume.
-//	public static let fluidOunce .init(coefficient: 1.18387e-6, symbol: "fls")
-	
-	/// The cup unit of volume.
-//	public static let cup .init(coefficient: 1 / (240 / 1e-6), symbol: "fldr")
-	
-	/// The tablespoon unit of volume.
-//	public static let tablespoon .init(coefficient: 1 / (15 / 1e-6), symbol: "fldr")
-	
-	/// The desertspoon unit of volume.
-//	public static let desertspoon .init(coefficient: 1 / (10 / 1e-6), symbol: "fldr")
-	
-	/// The teaspoon unit of volume.
-//	public static let teaspoon .init(coefficient: 1 / (5 / 1e-6), symbol: "fldr")
-	
 	// MARK: - Metric Units
 	
 	/// Creates a new instance with the specified metric prefix.

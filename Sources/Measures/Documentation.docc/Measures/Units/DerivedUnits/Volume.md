@@ -16,10 +16,6 @@
 
 - ``base``
 
-### Customary and Imperial Units
-
-// TODO: document units
-
 ### Metric Units
 
 - ``yottalitre``
