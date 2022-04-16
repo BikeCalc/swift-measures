@@ -86,21 +86,4 @@ extension Volume {
 	
 	/// The yoctolitre unit of volume.
 	public static let yoctolitre: Self = .init(.yocto)
-	
-	// MARK: - Raised Units
-	
-	/// Creates a new instance with the specified cubed length.
-	///
-	/// - parameter length: The length.
-	public init(cubic length: Length) {
-		let coefficient: Double = length.coefficient.raising(to: 3)
-		let symbol: String = length.symbol + "³"
-		let name: String = "cubic" + " " + length.name
-		
-		self.init(
-			coefficient: coefficient,
-			symbol: symbol,
-			name: name
-		)
-	}
 }

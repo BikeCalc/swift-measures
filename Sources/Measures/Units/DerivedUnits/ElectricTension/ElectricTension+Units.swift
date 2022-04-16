@@ -9,27 +9,11 @@ extension ElectricTension {
 	
 	// MARK: - Composed Units
 	
-	/// Creates a new instance with the specified electric current and time.
-	///
-	/// - parameter electricCurrent: The electric current.
-	/// - parameter time: The time.
-	private init(_ electricCurrent: ElectricCurrent, dividedBy time: Time) {
-		let coefficient: Double = electricCurrent.coefficient / time.coefficient
-		let symbol: String = electricCurrent.symbol + "/" + time.symbol
-		let name: String = electricCurrent.name + " " + time.name
-		
-		self.init(
-			coefficient: coefficient,
-			symbol: symbol,
-			name: name
-		)
-	}
-	
 	/// The ampere hour unit of speed.
-	public static let ampereHour: Self = .init(.ampere, dividedBy: .hour)
+	public static let ampereHour: Self = ElectricCurrent.ampere.dividing(by: .hour)
 	
 	/// The ampere second unit of speed.
-	public static let ampereSecond: Self = .init(.ampere, dividedBy: .second)
+	public static let ampereSecond: Self = ElectricCurrent.ampere.dividing(by: .second)
 	
 	// MARK: - Metric Units
 	

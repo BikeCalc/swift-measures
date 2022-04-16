@@ -11,7 +11,7 @@ extension Area {
 	
 	/// The township unit of area.
 	public static let township: Self = .init(
-		coefficient: Self.init(square: .mile).coefficient * 36,
+		coefficient: Length.mile.squared().coefficient * 36,
 		symbol: "twp",
 		name: "township"
 	)
@@ -20,7 +20,7 @@ extension Area {
 	
 	/// The acre unit of area.
 	public static let acre: Self = .init(
-		coefficient: Self.init(square: .chain).coefficient * 10,
+		coefficient: Length.chain.squared().coefficient * 10,
 		symbol: "ac",
 		name: "acre"
 	)
@@ -33,7 +33,7 @@ extension Area {
 	)
 	
 	/// The perch unit of area.
-	public static let perch: Self = .init(square: .rod)
+	public static let perch: Self = Length.rod.squared()
 	
 	// MARK: - Other Metric Units
 	
@@ -64,21 +64,4 @@ extension Area {
 		symbol: "ca",
 		name: "centiare"
 	)
-	
-	// MARK: - Raised Units
-	
-	/// Creates a new instance with the specified squared length.
-	///
-	/// - parameter length: The length.
-	public init(square length: Length) {
-		let coefficient: Double = length.coefficient.raising(to: 2)
-		let symbol: String = length.symbol + "²"
-		let name: String = "square" + " " + length.name
-		
-		self.init(
-			coefficient: coefficient,
-			symbol: symbol,
-			name: name
-		)
-	}
 }

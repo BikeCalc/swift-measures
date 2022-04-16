@@ -18,12 +18,12 @@
 
 ### Customary and Imperial Units
 
-- ``milePerHour``
+- ``milesPerHour``
 
 ### Metric Units
 
-- ``kilometrePerHour``
-- ``metrePerSecond``
+- ``kilometresPerHour``
+- ``metresPerSecond``
 
 ### Other Units
 

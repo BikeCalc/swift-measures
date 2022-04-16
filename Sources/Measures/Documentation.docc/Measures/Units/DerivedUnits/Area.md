@@ -32,7 +32,3 @@
 - ``decare``
 - ``are``
 - ``centiare``
-
-### Raised Units
-
-- ``init(square:)``

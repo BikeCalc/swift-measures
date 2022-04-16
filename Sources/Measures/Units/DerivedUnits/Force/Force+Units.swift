@@ -7,20 +7,6 @@
 	
 extension Force {
 	
-	// MARK: - Composed Units
-	
-	/// The gravity unit of force per the specified unit of mass.
-	///
-	/// - parameter mass: The mass.
-	/// - returns: The gravity unit of force.
-	public static func gravity(per mass: Mass = .base) -> Self {
-		return .init(
-			coefficient: 9.80665 * mass.coefficient,
-			symbol: "G",
-			name: "gravity"
-		)
-	}
-	
 	// MARK: - Metric Units
 	
 	/// Creates a new instance with the specified metric prefix.
@@ -99,4 +85,15 @@ extension Force {
 	
 	/// The yoctonewton unit of force.
 	public static let yoctonewton: Self = .init(.yocto)
+	
+	// MARK: - Other Units
+	
+	/// The gravity unit of force.
+	public static var gravity: Self {
+		return .init(
+			coefficient: 9.80665 * Mass.kilogram.coefficient,
+			symbol: "G",
+			name: "gravity"
+		)
+	}
 }

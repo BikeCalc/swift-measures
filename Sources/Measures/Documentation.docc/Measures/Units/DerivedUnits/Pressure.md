@@ -16,6 +16,11 @@
 
 - ``base``
 
+### Composed Units
+
+- ``newtonsPerSquareMetre``
+- ``poundsPerSquareInch``
+
 ### Metric Units
 
 - ``yottapascal``

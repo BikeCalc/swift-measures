@@ -7,24 +7,6 @@
 	
 extension Power {
 	
-	// MARK: - Composed Units
-	
-	/// Creates a new instance with the specified energy and time.
-	///
-	/// - parameter energy: The energy.
-	/// - parameter time: The time.
-	private init(_ energy: Energy, dividedBy time: Time) {
-		let coefficient: Double = energy.coefficient / time.coefficient
-		let symbol: String = energy.symbol + "/" + time.symbol
-		let name: String = energy.name + " " + time.name
-		
-		self.init(
-			coefficient: coefficient,
-			symbol: symbol,
-			name: name
-		)
-	}
-	
 	// MARK: - Customary and Imperial Units
 	
 	/// The horsepower unit of power.

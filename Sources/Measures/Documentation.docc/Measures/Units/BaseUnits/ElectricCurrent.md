@@ -39,3 +39,7 @@
 - ``attoampere``
 - ``zeptoampere``
 - ``yoctoampere``
+
+### Dividing Units
+
+- ``dividing(by:)``

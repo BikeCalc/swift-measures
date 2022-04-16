@@ -63,3 +63,13 @@
 - ``attometre``
 - ``zeptometre``
 - ``yoctometre``
+
+### Dividing Units
+
+- ``dividing(by:)-5h1ry``
+- ``dividing(by:)-6hl56``
+
+### Raising Units
+
+- ``squared()``
+- ``cubed()``

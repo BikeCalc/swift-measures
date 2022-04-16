@@ -34,5 +34,5 @@ public struct Area: Measurable {
 	
 	// MARK: - Base Unit
 	
-	public static let base: Self = .init(square: .metre)
+	public static let base: Self = Length.metre.squared()
 }

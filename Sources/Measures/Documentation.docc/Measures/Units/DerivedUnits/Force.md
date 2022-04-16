@@ -16,10 +16,6 @@
 
 - ``base``
 
-### Composed Units
-
-- ``gravity(dividedBy:)``
-
 ### Metric Units
 
 - ``yottanewton``
@@ -43,3 +39,7 @@
 - ``attonewton``
 - ``zeptonewton``
 - ``yoctonewton``
+
+### Other Units
+
+- ``gravity``

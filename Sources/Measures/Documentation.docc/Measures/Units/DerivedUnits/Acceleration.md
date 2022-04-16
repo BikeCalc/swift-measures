@@ -18,4 +18,4 @@
 
 ### Composed Units
 
-- ``metrePerSecondSquared``
+- ``metrePerSquareSecond``

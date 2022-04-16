@@ -34,5 +34,5 @@ public struct Volume: Measurable {
 	
 	// MARK: - Base Unit
 	
-	public static let base: Self = .init(cubic: .metre)
+	public static let base: Self = Length.metre.cubed()
 }

@@ -74,3 +74,7 @@
 
 - ``troyPound``
 - ``troyOunce``
+
+### Dividing Units
+
+- ``dividing(by:)``

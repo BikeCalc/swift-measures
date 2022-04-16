@@ -73,7 +73,7 @@ The Swift Package Manager is a tool for managing the distribution of Swift code 
         let symbol: String
         let name: String
 		
-        static let base: Self = .kilometrePerLitre
+        static let base: Self = .kilometresPerLitre
 	}
 	```
 
@@ -81,16 +81,16 @@ The Swift Package Manager is a tool for managing the distribution of Swift code 
 
 	```swift
     extension FuelEfficiency {
-        static let kilometrePerLitre: Self = .init(
+        static let kilometresPerLitre: Self = .init(
             coefficient: Length.kilometre.coefficient / Volume.litre.coefficient,
             symbol: "Km/L",
-            name: "kilometre per litre"
+            name: "kilometres per litre"
         )
 
-        static let metrePerLitre: Self = .init(
+        static let metresPerLitre: Self = .init(
             coefficient: Length.metre.coefficient / Volume.litre.coefficient,
             symbol: "m/L",
-            name: "metre per litre"
+            name: "metres per litre"
         )
     }
 
@@ -98,13 +98,13 @@ The Swift Package Manager is a tool for managing the distribution of Swift code 
 3. Initialize a measure of your dimension with a value and unit.
 
 	```swift
-    var measure: Measure<FuelEfficiency> = .init(5, .kilometrePerLitre)
+    var measure: Measure<FuelEfficiency> = .init(5, .kilometresPerLitre)
 	```
 
 4. Convert the measure to your other unit.
 
     ```swift
-    measure.convert(to: .metrePerLitre)
+    measure.convert(to: .metresPerLitre)
 
     print(measure)
     // Prints "5000 m/L"

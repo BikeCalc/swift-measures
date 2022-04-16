@@ -43,3 +43,7 @@
 - ``attowatt``
 - ``zeptowatt``
 - ``yoctowatt``
+
+### Dividing Units
+
+- ``dividing(by:)``

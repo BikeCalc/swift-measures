@@ -4,8 +4,28 @@
 // Copyright © 2021-2022 Alexandre H. Saad
 // Licensed under Apache License v2.0 with Runtime Library Exception
 //
+
+
+// Pressure+Compasable.swift
+// Measures
+//
+// Copyright © 2021-2022 Alexandre H. Saad
+// Licensed under Apache License v2.0 with Runtime Library Exception
+//
 	
 extension Pressure {
+	
+	// MARK: - Composed Units
+	
+	/// The newtons per square metre unit of pressure.
+	public static let newtonsPerSquareMetre: Self = Force.newton.dividing(by: Length.metre.squared())
+	
+	/// The pounds per square inch unit of pressure.
+	public static let poundsPerSquareInch: Self = .init(
+		coefficient: Mass.pound.coefficient / Length.inch.squared().coefficient,
+		symbol: "psi",
+		name: "pound per square inch"
+	)
 	
 	// MARK: - Metric Units
 	

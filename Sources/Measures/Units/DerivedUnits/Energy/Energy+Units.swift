@@ -9,30 +9,14 @@ extension Energy {
 	
 	// MARK: - Composed Units
 	
-	/// Creates a new instance with the specified power and time.
-	///
-	/// - parameter power: The power.
-	/// - parameter time: The time.
-	private init(_ power: Power, dividedBy time: Time) {
-		let coefficient: Double = power.coefficient / time.coefficient
-		let symbol: String = power.symbol + "/" + time.symbol
-		let name: String = power.name + " " + time.name
-		
-		self.init(
-			coefficient: coefficient,
-			symbol: symbol,
-			name: name
-		)
-	}
-	
 	/// The kilowatt year unit of energy.
-	public static let kilowattYear: Self = .init(.kilowatt, dividedBy: .year)
+	public static let kilowattYear: Self = Power.kilowatt.dividing(by: .year)
 	
 	/// The kilowatt hour unit of energy.
-	public static let kilowattHour: Self = .init(.kilowatt, dividedBy: .hour)
+	public static let kilowattHour: Self = Power.kilowatt.dividing(by: .hour)
 	
 	/// The kilowatt second unit of energy.
-	public static let kilowattSecond: Self = .init(.kilowatt, dividedBy: .second)
+	public static let kilowattSecond: Self = Power.kilowatt.dividing(by: .second)
 	
 	// MARK: - Metric Units
 	
