@@ -6,7 +6,7 @@
 //
 
 /// Representing a type that can be measured.
-public protocol Measurable: Equatable {
+public protocol Measurable: DefinableByConvention {
 	
 	// MARK: - Creating Units
 	
@@ -22,20 +22,6 @@ public protocol Measurable: Equatable {
 		symbol: String,
 		name: String
 	)
-	
-	// MARK: - Unit Properties
-	
-    /// The coefficient of this instance compared to its base unit.
-    var coefficient: Double { get }
-	
-	/// The constant of this instance compared to its base unit.
-	var constant: Double { get }
-	
-	/// The symbol of this instance.
-	var symbol: String { get }
-	
-	/// The name of this instance.
-	var name: String { get }
 	
 	// MARK: - Base Unit
 	
@@ -81,7 +67,8 @@ where Self: Encodable {
 	}
 }
 	
-extension Measurable {
+extension Measurable
+where Self: Equatable {
 	/// A boolean value indicating whether this instance is the base.
 	public var isBase: Bool {
 		return self == Self.base

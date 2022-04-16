@@ -23,9 +23,9 @@ extension Energy {
 	/// Creates a new instance with the specified metric prefix.
 	///
 	/// - parameter prefix: The prefix.
-	private init(_ prefix: MetricPrefix) {
+	fileprivate init(_ prefix: MetricPrefix) {
 		let symbol: String = prefix.symbol + "J"
-		let name: String = prefix.rawValue + "joule"
+		let name: String = prefix.name + "joule"
 		
 		self.init(
 			coefficient: prefix.coefficient,

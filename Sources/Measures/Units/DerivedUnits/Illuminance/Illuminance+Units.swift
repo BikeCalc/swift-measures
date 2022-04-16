@@ -12,9 +12,9 @@ extension Illuminance {
 	/// Creates a new instance with the specified metric prefix.
 	///
 	/// - parameter prefix: The prefix.
-	private init(_ prefix: MetricPrefix) {
+	fileprivate init(_ prefix: MetricPrefix) {
 		let symbol: String = prefix.symbol + "lx"
-		let name: String = prefix.rawValue + "lux"
+		let name: String = prefix.name + "lux"
 		
 		self.init(
 			coefficient: prefix.coefficient,

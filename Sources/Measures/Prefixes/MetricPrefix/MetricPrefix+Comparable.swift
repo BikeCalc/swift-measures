@@ -7,6 +7,6 @@
 
 extension MetricPrefix: Comparable {
 	public static func < (lhs: Self, rhs: Self) -> Bool {
-		return lhs.coefficient < rhs.coefficient
+		return lhs.coefficient + lhs.constant < rhs.coefficient + rhs.constant
 	}
 }

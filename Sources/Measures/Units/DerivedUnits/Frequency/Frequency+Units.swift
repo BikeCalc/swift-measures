@@ -12,9 +12,9 @@ extension Frequency {
 	/// Creates a new instance with the specified metric prefix.
 	///
 	/// - parameter prefix: The prefix.
-	private init(_ prefix: MetricPrefix) {
+	fileprivate init(_ prefix: MetricPrefix) {
 		let symbol: String = prefix.symbol + "Hz"
-		let name: String = prefix.rawValue + "hertz"
+		let name: String = prefix.name + "hertz"
 		
 		self.init(
 			coefficient: prefix.coefficient,

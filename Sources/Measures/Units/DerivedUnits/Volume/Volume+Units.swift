@@ -12,10 +12,10 @@ extension Volume {
 	/// Creates a new instance with the specified metric prefix.
 	///
 	/// - parameter prefix: The prefix.
-	private init(_ prefix: MetricPrefix) {
+	fileprivate init(_ prefix: MetricPrefix) {
 		let coefficient: Double = prefix.coefficient * 1e+3
 		let symbol: String = prefix.symbol + "L"
-		let name: String = prefix.rawValue + "litre"
+		let name: String = prefix.name + "litre"
 		
 		self.init(
 			coefficient: coefficient,

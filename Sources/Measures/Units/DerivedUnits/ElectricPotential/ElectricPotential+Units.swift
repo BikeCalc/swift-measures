@@ -12,9 +12,9 @@ extension ElectricPotential {
 	/// Creates a new instance with the specified metric prefix.
 	///
 	/// - parameter prefix: The prefix.
-	private init(_ prefix: MetricPrefix) {
+	fileprivate init(_ prefix: MetricPrefix) {
 		let symbol: String = prefix.symbol + "V"
-		let name: String = prefix.rawValue + "volt"
+		let name: String = prefix.name + "volt"
 		
 		self.init(
 			coefficient: prefix.coefficient,

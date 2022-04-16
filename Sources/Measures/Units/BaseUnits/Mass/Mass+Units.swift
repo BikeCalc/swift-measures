@@ -123,9 +123,9 @@ extension Mass {
 	/// Creates a new instance with the specified metric prefix.
 	///
 	/// - parameter prefix: The prefix.
-	private init(_ prefix: MetricPrefix) {
+	fileprivate init(_ prefix: MetricPrefix) {
 		let symbol: String = prefix.symbol + "g"
-		let name: String = prefix.rawValue + "gram"
+		let name: String = prefix.name + "gram"
 		let coefficient: Double = prefix.coefficient / 1000
 		
 		self.init(

@@ -16,6 +16,17 @@
 
 - ``base``
 
+### Binary Units
+
+- ``yobibit``
+- ``zebibit``
+- ``exbibit``
+- ``pebibit``
+- ``tebibit``
+- ``gibibit``
+- ``mebibit``
+- ``kibibit``
+
 ### Metric Units
 
 - ``yottabit``

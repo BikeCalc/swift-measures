@@ -7,14 +7,26 @@
 	
 extension ThermodynamicTemperature {
 	
+	// MARK: - Customary and Imperial Units
+		
+	/// The fahrenheit unit of thermodynamic temperature.
+	///
+	/// - warning: The result of converting this unit is not 100% accurate.
+	public static let fahrenheit: Self = .init(
+		coefficient: 5/9,
+		constant: 2.5537222222222427e+2,
+		symbol: "°F",
+		name: "fahrenheit"
+	)
+	
 	// MARK: - Metric Units
 	
 	/// Creates a new instance with the specified metric prefix.
 	///
 	/// - parameter prefix: The prefix.
-	private init(_ prefix: MetricPrefix) {
+	fileprivate init(_ prefix: MetricPrefix) {
 		let symbol: String = prefix.symbol + "K"
-		let name: String = prefix.rawValue + "kelvin"
+		let name: String = prefix.name + "kelvin"
 		
 		self.init(
 			coefficient: prefix.coefficient,

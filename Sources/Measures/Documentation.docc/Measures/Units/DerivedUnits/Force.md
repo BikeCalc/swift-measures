@@ -43,3 +43,7 @@
 ### Other Units
 
 - ``gravity``
+
+### Dividing Units
+
+- ``dividing(by:)``

@@ -12,15 +12,17 @@ No overview available
 
 - <doc:Installation>
 
-### Measuring Values
-
-- ``Measurable``
-
 ### Converting Values
 
 - <doc:Demonstration>
+- ``Convertible``
 - ``Measure``
 - ``Converted``
+
+### Measuring Values
+
+- ``DefinableByConvention``
+- ``Measurable``
 
 ### Base Units
 

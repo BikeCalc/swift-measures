@@ -12,9 +12,9 @@ extension Force {
 	/// Creates a new instance with the specified metric prefix.
 	///
 	/// - parameter prefix: The prefix.
-	private init(_ prefix: MetricPrefix) {
+	fileprivate init(_ prefix: MetricPrefix) {
 		let symbol: String = prefix.symbol + "N"
-		let name: String = prefix.rawValue + "newton"
+		let name: String = prefix.name + "newton"
 		
 		self.init(
 			coefficient: prefix.coefficient,

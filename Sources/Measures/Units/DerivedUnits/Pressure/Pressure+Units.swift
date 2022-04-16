@@ -32,9 +32,9 @@ extension Pressure {
 	/// Creates a new instance with the specified metric prefix.
 	///
 	/// - parameter prefix: The prefix.
-	private init(_ prefix: MetricPrefix) {
+	fileprivate init(_ prefix: MetricPrefix) {
 		let symbol: String = prefix.symbol + "Pa"
-		let name: String = prefix.rawValue + "pascal"
+		let name: String = prefix.name + "pascal"
 		
 		self.init(
 			coefficient: prefix.coefficient,

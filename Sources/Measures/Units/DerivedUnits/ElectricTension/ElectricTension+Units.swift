@@ -20,9 +20,9 @@ extension ElectricTension {
 	/// Creates a new instance with the specified metric prefix.
 	///
 	/// - parameter prefix: The prefix.
-	private init(_ prefix: MetricPrefix) {
+	fileprivate init(_ prefix: MetricPrefix) {
 		let symbol: String = prefix.symbol + "C"
-		let name: String = prefix.rawValue + "coulomb"
+		let name: String = prefix.name + "coulomb"
 		
 		self.init(
 			coefficient: prefix.coefficient,

@@ -12,9 +12,9 @@ extension LuminousIntensity {
 	/// Creates a new instance with the specified metric prefix.
 	///
 	/// - parameter prefix: The prefix.
-	private init(_ prefix: MetricPrefix) {
+	fileprivate init(_ prefix: MetricPrefix) {
 		let symbol: String = prefix.symbol + "cd"
-		let name: String = prefix.rawValue + "candela"
+		let name: String = prefix.name + "candela"
 		
 		self.init(
 			coefficient: prefix.coefficient,

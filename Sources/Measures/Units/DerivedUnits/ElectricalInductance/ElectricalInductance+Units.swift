@@ -12,9 +12,9 @@ extension ElectricalInductance {
 	/// Creates a new instance with the specified metric prefix.
 	///
 	/// - parameter prefix: The prefix.
-	private init(_ prefix: MetricPrefix) {
+	fileprivate init(_ prefix: MetricPrefix) {
 		let symbol: String = prefix.symbol + "H"
-		let name: String = prefix.rawValue + "henry"
+		let name: String = prefix.name + "henry"
 		
 		self.init(
 			coefficient: prefix.coefficient,

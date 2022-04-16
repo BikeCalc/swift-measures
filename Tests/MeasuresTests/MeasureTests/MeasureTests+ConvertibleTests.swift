@@ -9,7 +9,7 @@ import XCTest
 @testable import Measures
 
 extension MeasureTests {
-	struct FuelEfficiency: Measurable {
+	struct FuelEfficiency: Equatable, Measurable {
 		init(
 			coefficient: Double,
 			constant: Double = 0,
@@ -42,7 +42,7 @@ extension MeasureTests {
 		)
 	}
 	
-	func test_convertToSucceeds() {
+	func test_convertFuelEfficiencySucceeds() {
 		// Given
 		var measure: Measure<FuelEfficiency> = .init(5, .kilometresPerLitre)
 		

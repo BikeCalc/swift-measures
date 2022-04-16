@@ -12,9 +12,9 @@ extension SubstanceAmount {
 	/// Creates a new instance with the specified metric prefix.
 	///
 	/// - parameter prefix: The prefix.
-	private init(_ prefix: MetricPrefix) {
+	fileprivate init(_ prefix: MetricPrefix) {
 		let symbol: String = prefix.symbol + "mol"
-		let name: String = prefix.rawValue + "mole"
+		let name: String = prefix.name + "mole"
 		
 		self.init(
 			coefficient: prefix.coefficient,

@@ -12,9 +12,9 @@ extension AbsorbedDose {
 	/// Creates a new instance with the specified metric prefix.
 	///
 	/// - parameter prefix: The prefix.
-	private init(_ prefix: MetricPrefix) {
+	fileprivate init(_ prefix: MetricPrefix) {
 		let symbol: String = prefix.symbol + "Gy"
-		let name: String = prefix.rawValue + "gray"
+		let name: String = prefix.name + "gray"
 		
 		self.init(
 			coefficient: prefix.coefficient,

@@ -12,9 +12,9 @@ extension ElectricConductance {
 	/// Creates a new instance with the specified metric prefix.
 	///
 	/// - parameter prefix: The prefix.
-	private init(_ prefix: MetricPrefix) {
+	fileprivate init(_ prefix: MetricPrefix) {
 		let symbol: String = prefix.symbol + "S"
-		let name: String = prefix.rawValue + "siemens"
+		let name: String = prefix.name + "siemens"
 		
 		self.init(
 			coefficient: prefix.coefficient,
