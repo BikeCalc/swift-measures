@@ -9,6 +9,7 @@
 ### Unit Properties
 
 - ``coefficient``
+- ``constant``
 - ``symbol``
 - ``name``
 

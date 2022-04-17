@@ -1,8 +1,8 @@
 {
 	"value" : 1,
 	"unit" : {
-		"constant" : 0,
 		"coefficient" : 1,
+		"constant" : 0,
 		"symbol" : "s",
 		"name" : "second"
 	}
