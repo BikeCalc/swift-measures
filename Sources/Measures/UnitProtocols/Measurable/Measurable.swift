@@ -42,7 +42,7 @@ where Self: Decodable {
 		let container: KeyedDecodingContainer<MeasurableCodingKeys> = try decoder.container(keyedBy: MeasurableCodingKeys.self)
 		
 		let coefficient: Double = try container.decode(Double.self, forKey: .coefficient)
-		let constant: Double = try container.decode(Double.self, forKey: .constant)
+		let constant: Double = try container.decodeIfPresent(Double.self, forKey: .constant) ?? .zero
 		let symbol: String = try container.decode(String.self, forKey: .symbol)
 		let name: String = try container.decode(String.self, forKey: .name)
 		
@@ -78,7 +78,6 @@ where Self: Equatable {
         return lhs.coefficient == rhs.coefficient
 			&& lhs.constant == rhs.constant
 			&& lhs.symbol == rhs.symbol
-			&& lhs.name == rhs.name
     }
 }
 	
@@ -88,6 +87,5 @@ where Self: Hashable {
 		hasher.combine(self.coefficient.hashValue)
 		hasher.combine(self.constant.hashValue)
 		hasher.combine(self.symbol.hashValue)
-		hasher.combine(self.name.hashValue)
 	}
 }
