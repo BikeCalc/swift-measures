@@ -15,14 +15,14 @@ let package: Package = .init(
 		.library(name: "Measures", targets: ["Measures"])
 	],
 	dependencies: [
-		.package(url: "https://github.com/alexandrehsaad/swift-extensions.git", branch: "main"),
+		.package(url: "https://github.com/alexandrehsaad/swift-numeric-protocols.git", branch: "main"),
 		.package(url: "https://github.com/apple/swift-docc-plugin.git", .upToNextMinor(from: "1.0.0"))
 	],
 	targets: [
 		.target(
 			name: "Measures",
 			dependencies: [
-				.product(name: "Extensions", package: "swift-extensions")
+				.product(name: "NumericProtocols", package: "swift-numeric-protocols")
 			],
 			path: "Sources"
 		),
