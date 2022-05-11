@@ -4,7 +4,7 @@ A package containing a set of objects and protocols to create and convert units 
 
 ## Overview
 
-No overview available
+No overview available.
 
 ## Topics
 
