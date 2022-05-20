@@ -14,7 +14,7 @@ extension ElectricCurrent {
 	/// - parameter time: A unit of time.
 	/// - returns: A unit of electric tension.
 	public func dividing(by time: Time) -> ElectricTension {
-		let coefficient: Double = self.coefficient / time.coefficient
+		let coefficient: Double = self.coefficient * (1 / time.coefficient)
 		let symbol: String = self.symbol + "/" + time.symbol
 		let name: String = self.name + " " + time.name
 		

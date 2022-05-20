@@ -14,7 +14,7 @@ extension Mass {
 	/// - parameter volume: A unit of volume.
 	/// - returns: A unit of concentration.
 	public func dividing(by volume: Volume) -> Concentration {
-		let coefficient: Double = self.coefficient / volume.coefficient
+		let coefficient: Double = self.coefficient * (1 / volume.coefficient)
 		let symbol: String = self.symbol + "/" + volume.symbol
 		let name: String = self.name + " " + volume.name
 		

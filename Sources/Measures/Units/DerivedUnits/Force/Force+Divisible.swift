@@ -14,7 +14,7 @@ extension Force {
 	/// - parameter area: A unit of area.
 	/// - returns: A unit of pressure.
 	public func dividing(by area: Area) -> Pressure {
-		let coefficient: Double = self.coefficient / area.coefficient
+		let coefficient: Double = self.coefficient * (1 / area.coefficient)
 		let symbol: String = self.symbol + "/" + area.symbol
 		let name: String = self.name + " " + area.name
 		

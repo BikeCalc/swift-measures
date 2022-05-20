@@ -32,4 +32,9 @@ where Unit: Equatable & Measurable {
 	
 	/// The unit of this measure.
 	public let unit: Unit
+	
+	/// The value of this measure converted to its base unit.
+	public var baseValue: Double {
+		return self.converted(to: .base).value
+	}
 }

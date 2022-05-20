@@ -61,6 +61,25 @@ extension MeasureTests {
 }
 
 extension MeasureTests {
+	func test_convertSpeedSucceeds() {
+		// Given
+		var measure: Measure<Speed> = .init(5, .kilometresPerHour)
+		
+		// When
+		measure.convert(to: .metresPerSecond)
+		
+		// Then
+		XCTAssertEqual(measure.description, "1.3888888888888888 m/s")
+		
+		// When
+		measure.convert(to: .kilometresPerHour)
+		
+		// Then
+		XCTAssertEqual(measure.description, "5.0 km/h")
+	}
+}
+
+extension MeasureTests {
 	func test_convertThermodynamicTemperatureSucceeds() {
 		// Given
 		var measure: Measure<ThermodynamicTemperature> = .init(5, .kilokelvin)

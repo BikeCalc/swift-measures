@@ -14,7 +14,7 @@ extension Power {
 	/// - parameter time: A unit of time.
 	/// - returns: A unit of energy.
 	public func dividing(by time: Time) -> Energy {
-		let coefficient: Double = self.coefficient / time.coefficient
+		let coefficient: Double = self.coefficient * (1 / time.coefficient)
 		let symbol: String = self.symbol + "/" + time.symbol
 		let name: String = self.name + " " + time.name
 		
