@@ -6,7 +6,7 @@
 //
 
 extension Measure: Comparable {
-	public static func < (lhs: Self, rhs: Self) -> Bool {
+	public static func < (_ lhs: Self, _ rhs: Self) -> Bool {
 		let lhsValue: Double = lhs.value
 		let rhsValue: Double = rhs.converted(to: lhs.unit).value
 		

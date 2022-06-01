@@ -37,7 +37,7 @@ extension Measure {
 	///
 	/// - parameter lhs: The multiplicand.
 	/// - parameter rhs: The multiplicator.
-	public static func *= (lhs: inout Self, rhs: Double) {
+	public static func *= (_ lhs: inout Self, _ rhs: Double) {
 		lhs = lhs * rhs
 	}
 	

@@ -31,7 +31,7 @@ public protocol Measurable: DefinableByConvention {
 
 extension Measurable
 where Self: Comparable {
-	public static func < (lhs: Self, rhs: Self) -> Bool {
+	public static func < (_ lhs: Self, _ rhs: Self) -> Bool {
 		return lhs.coefficient + lhs.constant < rhs.coefficient + rhs.constant
 	}
 }
@@ -74,7 +74,7 @@ where Self: Equatable {
 		return self == Self.base
 	}
 	
-    public static func == (lhs: Self, rhs: Self) -> Bool {
+    public static func == (_ lhs: Self, _ rhs: Self) -> Bool {
         return lhs.coefficient == rhs.coefficient
 			&& lhs.constant == rhs.constant
 			&& lhs.symbol == rhs.symbol

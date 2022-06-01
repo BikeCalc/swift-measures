@@ -6,7 +6,7 @@
 //
 
 extension BinaryPrefix: Comparable {
-	public static func < (lhs: Self, rhs: Self) -> Bool {
+	public static func < (_ lhs: Self, _ rhs: Self) -> Bool {
 		return lhs.coefficient < rhs.coefficient
 	}
 }
