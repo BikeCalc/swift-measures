@@ -1,6 +1,6 @@
 # ``Measures``
 
-A package containing a set of objects and protocols to create and convert units of measure.
+A package containing a set of objects and protocols to create and convert units of measure, for the Swift programming language.
 
 ## Overview
 
