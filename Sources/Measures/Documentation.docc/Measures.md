@@ -40,6 +40,7 @@ No overview available.
 - ``AbsorbedDose``
 - ``Acceleration``
 - ``Area``
+- ``Cadence``
 - ``CatalyticActivity``
 - ``Concentration``
 - ``ElectricalCapacitance``
