@@ -9,10 +9,10 @@ extension ElectricTension {
 	
 	// MARK: - Composed Units
 	
-	/// The ampere hour unit of speed.
+	/// The ampere hour unit of electric tension.
 	public static let ampereHour: Self = ElectricCurrent.ampere.dividing(by: .hour)
 	
-	/// The ampere second unit of speed.
+	/// The ampere second unit of electric tension.
 	public static let ampereSecond: Self = ElectricCurrent.ampere.dividing(by: .second)
 	
 	// MARK: - Metric Units
