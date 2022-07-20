@@ -16,12 +16,10 @@ extension Mass {
 	public func dividing(by volume: Volume) -> Concentration {
 		let coefficient: Double = self.coefficient * (1 / volume.coefficient)
 		let symbol: String = self.symbol + "/" + volume.symbol
-		let name: String = self.name + " " + volume.name
 		
 		return .init(
 			coefficient: coefficient,
-			symbol: symbol,
-			name: name
+			symbol: symbol
 		)
 	}
 }

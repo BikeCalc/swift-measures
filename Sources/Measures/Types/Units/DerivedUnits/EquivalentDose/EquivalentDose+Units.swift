@@ -14,12 +14,10 @@ extension EquivalentDose {
 	/// - parameter prefix: The prefix.
 	fileprivate init(_ prefix: MetricPrefix) {
 		let symbol: String = prefix.symbol + "Sv"
-		let name: String = prefix.name + "sievert"
 		
 		self.init(
 			coefficient: prefix.coefficient,
-			symbol: symbol,
-			name: name
+			symbol: symbol
 		)
 	}
 	

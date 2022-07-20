@@ -15,12 +15,10 @@ extension Length {
 	public func squared() -> Area {
 		let coefficient: Double = self.coefficient.raising(to: 2)
 		let symbol: String = self.symbol + "²"
-		let name: String = "square" + " " + self.name
 		
 		return .init(
 			coefficient: coefficient,
-			symbol: symbol,
-			name: name
+			symbol: symbol
 		)
 	}
 	
@@ -30,12 +28,10 @@ extension Length {
 	public func cubed() -> Volume {
 		let coefficient: Double = self.coefficient.raising(to: 3)
 		let symbol: String = self.symbol + "³"
-		let name: String = "cubic" + " " + self.name
 		
 		return .init(
 			coefficient: coefficient,
-			symbol: symbol,
-			name: name
+			symbol: symbol
 		)
 	}
 }

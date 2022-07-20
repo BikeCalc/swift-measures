@@ -16,12 +16,10 @@ extension Force {
 	public func dividing(by area: Area) -> Pressure {
 		let coefficient: Double = self.coefficient * (1 / area.coefficient)
 		let symbol: String = self.symbol + "/" + area.symbol
-		let name: String = self.name + " " + area.name
 		
 		return .init(
 			coefficient: coefficient,
-			symbol: symbol,
-			name: name
+			symbol: symbol
 		)
 	}
 }

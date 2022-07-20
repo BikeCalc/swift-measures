@@ -14,12 +14,10 @@ extension ElectricalResistance {
 	/// - parameter prefix: The prefix.
 	fileprivate init(_ prefix: MetricPrefix) {
 		let symbol: String = prefix.symbol + "Ω"
-		let name: String = prefix.name + "ohm"
 		
 		self.init(
 			coefficient: prefix.coefficient,
-			symbol: symbol,
-			name: name
+			symbol: symbol
 		)
 	}
 	

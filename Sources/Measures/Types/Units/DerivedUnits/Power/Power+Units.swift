@@ -14,8 +14,7 @@ extension Power {
 	/// - warning: The result of converting this unit is not 100% accurate.
 	public static let horsepower: Self = .init(
 		coefficient: 7.45699872e+2,
-		symbol: "hp",
-		name: "horsepower"
+		symbol: "hp"
 	)
 	
 	// MARK: - Metric Units
@@ -25,12 +24,10 @@ extension Power {
 	/// - parameter prefix: The prefix.
 	fileprivate init(_ prefix: MetricPrefix) {
 		let symbol: String = prefix.symbol + "W"
-		let name: String = prefix.name + "watt"
 		
 		self.init(
 			coefficient: prefix.coefficient,
-			symbol: symbol,
-			name: name
+			symbol: symbol
 		)
 	}
 	

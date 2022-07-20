@@ -14,12 +14,10 @@ extension Time {
 	/// - parameter prefix: The prefix.
 	fileprivate init(_ prefix: MetricPrefix) {
 		let symbol: String = prefix.symbol + "s"
-		let name: String = prefix.name + "second"
 		
 		self.init(
 			coefficient: prefix.coefficient,
-			symbol: symbol,
-			name: name
+			symbol: symbol
 		)
 	}
 	
@@ -91,70 +89,60 @@ extension Time {
 	/// The millenium unit of time.
 	public static let millenium: Self = .init(
 		coefficient: 3.1556952e+10,
-		symbol: "mil",
-		name: "millenium"
+		symbol: "mil"
 	)
 	
 	/// The century unit of time.
 	public static let century: Self = .init(
 		coefficient: 3.1556952e+9,
-		symbol: "cent",
-		name: "century"
+		symbol: "cent"
 	)
 	
 	/// The decade unit of time.
 	public static let decade: Self = .init(
 		coefficient: 3.1556952e+8,
-		symbol: "dec",
-		name: "decade"
+		symbol: "dec"
 	)
 	
 	/// The year unit of time.
 	public static let year: Self = .init(
 		coefficient: 3.1556952e+7,
-		symbol: "yr",
-		name: "year"
+		symbol: "yr"
 	)
 	
 	/// The quarter unit of time.
 	public static let quarter: Self = .init(
 		coefficient: 7.889238e+6,
-		symbol: "qr",
-		name: "quarter"
+		symbol: "qr"
 	)
 	
 	/// The month unit of time.
 	public static let month: Self = .init(
 		coefficient: 2.629746e+6,
-		symbol: "mo",
-		name: "month"
+		symbol: "mo"
 	)
 	
 	/// The week unit of time.
 	public static let week: Self = .init(
 		coefficient: 6.04800e+5,
-		symbol: "wk",
-		name: "week"
+		symbol: "wk"
 	)
 	
 	/// The day unit of time.
 	public static let day: Self = .init(
 		coefficient: 8.64e+4,
-		symbol: "day",
-		name: "day"
+		symbol: "day"
 	)
 	
 	/// The hour unit of time.
 	public static let hour: Self = .init(
 		coefficient: 3.6e+3,
-		symbol: "h",
-		name: "hour"
+		symbol: "h"
 	)
 	
 	/// The minute unit of time.
 	public static let minute: Self = .init(
 		coefficient: 6e+1,
-		symbol: "min",
-		name: "minute"
+		symbol: "min"
 	)
 }

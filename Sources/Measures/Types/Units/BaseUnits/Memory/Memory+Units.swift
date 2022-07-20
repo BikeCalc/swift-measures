@@ -16,12 +16,10 @@ extension Memory {
 		precondition(prefix.coefficient >= .zero)
 		
 		let symbol: String = prefix.symbol + "b"
-		let name: String = prefix.rawValue + "bit"
 		
 		self.init(
 			coefficient: prefix.coefficient,
-			symbol: symbol,
-			name: name
+			symbol: symbol
 		)
 	}
 	
@@ -58,12 +56,10 @@ extension Memory {
 		precondition(prefix.coefficient >= .zero)
 		
 		let symbol: String = prefix.symbol + "b"
-		let name: String = prefix.rawValue + "bit"
 		
 		self.init(
 			coefficient: prefix.coefficient,
-			symbol: symbol,
-			name: name
+			symbol: symbol
 		)
 	}
 	

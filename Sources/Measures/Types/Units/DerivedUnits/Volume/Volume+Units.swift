@@ -15,12 +15,10 @@ extension Volume {
 	fileprivate init(_ prefix: MetricPrefix) {
 		let coefficient: Double = prefix.coefficient * 1e+3
 		let symbol: String = prefix.symbol + "L"
-		let name: String = prefix.name + "litre"
 		
 		self.init(
 			coefficient: coefficient,
-			symbol: symbol,
-			name: name
+			symbol: symbol
 		)
 	}
 	

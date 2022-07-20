@@ -14,12 +14,10 @@ extension Radioactivity {
 	/// - parameter prefix: The prefix.
 	fileprivate init(_ prefix: MetricPrefix) {
 		let symbol: String = prefix.symbol + "Bq"
-		let name: String = prefix.name + "becquerel"
 		
 		self.init(
 			coefficient: prefix.coefficient,
-			symbol: symbol,
-			name: name
+			symbol: symbol
 		)
 	}
 	

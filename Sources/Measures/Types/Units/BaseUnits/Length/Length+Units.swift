@@ -12,22 +12,19 @@ extension Length {
 	/// The parsec unit of length.
 	public static let parsec: Self = .init(
 		coefficient: 3.086e+16,
-		symbol: "pc",
-		name: "parsec"
+		symbol: "pc"
 	)
 	
 	/// The light year unit of length.
 	public static let lightYear: Self = .init(
 		coefficient: 9.4607e+15,
-		symbol: "ly",
-		name: "light year"
+		symbol: "ly"
 	)
 	
 	/// The astronomical unit unit of length.
 	public static let astronomicalUnit: Self = .init(
 		coefficient: 1.496e+11,
-		symbol: "au",
-		name: "astronomical unit"
+		symbol: "au"
 	)
 	
 	// MARK: - Customary and Imperial Units
@@ -35,112 +32,96 @@ extension Length {
 	/// The nautical league unit of length.
 	public static let nauticalLeague: Self = .init(
 		coefficient: Self.nauticalMile.coefficient * 3,
-		symbol: "nlea",
-		name: "nautical league"
+		symbol: "nlea"
 	)
 	
 	/// The league unit of length.
 	public static let league: Self = .init(
 		coefficient: Self.mile.coefficient * 3,
-		symbol: "lea",
-		name: "league"
+		symbol: "lea"
 	)
 	
 	/// The nautical mile unit of length.
 	public static let nauticalMile: Self = .init(
 		coefficient: 1.852e+3,
-		symbol: "nmi",
-		name: "nautical mile"
+		symbol: "nmi"
 	)
 	
 	/// The mile unit of length.
 	public static let mile: Self = .init(
 		coefficient: 1.609344e+3,
-		symbol: "mi",
-		name: "mile"
+		symbol: "mi"
 	)
 	
 	/// The cable unit of length.
 	public static let cable: Self = .init(
 		coefficient: Self.nauticalMile.coefficient / 10,
-		symbol: "cb",
-		name: "cable"
+		symbol: "cb"
 	)
 	
 	/// The furlong unit of length.
 	public static let furlong: Self = .init(
-		coefficient: 2.01168e+2, symbol: "fur",
-		name: "furlong"
+		coefficient: 2.01168e+2, symbol: "fur"
 	)
 	
 	/// The chain unit of length.
 	public static let chain: Self = .init(
 		coefficient: Self.inch.coefficient * 792,
-		symbol: "ch",
-		name: "chain"
+		symbol: "ch"
 	)
 	
 	/// The rod unit of length.
 	public static let rod: Self = .init(
 		coefficient: Self.inch.coefficient * 198,
-		symbol: "rd",
-		name: "rod"
+		symbol: "rd"
 	)
 	
 	/// The fathom unit of length.
 	public static let fathom: Self = .init(
 		coefficient: Self.inch.coefficient * 72,
-		symbol: "ftm",
-		name: "fathom"
+		symbol: "ftm"
 	)
 	
 	/// The yard unit of length.
 	public static let yard: Self = .init(
 		coefficient: Self.inch.coefficient * 36,
-		symbol: "yd",
-		name: "yard"
+		symbol: "yd"
 	)
 	
 	/// The foot unit of length.
 	public static let foot: Self = .init(
 		coefficient: Self.inch.coefficient * 12,
-		symbol: "ft",
-		name: "foot"
+		symbol: "ft"
 	)
 	
 	/// The link unit of length.
 	public static let link: Self = .init(
 		coefficient: 2.01168,
-		symbol: "li",
-		name: "link"
+		symbol: "li"
 	)
 	
 	/// The inch unit of length.
 	public static let inch: Self = .init(
 		coefficient: 2.54e-2,
-		symbol: "in",
-		name: "inch"
+		symbol: "in"
 	)
 	
 	/// The pica unit of length.
 	public static let pica: Self = .init(
 		coefficient: Self.inch.coefficient / 6,
-		symbol: "pc",
-		name: "pica"
+		symbol: "pc"
 	)
 	
 	/// The point unit of length.
 	public static let point: Self = .init(
 		coefficient: Self.inch.coefficient / 72,
-		symbol: "pt",
-		name: "point"
+		symbol: "pt"
 	)
 	
 	/// The thou unit of length.
 	public static let thou: Self = .init(
 		coefficient: Self.inch.coefficient / 1_000,
-		symbol: "th",
-		name: "thou"
+		symbol: "th"
 	)
 	
 	// MARK: - Metric Units
@@ -150,12 +131,10 @@ extension Length {
 	/// - parameter prefix: The prefix.
 	fileprivate init(_ prefix: MetricPrefix) {
 		let symbol: String = prefix.symbol + "m"
-		let name: String = prefix.name + "metre"
 		
 		self.init(
 			coefficient: prefix.coefficient,
-			symbol: symbol,
-			name: name
+			symbol: symbol
 		)
 	}
 	

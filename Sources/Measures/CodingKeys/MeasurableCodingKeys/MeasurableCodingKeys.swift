@@ -10,5 +10,4 @@ internal enum MeasurableCodingKeys: String, CodingKey {
 	case coefficient = "coefficient"
 	case constant = "constant"
 	case symbol = "symbol"
-	case name = "name"
 }

@@ -4,7 +4,7 @@
 
 ### Creating Units
 
-- ``init(coefficient:constant:symbol:name:)``
+- ``init(coefficient:constant:symbol:)``
 
 ### Base Unit
 

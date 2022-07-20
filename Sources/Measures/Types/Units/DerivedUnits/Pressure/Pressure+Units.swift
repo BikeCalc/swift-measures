@@ -23,8 +23,7 @@ extension Pressure {
 	/// The pounds per square inch unit of pressure.
 	public static let poundsPerSquareInch: Self = .init(
 		coefficient: Mass.pound.coefficient / Length.inch.squared().coefficient,
-		symbol: "psi",
-		name: "pound per square inch"
+		symbol: "psi"
 	)
 	
 	// MARK: - Metric Units
@@ -34,12 +33,10 @@ extension Pressure {
 	/// - parameter prefix: The prefix.
 	fileprivate init(_ prefix: MetricPrefix) {
 		let symbol: String = prefix.symbol + "Pa"
-		let name: String = prefix.name + "pascal"
 		
 		self.init(
 			coefficient: prefix.coefficient,
-			symbol: symbol,
-			name: name
+			symbol: symbol
 		)
 	}
 	
@@ -111,15 +108,13 @@ extension Pressure {
 	/// The bar unit of energy.
 	public static let bar: Self = .init(
 		coefficient: 1e+5,
-		symbol: "bar",
-		name: "bar"
+		symbol: "bar"
 	)
 	
 	/// The millibar unit of energy.
 	public static let millibar: Self = .init(
 		coefficient: 1e+2,
-		symbol: "mbar",
-		name: "millibar"
+		symbol: "mbar"
 	)
 	
 	// MARK: - Other Units
@@ -127,21 +122,18 @@ extension Pressure {
 	/// The atmosphere unit of energy.
 	public static let atmosphere: Self = .init(
 		coefficient: 1.01325e+5,
-		symbol: "atm",
-		name: "atmosphere"
+		symbol: "atm"
 	)
 	
 	/// The bar unit of energy.
 	public static let torr: Self = .init(
 		coefficient: Self.atmosphere.coefficient / 760,
-		symbol: "Torr",
-		name: "torr"
+		symbol: "Torr"
 	)
 	
 	/// The millitorr unit of energy.
 	public static let millitorr: Self = .init(
 		coefficient: Self.torr.coefficient * 1e-3,
-		symbol: "mTorr",
-		name: "millitorr"
+		symbol: "mTorr"
 	)
 }

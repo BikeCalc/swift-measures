@@ -13,13 +13,11 @@ public struct Concentration: Measurable {
 	public init(
 		coefficient: Double,
 		constant: Double = 0,
-		symbol: String,
-		name: String
+		symbol: String
 	) {
 		self.coefficient = coefficient
 		self.constant = constant
 		self.symbol = symbol
-		self.name = name
 	}
 	
 	// MARK: - Unit Properties
@@ -29,8 +27,6 @@ public struct Concentration: Measurable {
 	public let constant: Double
 	
 	public let symbol: String
-	
-	public let name: String
 	
 	// MARK: - Base Unit
 	

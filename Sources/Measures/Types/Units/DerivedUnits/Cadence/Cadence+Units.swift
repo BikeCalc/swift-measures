@@ -13,12 +13,10 @@ extension Cadence {
 	fileprivate static func dividing(by time: Time) -> Self {
 		let coefficient: Double = Time.base.coefficient * (1 / time.coefficient)
 		let symbol: String = "r" + "/" + time.symbol
-		let name: String = "revolutions" + " " + time.name
 		
 		return .init(
 			coefficient: coefficient,
-			symbol: symbol,
-			name: name
+			symbol: symbol
 		)
 	}
 	

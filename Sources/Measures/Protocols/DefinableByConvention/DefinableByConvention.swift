@@ -18,14 +18,4 @@ public protocol DefinableByConvention {
 	
 	/// The symbol of this instance.
 	var symbol: String { get }
-	
-	/// The name of this instance.
-	var name: String { get }
-}
-
-extension DefinableByConvention
-where Self: RawRepresentable, Self.RawValue == String {
-	public var name: String {
-		return self.rawValue
-	}
 }

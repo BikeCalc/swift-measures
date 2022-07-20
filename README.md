@@ -61,19 +61,16 @@ The Swift Package Manager is a tool for managing the distribution of Swift code 
         init(
             coefficient: Double,
             constant: Double = 0,
-            symbol: String,
-            name: String
+            symbol: String
         ) {
             self.coefficient = coefficient
             self.constant = constant
             self.symbol = symbol
-            self.name = name
         }
 		
         let coefficient: Double
         let constant: Double
         let symbol: String
-        let name: String
 		
         static let base: Self = .kilometresPerLitre
 	}
@@ -85,14 +82,12 @@ The Swift Package Manager is a tool for managing the distribution of Swift code 
     extension FuelEfficiency {
         static let kilometresPerLitre: Self = .init(
             coefficient: Length.kilometre.coefficient / Volume.litre.coefficient,
-            symbol: "Km/L",
-            name: "kilometres per litre"
+            symbol: "Km/L"
         )
 
         static let metresPerLitre: Self = .init(
             coefficient: Length.metre.coefficient / Volume.litre.coefficient,
-            symbol: "m/L",
-            name: "metres per litre"
+            symbol: "m/L"
         )
     }
 

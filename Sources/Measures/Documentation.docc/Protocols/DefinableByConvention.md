@@ -7,4 +7,3 @@
 - ``coefficient``
 - ``constant``
 - ``symbol``
-- ``name``

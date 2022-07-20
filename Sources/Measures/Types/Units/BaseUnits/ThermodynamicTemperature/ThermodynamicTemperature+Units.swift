@@ -15,8 +15,7 @@ extension ThermodynamicTemperature {
 	public static let fahrenheit: Self = .init(
 		coefficient: 5/9,
 		constant: 2.5537222222222427e+2,
-		symbol: "°F",
-		name: "fahrenheit"
+		symbol: "°F"
 	)
 	
 	// MARK: - Metric Units
@@ -26,12 +25,10 @@ extension ThermodynamicTemperature {
 	/// - parameter prefix: The prefix.
 	fileprivate init(_ prefix: MetricPrefix) {
 		let symbol: String = prefix.symbol + "K"
-		let name: String = prefix.name + "kelvin"
 		
 		self.init(
 			coefficient: prefix.coefficient,
-			symbol: symbol,
-			name: name
+			symbol: symbol
 		)
 	}
 	
@@ -104,7 +101,6 @@ extension ThermodynamicTemperature {
 	public static let celsius: Self = .init(
 		coefficient: 1,
 		constant: 273.15,
-		symbol: "°C",
-		name: "celsius"
+		symbol: "°C"
 	)
 }

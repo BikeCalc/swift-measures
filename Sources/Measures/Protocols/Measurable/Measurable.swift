@@ -10,17 +10,15 @@ public protocol Measurable: DefinableByConvention {
 	
 	// MARK: - Creating Units
 	
-	/// Creates a new instance with the specified coefficient, constant, symbol and name.
+	/// Creates a new instance with the specified coefficient, constant and symbol.
 	///
 	/// - parameter coefficient: The coefficient.
 	/// - parameter constant: The constant.
 	/// - parameter symbol: The symbol.
-	/// - parameter name: The name.
 	init(
 		coefficient: Double,
 		constant: Double,
-		symbol: String,
-		name: String
+		symbol: String
 	)
 	
 	// MARK: - Base Unit
@@ -44,13 +42,11 @@ where Self: Decodable {
 		let coefficient: Double = try container.decode(Double.self, forKey: .coefficient)
 		let constant: Double = try container.decodeIfPresent(Double.self, forKey: .constant) ?? .zero
 		let symbol: String = try container.decode(String.self, forKey: .symbol)
-		let name: String = try container.decode(String.self, forKey: .name)
 		
 		self.init(
 			coefficient: coefficient,
 			constant: constant,
-			symbol: symbol,
-			name: name
+			symbol: symbol
 		)
 	}
 }
@@ -63,7 +59,6 @@ where Self: Encodable {
 		try container.encode(self.coefficient, forKey: .coefficient)
 		try container.encode(self.constant, forKey: .constant)
 		try container.encode(self.symbol, forKey: .symbol)
-		try container.encode(self.name, forKey: .name)
 	}
 }
 	

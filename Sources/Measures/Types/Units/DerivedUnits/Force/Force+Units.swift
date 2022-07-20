@@ -14,12 +14,10 @@ extension Force {
 	/// - parameter prefix: The prefix.
 	fileprivate init(_ prefix: MetricPrefix) {
 		let symbol: String = prefix.symbol + "N"
-		let name: String = prefix.name + "newton"
 		
 		self.init(
 			coefficient: prefix.coefficient,
-			symbol: symbol,
-			name: name
+			symbol: symbol
 		)
 	}
 	
@@ -92,8 +90,7 @@ extension Force {
 	public static var gravity: Self {
 		return .init(
 			coefficient: 9.80665 * Mass.kilogram.coefficient,
-			symbol: "G",
-			name: "gravity"
+			symbol: "G"
 		)
 	}
 }

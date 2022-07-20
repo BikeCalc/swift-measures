@@ -25,12 +25,10 @@ extension Energy {
 	/// - parameter prefix: The prefix.
 	fileprivate init(_ prefix: MetricPrefix) {
 		let symbol: String = prefix.symbol + "J"
-		let name: String = prefix.name + "joule"
 		
 		self.init(
 			coefficient: prefix.coefficient,
-			symbol: symbol,
-			name: name
+			symbol: symbol
 		)
 	}
 	
@@ -102,14 +100,12 @@ extension Energy {
 	/// The kilocalorie unit of energy.
 	public static let kilocalorie: Self = .init(
 		coefficient: Self.kilocalorie.coefficient * 1_000,
-		symbol: "kCal",
-		name: "kilocalorie"
+		symbol: "kCal"
 	)
 	
 	/// The calorie unit of energy.
 	public static let calorie: Self = .init(
 		coefficient: 4.184,
-		symbol: "Cal",
-		name: "calorie"
+		symbol: "Cal"
 	)
 }

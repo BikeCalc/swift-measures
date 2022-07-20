@@ -12,22 +12,19 @@ extension Mass {
 	/// The solar unit of mass.
 	public static let solar: Self = .init(
 		coefficient: 1.98892e+30,
-		symbol: "Mo",
-		name: "solar"
+		symbol: "Mo"
 	)
 	
 	/// The jupiter unit of mass.
 	public static let jupiter: Self = .init(
 		coefficient: 1.898e+27,
-		symbol: "Mj",
-		name: "jupiter"
+		symbol: "Mj"
 	)
 	
 	/// The jupiter unit of mass.
 	public static let earth: Self = .init(
 		coefficient: Self.pound.coefficient *  5.9742e+24,
-		symbol: "Me",
-		name: "earth"
+		symbol: "Me"
 	)
 	
 	// MARK: - Customary Units
@@ -35,15 +32,13 @@ extension Mass {
 	/// The short ton unit of mass.
 	public static let shortTon: Self = .init(
 		coefficient: Self.pound.coefficient * 2e+3,
-		symbol: "sht",
-		name: "short yon"
+		symbol: "sht"
 	)
 	
 	/// The centalweight unit of mass.
 	public static let centalweight: Self = .init(
 		coefficient: Self.pound.coefficient * 1e+2,
-		symbol: "cwt",
-		name: "centalweight"
+		symbol: "cwt"
 	)
 	
 	// MARK: - Customary and Imperial Units
@@ -51,71 +46,61 @@ extension Mass {
 	/// The long ton unit of mass.
 	public static let longTon: Self = .init(
 		coefficient: Self.pound.coefficient * 2.24e+3,
-		symbol: "lt",
-		name: "long ton"
+		symbol: "lt"
 	)
 	
 	/// The hundredweight unit of mass.
 	public static let hundredweight: Self = .init(
 		coefficient: Self.pound.coefficient * 112,
-		symbol: "hwt",
-		name: "hundredweight"
+		symbol: "hwt"
 	)
 	
 	/// The slug unit of mass.
 	public static let slug: Self = .init(
 		coefficient: 1.45939e+1,
-		symbol: "slg",
-		name: "slug"
+		symbol: "slg"
 	)
 	
 	/// The stone unit of mass.
 	public static let stone: Self = .init(
 		coefficient: Self.pound.coefficient * 14,
-		symbol: "st",
-		name: "stone"
+		symbol: "st"
 	)
 	
 	/// The blob unit of mass.
 	public static let blob: Self = .init(
 		coefficient: Self.slug.coefficient / 12,
-		symbol: "blb",
-		name: "blob"
+		symbol: "blb"
 	)
 	
 	/// The pound unit of mass.
 	public static let pound: Self = .init(
 		coefficient: 4.5359237e-1,
-		symbol: "lb",
-		name: "pound"
+		symbol: "lb"
 	)
 	
 	/// The ounce unit of mass.
 	public static let ounce: Self = .init(
 		coefficient: Self.pound.coefficient / 16,
-		symbol: "oz",
-		name: "ounce"
+		symbol: "oz"
 	)
 	
 	/// The carat unit of mass.
 	public static let dram: Self = .init(
 		coefficient: Self.ounce.coefficient / 16,
-		symbol: "dr",
-		name: "dram"
+		symbol: "dr"
 	)
 	
 	/// The pennyweight unit of mass.
 	public static let pennyweight: Self = .init(
 		coefficient: Self.grain.coefficient * 24,
-		symbol: "dwt",
-		name: "pennyweight"
+		symbol: "dwt"
 	)
 	
 	/// The grain unit of mass.
 	public static let grain: Self = .init(
 		coefficient: Self.pound.coefficient / 7e+3,
-		symbol: "gr",
-		name: "grain"
+		symbol: "gr"
 	)
 	
 	// MARK: - Metric Units
@@ -124,14 +109,12 @@ extension Mass {
 	///
 	/// - parameter prefix: The prefix.
 	fileprivate init(_ prefix: MetricPrefix) {
-		let symbol: String = prefix.symbol + "g"
-		let name: String = prefix.name + "gram"
 		let coefficient: Double = prefix.coefficient / 1000
+		let symbol: String = prefix.symbol + "g"
 		
 		self.init(
 			coefficient: coefficient,
-			symbol: symbol,
-			name: name
+			symbol: symbol
 		)
 	}
 	
@@ -203,15 +186,13 @@ extension Mass {
 	/// The tonne unit of mass.
 	public static let tonne: Self = .init(
 		coefficient: Self.megagram.coefficient,
-		symbol: "t",
-		name: "tonne"
+		symbol: "t"
 	)
 
 	/// The carat unit of mass.
 	public static let carat: Self = .init(
 		coefficient: 2e-4,
-		symbol: "ct",
-		name: "carat"
+		symbol: "ct"
 	)
 	
 	// MARK: - Troy Units
@@ -219,14 +200,12 @@ extension Mass {
 	/// The troy pound unit of mass.
 	public static let troyPound: Self = .init(
 		coefficient: Self.troyOunce.coefficient * 12,
-		symbol: "tlb",
-		name: "troy pound"
+		symbol: "tlb"
 	)
 	
 	/// The troy ounce unit of mass.
 	public static let troyOunce: Self = .init(
 		coefficient: Self.grain.coefficient * 480,
-		symbol: "toz",
-		name: "troy ounce"
+		symbol: "toz"
 	)
 }

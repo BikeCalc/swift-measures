@@ -4,14 +4,13 @@
 
 ### Creating Units
 
-- ``init(coefficient:constant:symbol:name:)``
+- ``init(coefficient:constant:symbol:)``
 
 ### Unit Properties
 
 - ``coefficient``
 - ``constant``
 - ``symbol``
-- ``name``
 
 ### Base Unit
 

@@ -12,8 +12,7 @@ extension Area {
 	/// The township unit of area.
 	public static let township: Self = .init(
 		coefficient: Length.mile.squared().coefficient * 36,
-		symbol: "twp",
-		name: "township"
+		symbol: "twp"
 	)
 	
 	// MARK: - Customary and Imperial Units
@@ -21,15 +20,13 @@ extension Area {
 	/// The acre unit of area.
 	public static let acre: Self = .init(
 		coefficient: Length.chain.squared().coefficient * 10,
-		symbol: "ac",
-		name: "acre"
+		symbol: "ac"
 	)
 	
 	/// The rood unit of area.
 	public static let rood: Self = .init(
 		coefficient: Self.perch.coefficient * 40,
-		symbol: "roo",
-		name: "rood"
+		symbol: "roo"
 	)
 	
 	/// The perch unit of area.
@@ -40,28 +37,24 @@ extension Area {
 	/// The hectare unit of area.
 	public static let hectare: Self = .init(
 		coefficient: 1e+4,
-		symbol: "ha",
-		name: "hectare"
+		symbol: "ha"
 	)
 	
 	/// The decare unit of area.
 	public static let decare: Self = .init(
 		coefficient: 1e+3,
-		symbol: "daa",
-		name: "decare"
+		symbol: "daa"
 	)
 	
 	/// The are unit of area.
 	public static let are: Self = .init(
 		coefficient: 1e+2,
-		symbol: "a",
-		name: "are"
+		symbol: "a"
 	)
 	
 	/// The centiare unit of area.
 	public static let centiare: Self = .init(
 		coefficient: 1,
-		symbol: "ca",
-		name: "centiare"
+		symbol: "ca"
 	)
 }

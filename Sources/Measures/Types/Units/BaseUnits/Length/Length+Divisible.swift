@@ -16,12 +16,10 @@ extension Length {
 	public func dividing(by time: Time) -> Acceleration {
 		let coefficient: Double = self.coefficient * (1 / time.coefficient.raising(to: 2))
 		let symbol: String = self.symbol + "/" + time.symbol + "²"
-		let name: String = self.name + " " + "square" + " " + time.name
 		
 		return .init(
 			coefficient: coefficient,
-			symbol: symbol,
-			name: name
+			symbol: symbol
 		)
 	}
 	
@@ -32,12 +30,10 @@ extension Length {
 	public func dividing(by time: Time) -> Speed {
 		let coefficient: Double =  self.coefficient * (1 / time.coefficient)
 		let symbol: String = self.symbol + "/" + time.symbol
-		let name: String = self.name + " " + time.name
 		
 		return .init(
 			coefficient: coefficient,
-			symbol: symbol,
-			name: name
+			symbol: symbol
 		)
 	}
 }
