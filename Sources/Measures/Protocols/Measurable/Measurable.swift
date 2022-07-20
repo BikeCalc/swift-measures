@@ -6,7 +6,7 @@
 //
 
 /// Representing a type that can be measured.
-public protocol Measurable: DefinableByConvention {
+public protocol Measurable {
 	
 	// MARK: - Creating Units
 	
@@ -20,6 +20,17 @@ public protocol Measurable: DefinableByConvention {
 		constant: Double,
 		symbol: String
 	)
+	
+	// MARK: - Unit Properties
+	
+	/// The coefficient of this instance compared to its base unit.
+	var coefficient: Double { get }
+	
+	/// The constant of this instance compared to its base unit.
+	var constant: Double { get }
+	
+	/// The symbol of this instance.
+	var symbol: String { get }
 	
 	// MARK: - Base Unit
 	

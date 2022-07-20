@@ -10,7 +10,6 @@
 
 - ``value``
 - ``unit-swift.property``
-- ``baseValue``
 
 ### Converting Measures
 

@@ -14,9 +14,6 @@ extension Measure: CustomStringConvertible {
 	/// // Prints "1m"
 	/// ```
 	public var description: String {
-		let value: String = self.value.description
-		let symbol: String = self.unit.symbol
-		
-		return value + symbol
+		return self.value.description + self.unit.symbol
 	}
 }

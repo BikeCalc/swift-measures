@@ -21,7 +21,6 @@ No overview available.
 
 ### Measuring Values
 
-- ``DefinableByConvention``
 - ``Measurable``
 
 ### Base Units
