@@ -11,13 +11,12 @@ extension Measure: CustomStringConvertible {
 	/// ```swift
 	/// let measure: Measure<Length> = .init(1, .metre)
 	/// print(measure)
-	/// // Prints "1 m"
+	/// // Prints "1m"
 	/// ```
 	public var description: String {
 		let value: String = self.value.description
-		let spacer: String = " "
 		let symbol: String = self.unit.symbol
 		
-		return value + spacer + symbol
+		return value + symbol
 	}
 }

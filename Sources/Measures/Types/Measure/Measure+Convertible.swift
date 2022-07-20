@@ -10,8 +10,9 @@ extension Measure: Convertible {
 	// MARK: - Converting Values
 	
 	/// The value of this unit in terms of the base unit of its dimension.
-	private func valueConvertedToBase() -> Double {
-		return self.value * self.unit.coefficient + self.unit.constant
+	private func convertedToBase() -> Self {
+		let newValue: Double = self.value * self.unit.coefficient + self.unit.constant
+		return .init(newValue, .base)
 	}
 	
 	/// Returns this measure converted to the specified unit.
@@ -19,13 +20,13 @@ extension Measure: Convertible {
 	/// ```swift
 	/// let measure: Measure<Length> = .init(1, .metre).converted(to: .centimetre)
 	/// print(measure)
-	/// // Prints "100 cm"
+	/// // Prints "100cm"
 	/// ```
 	///
 	/// - parameter rhs: The unit to convert to.
 	/// - returns: The converted measure.
 	public func converted(to rhs: Unit) -> Self {
-		let newValue: Double = (self.valueConvertedToBase() - rhs.constant) / rhs.coefficient
+		let newValue: Double = (self.convertedToBase().value - rhs.constant) / rhs.coefficient
 		return .init(newValue, rhs)
 	}
 	
@@ -34,14 +35,14 @@ extension Measure: Convertible {
 	/// ```swift
 	/// let measure: Measure<Frequency> = .init(1, .hertz).converted(to: .second)
 	/// print(measure)
-	/// // Prints "1 s"
+	/// // Prints "1s"
 	/// ```
 	///
 	/// - parameter rhs: The unit to convert to.
 	/// - returns: The converted measure.
 	public func converted(to rhs: Time) -> Measure<Time>
 	where Unit == Frequency {
-		let newValue: Double = (self.valueConvertedToBase() - rhs.constant) / rhs.coefficient
+		let newValue: Double = (self.convertedToBase().value - rhs.constant) / rhs.coefficient
 		return .init(1 / newValue, rhs)
 	}
 	
@@ -51,7 +52,7 @@ extension Measure: Convertible {
 	/// var measure: Measure<Length> = .init(1, .metre)
 	/// measure.convert(to: .centimetre)
 	/// print(measure)
-	/// // Prints "100 cm"
+	/// // Prints "100cm"
 	/// ```
 	///
 	/// - parameter rhs: The unit to convert to.
@@ -59,4 +60,3 @@ extension Measure: Convertible {
 		self = self.converted(to: rhs)
 	}
 }
-

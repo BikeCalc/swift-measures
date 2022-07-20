@@ -63,5 +63,5 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
     measure.convert(to: .metresPerLitre)
 
     print(measure)
-    // Prints "5000 m/L"
+    // Prints "5000m/L"
 	```

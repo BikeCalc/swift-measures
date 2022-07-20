@@ -17,6 +17,6 @@ extension MeasureTests {
 		let description: String = value.description
 		
 		// Then
-		XCTAssertEqual(description, "4.0 s")
+		XCTAssertEqual(description, "4.0s")
 	}
 }

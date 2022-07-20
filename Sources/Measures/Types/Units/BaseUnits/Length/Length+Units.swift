@@ -125,14 +125,14 @@ extension Length {
 	/// The pica unit of length.
 	public static let pica: Self = .init(
 		coefficient: Self.inch.coefficient / 6,
-		symbol: "Pc",
+		symbol: "pc",
 		name: "pica"
 	)
 	
 	/// The point unit of length.
 	public static let point: Self = .init(
 		coefficient: Self.inch.coefficient / 72,
-		symbol: "Pt",
+		symbol: "pt",
 		name: "point"
 	)
 	

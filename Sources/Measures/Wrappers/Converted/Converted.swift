@@ -11,7 +11,7 @@
 /// @Converted(to: .metre)
 /// var measure: Measure<Length> = .init(100, .centimetre)
 /// print(measure)
-/// // Prints "1 m"
+/// // Prints "1m"
 /// ```
 @propertyWrapper
 public struct Converted<Unit>

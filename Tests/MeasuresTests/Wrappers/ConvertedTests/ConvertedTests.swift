@@ -19,13 +19,13 @@ final class ConvertedTests: XCTestCase {
 		
 		// Then
 		XCTAssertEqual(measure, .init(1, .metre))
-		XCTAssertEqual(measure.description, "1.0 m")
+		XCTAssertEqual(measure.description, "1.0m")
 		
 		// When
 		measure = .init(0.001, .kilometre)
 		
 		// Then
 		XCTAssertEqual(measure, .init(1, .metre))
-		XCTAssertEqual(measure.description, "1.0 m")
+		XCTAssertEqual(measure.description, "1.0m")
 	}
 }
