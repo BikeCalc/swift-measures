@@ -127,7 +127,7 @@ If you find a bug, please create an [issue].
 
 ### Contacting the maintainers
 
-If you want to share your thoughts on how to improve this repository, you can contact the code owner. See the `CODE_OWNERS.md` file for more information.
+If you want to share your thoughts on how to improve this repository, you can contact the code owner. See the `CODEOWNERS.txt` file for more information.
 
 ### Supporting this repository
 
@@ -135,7 +135,7 @@ If this repository has been useful to you in some way, show your support by star
 
 ## Code of Conduct
 
-To be a truly great community, we welcome developers from all walks of life, with different backgrounds, and with a wide range of experience. A diverse and friendly community will have more great ideas, more unique perspectives, and produce more great code. We will work diligently to make this community welcoming to everyone. See the `CODE_OF_CONDUCT.md` file for more information.
+To be a truly great community, we welcome developers from all walks of life, with different backgrounds, and with a wide range of experience. A diverse and friendly community will have more great ideas, more unique perspectives, and produce more great code. We will work diligently to make this community welcoming to everyone. See the `CODEOFCONDUCT.md` file for more information.
 
 ## License
 
@@ -144,4 +144,3 @@ Distributed under Apache License v2.0 with Runtime Library Exception. See the `L
 [documentation page]: https://alexandrehsaad.github.io/swift-measures/documentation/measures
 [pull request]: https://github.com/alexandrehsaad/swift-measures/pulls
 [issue]: https://github.com/alexandrehsaad/swift-measures/issues
-[@alexandrehsaad]: https://github.com/alexandrehsaad
