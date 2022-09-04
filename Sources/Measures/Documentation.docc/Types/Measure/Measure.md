@@ -5,6 +5,7 @@
 ### Creating Measures
 
 - ``init(_:_:)``
+- ``init(_:_:)``
 
 ### Measure Properties
 

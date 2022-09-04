@@ -12,18 +12,32 @@ where Unit: Equatable & Measurable {
 	public typealias Unit = Unit
 	
 	// MARK: - Creating Instances
-    
-    /// Creates a new instance with the specified value and unit.
-    ///
-    /// - parameter value: The value.
+	
+	/// Creates a new instance with the specified value and unit.
+	///
+	/// - parameter value: The value.
 	/// - parameter unit: The unit.
 	/// - warning: A measure can not be negative.
-	public init(_ value: Double = 1, _ unit: Unit) {
-		precondition(value.isNegative == false)
+	public init<Value>(_ value: Value, _ unit: Unit)
+	where Value: BinaryFloatingPoint {
+		precondition(Value.zero <= value)
 		
-        self.value = value
-        self.unit = unit
-    }
+		self.value = .init(value)
+		self.unit = unit
+	}
+	
+	/// Creates a new instance with the specified value and unit.
+	///
+	/// - parameter value: The value.
+	/// - parameter unit: The unit.
+	/// - warning: A measure can not be negative.
+	public init<Value>(_ value: Value, _ unit: Unit)
+	where Value: BinaryInteger {
+		precondition(Value.zero <= value)
+		
+		self.value = .init(value)
+		self.unit = unit
+	}
 	
 	// MARK: - Instance Properties
 	

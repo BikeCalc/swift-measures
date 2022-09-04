@@ -16,11 +16,6 @@
 
 - ``base``
 
-### Composed Units
-
-- ``ampereHour``
-- ``ampereSecond``
-
 ### Metric Units
 
 - ``yottavolt``
