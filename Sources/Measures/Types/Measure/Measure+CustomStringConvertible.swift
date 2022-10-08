@@ -11,9 +11,9 @@ extension Measure: CustomStringConvertible {
 	/// ```swift
 	/// let measure: Measure<Length> = .init(1, .metre)
 	/// print(measure)
-	/// // Prints "1m"
+	/// // Prints "1 m"
 	/// ```
 	public var description: String {
-		return self.value.description + self.unit.symbol
+		return self.value.description + " " + self.unit.symbol
 	}
 }

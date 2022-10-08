@@ -45,13 +45,13 @@ extension MeasureTests {
 		measure.convert(to: .metresPerLitre)
 		
 		// Then
-		XCTAssertEqual(measure.description, "5000.0m/L")
+		XCTAssertEqual(measure.description, "5000.0 m/L")
 		
 		// When
 		measure.convert(to: .kilometresPerLitre)
 		
 		// Then
-		XCTAssertEqual(measure.description, "5.0Km/L")
+		XCTAssertEqual(measure.description, "5.0 Km/L")
 	}
 }
 
@@ -64,13 +64,13 @@ extension MeasureTests {
 		measure.convert(to: .metresPerSecond)
 		
 		// Then
-		XCTAssertEqual(measure.description, "1.3888888888888888m/s")
+		XCTAssertEqual(measure.description, "1.3888888888888888 m/s")
 		
 		// When
 		measure.convert(to: .kilometresPerHour)
 		
 		// Then
-		XCTAssertEqual(measure.description, "5.0km/h")
+		XCTAssertEqual(measure.description, "5.0 km/h")
 	}
 }
 
@@ -83,12 +83,12 @@ extension MeasureTests {
 		measure.convert(to: .celsius)
 		
 		// Then
-		XCTAssertEqual(measure.description, "4726.85°C")
+		XCTAssertEqual(measure.description, "4726.85 °C")
 		
 		// When
 		measure.convert(to: .kilokelvin)
 		
 		// Then
-		XCTAssertEqual(measure.description, "5.0kK")
+		XCTAssertEqual(measure.description, "5.0 kK")
 	}
 }
