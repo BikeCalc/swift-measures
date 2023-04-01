@@ -25,6 +25,20 @@ extension Mass {
 	
 	/// Returns the quotient of dividing this value by the specified value.
 	///
+	/// - parameter area: A unit of substance amount.
+	/// - returns: A unit of molar mass.
+	public func dividing(by substanceAmount: SubstanceAmount) -> MolarMass {
+		let coefficient: Double = self.coefficient * (1 / substanceAmount.coefficient)
+		let symbol: String = self.symbol + "/" + substanceAmount.symbol
+		
+		return .init(
+			coefficient: coefficient,
+			symbol: symbol
+		)
+	}
+	
+	/// Returns the quotient of dividing this value by the specified value.
+	///
 	/// - parameter volume: A unit of volume.
 	/// - returns: A unit of concentration.
 	public func dividing(by volume: Volume) -> Concentration {
