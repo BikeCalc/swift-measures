@@ -59,6 +59,7 @@ No overview available.
 - ``Power``
 - ``Pressure``
 - ``Radioactivity``
+- ``SurfaceDensity``
 - ``Speed``
 - ``Volume``
 

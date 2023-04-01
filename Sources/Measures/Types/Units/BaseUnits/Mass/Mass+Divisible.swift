@@ -11,6 +11,20 @@ extension Mass {
 	
 	/// Returns the quotient of dividing this value by the specified value.
 	///
+	/// - parameter area: A unit of area.
+	/// - returns: A unit of surface density.
+	public func dividing(by area: Area) -> SurfaceDensity {
+		let coefficient: Double = self.coefficient * (1 / area.coefficient)
+		let symbol: String = self.symbol + "/" + area.symbol
+		
+		return .init(
+			coefficient: coefficient,
+			symbol: symbol
+		)
+	}
+	
+	/// Returns the quotient of dividing this value by the specified value.
+	///
 	/// - parameter volume: A unit of volume.
 	/// - returns: A unit of concentration.
 	public func dividing(by volume: Volume) -> Concentration {
