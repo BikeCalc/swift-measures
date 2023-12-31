@@ -20,9 +20,7 @@ where Unit: Equatable & Measurable {
 	/// - warning: A measure can not be negative.
 	public init<Value>(_ value: Value, _ unit: Unit)
 	where Value: BinaryFloatingPoint {
-		precondition(Value.zero <= value)
-		
-		self.value = .init(value)
+        self.value = .init(max(.zero, value))
 		self.unit = unit
 	}
 	
@@ -33,9 +31,7 @@ where Unit: Equatable & Measurable {
 	/// - warning: A measure can not be negative.
 	public init<Value>(_ value: Value, _ unit: Unit)
 	where Value: BinaryInteger {
-		precondition(Value.zero <= value)
-		
-		self.value = .init(value)
+        self.value = .init(max(.zero, value))
 		self.unit = unit
 	}
 	
