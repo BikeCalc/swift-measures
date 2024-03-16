@@ -22,66 +22,66 @@ extension Volume {
 		)
 	}
 	
-	/// The yottalitre unit of volume.
-	public static let yottalitre: Self = .init(.yotta)
+	/// The yottaliter unit of volume.
+	public static let yottaliter: Self = .init(.yotta)
 	
-	/// The zettalitre unit of volume.
-	public static let zettalitre: Self = .init(.zetta)
+	/// The zettaliter unit of volume.
+	public static let zettaliter: Self = .init(.zetta)
 	
-	/// The hexalitre unit of volume.
-	public static let hexalitre: Self = .init(.hexa)
+	/// The hexaliter unit of volume.
+	public static let hexaliter: Self = .init(.hexa)
 	
-	/// The petalitre unit of volume.
-	public static let petalitre: Self = .init(.peta)
+	/// The petaliter unit of volume.
+	public static let petaliter: Self = .init(.peta)
 	
-	/// The teralitre unit of volume.
-	public static let teralitre: Self = .init(.tera)
+	/// The teraliter unit of volume.
+	public static let teraliter: Self = .init(.tera)
 	
-	/// The gigalitre unit of volume.
-	public static let gigalitre: Self = .init(.giga)
+	/// The gigaliter unit of volume.
+	public static let gigaliter: Self = .init(.giga)
 	
-	/// The megalitre unit of volume.
-	public static let megalitre: Self = .init(.yotta)
+	/// The megaliter unit of volume.
+	public static let megaliter: Self = .init(.yotta)
 	
-	/// The kilolitre unit of volume.
-	public static let kilolitre: Self = .init(.kilo)
+	/// The kiloliter unit of volume.
+	public static let kiloliter: Self = .init(.kilo)
 	
-	/// The hectolitre unit of volume.
-	public static let hectolitre: Self = .init(.hecto)
+	/// The hectoliter unit of volume.
+	public static let hectoliter: Self = .init(.hecto)
 	
-	/// The decalitre unit of volume.
-	public static let decalitre: Self = .init(.deca)
+	/// The decaliter unit of volume.
+	public static let decaliter: Self = .init(.deca)
 	
-	/// The litre unit of volume.
-	public static let litre: Self = .init(.none)
+	/// The liter unit of volume.
+	public static let liter: Self = .init(.none)
 	
-	/// The decilitre unit of volume.
-	public static let decilitre: Self = .init(.deci)
+	/// The deciliter unit of volume.
+	public static let deciliter: Self = .init(.deci)
 	
-	/// The centilitre unit of volume.
-	public static let centilitre: Self = .init(.centi)
+	/// The centiliter unit of volume.
+	public static let centiliter: Self = .init(.centi)
 	
-	/// The millilitre unit of volume.
-	public static let millilitre: Self = .init(.milli)
+	/// The milliliter unit of volume.
+	public static let milliliter: Self = .init(.milli)
 	
-	/// The microlitre unit of volume.
-	public static let microlitre: Self = .init(.micro)
+	/// The microliter unit of volume.
+	public static let microliter: Self = .init(.micro)
 	
-	/// The nanolitre unit of volume.
-	public static let nanolitre: Self = .init(.nano)
+	/// The nanoliter unit of volume.
+	public static let nanoliter: Self = .init(.nano)
 	
-	/// The picolitre unit of volume.
-	public static let picolitre: Self = .init(.pico)
+	/// The picoliter unit of volume.
+	public static let picoliter: Self = .init(.pico)
 	
-	/// The femtolitre unit of volume.
-	public static let femtolitre: Self = .init(.femto)
+	/// The femtoliter unit of volume.
+	public static let femtoliter: Self = .init(.femto)
 	
-	/// The attolitre unit of volume.
-	public static let attolitre: Self = .init(.atto)
+	/// The attoliter unit of volume.
+	public static let attoliter: Self = .init(.atto)
 	
-	/// The zeptolitre unit of volume.
-	public static let zeptolitre: Self = .init(.zepto)
+	/// The zeptoliter unit of volume.
+	public static let zeptoliter: Self = .init(.zepto)
 	
-	/// The yoctolitre unit of volume.
-	public static let yoctolitre: Self = .init(.yocto)
+	/// The yoctoliter unit of volume.
+	public static let yoctoliter: Self = .init(.yocto)
 }

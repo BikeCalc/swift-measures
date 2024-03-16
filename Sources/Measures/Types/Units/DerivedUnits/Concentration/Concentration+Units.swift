@@ -9,6 +9,6 @@ extension Concentration {
 	
 	// MARK: - Composed Units
 	
-	/// The grams per litre unit of concentration.
-	public static let gramsPerLitre: Self = Mass.gram.dividing(by: .litre)
+	/// The grams per liter unit of concentration.
+	public static let gramsPerLiter: Self = Mass.gram.dividing(by: .liter)
 }

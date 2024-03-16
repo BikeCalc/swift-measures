@@ -30,5 +30,5 @@ public struct Concentration: Measurable {
 	
 	// MARK: - Base Unit
 	
-	public static let base: Self = .gramsPerLitre
+	public static let base: Self = .gramsPerLiter
 }
