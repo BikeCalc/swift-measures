@@ -30,5 +30,5 @@ public struct Length: Measurable {
 	
 	// MARK: - Base Unit
 	
-	public static let base: Self = .metre
+	public static let base: Self = .meter
 }

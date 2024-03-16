@@ -8,8 +8,8 @@
 /// A property wrapper that keeps a measure converted to a specified unit.
 ///
 /// ```swift
-/// @Converted(to: .metre)
-/// var measure: Measure<Length> = .init(100, .centimetre)
+/// @Converted(to: .meter)
+/// var measure: Measure<Length> = .init(100, .centimeter)
 /// print(measure)
 /// // Prints "1m"
 /// ```

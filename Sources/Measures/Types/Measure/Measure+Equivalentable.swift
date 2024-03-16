@@ -9,9 +9,9 @@ extension Measure: Equivalentable {
 	/// Returns a boolean value indicating whether the two specified instances are equivalent.
 	///
 	/// ```swift
-	/// let oneMetre: Measure<Length> = .init(1, .metre)
-	/// let oneHundredCentimetres: Measure<Length> = .init(100, .centimetre)
-	/// print(oneMetre.isEquivalent(to: oneHundredCentimetres))
+	/// let oneMeter: Measure<Length> = .init(1, .meter)
+	/// let oneHundredCentimetres: Measure<Length> = .init(100, .centimeter)
+	/// print(oneMeter.isEquivalent(to: oneHundredCentimetres))
 	/// // Prints "true"
 	/// ```
 	///

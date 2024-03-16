@@ -42,27 +42,27 @@
 
 ### Metric Units
 
-- ``yottametre``
-- ``zettametre``
-- ``hexametre``
-- ``petametre``
-- ``terametre``
-- ``gigametre``
-- ``megametre``
-- ``kilometre``
-- ``hectometre``
-- ``decametre``
-- ``metre``
-- ``decimetre``
-- ``centimetre``
-- ``millimetre``
-- ``micrometre``
-- ``nanometre``
-- ``picometre``
-- ``femtometre``
-- ``attometre``
-- ``zeptometre``
-- ``yoctometre``
+- ``yottameter``
+- ``zettameter``
+- ``hexameter``
+- ``petameter``
+- ``terameter``
+- ``gigameter``
+- ``megameter``
+- ``kilometer``
+- ``hectometer``
+- ``decameter``
+- ``meter``
+- ``decimeter``
+- ``centimeter``
+- ``millimeter``
+- ``micrometer``
+- ``nanometer``
+- ``picometer``
+- ``femtometer``
+- ``attometer``
+- ``zeptometer``
+- ``yoctometer``
 
 ### Dividing Units
 

@@ -10,8 +10,8 @@ extension SurfaceDensity {
 	// MARK: - Composed Units
 	
 	/// The kilograms per square meter unit of surface density.
-	public static let kilogramsPerSquareMeter: Self = Mass.kilogram.dividing(by: Length.metre.squared())
+	public static let kilogramsPerSquareMeter: Self = Mass.kilogram.dividing(by: Length.meter.squared())
 	
 	/// The grams per square meter unit of surface density.
-	public static let gramsPerSquareMeter: Self = Mass.gram.dividing(by: Length.metre.squared())
+	public static let gramsPerSquareMeter: Self = Mass.gram.dividing(by: Length.meter.squared())
 }

@@ -9,8 +9,8 @@ extension Pressure {
 	
 	// MARK: - Composed Units
 	
-	/// The newtons per square metre unit of pressure.
-	public static let newtonsPerSquareMetre: Self = Force.newton.dividing(by: Length.metre.squared())
+	/// The newtons per square meter unit of pressure.
+	public static let newtonsPerSquareMeter: Self = Force.newton.dividing(by: Length.meter.squared())
 	
 	/// The pounds per square inch unit of pressure.
 	public static let poundsPerSquareInch: Self = .init(

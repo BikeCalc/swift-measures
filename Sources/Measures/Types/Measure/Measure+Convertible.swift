@@ -18,7 +18,7 @@ extension Measure: Convertible {
 	/// Returns this measure converted to the specified unit.
 	///
 	/// ```swift
-	/// let measure: Measure<Length> = .init(1, .metre).converted(to: .centimetre)
+	/// let measure: Measure<Length> = .init(1, .meter).converted(to: .centimeter)
 	/// print(measure)
 	/// // Prints "100cm"
 	/// ```
@@ -49,8 +49,8 @@ extension Measure: Convertible {
 	/// Converts this measure to the specified unit.
 	///
 	/// ```swift
-	/// var measure: Measure<Length> = .init(1, .metre)
-	/// measure.convert(to: .centimetre)
+	/// var measure: Measure<Length> = .init(1, .meter)
+	/// measure.convert(to: .centimeter)
 	/// print(measure)
 	/// // Prints "100cm"
 	/// ```

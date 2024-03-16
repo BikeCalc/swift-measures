@@ -9,7 +9,7 @@ extension Measure: CustomStringConvertible {
 	/// A textual representation of this instance.
 	///
 	/// ```swift
-	/// let measure: Measure<Length> = .init(1, .metre)
+	/// let measure: Measure<Length> = .init(1, .meter)
 	/// print(measure)
 	/// // Prints "1 m"
 	/// ```

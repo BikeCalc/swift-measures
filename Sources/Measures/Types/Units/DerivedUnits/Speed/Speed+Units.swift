@@ -15,10 +15,10 @@ extension Speed {
 	// MARK: - Metric Units
 
 	/// The kilometres per hour unit of speed.
-	public static let kilometresPerHour: Self = Length.kilometre.dividing(by: .hour)
+	public static let kilometresPerHour: Self = Length.kilometer.dividing(by: .hour)
 
-	/// The metre per second unit of speed.
-	public static let metresPerSecond: Self = Length.metre.dividing(by: .second)
+	/// The meter per second unit of speed.
+	public static let metresPerSecond: Self = Length.meter.dividing(by: .second)
 	
 	// MARK: - Other Units
 	

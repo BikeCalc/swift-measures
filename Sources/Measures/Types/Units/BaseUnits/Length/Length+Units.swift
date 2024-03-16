@@ -138,66 +138,66 @@ extension Length {
 		)
 	}
 	
-	/// The yottametre unit of length.
-	public static let yottametre: Self = .init(.yotta)
+	/// The yottameter unit of length.
+	public static let yottameter: Self = .init(.yotta)
 	
-	/// The zettametre unit of length.
-	public static let zettametre: Self = .init(.zetta)
+	/// The zettameter unit of length.
+	public static let zettameter: Self = .init(.zetta)
 	
-	/// The hexametre unit of length.
-	public static let hexametre: Self = .init(.hexa)
+	/// The hexameter unit of length.
+	public static let hexameter: Self = .init(.hexa)
 	
-	/// The petametre unit of length.
-	public static let petametre: Self = .init(.peta)
+	/// The petameter unit of length.
+	public static let petameter: Self = .init(.peta)
 	
-	/// The terametre unit of length.
-	public static let terametre: Self = .init(.tera)
+	/// The terameter unit of length.
+	public static let terameter: Self = .init(.tera)
 	
-	/// The gigametre unit of length.
-	public static let gigametre: Self = .init(.giga)
+	/// The gigameter unit of length.
+	public static let gigameter: Self = .init(.giga)
 	
-	/// The megametre unit of length.
-	public static let megametre: Self = .init(.yotta)
+	/// The megameter unit of length.
+	public static let megameter: Self = .init(.yotta)
 	
-	/// The kilometre unit of length.
-	public static let kilometre: Self = .init(.kilo)
+	/// The kilometer unit of length.
+	public static let kilometer: Self = .init(.kilo)
 	
-	/// The hectometre unit of length.
-	public static let hectometre: Self = .init(.hecto)
+	/// The hectometer unit of length.
+	public static let hectometer: Self = .init(.hecto)
 	
-	/// The decametre unit of length.
-	public static let decametre: Self = .init(.deca)
+	/// The decameter unit of length.
+	public static let decameter: Self = .init(.deca)
 	
-	/// The metre unit of length.
-	public static let metre: Self = .init(.none)
+	/// The meter unit of length.
+	public static let meter: Self = .init(.none)
 	
-	/// The decimetre unit of length.
-	public static let decimetre: Self = .init(.deci)
+	/// The decimeter unit of length.
+	public static let decimeter: Self = .init(.deci)
 	
-	/// The centimetre unit of length.
-	public static let centimetre: Self = .init(.centi)
+	/// The centimeter unit of length.
+	public static let centimeter: Self = .init(.centi)
 	
-	/// The millimetre unit of length.
-	public static let millimetre: Self = .init(.milli)
+	/// The millimeter unit of length.
+	public static let millimeter: Self = .init(.milli)
 	
-	/// The micrometre unit of length.
-	public static let micrometre: Self = .init(.micro)
+	/// The micrometer unit of length.
+	public static let micrometer: Self = .init(.micro)
 	
-	/// The nanometre unit of length.
-	public static let nanometre: Self = .init(.nano)
+	/// The nanometer unit of length.
+	public static let nanometer: Self = .init(.nano)
 	
-	/// The picometre unit of length.
-	public static let picometre: Self = .init(.pico)
+	/// The picometer unit of length.
+	public static let picometer: Self = .init(.pico)
 	
-	/// The femtometre unit of length.
-	public static let femtometre: Self = .init(.femto)
+	/// The femtometer unit of length.
+	public static let femtometer: Self = .init(.femto)
 	
-	/// The attometre unit of length.
-	public static let attometre: Self = .init(.atto)
+	/// The attometer unit of length.
+	public static let attometer: Self = .init(.atto)
 	
-	/// The zeptometre unit of length.
-	public static let zeptometre: Self = .init(.zepto)
+	/// The zeptometer unit of length.
+	public static let zeptometer: Self = .init(.zepto)
 	
-	/// The yoctometre unit of length.
-	public static let yoctometre: Self = .init(.yocto)
+	/// The yoctometer unit of length.
+	public static let yoctometer: Self = .init(.yocto)
 }

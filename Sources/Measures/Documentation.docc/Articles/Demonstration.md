@@ -35,12 +35,12 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 	```swift
     extension FuelEfficiency {
         static let kilometresPerLitre: Self = .init(
-            coefficient: Length.kilometre.coefficient / Volume.litre.coefficient,
+            coefficient: Length.kilometer.coefficient / Volume.litre.coefficient,
             symbol: "Km/L"
         )
 
         static let metresPerLitre: Self = .init(
-            coefficient: Length.metre.coefficient / Volume.litre.coefficient,
+            coefficient: Length.meter.coefficient / Volume.litre.coefficient,
             symbol: "m/L"
         )
     }

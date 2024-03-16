@@ -18,5 +18,5 @@
 
 ### Composed Units
 
-- ``kilogramsPerSquareMetre``
-- ``gramsPerSquareMetre``
+- ``kilogramsPerSquareMeter``
+- ``gramsPerSquareMeter``
