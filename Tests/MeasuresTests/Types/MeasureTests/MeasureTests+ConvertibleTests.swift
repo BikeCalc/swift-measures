@@ -24,31 +24,31 @@ extension MeasureTests {
 		let coefficient: Double
 		let symbol: String
 		
-		static let base: Self = .kilometresPerLitre
+		static let base: Self = .kilometersPerLitre
 		
-		static let kilometresPerLitre: Self = .init(
-			coefficient: Length.kilometre.coefficient / Volume.litre.coefficient,
+		static let kilometersPerLitre: Self = .init(
+			coefficient: Length.kilometer.coefficient / Volume.litre.coefficient,
 			symbol: "Km/L"
 		)
 		
-		static let metresPerLitre: Self = .init(
-			coefficient: Length.metre.coefficient / Volume.litre.coefficient,
+		static let metersPerLitre: Self = .init(
+			coefficient: Length.meter.coefficient / Volume.litre.coefficient,
 			symbol: "m/L"
 		)
 	}
 	
 	func test_convertFuelEfficiencySucceeds() {
 		// Given
-		var measure: Measure<FuelEfficiency> = .init(5, .kilometresPerLitre)
+		var measure: Measure<FuelEfficiency> = .init(5, .kilometersPerLitre)
 		
 		// When
-		measure.convert(to: .metresPerLitre)
+		measure.convert(to: .metersPerLitre)
 		
 		// Then
 		XCTAssertEqual(measure.description, "5000.0 m/L")
 		
 		// When
-		measure.convert(to: .kilometresPerLitre)
+		measure.convert(to: .kilometersPerLitre)
 		
 		// Then
 		XCTAssertEqual(measure.description, "5.0 Km/L")
@@ -58,16 +58,16 @@ extension MeasureTests {
 extension MeasureTests {
 	func test_convertSpeedSucceeds() {
 		// Given
-		var measure: Measure<Speed> = .init(5, .kilometresPerHour)
+		var measure: Measure<Speed> = .init(5, .kilometersPerHour)
 		
 		// When
-		measure.convert(to: .metresPerSecond)
+		measure.convert(to: .metersPerSecond)
 		
 		// Then
 		XCTAssertEqual(measure.description, "1.3888888888888888 m/s")
 		
 		// When
-		measure.convert(to: .kilometresPerHour)
+		measure.convert(to: .kilometersPerHour)
 		
 		// Then
 		XCTAssertEqual(measure.description, "5.0 km/h")

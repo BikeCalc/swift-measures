@@ -11,21 +11,21 @@ import XCTest
 final class ConvertedTests: XCTestCase {
 	func test_converted_succeeds() {
 		// Given
-		@Converted(to: .metre)
-		var measure: Measure<Length> = .init(100, .centimetre)
+		@Converted(to: .meter)
+		var measure: Measure<Length> = .init(100, .centimeter)
 		
 		// When
-		measure = .init(1000, .millimetre)
+		measure = .init(1000, .millimeter)
 		
 		// Then
-		XCTAssertEqual(measure, .init(1, .metre))
+		XCTAssertEqual(measure, .init(1, .meter))
 		XCTAssertEqual(measure.description, "1.0 m")
 		
 		// When
-		measure = .init(0.001, .kilometre)
+		measure = .init(0.001, .kilometer)
 		
 		// Then
-		XCTAssertEqual(measure, .init(1, .metre))
+		XCTAssertEqual(measure, .init(1, .meter))
 		XCTAssertEqual(measure.description, "1.0 m")
 	}
 }
