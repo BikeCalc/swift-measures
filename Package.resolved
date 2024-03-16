@@ -3,10 +3,10 @@
     {
       "identity" : "swift-contributors-plugin",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/alexandrehsaad/swift-contributors-plugin",
+      "location" : "https://github.com/alexandrehsaad/swift-contributors-plugin.git",
       "state" : {
         "branch" : "main",
-        "revision" : "8f9b0e81f3fe3281a96dcd5d6345d4736cf4b79d"
+        "revision" : "b3d63d535411229582560975a47eae438357d382"
       }
     },
     {
@@ -24,7 +24,7 @@
       "location" : "https://github.com/alexandrehsaad/swift-numeric-protocols.git",
       "state" : {
         "branch" : "main",
-        "revision" : "62680e3d205cce79605824f2b6eb3844228147ec"
+        "revision" : "e6d43dd853c18e13013463341b655779d7cd84a5"
       }
     }
   ],
