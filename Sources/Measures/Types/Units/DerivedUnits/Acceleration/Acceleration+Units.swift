@@ -10,5 +10,5 @@ extension Acceleration {
 	// MARK: - Composed Units
 	
 	/// The meter per square second unit of acceleration.
-	public static let metrePerSquareSecond: Self = Length.meter.dividing(by: .second)
+	public static let meterPerSquareSecond: Self = Length.meter.dividing(by: .second)
 }

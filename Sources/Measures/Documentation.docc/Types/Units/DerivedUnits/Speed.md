@@ -22,8 +22,8 @@
 
 ### Metric Units
 
-- ``kilometresPerHour``
-- ``metresPerSecond``
+- ``kilometersPerHour``
+- ``metersPerSecond``
 
 ### Other Units
 

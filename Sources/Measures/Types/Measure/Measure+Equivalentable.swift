@@ -10,8 +10,8 @@ extension Measure: Equivalentable {
 	///
 	/// ```swift
 	/// let oneMeter: Measure<Length> = .init(1, .meter)
-	/// let oneHundredCentimetres: Measure<Length> = .init(100, .centimeter)
-	/// print(oneMeter.isEquivalent(to: oneHundredCentimetres))
+	/// let oneHundredCentimeters: Measure<Length> = .init(100, .centimeter)
+	/// print(oneMeter.isEquivalent(to: oneHundredCentimeters))
 	/// // Prints "true"
 	/// ```
 	///

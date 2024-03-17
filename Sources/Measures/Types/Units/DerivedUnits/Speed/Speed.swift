@@ -30,5 +30,5 @@ public struct Speed: Measurable {
 	
 	// MARK: - Base Unit
 	
-	public static let base: Self = .metresPerSecond
+	public static let base: Self = .metersPerSecond
 }

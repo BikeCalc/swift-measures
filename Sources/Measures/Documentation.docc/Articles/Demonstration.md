@@ -26,7 +26,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         let constant: Double
         let symbol: String
 		
-        static let base: Self = .kilometresPerLiter
+        static let base: Self = .kilometersPerLiter
 	}
 	```
 
@@ -34,12 +34,12 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 	```swift
     extension FuelEfficiency {
-        static let kilometresPerLiter: Self = .init(
+        static let kilometersPerLiter: Self = .init(
             coefficient: Length.kilometer.coefficient / Volume.liter.coefficient,
             symbol: "Km/L"
         )
 
-        static let metresPerLiter: Self = .init(
+        static let metersPerLiter: Self = .init(
             coefficient: Length.meter.coefficient / Volume.liter.coefficient,
             symbol: "m/L"
         )
@@ -49,13 +49,13 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 3. Initialize a measure of your dimension with a value and unit.
 
 	```swift
-    var measure: Measure<FuelEfficiency> = .init(5, .kilometresPerLiter)
+    var measure: Measure<FuelEfficiency> = .init(5, .kilometersPerLiter)
 	```
 
 4. Convert the measure to your other unit.
 
     ```swift
-    measure.convert(to: .metresPerLiter)
+    measure.convert(to: .metersPerLiter)
 
     print(measure)
     // Prints "5000m/L"
