@@ -2,10 +2,6 @@
 
 A demonstration on how to create custom dimensions and units.
 
-## Overview
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-
 ## Converting custom measures
 
 1. Create a dimension that conforms to the measurable protocol.

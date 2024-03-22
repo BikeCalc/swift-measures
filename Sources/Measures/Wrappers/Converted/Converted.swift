@@ -1,7 +1,8 @@
+//
 // Converted.swift
 // Measures
 //
-// Copyright © 2021-2022 Alexandre H. Saad
+// Copyright © 2021-2024 Alexandre H. Saad
 // Licensed under Apache License v2.0 with Runtime Library Exception
 //
 
@@ -16,9 +17,12 @@
 @propertyWrapper
 public struct Converted<Unit>
 where Unit: Equatable & Measurable {
-	
-	// MARK: - Creating Instances
-	
+    /// The measure converted to the unit.
+    private var value: Measure<Unit>
+    
+    /// The unit.
+    private let unit: Measure<Unit>.Unit
+    
 	/// Creates a new instance from the given measure and specified unit.
 	///
 	/// - parameter measure: The measure to convert.
@@ -28,14 +32,6 @@ where Unit: Equatable & Measurable {
 		self.unit = unit
 		self.wrappedValue = value
 	}
-	
-	// MARK: - Instance Properties
-	
-	/// The measure converted to the unit.
-	private var value: Measure<Unit>
-	
-	/// The unit.
-	private let unit: Measure<Unit>.Unit
 
 	/// The wrapped value of this property wrapper.
 	public var wrappedValue: Measure<Unit> {
