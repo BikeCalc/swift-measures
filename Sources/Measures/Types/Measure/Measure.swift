@@ -331,6 +331,10 @@ extension Measure {
     }
 }
 
+// MARK: - Sendable
+
+extension Measure: Sendable {}
+
 // MARK: - Subtractable
 
 extension Measure: Subtractable {

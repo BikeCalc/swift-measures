@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/alexandrehsaad/swift-numeric-protocols.git",
       "state" : {
-        "branch" : "main",
-        "revision" : "e6d43dd853c18e13013463341b655779d7cd84a5"
+        "revision" : "8d73c5f1ed7fb9d525d19ebff3ba774398f64fd1",
+        "version" : "0.1.0"
       }
     }
   ],

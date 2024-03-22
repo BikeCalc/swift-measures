@@ -58,6 +58,10 @@ The Swift Package Manager is a tool for managing the distribution of Swift code 
 
 	```swift
     struct FuelEfficiency: Measurable {
+        let coefficient: Double
+        let constant: Double
+        let symbol: String
+        
         init(
             coefficient: Double,
             constant: Double = 0,
@@ -67,11 +71,7 @@ The Swift Package Manager is a tool for managing the distribution of Swift code 
             self.constant = constant
             self.symbol = symbol
         }
-		
-        let coefficient: Double
-        let constant: Double
-        let symbol: String
-		
+        
         static let base: Self = .kilometresPerLiter
 	}
 	```
@@ -90,7 +90,7 @@ The Swift Package Manager is a tool for managing the distribution of Swift code 
             symbol: "m/L"
         )
     }
-
+    ```
 
 3. Initialize a measure of your dimension with a value and unit.
 
@@ -102,9 +102,7 @@ The Swift Package Manager is a tool for managing the distribution of Swift code 
 
     ```swift
     measure.convert(to: .metresPerLiter)
-
-    print(measure)
-    // Prints "5000m/L"
+    print(measure) // Prints "5000m/L"
 	```
 
 ## Documentation
