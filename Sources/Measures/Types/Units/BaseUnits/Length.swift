@@ -6,6 +6,8 @@
 // Licensed under Apache License v2.0 with Runtime Library Exception
 //
 
+import NumericProtocols
+
 /// A unit of measure for length.
 public struct Length {
     public let coefficient: Double

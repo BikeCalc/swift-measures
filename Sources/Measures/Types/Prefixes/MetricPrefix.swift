@@ -6,6 +6,8 @@
 // Licensed under Apache License v2.0 with Runtime Library Exception
 //
 
+import NumericProtocols
+
 /// A representation of a metric prefix.
 @frozen
 public enum MetricPrefix: String {

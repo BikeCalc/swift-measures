@@ -6,6 +6,8 @@
 // Licensed under Apache License v2.0 with Runtime Library Exception
 //
 
+import NumericProtocols
+
 /// A representation of a measure.
 public struct Measure<Unit>
 where Unit: Equatable & Measurable {
