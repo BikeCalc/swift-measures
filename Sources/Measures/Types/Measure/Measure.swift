@@ -55,6 +55,10 @@ extension Measure: Addable {
     }
 }
 
+// MARK: - AdditiveArithmetic
+
+extension Measure: AdditiveArithmetic {}
+
 // MARK: - Comparable
 
 extension Measure: Comparable {
@@ -328,6 +332,14 @@ extension Measure {
     /// Doubles this value.
     public mutating func double() {
         self = self.doubled()
+    }
+}
+
+// MARK: - RepresentableByZero
+
+extension Measure: RepresentableByZero {
+    public static var zero: Self {
+        return .init(0, .base)
     }
 }
 

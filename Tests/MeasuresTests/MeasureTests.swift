@@ -314,15 +314,24 @@ extension MeasureTests {
 // MARK: - Decodable
 
 extension MeasureTests {
-    #if !os(Linux) && canImport(Foundation)
-    internal func test_decodeFromJSONSucceeds() throws {
+    #if canImport(Foundation)
+    internal func test_downloadGroupDecodesSuccessfully() throws {
         // Given
-        let bundle: Bundle = .module
-        let url: URL? = bundle.url(forResource: "Measure", withExtension: "json")
-        let data: Data? = try .init(contentsOf: XCTUnwrap(url))
+        let id: UUID = .init()
+        let json: String = """
+        {
+          "unit" : {
+            "coefficient" : 1,
+            "constant" : 0,
+            "symbol" : "s"
+          },
+          "value" : 1
+        }
+        """
         
         // When
         let decoder: JSONDecoder = .init()
+        let data: Data = .init(json.utf8)
         let result: Measure<Time> = try decoder.decode(Measure<Time>.self, from: XCTUnwrap(data))
         
         // Then
@@ -336,22 +345,28 @@ extension MeasureTests {
 
 extension MeasureTests {
     #if canImport(Foundation)
-    internal func test_encodeToJSONSucceeds() throws {
+    internal func test_downloadGroupEncodesSuccessfully() throws {
         // Given
         let value: Measure<Time> = .init(1, .second)
         
         // When
         let encoder: JSONEncoder = .init()
-        let result: Data? = try encoder.encode(value)
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
+        let data: Data = try encoder.encode(value)
+        let result: String = .init(decoding: data, as: UTF8.self)
         
         // Then
-        let bundle: Bundle = .module
-        let url: URL? = bundle.url(forResource: "Measure", withExtension: "json")
-        let data: Data? = try .init(contentsOf: XCTUnwrap(url))
-        let json: Any? = try JSONSerialization.jsonObject(with: XCTUnwrap(data))
-        let jsonData: Data? = try JSONSerialization.data(withJSONObject: XCTUnwrap(json))
-        
-        XCTAssertEqual(result, jsonData)
+        let json: String = """
+        {
+          "unit" : {
+            "coefficient" : 1,
+            "constant" : 0,
+            "symbol" : "s"
+          },
+          "value" : 1
+        }
+        """
+        XCTAssertEqual(result, json)
     }
     #endif
 }
