@@ -8,10 +8,9 @@
 
 /// Representing a type that can be converted.
 public protocol Convertible {
+    ///
 	associatedtype Unit
 	where Unit: Measurable
-	
-	// MARK: - Converting Values
 	
 	/// Returns this measure converted to the specified unit.
 	///

@@ -11,9 +11,6 @@ import NumericProtocols
 /// A representation of a metric prefix.
 @frozen
 public enum MetricPrefix: String {
-	
-	// MARK: - Prefixes
-	
     /// A prefix that divides the base unit by 1e+30.
     case geop
     
@@ -91,9 +88,6 @@ public enum MetricPrefix: String {
 }
 
 extension MetricPrefix {
-	
-	// MARK: - Prefix Properties
-	
 	/// The coefficient of this instance compared to its base unit.
 	public var coefficient: Double {
 		switch self {

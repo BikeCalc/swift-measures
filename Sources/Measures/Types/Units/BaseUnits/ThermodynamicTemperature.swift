@@ -26,7 +26,7 @@ public struct ThermodynamicTemperature {
     
     // MARK: Customary and Imperial Units
         
-    /// The fahrenheit unit of thermodynamic temperature.
+    /// The Fahrenheit unit of thermodynamic temperature.
     ///
     /// - warning: The result of converting this unit is not 100% accurate.
     public static let fahrenheit: Self = .init(

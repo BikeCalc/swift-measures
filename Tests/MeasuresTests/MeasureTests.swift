@@ -6,24 +6,25 @@
 // Licensed under Apache License v2.0 with Runtime Library Exception
 //
 
-#if canImport(Foundation)
-import Foundation
-#endif
 import XCTest
 @testable import Measures
 
-internal final class MeasureTests: XCTestCase {
-	typealias TestSubject = Measure<Time>
-}
+#if canImport(Foundation)
+import Foundation
+#endif
+
+internal final class MeasureTests: XCTestCase {}
+
+// MARK: - Addable
 
 extension MeasureTests {
     internal func test_additionSucceeds() {
         // Given
-        let augend: TestSubject = .init(2, .base)
-        let addend: TestSubject = .init(4, .base)
+        let augend: Measure<Time> = .init(2, .base)
+        let addend: Measure<Time> = .init(4, .base)
         
         // When
-        let sum: TestSubject = augend + addend
+        let sum: Measure<Time> = augend + addend
 
         // Then
         XCTAssertEqual(sum, .init(6, .base))
@@ -31,8 +32,8 @@ extension MeasureTests {
     
     internal func test_additionEqualSucceeds() {
         // Given
-        var sum: TestSubject = .init(2, .base)
-        let addend: TestSubject = .init(4, .base)
+        var sum: Measure<Time> = .init(2, .base)
+        let addend: Measure<Time> = .init(4, .base)
         
         // When
         sum += addend
@@ -43,11 +44,11 @@ extension MeasureTests {
     
     internal func test_addingSucceeds() {
         // Given
-        let augend: TestSubject = .init(2, .base)
-        let addend: TestSubject = .init(4, .base)
+        let augend: Measure<Time> = .init(2, .base)
+        let addend: Measure<Time> = .init(4, .base)
         
         // When
-        let sum: TestSubject = augend.adding(addend)
+        let sum: Measure<Time> = augend.adding(addend)
 
         // Then
         XCTAssertEqual(sum, .init(6, .base))
@@ -55,8 +56,8 @@ extension MeasureTests {
     
     internal func test_addSucceeds() {
         // Given
-        var sum: TestSubject = .init(2, .base)
-        let addend: TestSubject = .init(4, .base)
+        var sum: Measure<Time> = .init(2, .base)
+        let addend: Measure<Time> = .init(4, .base)
         
         // When
         sum.add(addend)
@@ -66,12 +67,13 @@ extension MeasureTests {
     }
 }
 
+// MARK: - Comparable
 
 extension MeasureTests {
     internal func test_isLessThanReturnsFalse() {
         // Given
-        let lhs: TestSubject = .init(2, .base)
-        let rhs: TestSubject = .init(1, .base)
+        let lhs: Measure<Time> = .init(2, .base)
+        let rhs: Measure<Time> = .init(1, .base)
         
         // When
         let result: Bool = lhs.isLess(than: rhs)
@@ -82,8 +84,8 @@ extension MeasureTests {
     
     internal func test_isLessThanReturnsTrue() {
         // Given
-        let lhs: TestSubject = .init(1, .base)
-        let rhs: TestSubject = .init(2, .base)
+        let lhs: Measure<Time> = .init(1, .base)
+        let rhs: Measure<Time> = .init(2, .base)
         
         // When
         let result: Bool = lhs.isLess(than: rhs)
@@ -94,8 +96,8 @@ extension MeasureTests {
     
     internal func test_isLessThanOrEqualToReturnsFalse() {
         // Given
-        let lhs: TestSubject = .init(2, .base)
-        let rhs: TestSubject = .init(1, .base)
+        let lhs: Measure<Time> = .init(2, .base)
+        let rhs: Measure<Time> = .init(1, .base)
         
         // When
         let result: Bool = lhs.isLessThanOrEqual(to: rhs)
@@ -106,8 +108,8 @@ extension MeasureTests {
     
     internal func test_isLessThanOrEqualToReturnsTrue() {
         // Given
-        let lhs: TestSubject = .init(1, .base)
-        let rhs: TestSubject = .init(1, .base)
+        let lhs: Measure<Time> = .init(1, .base)
+        let rhs: Measure<Time> = .init(1, .base)
         
         // When
         let result: Bool = lhs.isLessThanOrEqual(to: rhs)
@@ -118,8 +120,8 @@ extension MeasureTests {
     
     internal func test_isGreaterThanReturnsFalse() {
         // Given
-        let lhs: TestSubject = .init(1, .base)
-        let rhs: TestSubject = .init(2, .base)
+        let lhs: Measure<Time> = .init(1, .base)
+        let rhs: Measure<Time> = .init(2, .base)
         
         // When
         let result: Bool = lhs.isGreater(than: rhs)
@@ -130,8 +132,8 @@ extension MeasureTests {
     
     internal func test_isGreaterThanReturnsTrue() {
         // Given
-        let lhs: TestSubject = .init(2, .base)
-        let rhs: TestSubject = .init(1, .base)
+        let lhs: Measure<Time> = .init(2, .base)
+        let rhs: Measure<Time> = .init(1, .base)
         
         // When
         let result: Bool = lhs.isGreater(than: rhs)
@@ -142,8 +144,8 @@ extension MeasureTests {
     
     internal func test_isGreaterThanOrEqualToReturnsFalse() {
         // Given
-        let lhs: TestSubject = .init(1, .base)
-        let rhs: TestSubject = .init(2, .base)
+        let lhs: Measure<Time> = .init(1, .base)
+        let rhs: Measure<Time> = .init(2, .base)
         
         // When
         let result: Bool = lhs.isGreaterThanOrEqual(to: rhs)
@@ -154,8 +156,8 @@ extension MeasureTests {
     
     internal func test_isGreaterThanOrEqualToReturnsTrue() {
         // Given
-        let lhs: TestSubject = .init(1, .base)
-        let rhs: TestSubject = .init(1, .base)
+        let lhs: Measure<Time> = .init(1, .base)
+        let rhs: Measure<Time> = .init(1, .base)
         
         // When
         let result: Bool = lhs.isGreaterThanOrEqual(to: rhs)
@@ -166,10 +168,10 @@ extension MeasureTests {
     
     internal func test_isWithinClosedRangeReturnsFalse() {
         // Given
-        let value: TestSubject = .init(4, .base)
-        let lowerBound: TestSubject = .init(1, .base)
-        let upperBound: TestSubject = .init(3, .base)
-        let range: ClosedRange<TestSubject> = lowerBound...upperBound
+        let value: Measure<Time> = .init(4, .base)
+        let lowerBound: Measure<Time> = .init(1, .base)
+        let upperBound: Measure<Time> = .init(3, .base)
+        let range: ClosedRange<Measure<Time>> = lowerBound...upperBound
         
         // Then
         XCTAssertFalse(value.isWithin(range))
@@ -177,10 +179,10 @@ extension MeasureTests {
     
     internal func test_isWithinClosedRangeReturnsTrue() {
         // Given
-        let value: TestSubject = .init(2, .base)
-        let lowerBound: TestSubject = .init(1, .base)
-        let upperBound: TestSubject = .init(3, .base)
-        let range: ClosedRange<TestSubject> = lowerBound...upperBound
+        let value: Measure<Time> = .init(2, .base)
+        let lowerBound: Measure<Time> = .init(1, .base)
+        let upperBound: Measure<Time> = .init(3, .base)
+        let range: ClosedRange<Measure<Time>> = lowerBound...upperBound
         
         // Then
         XCTAssertTrue(value.isWithin(range))
@@ -188,9 +190,9 @@ extension MeasureTests {
     
     internal func test_isWithinBoundsReturnsFalse() {
         // Given
-        let value: TestSubject = .init(4, .base)
-        let lowerBound: TestSubject = .init(1, .base)
-        let upperBound: TestSubject = .init(3, .base)
+        let value: Measure<Time> = .init(4, .base)
+        let lowerBound: Measure<Time> = .init(1, .base)
+        let upperBound: Measure<Time> = .init(3, .base)
         
         // Then
         XCTAssertFalse(value.isWithin(lowerBound, to: upperBound))
@@ -198,15 +200,16 @@ extension MeasureTests {
     
     internal func test_isWithinBoundsReturnsTrue() {
         // Given
-        let value: TestSubject = .init(2, .base)
-        let lowerBound: TestSubject = .init(1, .base)
-        let upperBound: TestSubject = .init(3, .base)
+        let value: Measure<Time> = .init(2, .base)
+        let lowerBound: Measure<Time> = .init(1, .base)
+        let upperBound: Measure<Time> = .init(3, .base)
         
         // Then
         XCTAssertTrue(value.isWithin(lowerBound, to: upperBound))
     }
 }
 
+// MARK: - Convertible
 
 extension MeasureTests {
     private struct FuelEfficiency: Equatable, Measurable {
@@ -293,10 +296,12 @@ extension MeasureTests {
     }
 }
 
+// MARK: - CustomStringConvertible
+
 extension MeasureTests {
     internal func test_descriptionSucceeds() {
         // Given
-        let value: TestSubject = .init(4, .base)
+        let value: Measure<Time> = .init(4, .base)
         
         // When
         let description: String = value.description
@@ -306,84 +311,10 @@ extension MeasureTests {
     }
 }
 
-extension MeasureTests {
-    internal func test_isEqualToReturnsFalse() {
-        // Given
-        let lhs: TestSubject = .init(1, .second)
-        let rhs: TestSubject = .init(2, .second)
-        
-        // When
-        let result: Bool = lhs.isEqual(to: rhs)
-        
-        // Then
-        XCTAssertFalse(result)
-    }
-    
-    internal func test_isEqualToReturnsTrue() {
-        // Given
-        let lhs: TestSubject = .init(1, .second)
-        let rhs: TestSubject = .init(1, .second)
-        
-        // When
-        let result: Bool = lhs.isEqual(to: rhs)
-        
-        // Then
-        XCTAssertTrue(result)
-    }
-    
-    internal func test_isUnequalToReturnsFalse() {
-        // Given
-        let lhs: TestSubject = .init(1, .second)
-        let rhs: TestSubject = .init(1, .second)
-        
-        // When
-        let result: Bool = lhs.isUnequal(to: rhs)
-        
-        // Then
-        XCTAssertFalse(result)
-    }
-    
-    internal func test_isUnequalToReturnsTrue() {
-        // Given
-        let lhs: TestSubject = .init(1, .second)
-        let rhs: TestSubject = .init(2, .second)
-        
-        // When
-        let result: Bool = lhs.isUnequal(to: rhs)
-        
-        // Then
-        XCTAssertTrue(result)
-    }
-}
+// MARK: - Decodable
 
 extension MeasureTests {
-    internal func test_isEquivalentToReturnsFalse() {
-        // Given
-        let lhs: TestSubject = .init(1, .minute)
-        let rhs: TestSubject = .init(1, .second)
-        
-        // When
-        let result: Bool = lhs.isEquivalent(to: rhs)
-        
-        // Then
-        XCTAssertFalse(result)
-    }
-    
-    internal func test_isEquivalentToReturnsTrue() {
-        // Given
-        let lhs: TestSubject = .init(1, .minute)
-        let rhs: TestSubject = .init(60, .second)
-        
-        // When
-        let result: Bool = lhs.isEquivalent(to: rhs)
-        
-        // Then
-        XCTAssertTrue(result)
-    }
-}
-
-#if canImport(Foundation)
-extension MeasureTests {
+    #if !os(Linux) && canImport(Foundation)
     internal func test_decodeFromJSONSucceeds() throws {
         // Given
         let bundle: Bundle = .module
@@ -392,20 +323,22 @@ extension MeasureTests {
         
         // When
         let decoder: JSONDecoder = .init()
-        let result: TestSubject = try decoder.decode(TestSubject.self, from: XCTUnwrap(data))
+        let result: Measure<Time> = try decoder.decode(Measure<Time>.self, from: XCTUnwrap(data))
         
         // Then
-        let value: TestSubject = .init(1, .second)
+        let value: Measure<Time> = .init(1, .second)
         XCTAssertEqual(result, value)
     }
+    #endif
 }
-#endif
 
-#if canImport(Foundation)
+// MARK: - Encodable
+
 extension MeasureTests {
+    #if canImport(Foundation)
     internal func test_encodeToJSONSucceeds() throws {
         // Given
-        let value: TestSubject = .init(1, .second)
+        let value: Measure<Time> = .init(1, .second)
         
         // When
         let encoder: JSONEncoder = .init()
@@ -420,8 +353,90 @@ extension MeasureTests {
         
         XCTAssertEqual(result, jsonData)
     }
+    #endif
 }
-#endif
+
+// MARK: - Equatable
+
+extension MeasureTests {
+    internal func test_isEqualToReturnsFalse() {
+        // Given
+        let lhs: Measure<Time> = .init(1, .second)
+        let rhs: Measure<Time> = .init(2, .second)
+        
+        // When
+        let result: Bool = lhs.isEqual(to: rhs)
+        
+        // Then
+        XCTAssertFalse(result)
+    }
+    
+    internal func test_isEqualToReturnsTrue() {
+        // Given
+        let lhs: Measure<Time> = .init(1, .second)
+        let rhs: Measure<Time> = .init(1, .second)
+        
+        // When
+        let result: Bool = lhs.isEqual(to: rhs)
+        
+        // Then
+        XCTAssertTrue(result)
+    }
+    
+    internal func test_isUnequalToReturnsFalse() {
+        // Given
+        let lhs: Measure<Time> = .init(1, .second)
+        let rhs: Measure<Time> = .init(1, .second)
+        
+        // When
+        let result: Bool = lhs.isUnequal(to: rhs)
+        
+        // Then
+        XCTAssertFalse(result)
+    }
+    
+    internal func test_isUnequalToReturnsTrue() {
+        // Given
+        let lhs: Measure<Time> = .init(1, .second)
+        let rhs: Measure<Time> = .init(2, .second)
+        
+        // When
+        let result: Bool = lhs.isUnequal(to: rhs)
+        
+        // Then
+        XCTAssertTrue(result)
+    }
+}
+
+// MARK: - Equivalentable
+
+extension MeasureTests {
+    internal func test_isEquivalentToReturnsFalse() {
+        // Given
+        let lhs: Measure<Time> = .init(1, .minute)
+        let rhs: Measure<Time> = .init(1, .second)
+        
+        // When
+        let result: Bool = lhs.isEquivalent(to: rhs)
+        
+        // Then
+        XCTAssertFalse(result)
+    }
+    
+    internal func test_isEquivalentToReturnsTrue() {
+        // Given
+        let lhs: Measure<Time> = .init(1, .minute)
+        let rhs: Measure<Time> = .init(60, .second)
+        
+        // When
+        let result: Bool = lhs.isEquivalent(to: rhs)
+        
+        // Then
+        XCTAssertTrue(result)
+    }
+}
+
+// MARK: - Subtractable
 
 extension MeasureTests {
     internal func test_subtractionSucceeds() {

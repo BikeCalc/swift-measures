@@ -9,9 +9,6 @@
 /// Representing a type that can be measured.
 public protocol Measurable
 where Self: Sendable {
-	
-	// MARK: - Creating Units
-	
 	/// Creates a new instance with the specified coefficient, constant and symbol.
 	///
 	/// - parameter coefficient: The coefficient.
@@ -23,8 +20,6 @@ where Self: Sendable {
 		symbol: String
 	)
 	
-	// MARK: - Unit Properties
-	
 	/// The coefficient of this instance compared to its base unit.
 	var coefficient: Double { get }
 	
@@ -33,8 +28,6 @@ where Self: Sendable {
 	
 	/// The symbol of this instance.
 	var symbol: String { get }
-	
-	// MARK: - Base Unit
 	
 	/// The base unit of this instance's dimension.
 	static var base: Self { get }
