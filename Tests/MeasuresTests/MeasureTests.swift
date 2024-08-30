@@ -317,7 +317,6 @@ extension MeasureTests {
     #if canImport(Foundation)
     internal func test_downloadGroupDecodesSuccessfully() throws {
         // Given
-        let id: UUID = .init()
         let json: String = """
         {
           "unit" : {
