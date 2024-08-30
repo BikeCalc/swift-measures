@@ -5,12 +5,6 @@ import PackageDescription
 let package: Package = .init(
     name: "swift-measures",
     defaultLocalization: "en",
-    platforms: [
-        .iOS(.v13),
-        .macCatalyst(.v15),
-        .macOS(.v10_15),
-        .watchOS(.v6)
-    ],
     products: [
         .library(name: "Measures", targets: ["Measures"])
     ],
