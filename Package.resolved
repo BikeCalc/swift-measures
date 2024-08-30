@@ -21,7 +21,7 @@
     {
       "identity" : "swift-numeric-protocols",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/alexandrehsaad/swift-numeric-protocols.git",
+      "location" : "https://github.com/bikecalc/swift-numeric-protocols.git",
       "state" : {
         "revision" : "4afecc884b0430888c88608ee0604a8050fc0c80",
         "version" : "0.2.0"
