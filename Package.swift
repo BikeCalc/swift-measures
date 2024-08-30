@@ -9,7 +9,7 @@ let package: Package = .init(
         .library(name: "Measures", targets: ["Measures"])
     ],
     dependencies: [
-        .package(url: "https://github.com/bikecalc/swift-numeric-protocols.git", from: "0.2.0"),
+        .package(url: "https://github.com/bikecalc/swift-numeric-protocols.git", from: "1.0.0"),
         .package(url: "https://github.com/swiftlang/swift-docc-plugin.git", from: "1.4.2")
     ],
     targets: [

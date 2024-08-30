@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/bikecalc/swift-numeric-protocols.git",
       "state" : {
-        "revision" : "4afecc884b0430888c88608ee0604a8050fc0c80",
-        "version" : "0.2.0"
+        "revision" : "072f1f3a85216adebb7a584077043e4bf2a84769",
+        "version" : "1.0.0"
       }
     }
   ],
