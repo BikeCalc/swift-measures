@@ -56,6 +56,7 @@ No overview available.
 - ``LuminousFlux``
 - ``MagneticFlux``
 - ``MagneticFluxDensity``
+- ``MolarMass``
 - ``Power``
 - ``Pressure``
 - ``Radioactivity``
