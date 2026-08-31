@@ -6,7 +6,7 @@
 // Licensed under Apache License v2.0 with Runtime Library Exception
 //
 
-import NumericProtocols
+import NumericsExtended
 
 /// A representation of a binary prefix.
 @frozen

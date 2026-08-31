@@ -19,12 +19,12 @@
       }
     },
     {
-      "identity" : "swift-numeric-protocols",
+      "identity" : "swift-numerics-extended",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/bikecalc/swift-numeric-protocols.git",
+      "location" : "https://github.com/bikecalc/swift-numerics-extended.git",
       "state" : {
-        "revision" : "072f1f3a85216adebb7a584077043e4bf2a84769",
-        "version" : "1.0.0"
+        "revision" : "3c49f17591e2c141f127dedc68a7d8fd7b40bd3d",
+        "version" : "2.0.0"
       }
     }
   ],

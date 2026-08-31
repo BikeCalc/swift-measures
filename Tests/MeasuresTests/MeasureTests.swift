@@ -195,7 +195,7 @@ extension MeasureTests {
         let upperBound: Measure<Time> = .init(3, .base)
         
         // Then
-        XCTAssertFalse(value.isWithin(lowerBound, to: upperBound))
+        XCTAssertFalse(value.isWithin(lowerBound, through: upperBound))
     }
     
     internal func test_isWithinBoundsReturnsTrue() {
@@ -205,7 +205,7 @@ extension MeasureTests {
         let upperBound: Measure<Time> = .init(3, .base)
         
         // Then
-        XCTAssertTrue(value.isWithin(lowerBound, to: upperBound))
+        XCTAssertTrue(value.isWithin(lowerBound, through: upperBound))
     }
 }
 
@@ -431,8 +431,8 @@ extension MeasureTests {
         let rhs: Measure<Time> = .init(1, .second)
         
         // When
-        let result: Bool = lhs.isEquivalent(to: rhs)
-        
+        let result: Bool = lhs.isCanonicallyEquatable(to: rhs)
+
         // Then
         XCTAssertFalse(result)
     }
@@ -443,8 +443,8 @@ extension MeasureTests {
         let rhs: Measure<Time> = .init(60, .second)
         
         // When
-        let result: Bool = lhs.isEquivalent(to: rhs)
-        
+        let result: Bool = lhs.isCanonicallyEquatable(to: rhs)
+
         // Then
         XCTAssertTrue(result)
     }

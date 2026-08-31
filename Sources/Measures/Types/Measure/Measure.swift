@@ -6,7 +6,7 @@
 // Licensed under Apache License v2.0 with Runtime Library Exception
 //
 
-import NumericProtocols
+import NumericsExtended
 
 /// A representation of a measure.
 public struct Measure<Unit>
@@ -242,7 +242,7 @@ where Unit: Equatable {
 
 // MARK: - Equivalentable
 
-extension Measure: Equivalentable {
+extension Measure: CanonicallyEquatable {
     /// Returns a boolean value indicating whether the two specified instances are equivalent.
     ///
     /// ```swift
@@ -254,7 +254,7 @@ extension Measure: Equivalentable {
     ///
     /// - parameter rhs: An instance to compare.
     /// - returns: `true` if is equivalent, and `false` otherwise.
-    public func isEquivalent(to rhs: Self) -> Bool {
+    public func isCanonicallyEquatable(to rhs: Self) -> Bool {
         let lhsValue: Double = self.value
         let rhsValue: Double = rhs.converted(to: self.unit).value
         
