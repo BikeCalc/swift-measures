@@ -30,7 +30,7 @@ public struct Volume {
     ///
     /// - parameter prefix: The prefix.
     fileprivate init(_ prefix: MetricPrefix) {
-        let coefficient: Double = prefix.coefficient * 1e+3
+        let coefficient: Double = prefix.coefficient * 1e-3
         let symbol: String = prefix.symbol + "L"
         
         self.init(
