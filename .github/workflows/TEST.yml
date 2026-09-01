@@ -1,18 +1,21 @@
-name: "Build & Test Package"
+name: Test
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "release/**"]
   pull_request:
-    branches: ["main", "develop"]
+    branches: ["main", "release/**"]
 
 jobs:
   build:
-    runs-on: macos-latest
+    name: Build and Test Package
+    runs-on: macos-26
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
+      - name: Get Swift Version
+        run: swift --version
       - name: Build Package
-        run: swift build
+        run: swift build --target Measures
       - name: Test Package
         run: swift test
