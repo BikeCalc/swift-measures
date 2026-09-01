@@ -16,10 +16,6 @@
 
 - ``base``
 
-### Customary and Imperial Units
-
-- ``horsepower``
-
 ### Metric Units
 
 - ``quettawatt``
@@ -47,6 +43,10 @@
 - ``yoctowatt``
 - ``rontowatt``
 - ``quectowatt``
+
+### U.S. Customary and Imperial Units
+
+- ``mechanicalHorsepower``
 
 ### Dividing Units
 

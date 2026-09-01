@@ -22,24 +22,11 @@
 - ``jupiter``
 - ``earth``
 
-### Customary Units
+### Imperial Units
 
-- ``shortTon``
-- ``centalweight``
-
-### Customary and Imperial Units
-
-- ``longTon``
-- ``hundredweight``
-- ``slug``
+- ``imperialTon``
+- ``imperialHundredweight``
 - ``stone``
-- ``blob``
-- ``pound``
-- ``ounce``
-- ``dram``
-- ``pennyweight``
-- ``grain``
-- ``shortTon``
 
 ### Metric Units
 
@@ -71,13 +58,28 @@
 
 ### Other Metric Units
 
-- ``tonne``
+- ``metricTon``
 - ``carat``
 
 ### Troy Units
 
 - ``troyPound``
 - ``troyOunce``
+
+### U.S. Customary and Imperial Units
+
+- ``pound``
+- ``ounce``
+- ``dram``
+- ``pennyweight``
+- ``grain``
+
+### U.S. Customary Units
+
+- ``usTon``
+- ``usHundredweight``
+- ``slug``
+- ``blob``
 
 ### Dividing Units
 

@@ -16,6 +16,6 @@
 
 - ``base``
 
-### Other Units
+### Composed Units
 
 - ``gramsPerLiter``

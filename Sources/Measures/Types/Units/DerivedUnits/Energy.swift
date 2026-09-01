@@ -124,6 +124,20 @@ public struct Energy {
     /// The quectojoule unit of energy.
     public static let quectojoule: Self = .init(.quecto)
 
+    // MARK: U.S. Customary and Imperial Units
+
+    /// The foot-pound-force unit of energy.
+    public static let footPoundForce: Self = .init(
+        coefficient: Force.poundForce.coefficient * Length.foot.coefficient,
+        symbol: "ft·lbf"
+    )
+
+    /// The British thermal unit based on the International Table calorie.
+    public static let britishThermalUnitInternationalTable: Self = .init(
+        coefficient: 1_055.05585262,
+        symbol: "Btu (IT)"
+    )
+
     // MARK: Other Units
 
     /// The kilocalorie unit of energy.

@@ -24,101 +24,6 @@ public struct Memory {
         self.symbol = symbol
     }
 
-    // MARK: Binary Units
-
-    /// Creates a new instance with the specified metric prefix.
-    ///
-    /// - parameter prefix: The prefix.
-    private static func bit(_ prefix: BinaryPrefix) -> Self {
-        precondition(prefix.coefficient >= .zero)
-
-        let symbol: String = prefix.symbol + "b"
-
-        return self.init(
-            coefficient: prefix.coefficient,
-            symbol: symbol
-        )
-    }
-
-    /// The yobibit unit of memory.
-    public static let yobibit: Self = .bit(.yobi)
-
-    /// The zebibit unit of memory.
-    public static let zebibit: Self = .bit(.zebi)
-
-    /// The exbibit unit of memory.
-    public static let exbibit: Self = .bit(.exbi)
-
-    /// The pebibit unit of memory.
-    public static let pebibit: Self = .bit(.pebi)
-
-    /// The tebibit unit of memory.
-    public static let tebibit: Self = .bit(.tebi)
-
-    /// The gibibit unit of memory.
-    public static let gibibit: Self = .bit(.gibi)
-
-    /// The mebibit unit of memory.
-    public static let mebibit: Self = .bit(.mebi)
-
-    /// The kibibit unit of memory.
-    public static let kibibit: Self = .bit(.kibi)
-
-    // MARK: Metric Units
-
-    /// Creates a new instance with the specified metric prefix.
-    ///
-    /// - parameter prefix: The prefix.
-    private static func bit(_ prefix: MetricPrefix) -> Self {
-        precondition(prefix.coefficient >= .zero)
-
-        let symbol: String = prefix.symbol + "b"
-
-        return self.init(
-            coefficient: prefix.coefficient,
-            symbol: symbol
-        )
-    }
-
-    /// The quettabit unit of memory.
-    public static let quettabit: Self = .bit(.quetta)
-
-    /// The ronnabit unit of memory.
-    public static let ronnabit: Self = .bit(.ronna)
-
-    /// The yottabit unit of memory.
-    public static let yottabit: Self = .bit(.yotta)
-
-    /// The zettabit unit of memory.
-    public static let zettabit: Self = .bit(.zetta)
-
-    /// The exabit unit of memory.
-    public static let exabit: Self = .bit(.exa)
-
-    /// The petabit unit of memory.
-    public static let petabit: Self = .bit(.peta)
-
-    /// The terabit unit of memory.
-    public static let terabit: Self = .bit(.tera)
-
-    /// The gigabit unit of memory.
-    public static let gigabit: Self = .bit(.giga)
-
-    /// The megabit unit of memory.
-    public static let megabit: Self = .bit(.mega)
-
-    /// The kilobit unit of memory.
-    public static let kilobit: Self = .bit(.kilo)
-
-    /// The hectobit unit of memory.
-    public static let hectobit: Self = .bit(.hecto)
-
-    /// The decabit unit of memory.
-    public static let decabit: Self = .bit(.deca)
-
-    /// The bit unit of memory.
-    public static let bit: Self = .bit(MetricPrefix.none)
-
     // MARK: Additional Binary Units
 
     /// Creates a new instance with the specified metric prefix.
@@ -213,6 +118,101 @@ public struct Memory {
 
     /// The byte unit of memory.
     public static let byte: Self = .byte(MetricPrefix.none)
+
+    // MARK: Binary Units
+
+    /// Creates a new instance with the specified metric prefix.
+    ///
+    /// - parameter prefix: The prefix.
+    private static func bit(_ prefix: BinaryPrefix) -> Self {
+        precondition(prefix.coefficient >= .zero)
+
+        let symbol: String = prefix.symbol + "b"
+
+        return self.init(
+            coefficient: prefix.coefficient,
+            symbol: symbol
+        )
+    }
+
+    /// The yobibit unit of memory.
+    public static let yobibit: Self = .bit(.yobi)
+
+    /// The zebibit unit of memory.
+    public static let zebibit: Self = .bit(.zebi)
+
+    /// The exbibit unit of memory.
+    public static let exbibit: Self = .bit(.exbi)
+
+    /// The pebibit unit of memory.
+    public static let pebibit: Self = .bit(.pebi)
+
+    /// The tebibit unit of memory.
+    public static let tebibit: Self = .bit(.tebi)
+
+    /// The gibibit unit of memory.
+    public static let gibibit: Self = .bit(.gibi)
+
+    /// The mebibit unit of memory.
+    public static let mebibit: Self = .bit(.mebi)
+
+    /// The kibibit unit of memory.
+    public static let kibibit: Self = .bit(.kibi)
+
+    // MARK: Metric Units
+
+    /// Creates a new instance with the specified metric prefix.
+    ///
+    /// - parameter prefix: The prefix.
+    private static func bit(_ prefix: MetricPrefix) -> Self {
+        precondition(prefix.coefficient >= .zero)
+
+        let symbol: String = prefix.symbol + "b"
+
+        return self.init(
+            coefficient: prefix.coefficient,
+            symbol: symbol
+        )
+    }
+
+    /// The quettabit unit of memory.
+    public static let quettabit: Self = .bit(.quetta)
+
+    /// The ronnabit unit of memory.
+    public static let ronnabit: Self = .bit(.ronna)
+
+    /// The yottabit unit of memory.
+    public static let yottabit: Self = .bit(.yotta)
+
+    /// The zettabit unit of memory.
+    public static let zettabit: Self = .bit(.zetta)
+
+    /// The exabit unit of memory.
+    public static let exabit: Self = .bit(.exa)
+
+    /// The petabit unit of memory.
+    public static let petabit: Self = .bit(.peta)
+
+    /// The terabit unit of memory.
+    public static let terabit: Self = .bit(.tera)
+
+    /// The gigabit unit of memory.
+    public static let gigabit: Self = .bit(.giga)
+
+    /// The megabit unit of memory.
+    public static let megabit: Self = .bit(.mega)
+
+    /// The kilobit unit of memory.
+    public static let kilobit: Self = .bit(.kilo)
+
+    /// The hectobit unit of memory.
+    public static let hectobit: Self = .bit(.hecto)
+
+    /// The decabit unit of memory.
+    public static let decabit: Self = .bit(.deca)
+
+    /// The bit unit of memory.
+    public static let bit: Self = .bit(MetricPrefix.none)
 }
 
 // MARK: - Codable

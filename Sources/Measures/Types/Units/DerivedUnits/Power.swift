@@ -24,16 +24,6 @@ public struct Power {
         self.symbol = symbol
     }
 
-    // MARK: Customary and Imperial Units
-
-    /// The horsepower unit of power.
-    ///
-    /// - warning: The result of converting this unit is not 100% accurate.
-    public static let horsepower: Self = .init(
-        coefficient: 7.45699872e+2,
-        symbol: "hp"
-    )
-
     // MARK: Metric Units
 
     /// Creates a new instance with the specified metric prefix.
@@ -122,6 +112,14 @@ public struct Power {
 
     /// The quectowatt unit of power.
     public static let quectowatt: Self = .init(.quecto)
+
+    // MARK: U.S. Customary and Imperial Units
+
+    /// The mechanical horsepower unit of power.
+    public static let mechanicalHorsepower: Self = .init(
+        coefficient: Energy.footPoundForce.coefficient * 550,
+        symbol: "hp"
+    )
 }
 
 // MARK: - Codable

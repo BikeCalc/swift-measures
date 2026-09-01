@@ -24,14 +24,6 @@ public struct Area {
         self.symbol = symbol
     }
 
-    // MARK: Customary Units
-
-    /// The township unit of area.
-    public static let township: Self = .init(
-        coefficient: Length.mile.squared().coefficient * 36,
-        symbol: "twp"
-    )
-
     // MARK: Customary and Imperial Units
 
     /// The acre unit of area.
@@ -48,6 +40,14 @@ public struct Area {
 
     /// The perch unit of area.
     public static let perch: Self = Length.rod.squared()
+
+    // MARK: Customary Units
+
+    /// The township unit of area.
+    public static let township: Self = .init(
+        coefficient: Length.mile.squared().coefficient * 36,
+        symbol: "twp"
+    )
 
     // MARK: Other Metric Units
 

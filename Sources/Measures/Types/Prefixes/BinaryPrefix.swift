@@ -11,28 +11,28 @@ import NumericsExtended
 /// A representation of a binary prefix.
 @frozen
 public enum BinaryPrefix: String {
-    /// A prefix that multiplies the base unit by 1024⁹.
+    /// A prefix that multiplies the base unit by 1024⁸.
     case yobi
 
-    /// A prefix that multiplies the base unit by 1024⁸.
+    /// A prefix that multiplies the base unit by 1024⁷.
     case zebi
 
-    /// A prefix that multiplies the base unit by 1024⁷.
+    /// A prefix that multiplies the base unit by 1024⁶.
     case exbi
 
-    /// A prefix that multiplies the base unit by 1024⁶.
+    /// A prefix that multiplies the base unit by 1024⁵.
     case pebi
 
-    /// A prefix that multiplies the base unit by 1024⁵.
+    /// A prefix that multiplies the base unit by 1024⁴.
     case tebi
 
-    /// A prefix that multiplies the base unit by 1024⁴.
+    /// A prefix that multiplies the base unit by 1024³.
     case gibi
 
-    /// A prefix that multiplies the base unit by 1024³.
+    /// A prefix that multiplies the base unit by 1024².
     case mebi
 
-    /// A prefix that multiplies the base unit by 1024².
+    /// A prefix that multiplies the base unit by 1024¹.
     case kibi
 
     /// A prefix that does not modify the base unit.

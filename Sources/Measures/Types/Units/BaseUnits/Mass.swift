@@ -44,80 +44,24 @@ public struct Mass {
         symbol: "Me"
     )
 
-    // MARK: Customary Units
+    // MARK: Imperial Units
 
-    /// The short ton unit of mass.
-    public static let shortTon: Self = .init(
-        coefficient: Self.pound.coefficient * 2e+3,
-        symbol: "sht"
-    )
-
-    /// The centalweight unit of mass.
-    public static let centalweight: Self = .init(
-        coefficient: Self.pound.coefficient * 1e+2,
-        symbol: "cwt"
-    )
-
-    // MARK: Customary and Imperial Units
-
-    /// The long ton unit of mass.
-    public static let longTon: Self = .init(
+    /// The imperial ton unit of mass.
+    public static let imperialTon: Self = .init(
         coefficient: Self.pound.coefficient * 2.24e+3,
-        symbol: "lt"
+        symbol: "imp ton"
     )
 
-    /// The hundredweight unit of mass.
-    public static let hundredweight: Self = .init(
+    /// The imperial hundredweight unit of mass.
+    public static let imperialHundredweight: Self = .init(
         coefficient: Self.pound.coefficient * 112,
-        symbol: "hwt"
-    )
-
-    /// The slug unit of mass.
-    public static let slug: Self = .init(
-        coefficient: 1.45939e+1,
-        symbol: "slg"
+        symbol: "imp cwt"
     )
 
     /// The stone unit of mass.
     public static let stone: Self = .init(
         coefficient: Self.pound.coefficient * 14,
         symbol: "st"
-    )
-
-    /// The blob unit of mass.
-    public static let blob: Self = .init(
-        coefficient: Self.slug.coefficient / 12,
-        symbol: "blb"
-    )
-
-    /// The pound unit of mass.
-    public static let pound: Self = .init(
-        coefficient: 4.5359237e-1,
-        symbol: "lb"
-    )
-
-    /// The ounce unit of mass.
-    public static let ounce: Self = .init(
-        coefficient: Self.pound.coefficient / 16,
-        symbol: "oz"
-    )
-
-    /// The carat unit of mass.
-    public static let dram: Self = .init(
-        coefficient: Self.ounce.coefficient / 16,
-        symbol: "dr"
-    )
-
-    /// The pennyweight unit of mass.
-    public static let pennyweight: Self = .init(
-        coefficient: Self.grain.coefficient * 24,
-        symbol: "dwt"
-    )
-
-    /// The grain unit of mass.
-    public static let grain: Self = .init(
-        coefficient: Self.pound.coefficient / 7e+3,
-        symbol: "gr"
     )
 
     // MARK: Metric Units
@@ -212,8 +156,8 @@ public struct Mass {
 
     // MARK: Other Metric Units
 
-    /// The tonne unit of mass.
-    public static let tonne: Self = .init(
+    /// The metric ton unit of mass.
+    public static let metricTon: Self = .init(
         coefficient: Self.megagram.coefficient,
         symbol: "t"
     )
@@ -224,7 +168,7 @@ public struct Mass {
         symbol: "ct"
     )
 
-    // MARK: - Troy Units
+    // MARK: Troy Units
 
     /// The troy pound unit of mass.
     public static let troyPound: Self = .init(
@@ -236,6 +180,64 @@ public struct Mass {
     public static let troyOunce: Self = .init(
         coefficient: Self.grain.coefficient * 480,
         symbol: "toz"
+    )
+
+    // MARK: U.S. Customary and Imperial Units
+
+    /// The pound unit of mass.
+    public static let pound: Self = .init(
+        coefficient: 4.5359237e-1,
+        symbol: "lb"
+    )
+
+    /// The ounce unit of mass.
+    public static let ounce: Self = .init(
+        coefficient: Self.pound.coefficient / 16,
+        symbol: "oz"
+    )
+
+    /// The dram unit of mass.
+    public static let dram: Self = .init(
+        coefficient: Self.ounce.coefficient / 16,
+        symbol: "dr"
+    )
+
+    /// The pennyweight unit of mass.
+    public static let pennyweight: Self = .init(
+        coefficient: Self.grain.coefficient * 24,
+        symbol: "dwt"
+    )
+
+    /// The grain unit of mass.
+    public static let grain: Self = .init(
+        coefficient: Self.pound.coefficient / 7e+3,
+        symbol: "gr"
+    )
+
+    // MARK: U.S. Customary Units
+
+    /// The U.S. ton unit of mass.
+    public static let usTon: Self = .init(
+        coefficient: Self.pound.coefficient * 2e+3,
+        symbol: "US ton"
+    )
+
+    /// The U.S. hundredweight unit of mass.
+    public static let usHundredweight: Self = .init(
+        coefficient: Self.pound.coefficient * 1e+2,
+        symbol: "US cwt"
+    )
+
+    /// The slug unit of mass.
+    public static let slug: Self = .init(
+        coefficient: 1.45939e+1,
+        symbol: "slg"
+    )
+
+    /// The blob unit of mass.
+    public static let blob: Self = .init(
+        coefficient: Self.slug.coefficient / 12,
+        symbol: "blb"
     )
 }
 

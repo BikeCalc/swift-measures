@@ -124,7 +124,7 @@ public struct ThermodynamicTemperature {
     /// The quectokelvin unit of thermodynamic temperature.
     public static let quectokelvin: Self = .init(.quecto)
 
-    // MARK: Other Units
+    // MARK: Other Metric Units
 
     /// The celsius unit of thermodynamic temperature.
     public static let celsius: Self = .init(

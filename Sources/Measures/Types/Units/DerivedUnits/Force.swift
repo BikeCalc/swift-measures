@@ -113,6 +113,14 @@ public struct Force {
     /// The quectonewton unit of force.
     public static let quectonewton: Self = .init(.quecto)
 
+    // MARK: U.S. Customary and Imperial Units
+
+    /// The pound-force unit of force.
+    public static let poundForce: Self = .init(
+        coefficient: Mass.pound.coefficient * 9.80665,
+        symbol: "lbf"
+    )
+
     // MARK: Other Units
 
     /// The gravity unit of force.

@@ -50,6 +50,11 @@
 - ``rontojoule``
 - ``quectojoule``
 
+### U.S. Customary and Imperial Units
+
+- ``footPoundForce``
+- ``britishThermalUnitInternationalTable``
+
 ### Other Units
 
 - ``kilocalorie``

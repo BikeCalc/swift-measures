@@ -44,6 +44,10 @@
 - ``rontonewton``
 - ``quectonewton``
 
+### U.S. Customary and Imperial Units
+
+- ``poundForce``
+
 ### Other Units
 
 - ``gravity``

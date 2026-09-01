@@ -16,6 +16,21 @@
 
 - ``base``
 
+### Imperial Units
+
+- ``imperialGallon``
+- ``imperialBushel``
+- ``imperialPeck``
+- ``imperialQuart``
+- ``imperialPint``
+- ``imperialGill``
+- ``imperialFluidOunce``
+- ``imperialTablespoon``
+- ``imperialTeaspoon``
+- ``imperialFluidDram``
+- ``imperialFluidScruple``
+- ``imperialMinim``
+
 ### Metric Units
 
 - ``quettaliter``
@@ -43,3 +58,31 @@
 - ``yoctoliter``
 - ``rontoliter``
 - ``quectoliter``
+
+### U.S. Dry Units
+
+- ``usDryBushel``
+- ``usDryPeck``
+- ``usDryQuart``
+- ``usDryPint``
+
+### U.S. Liquid Units
+
+- ``usLiquidGallon``
+- ``usLiquidQuart``
+- ``usLiquidPint``
+- ``usCup``
+- ``usGill``
+- ``usFluidOunce``
+- ``usTablespoon``
+- ``usTeaspoon``
+- ``usFluidDram``
+- ``usMinim``
+- ``acreFoot``
+
+### U.S. Nutrition Labeling Units
+
+- ``usNutritionCup``
+- ``usNutritionFluidOunce``
+- ``usNutritionTablespoon``
+- ``usNutritionTeaspoon``

@@ -16,15 +16,15 @@
 
 - ``base``
 
-### Customary Units
-
-- ``township``
-
 ### Customary and Imperial Units
 
 - ``acre``
 - ``rood``
 - ``perch``
+
+### Customary Units
+
+- ``township``
 
 ### Other Metric Units
 
