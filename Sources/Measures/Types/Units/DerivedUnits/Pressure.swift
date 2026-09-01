@@ -74,7 +74,7 @@ public struct Pressure {
     public static let gigapascal: Self = .init(.giga)
     
     /// The megapascal unit of pressure.
-    public static let megapascal: Self = .init(.yotta)
+    public static let megapascal: Self = .init(.mega)
     
     /// The kilopascal unit of pressure.
     public static let kilopascal: Self = .init(.kilo)

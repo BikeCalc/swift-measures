@@ -63,7 +63,7 @@ public struct CatalyticActivity {
     public static let gigakatal: Self = .init(.giga)
     
     /// The megakatal unit of catalytic activity.
-    public static let megakatal: Self = .init(.yotta)
+    public static let megakatal: Self = .init(.mega)
     
     /// The kilokatal unit of catalytic activity.
     public static let kilokatal: Self = .init(.kilo)

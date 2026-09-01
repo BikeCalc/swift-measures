@@ -160,7 +160,7 @@ public struct Mass {
     public static let gigagram: Self = .init(.giga)
     
     /// The megagram unit of mass.
-    public static let megagram: Self = .init(.yotta)
+    public static let megagram: Self = .init(.mega)
     
     /// The kilogram unit of mass.
     public static let kilogram: Self = .init(.kilo)

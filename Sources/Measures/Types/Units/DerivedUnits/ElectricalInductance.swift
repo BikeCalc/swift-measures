@@ -63,7 +63,7 @@ public struct ElectricalInductance {
     public static let gigahenry: Self = .init(.giga)
     
     /// The megahenry unit of electrical inductance.
-    public static let megahenry: Self = .init(.yotta)
+    public static let megahenry: Self = .init(.mega)
     
     /// The kilohenry unit of electrical inductance.
     public static let kilohenry: Self = .init(.kilo)

@@ -73,7 +73,7 @@ public struct Power {
     public static let gigawatt: Self = .init(.giga)
     
     /// The megawatt unit of power.
-    public static let megawatt: Self = .init(.yotta)
+    public static let megawatt: Self = .init(.mega)
     
     /// The kilowatt unit of power.
     public static let kilowatt: Self = .init(.kilo)

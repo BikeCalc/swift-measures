@@ -63,7 +63,7 @@ public struct Illuminance {
     public static let gigalux: Self = .init(.giga)
     
     /// The megalux unit of illuminance.
-    public static let megalux: Self = .init(.yotta)
+    public static let megalux: Self = .init(.mega)
     
     /// The kilolux unit of illuminance.
     public static let kilolux: Self = .init(.kilo)

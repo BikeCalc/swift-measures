@@ -63,7 +63,7 @@ public struct ElectricConductance {
     public static let gigasiemens: Self = .init(.giga)
     
     /// The megasiemens unit of electric conductance.
-    public static let megasiemens: Self = .init(.yotta)
+    public static let megasiemens: Self = .init(.mega)
     
     /// The kilosiemens unit of electric conductance.
     public static let kilosiemens: Self = .init(.kilo)

@@ -74,7 +74,7 @@ public struct ThermodynamicTemperature {
     public static let gigakelvin: Self = .init(.giga)
     
     /// The megakelvin unit of thermodynamic temperature.
-    public static let megakelvin: Self = .init(.yotta)
+    public static let megakelvin: Self = .init(.mega)
     
     /// The kilokelvin unit of thermodynamic temperature.
     public static let kilokelvin: Self = .init(.kilo)

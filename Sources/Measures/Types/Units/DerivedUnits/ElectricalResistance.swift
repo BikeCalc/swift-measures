@@ -63,7 +63,7 @@ public struct ElectricalResistance {
     public static let gigaohm: Self = .init(.giga)
     
     /// The megaohm unit of electrical resistance.
-    public static let megaohm: Self = .init(.yotta)
+    public static let megaohm: Self = .init(.mega)
     
     /// The kiloohm unit of electrical resistance.
     public static let kiloohm: Self = .init(.kilo)

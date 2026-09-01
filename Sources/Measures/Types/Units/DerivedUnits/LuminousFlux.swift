@@ -63,7 +63,7 @@ public struct LuminousFlux {
     public static let gigalumen: Self = .init(.giga)
     
     /// The megalumen unit of luminous flux.
-    public static let megalumen: Self = .init(.yotta)
+    public static let megalumen: Self = .init(.mega)
     
     /// The kilolumen unit of luminous flux.
     public static let kilolumen: Self = .init(.kilo)

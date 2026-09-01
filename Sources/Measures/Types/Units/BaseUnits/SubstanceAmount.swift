@@ -63,7 +63,7 @@ public struct SubstanceAmount {
     public static let gigamole: Self = .init(.giga)
     
     /// The megamole unit of substance amount.
-    public static let megamole: Self = .init(.yotta)
+    public static let megamole: Self = .init(.mega)
     
     /// The kilomole unit of substance amount.
     public static let kilomole: Self = .init(.kilo)

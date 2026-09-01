@@ -63,7 +63,7 @@ public struct ElectricalCapacitance {
     public static let gigafarad: Self = .init(.giga)
     
     /// The megafarad unit of electrical capacitance.
-    public static let megafarad: Self = .init(.yotta)
+    public static let megafarad: Self = .init(.mega)
     
     /// The kilofarad unit of electrical capacitance.
     public static let kilofarad: Self = .init(.kilo)

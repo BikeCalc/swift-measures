@@ -63,7 +63,7 @@ public struct MagneticFluxDensity {
     public static let gigatesla: Self = .init(.giga)
     
     /// The megatesla unit of magnetic flux density.
-    public static let megatesla: Self = .init(.yotta)
+    public static let megatesla: Self = .init(.mega)
     
     /// The kilotesla unit of magnetic flux density.
     public static let kilotesla: Self = .init(.kilo)

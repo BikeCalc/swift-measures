@@ -63,7 +63,7 @@ public struct AbsorbedDose {
     public static let gigagray: Self = .init(.giga)
     
     /// The megagray unit of absorbed dose.
-    public static let megagray: Self = .init(.yotta)
+    public static let megagray: Self = .init(.mega)
     
     /// The kilogray unit of absorbed dose.
     public static let kilogray: Self = .init(.kilo)

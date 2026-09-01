@@ -63,7 +63,7 @@ public struct Radioactivity {
     public static let gigabecquerel: Self = .init(.giga)
     
     /// The megabecquerel unit of radioactivity.
-    public static let megabecquerel: Self = .init(.yotta)
+    public static let megabecquerel: Self = .init(.mega)
     
     /// The kilobecquerel unit of radioactivity.
     public static let kilobecquerel: Self = .init(.kilo)

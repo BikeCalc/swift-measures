@@ -63,7 +63,7 @@ public struct EquivalentDose {
     public static let gigasievert: Self = .init(.giga)
     
     /// The megasievert unit of equivalent dose.
-    public static let megasievert: Self = .init(.yotta)
+    public static let megasievert: Self = .init(.mega)
     
     /// The kilosievert unit of equivalent dose.
     public static let kilosievert: Self = .init(.kilo)

@@ -63,7 +63,7 @@ public struct ElectricPotential {
     public static let gigavolt: Self = .init(.giga)
     
     /// The megavolt unit of electric potential.
-    public static let megavolt: Self = .init(.yotta)
+    public static let megavolt: Self = .init(.mega)
     
     /// The kilovolt unit of electric potential.
     public static let kilovolt: Self = .init(.kilo)

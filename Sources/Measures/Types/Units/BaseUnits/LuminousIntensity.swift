@@ -63,7 +63,7 @@ public struct LuminousIntensity {
     public static let gigacandela: Self = .init(.giga)
     
     /// The megacandela unit of luminous intensity.
-    public static let megacandela: Self = .init(.yotta)
+    public static let megacandela: Self = .init(.mega)
     
     /// The kilocandela unit of luminous intensity.
     public static let kilocandela: Self = .init(.kilo)

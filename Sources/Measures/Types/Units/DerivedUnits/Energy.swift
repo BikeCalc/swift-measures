@@ -74,7 +74,7 @@ public struct Energy {
     public static let gigajoule: Self = .init(.giga)
     
     /// The megajoule unit of energy.
-    public static let megajoule: Self = .init(.yotta)
+    public static let megajoule: Self = .init(.mega)
     
     /// The kilojoule unit of energy.
     public static let kilojoule: Self = .init(.kilo)

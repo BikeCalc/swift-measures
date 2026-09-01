@@ -64,7 +64,7 @@ public struct Volume {
     public static let gigaliter: Self = .init(.giga)
     
     /// The megaliter unit of volume.
-    public static let megaliter: Self = .init(.yotta)
+    public static let megaliter: Self = .init(.mega)
     
     /// The kiloliter unit of volume.
     public static let kiloliter: Self = .init(.kilo)

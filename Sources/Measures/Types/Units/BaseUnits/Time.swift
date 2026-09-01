@@ -63,7 +63,7 @@ public struct Time {
     public static let gigasecond: Self = .init(.giga)
     
     /// The megasecond unit of time.
-    public static let megasecond: Self = .init(.yotta)
+    public static let megasecond: Self = .init(.mega)
     
     /// The kilosecond unit of time.
     public static let kilosecond: Self = .init(.kilo)

@@ -63,7 +63,7 @@ public struct Force {
     public static let giganewton: Self = .init(.giga)
     
     /// The meganewton unit of force.
-    public static let meganewton: Self = .init(.yotta)
+    public static let meganewton: Self = .init(.mega)
     
     /// The kilonewton unit of force.
     public static let kilonewton: Self = .init(.kilo)

@@ -182,7 +182,7 @@ public struct Length {
     public static let gigameter: Self = .init(.giga)
     
     /// The megameter unit of length.
-    public static let megameter: Self = .init(.yotta)
+    public static let megameter: Self = .init(.mega)
     
     /// The kilometer unit of length.
     public static let kilometer: Self = .init(.kilo)

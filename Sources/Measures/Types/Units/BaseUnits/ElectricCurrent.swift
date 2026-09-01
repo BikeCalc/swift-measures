@@ -63,7 +63,7 @@ public struct ElectricCurrent {
     public static let gigaampere: Self = .init(.giga)
     
     /// The megaampere unit of electric current.
-    public static let megaampere: Self = .init(.yotta)
+    public static let megaampere: Self = .init(.mega)
     
     /// The kiloampere unit of electric current.
     public static let kiloampere: Self = .init(.kilo)

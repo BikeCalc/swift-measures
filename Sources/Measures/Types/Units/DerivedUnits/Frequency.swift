@@ -63,7 +63,7 @@ public struct Frequency {
     public static let gigahertz: Self = .init(.giga)
     
     /// The megahertz unit of frequency.
-    public static let megahertz: Self = .init(.yotta)
+    public static let megahertz: Self = .init(.mega)
     
     /// The kilohertz unit of frequency.
     public static let kilohertz: Self = .init(.kilo)

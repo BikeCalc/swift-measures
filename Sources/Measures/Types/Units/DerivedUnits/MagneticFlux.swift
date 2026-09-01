@@ -63,7 +63,7 @@ public struct MagneticFlux {
     public static let gigaweber: Self = .init(.giga)
     
     /// The megaweber unit of magnetic flux.
-    public static let megaweber: Self = .init(.yotta)
+    public static let megaweber: Self = .init(.mega)
     
     /// The kiloweber unit of magnetic flux.
     public static let kiloweber: Self = .init(.kilo)
