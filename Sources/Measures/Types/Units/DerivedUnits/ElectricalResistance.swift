@@ -38,6 +38,12 @@ public struct ElectricalResistance {
         )
     }
     
+    /// The quettaohm unit of electrical resistance.
+    public static let quettaohm: Self = .init(.quetta)
+
+    /// The ronnaohm unit of electrical resistance.
+    public static let ronnaohm: Self = .init(.ronna)
+
     /// The yottaohm unit of electrical resistance.
     public static let yottaohm: Self = .init(.yotta)
     
@@ -100,6 +106,12 @@ public struct ElectricalResistance {
     
     /// The yoctoohm unit of electrical resistance.
     public static let yoctoohm: Self = .init(.yocto)
+
+    /// The rontoohm unit of electrical resistance.
+    public static let rontoohm: Self = .init(.ronto)
+
+    /// The quectoohm unit of electrical resistance.
+    public static let quectoohm: Self = .init(.quecto)
 }
 
 // MARK: - Codable

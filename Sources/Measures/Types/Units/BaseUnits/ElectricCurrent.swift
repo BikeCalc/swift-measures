@@ -38,6 +38,12 @@ public struct ElectricCurrent {
         )
     }
     
+    /// The quettaampere unit of electric current.
+    public static let quettaampere: Self = .init(.quetta)
+
+    /// The ronnaampere unit of electric current.
+    public static let ronnaampere: Self = .init(.ronna)
+
     /// The yottaampere unit of electric current.
     public static let yottaampere: Self = .init(.yotta)
     
@@ -100,6 +106,12 @@ public struct ElectricCurrent {
     
     /// The yoctoampere unit of electric current.
     public static let yoctoampere: Self = .init(.yocto)
+
+    /// The rontoampere unit of electric current.
+    public static let rontoampere: Self = .init(.ronto)
+
+    /// The quectoampere unit of electric current.
+    public static let quectoampere: Self = .init(.quecto)
 }
 
 // MARK: - Codable

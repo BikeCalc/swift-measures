@@ -49,6 +49,12 @@ public struct Pressure {
         )
     }
     
+    /// The quettapascal unit of pressure.
+    public static let quettapascal: Self = .init(.quetta)
+
+    /// The ronnapascal unit of pressure.
+    public static let ronnapascal: Self = .init(.ronna)
+
     /// The yottapascal unit of pressure.
     public static let yottapascal: Self = .init(.yotta)
     
@@ -111,6 +117,12 @@ public struct Pressure {
     
     /// The yoctopascal unit of pressure.
     public static let yoctopascal: Self = .init(.yocto)
+
+    /// The rontopascal unit of pressure.
+    public static let rontopascal: Self = .init(.ronto)
+
+    /// The quectopascal unit of pressure.
+    public static let quectopascal: Self = .init(.quecto)
     
     // MARK: Other Metric Units
     

@@ -38,6 +38,12 @@ public struct Frequency {
         )
     }
     
+    /// The quettahertz unit of frequency.
+    public static let quettahertz: Self = .init(.quetta)
+
+    /// The ronnahertz unit of frequency.
+    public static let ronnahertz: Self = .init(.ronna)
+
     /// The yottahertz unit of frequency.
     public static let yottahertz: Self = .init(.yotta)
     
@@ -100,6 +106,12 @@ public struct Frequency {
     
     /// The yoctohertz unit of frequency.
     public static let yoctohertz: Self = .init(.yocto)
+
+    /// The rontohertz unit of frequency.
+    public static let rontohertz: Self = .init(.ronto)
+
+    /// The quectohertz unit of frequency.
+    public static let quectohertz: Self = .init(.quecto)
 }
 
 // MARK: - Codable

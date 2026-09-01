@@ -38,6 +38,12 @@ public struct Force {
         )
     }
     
+    /// The quettanewton unit of force.
+    public static let quettanewton: Self = .init(.quetta)
+
+    /// The ronnanewton unit of force.
+    public static let ronnanewton: Self = .init(.ronna)
+
     /// The yottanewton unit of force.
     public static let yottanewton: Self = .init(.yotta)
     
@@ -100,6 +106,12 @@ public struct Force {
     
     /// The yoctonewton unit of force.
     public static let yoctonewton: Self = .init(.yocto)
+
+    /// The rontonewton unit of force.
+    public static let rontonewton: Self = .init(.ronto)
+
+    /// The quectonewton unit of force.
+    public static let quectonewton: Self = .init(.quecto)
     
     // MARK: Other Units
     

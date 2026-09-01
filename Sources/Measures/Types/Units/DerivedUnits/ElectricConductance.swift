@@ -38,6 +38,12 @@ public struct ElectricConductance {
         )
     }
     
+    /// The quettasiemens unit of electric conductance.
+    public static let quettasiemens: Self = .init(.quetta)
+
+    /// The ronnasiemens unit of electric conductance.
+    public static let ronnasiemens: Self = .init(.ronna)
+
     /// The yottasiemens unit of electric conductance.
     public static let yottasiemens: Self = .init(.yotta)
     
@@ -100,6 +106,12 @@ public struct ElectricConductance {
     
     /// The yoctosiemens unit of electric conductance.
     public static let yoctosiemens: Self = .init(.yocto)
+
+    /// The rontosiemens unit of electric conductance.
+    public static let rontosiemens: Self = .init(.ronto)
+
+    /// The quectosiemens unit of electric conductance.
+    public static let quectosiemens: Self = .init(.quecto)
 }
 
 // MARK: - Codable

@@ -38,6 +38,12 @@ public struct LuminousIntensity {
         )
     }
     
+    /// The quettacandela unit of luminous intensity.
+    public static let quettacandela: Self = .init(.quetta)
+
+    /// The ronnacandela unit of luminous intensity.
+    public static let ronnacandela: Self = .init(.ronna)
+
     /// The yottacandela unit of luminous intensity.
     public static let yottacandela: Self = .init(.yotta)
     
@@ -100,6 +106,12 @@ public struct LuminousIntensity {
     
     /// The yoctocandela unit of luminous intensity.
     public static let yoctocandela: Self = .init(.yocto)
+
+    /// The rontocandela unit of luminous intensity.
+    public static let rontocandela: Self = .init(.ronto)
+
+    /// The quectocandela unit of luminous intensity.
+    public static let quectocandela: Self = .init(.quecto)
 }
 
 // MARK: - Codable

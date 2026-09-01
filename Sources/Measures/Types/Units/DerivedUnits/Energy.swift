@@ -49,6 +49,12 @@ public struct Energy {
         )
     }
     
+    /// The quettajoule unit of energy.
+    public static let quettajoule: Self = .init(.quetta)
+
+    /// The ronnajoule unit of energy.
+    public static let ronnajoule: Self = .init(.ronna)
+
     /// The yottajoule unit of energy.
     public static let yottajoule: Self = .init(.yotta)
     
@@ -111,6 +117,12 @@ public struct Energy {
     
     /// The yoctojoule unit of energy.
     public static let yoctojoule: Self = .init(.yocto)
+
+    /// The rontojoule unit of energy.
+    public static let rontojoule: Self = .init(.ronto)
+
+    /// The quectojoule unit of energy.
+    public static let quectojoule: Self = .init(.quecto)
     
     // MARK: Other Units
     

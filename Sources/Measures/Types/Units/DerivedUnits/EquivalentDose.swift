@@ -38,6 +38,12 @@ public struct EquivalentDose {
         )
     }
     
+    /// The quettasievert unit of equivalent dose.
+    public static let quettasievert: Self = .init(.quetta)
+
+    /// The ronnasievert unit of equivalent dose.
+    public static let ronnasievert: Self = .init(.ronna)
+
     /// The yottasievert unit of equivalent dose.
     public static let yottasievert: Self = .init(.yotta)
     
@@ -100,6 +106,12 @@ public struct EquivalentDose {
     
     /// The yoctosievert unit of equivalent dose.
     public static let yoctosievert: Self = .init(.yocto)
+
+    /// The rontosievert unit of equivalent dose.
+    public static let rontosievert: Self = .init(.ronto)
+
+    /// The quectosievert unit of equivalent dose.
+    public static let quectosievert: Self = .init(.quecto)
 }
 
 // MARK: - Codable

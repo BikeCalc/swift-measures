@@ -38,6 +38,12 @@ public struct AbsorbedDose {
         )
     }
     
+    /// The quettagray unit of absorbed dose.
+    public static let quettagray: Self = .init(.quetta)
+
+    /// The ronnagray unit of absorbed dose.
+    public static let ronnagray: Self = .init(.ronna)
+
     /// The yottagray unit of absorbed dose.
     public static let yottagray: Self = .init(.yotta)
     
@@ -100,6 +106,12 @@ public struct AbsorbedDose {
     
     /// The yoctogray unit of absorbed dose.
     public static let yoctogray: Self = .init(.yocto)
+
+    /// The rontogray unit of absorbed dose.
+    public static let rontogray: Self = .init(.ronto)
+
+    /// The quectogray unit of absorbed dose.
+    public static let quectogray: Self = .init(.quecto)
 }
 
 // MARK: - Codable

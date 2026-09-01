@@ -38,6 +38,12 @@ public struct ElectricalCapacitance {
         )
     }
     
+    /// The quettafarad unit of electrical capacitance.
+    public static let quettafarad: Self = .init(.quetta)
+
+    /// The ronnafarad unit of electrical capacitance.
+    public static let ronnafarad: Self = .init(.ronna)
+
     /// The yottafarad unit of electrical capacitance.
     public static let yottafarad: Self = .init(.yotta)
     
@@ -100,6 +106,12 @@ public struct ElectricalCapacitance {
     
     /// The yoctofarad unit of electrical capacitance.
     public static let yoctofarad: Self = .init(.yocto)
+
+    /// The rontofarad unit of electrical capacitance.
+    public static let rontofarad: Self = .init(.ronto)
+
+    /// The quectofarad unit of electrical capacitance.
+    public static let quectofarad: Self = .init(.quecto)
 }
 
 // MARK: - Codable

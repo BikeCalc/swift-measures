@@ -38,6 +38,12 @@ public struct SubstanceAmount {
         )
     }
     
+    /// The quettamole unit of substance amount.
+    public static let quettamole: Self = .init(.quetta)
+
+    /// The ronnamole unit of substance amount.
+    public static let ronnamole: Self = .init(.ronna)
+
     /// The yottamole unit of substance amount.
     public static let yottamole: Self = .init(.yotta)
     
@@ -100,6 +106,12 @@ public struct SubstanceAmount {
     
     /// The yoctomole unit of substance amount.
     public static let yoctomole: Self = .init(.yocto)
+
+    /// The rontomole unit of substance amount.
+    public static let rontomole: Self = .init(.ronto)
+
+    /// The quectomole unit of substance amount.
+    public static let quectomole: Self = .init(.quecto)
 }
 
 // MARK: - Codable

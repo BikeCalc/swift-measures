@@ -157,6 +157,12 @@ public struct Length {
         )
     }
     
+    /// The quettameter unit of length.
+    public static let quettameter: Self = .init(.quetta)
+
+    /// The ronnameter unit of length.
+    public static let ronnameter: Self = .init(.ronna)
+
     /// The yottameter unit of length.
     public static let yottameter: Self = .init(.yotta)
     
@@ -219,6 +225,12 @@ public struct Length {
     
     /// The yoctometer unit of length.
     public static let yoctometer: Self = .init(.yocto)
+
+    /// The rontometer unit of length.
+    public static let rontometer: Self = .init(.ronto)
+
+    /// The quectometer unit of length.
+    public static let quectometer: Self = .init(.quecto)
 }
 
 // MARK: - Codable

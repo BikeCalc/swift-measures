@@ -38,6 +38,12 @@ public struct ElectricalInductance {
         )
     }
     
+    /// The quettahenry unit of electrical inductance.
+    public static let quettahenry: Self = .init(.quetta)
+
+    /// The ronnahenry unit of electrical inductance.
+    public static let ronnahenry: Self = .init(.ronna)
+
     /// The yottahenry unit of electrical inductance.
     public static let yottahenry: Self = .init(.yotta)
     
@@ -100,6 +106,12 @@ public struct ElectricalInductance {
     
     /// The yoctohenry unit of electrical inductance.
     public static let yoctohenry: Self = .init(.yocto)
+
+    /// The rontohenry unit of electrical inductance.
+    public static let rontohenry: Self = .init(.ronto)
+
+    /// The quectohenry unit of electrical inductance.
+    public static let quectohenry: Self = .init(.quecto)
 }
 
 // MARK: - Codable

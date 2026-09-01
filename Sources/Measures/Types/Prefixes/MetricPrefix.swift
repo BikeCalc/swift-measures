@@ -11,11 +11,11 @@ import NumericsExtended
 /// A representation of a metric prefix.
 @frozen
 public enum MetricPrefix: String {
-    /// A prefix that divides the base unit by 1e+30.
-    case geop
+    /// A prefix that multiplies the base unit by 1e+30.
+    case quetta
     
-    /// A prefix that divides the base unit by 1e+27.
-    case bronto
+    /// A prefix that multiplies the base unit by 1e+27.
+    case ronna
     
     /// A prefix that divides the base unit by 1e+24.
     case yotta
@@ -80,20 +80,20 @@ public enum MetricPrefix: String {
     /// A prefix that divides the base unit by 1e-24.
     case yocto
     
-    /// A prefix that divides the base unit by 1e-27.
-    case brimto
+    /// A prefix that multiplies the base unit by 1e-27.
+    case ronto
     
-    /// A prefix that divides the base unit by 1e-30.
-    case gepto
+    /// A prefix that multiplies the base unit by 1e-30.
+    case quecto
 }
 
 extension MetricPrefix {
 	/// The coefficient of this instance compared to its base unit.
 	public var coefficient: Double {
 		switch self {
-		case .geop:
+		case .quetta:
 			return .nonillion
-		case .bronto:
+		case .ronna:
 			return .octillion
 		case .yotta:
 			return .septillion
@@ -137,9 +137,9 @@ extension MetricPrefix {
 			return .sextillionth
 		case .yocto:
 			return .septillionth
-		case .brimto:
+		case .ronto:
 			return .octillionth
-		case .gepto:
+		case .quecto:
 			return .nonillionth
 		}
 	}
@@ -152,10 +152,10 @@ extension MetricPrefix {
 	/// The symbol of this instance.
 	public var symbol: String {
 		switch self {
-		case .geop:
-			return "O"
-		case .bronto:
-			return "B"
+		case .quetta:
+			return "Q"
+		case .ronna:
+			return "R"
 		case .yotta:
 			return "Y"
 		case .zetta:
@@ -198,10 +198,10 @@ extension MetricPrefix {
 			return "z"
 		case .yocto:
 			return "y"
-		case .brimto:
-			return "b"
-		case .gepto:
-			return "g"
+		case .ronto:
+			return "r"
+		case .quecto:
+			return "q"
 		}
 	}
 }

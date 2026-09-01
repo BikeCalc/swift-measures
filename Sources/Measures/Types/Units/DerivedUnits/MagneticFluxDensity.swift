@@ -38,6 +38,12 @@ public struct MagneticFluxDensity {
         )
     }
     
+    /// The quettatesla unit of magnetic flux density.
+    public static let quettatesla: Self = .init(.quetta)
+
+    /// The ronnatesla unit of magnetic flux density.
+    public static let ronnatesla: Self = .init(.ronna)
+
     /// The yottatesla unit of magnetic flux density.
     public static let yottatesla: Self = .init(.yotta)
     
@@ -100,6 +106,12 @@ public struct MagneticFluxDensity {
     
     /// The yoctotesla unit of magnetic flux density.
     public static let yoctotesla: Self = .init(.yocto)
+
+    /// The rontotesla unit of magnetic flux density.
+    public static let rontotesla: Self = .init(.ronto)
+
+    /// The quectotesla unit of magnetic flux density.
+    public static let quectotesla: Self = .init(.quecto)
 }
 
 // MARK: - Codable

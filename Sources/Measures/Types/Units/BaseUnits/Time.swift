@@ -38,6 +38,12 @@ public struct Time {
         )
     }
     
+    /// The quettasecond unit of time.
+    public static let quettasecond: Self = .init(.quetta)
+
+    /// The ronnasecond unit of time.
+    public static let ronnasecond: Self = .init(.ronna)
+
     /// The yottasecond unit of time.
     public static let yottasecond: Self = .init(.yotta)
     
@@ -100,6 +106,12 @@ public struct Time {
     
     /// The yoctosecond unit of time.
     public static let yoctosecond: Self = .init(.yocto)
+
+    /// The rontosecond unit of time.
+    public static let rontosecond: Self = .init(.ronto)
+
+    /// The quectosecond unit of time.
+    public static let quectosecond: Self = .init(.quecto)
     
     // MARK: Other Units
     

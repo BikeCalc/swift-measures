@@ -38,6 +38,12 @@ public struct Illuminance {
         )
     }
     
+    /// The quettalux unit of illuminance.
+    public static let quettalux: Self = .init(.quetta)
+
+    /// The ronnalux unit of illuminance.
+    public static let ronnalux: Self = .init(.ronna)
+
     /// The yottalux unit of illuminance.
     public static let yottalux: Self = .init(.yotta)
     
@@ -100,6 +106,12 @@ public struct Illuminance {
     
     /// The yoctolux unit of illuminance.
     public static let yoctolux: Self = .init(.yocto)
+
+    /// The rontolux unit of illuminance.
+    public static let rontolux: Self = .init(.ronto)
+
+    /// The quectolux unit of illuminance.
+    public static let quectolux: Self = .init(.quecto)
 }
 
 // MARK: - Codable

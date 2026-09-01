@@ -38,6 +38,12 @@ public struct ElectricPotential {
         )
     }
     
+    /// The quettavolt unit of electric potential.
+    public static let quettavolt: Self = .init(.quetta)
+
+    /// The ronnavolt unit of electric potential.
+    public static let ronnavolt: Self = .init(.ronna)
+
     /// The yottavolt unit of electric potential.
     public static let yottavolt: Self = .init(.yotta)
     
@@ -100,6 +106,12 @@ public struct ElectricPotential {
     
     /// The yoctovolt unit of electric potential.
     public static let yoctovolt: Self = .init(.yocto)
+
+    /// The rontovolt unit of electric potential.
+    public static let rontovolt: Self = .init(.ronto)
+
+    /// The quectovolt unit of electric potential.
+    public static let quectovolt: Self = .init(.quecto)
 }
 
 // MARK: - Codable

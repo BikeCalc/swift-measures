@@ -49,6 +49,12 @@ public struct ThermodynamicTemperature {
         )
     }
     
+    /// The quettakelvin unit of thermodynamic temperature.
+    public static let quettakelvin: Self = .init(.quetta)
+
+    /// The ronnakelvin unit of thermodynamic temperature.
+    public static let ronnakelvin: Self = .init(.ronna)
+
     /// The yottakelvin unit of thermodynamic temperature.
     public static let yottakelvin: Self = .init(.yotta)
     
@@ -111,6 +117,12 @@ public struct ThermodynamicTemperature {
     
     /// The yoctokelvin unit of thermodynamic temperature.
     public static let yoctokelvin: Self = .init(.yocto)
+
+    /// The rontokelvin unit of thermodynamic temperature.
+    public static let rontokelvin: Self = .init(.ronto)
+
+    /// The quectokelvin unit of thermodynamic temperature.
+    public static let quectokelvin: Self = .init(.quecto)
     
     // MARK: Other Units
     

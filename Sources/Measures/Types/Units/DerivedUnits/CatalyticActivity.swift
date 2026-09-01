@@ -38,6 +38,12 @@ public struct CatalyticActivity {
         )
     }
     
+    /// The quettakatal unit of catalytic activity.
+    public static let quettakatal: Self = .init(.quetta)
+
+    /// The ronnakatal unit of catalytic activity.
+    public static let ronnakatal: Self = .init(.ronna)
+
     /// The yottakatal unit of catalytic activity.
     public static let yottakatal: Self = .init(.yotta)
     
@@ -100,6 +106,12 @@ public struct CatalyticActivity {
     
     /// The yoctokatal unit of catalytic activity.
     public static let yoctokatal: Self = .init(.yocto)
+
+    /// The rontokatal unit of catalytic activity.
+    public static let rontokatal: Self = .init(.ronto)
+
+    /// The quectokatal unit of catalytic activity.
+    public static let quectokatal: Self = .init(.quecto)
 }
 
 // MARK: - Codable

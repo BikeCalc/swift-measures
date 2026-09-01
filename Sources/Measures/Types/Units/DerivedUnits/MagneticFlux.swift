@@ -38,6 +38,12 @@ public struct MagneticFlux {
         )
     }
     
+    /// The quettaweber unit of magnetic flux.
+    public static let quettaweber: Self = .init(.quetta)
+
+    /// The ronnaweber unit of magnetic flux.
+    public static let ronnaweber: Self = .init(.ronna)
+
     /// The yottaweber unit of magnetic flux.
     public static let yottaweber: Self = .init(.yotta)
     
@@ -100,6 +106,12 @@ public struct MagneticFlux {
     
     /// The yoctoweber unit of magnetic flux.
     public static let yoctoweber: Self = .init(.yocto)
+
+    /// The rontoweber unit of magnetic flux.
+    public static let rontoweber: Self = .init(.ronto)
+
+    /// The quectoweber unit of magnetic flux.
+    public static let quectoweber: Self = .init(.quecto)
 }
 
 // MARK: - Codable

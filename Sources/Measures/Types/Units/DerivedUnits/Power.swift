@@ -48,6 +48,12 @@ public struct Power {
         )
     }
     
+    /// The quettawatt unit of power.
+    public static let quettawatt: Self = .init(.quetta)
+
+    /// The ronnawatt unit of power.
+    public static let ronnawatt: Self = .init(.ronna)
+
     /// The yottawatt unit of power.
     public static let yottawatt: Self = .init(.yotta)
     
@@ -110,6 +116,12 @@ public struct Power {
     
     /// The yoctowatt unit of power.
     public static let yoctowatt: Self = .init(.yocto)
+
+    /// The rontowatt unit of power.
+    public static let rontowatt: Self = .init(.ronto)
+
+    /// The quectowatt unit of power.
+    public static let quectowatt: Self = .init(.quecto)
 }
 
 // MARK: - Codable

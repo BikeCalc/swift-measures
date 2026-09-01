@@ -80,6 +80,12 @@ public struct Memory {
         )
     }
     
+    /// The quettabit unit of memory.
+    public static let quettabit: Self = .bit(.quetta)
+
+    /// The ronnabit unit of memory.
+    public static let ronnabit: Self = .bit(.ronna)
+
     /// The yottabit unit of memory.
     public static let yottabit: Self = .bit(.yotta)
     
@@ -169,6 +175,12 @@ public struct Memory {
         )
     }
     
+    /// The quettabyte unit of memory.
+    public static let quettabyte: Self = .byte(.quetta)
+
+    /// The ronnabyte unit of memory.
+    public static let ronnabyte: Self = .byte(.ronna)
+
     /// The yottabyte unit of memory.
     public static let yottabyte: Self = .byte(.yotta)
     

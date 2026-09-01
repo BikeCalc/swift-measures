@@ -39,6 +39,12 @@ public struct Volume {
         )
     }
     
+    /// The quettaliter unit of volume.
+    public static let quettaliter: Self = .init(.quetta)
+
+    /// The ronnaliter unit of volume.
+    public static let ronnaliter: Self = .init(.ronna)
+
     /// The yottaliter unit of volume.
     public static let yottaliter: Self = .init(.yotta)
     
@@ -101,6 +107,12 @@ public struct Volume {
     
     /// The yoctoliter unit of volume.
     public static let yoctoliter: Self = .init(.yocto)
+
+    /// The rontoliter unit of volume.
+    public static let rontoliter: Self = .init(.ronto)
+
+    /// The quectoliter unit of volume.
+    public static let quectoliter: Self = .init(.quecto)
 }
 
 // MARK: - Codable

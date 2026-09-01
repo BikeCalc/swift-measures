@@ -38,6 +38,12 @@ public struct LuminousFlux {
         )
     }
     
+    /// The quettalumen unit of luminous flux.
+    public static let quettalumen: Self = .init(.quetta)
+
+    /// The ronnalumen unit of luminous flux.
+    public static let ronnalumen: Self = .init(.ronna)
+
     /// The yottalumen unit of luminous flux.
     public static let yottalumen: Self = .init(.yotta)
     
@@ -100,6 +106,12 @@ public struct LuminousFlux {
     
     /// The yoctolumen unit of luminous flux.
     public static let yoctolumen: Self = .init(.yocto)
+
+    /// The rontolumen unit of luminous flux.
+    public static let rontolumen: Self = .init(.ronto)
+
+    /// The quectolumen unit of luminous flux.
+    public static let quectolumen: Self = .init(.quecto)
 }
 
 // MARK: - Codable

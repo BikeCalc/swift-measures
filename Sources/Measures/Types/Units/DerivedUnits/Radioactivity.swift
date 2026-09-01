@@ -38,6 +38,12 @@ public struct Radioactivity {
         )
     }
     
+    /// The quettabecquerel unit of radioactivity.
+    public static let quettabecquerel: Self = .init(.quetta)
+
+    /// The ronnabecquerel unit of radioactivity.
+    public static let ronnabecquerel: Self = .init(.ronna)
+
     /// The yottabecquerel unit of radioactivity.
     public static let yottabecquerel: Self = .init(.yotta)
     
@@ -100,6 +106,12 @@ public struct Radioactivity {
     
     /// The yoctobecquerel unit of radioactivity.
     public static let yoctobecquerel: Self = .init(.yocto)
+
+    /// The rontobecquerel unit of radioactivity.
+    public static let rontobecquerel: Self = .init(.ronto)
+
+    /// The quectobecquerel unit of radioactivity.
+    public static let quectobecquerel: Self = .init(.quecto)
 }
 
 // MARK: - Codable
