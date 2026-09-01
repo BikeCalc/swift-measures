@@ -8,9 +8,9 @@
 
 /// The coding keys for the codable protocol.
 internal enum MeasurableCodingKeys: String {
-	case coefficient = "coefficient"
-	case constant = "constant"
-	case symbol = "symbol"
+    case coefficient = "coefficient"
+    case constant = "constant"
+    case symbol = "symbol"
 }
 
 // MARK: - CodingKey

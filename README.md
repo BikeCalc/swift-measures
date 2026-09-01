@@ -51,17 +51,17 @@ The Swift Package Manager is a tool for managing the distribution of Swift code 
     ```swift
     import Measures
     ```
-    
+
 ## Demonstration
-    
+
 1. Create a dimension that conforms to the measurable protocol.
 
-	```swift
+    ```swift
     struct FuelEfficiency: Measurable {
         let coefficient: Double
         let constant: Double
         let symbol: String
-        
+
         init(
             coefficient: Double,
             constant: Double = 0,
@@ -71,14 +71,14 @@ The Swift Package Manager is a tool for managing the distribution of Swift code 
             self.constant = constant
             self.symbol = symbol
         }
-        
+
         static let base: Self = .kilometresPerLiter
-	}
-	```
+    }
+    ```
 
 2. Create a minimum of two units.
 
-	```swift
+    ```swift
     extension FuelEfficiency {
         static let kilometresPerLiter: Self = .init(
             coefficient: Length.kilometre.coefficient / Volume.liter.coefficient,
@@ -94,16 +94,16 @@ The Swift Package Manager is a tool for managing the distribution of Swift code 
 
 3. Initialize a measure of your dimension with a value and unit.
 
-	```swift
+    ```swift
     var measure: Measure<FuelEfficiency> = .init(5, .kilometresPerLiter)
-	```
+    ```
 
 4. Convert the measure to your other unit.
 
     ```swift
     measure.convert(to: .metresPerLiter)
     print(measure) // Prints "5000m/L"
-	```
+    ```
 
 ## Documentation
 

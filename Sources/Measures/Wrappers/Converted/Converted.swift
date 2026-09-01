@@ -19,27 +19,27 @@ public struct Converted<Unit>
 where Unit: Equatable & Measurable {
     /// The measure converted to the unit.
     private var value: Measure<Unit>
-    
+
     /// The unit.
     private let unit: Measure<Unit>.Unit
-    
-	/// Creates a new instance from the given measure and specified unit.
-	///
-	/// - parameter measure: The measure to convert.
-	/// - parameter unit: The unit.
-	public init(wrappedValue value: Measure<Unit>, to unit: Measure<Unit>.Unit) {
-		self.value = value
-		self.unit = unit
-		self.wrappedValue = value
-	}
 
-	/// The wrapped value of this property wrapper.
-	public var wrappedValue: Measure<Unit> {
-		get {
-			return self.value
-		} set (newValue) {
-			self.value = newValue
-			self.value.convert(to: self.unit)
-		}
-	}
+    /// Creates a new instance from the given measure and specified unit.
+    ///
+    /// - parameter measure: The measure to convert.
+    /// - parameter unit: The unit.
+    public init(wrappedValue value: Measure<Unit>, to unit: Measure<Unit>.Unit) {
+        self.value = value
+        self.unit = unit
+        self.wrappedValue = value
+    }
+
+    /// The wrapped value of this property wrapper.
+    public var wrappedValue: Measure<Unit> {
+        get {
+            return self.value
+        } set (newValue) {
+            self.value = newValue
+            self.value.convert(to: self.unit)
+        }
+    }
 }

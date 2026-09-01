@@ -6,7 +6,7 @@ A demonstration on how to create custom dimensions and units.
 
 1. Create a dimension that conforms to the measurable protocol.
 
-	```swift
+    ```swift
     struct FuelEfficiency: Measurable {
         let coefficient: Double
         let constant: Double
@@ -21,14 +21,14 @@ A demonstration on how to create custom dimensions and units.
             self.constant = constant
             self.symbol = symbol
         }
-        
+
         static let base: Self = .kilometersPerLiter
-	}
-	```
+    }
+    ```
 
 2. Create a minimum of two units.
 
-	```swift
+    ```swift
     extension FuelEfficiency {
         static let kilometersPerLiter: Self = .init(
             coefficient: Length.kilometer.coefficient / Volume.liter.coefficient,
@@ -44,13 +44,13 @@ A demonstration on how to create custom dimensions and units.
 
 3. Initialize a measure of your dimension with a value and unit.
 
-	```swift
+    ```swift
     var measure: Measure<FuelEfficiency> = .init(5, .kilometersPerLiter)
-	```
+    ```
 
 4. Convert the measure to your other unit.
 
     ```swift
     measure.convert(to: .metersPerLiter)
     print(measure) // Prints "5000m/L"
-	```
+    ```

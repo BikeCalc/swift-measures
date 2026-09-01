@@ -9,23 +9,23 @@
 /// A unit of measure for acceleration.
 public struct Acceleration {
     public let coefficient: Double
-    
+
     public let constant: Double
-    
+
     public let symbol: String
-	
-	public init(
-		coefficient: Double,
-		constant: Double = 0,
-		symbol: String
-	) {
-		self.coefficient = coefficient
-		self.constant = constant
-		self.symbol = symbol
-	}
-    
+
+    public init(
+        coefficient: Double,
+        constant: Double = 0,
+        symbol: String
+    ) {
+        self.coefficient = coefficient
+        self.constant = constant
+        self.symbol = symbol
+    }
+
     // MARK: Composed Units
-    
+
     /// The meter per square second unit of acceleration.
     public static let meterPerSquareSecond: Self = Length.meter.dividing(by: .second)
 }

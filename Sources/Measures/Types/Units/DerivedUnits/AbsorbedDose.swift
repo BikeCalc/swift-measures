@@ -9,35 +9,35 @@
 /// A unit of measure for absorbed dose.
 public struct AbsorbedDose {
     public let coefficient: Double
-    
+
     public let constant: Double
-    
+
     public let symbol: String
-	
-	public init(
-		coefficient: Double,
-		constant: Double = 0,
-		symbol: String
-	) {
-		self.coefficient = coefficient
-		self.constant = constant
-		self.symbol = symbol
-	}
-    
+
+    public init(
+        coefficient: Double,
+        constant: Double = 0,
+        symbol: String
+    ) {
+        self.coefficient = coefficient
+        self.constant = constant
+        self.symbol = symbol
+    }
+
     // MARK: Metric Units
-    
+
     /// Creates a new instance with the specified metric prefix.
     ///
     /// - parameter prefix: The prefix.
     fileprivate init(_ prefix: MetricPrefix) {
         let symbol: String = prefix.symbol + "Gy"
-        
+
         self.init(
             coefficient: prefix.coefficient,
             symbol: symbol
         )
     }
-    
+
     /// The quettagray unit of absorbed dose.
     public static let quettagray: Self = .init(.quetta)
 
@@ -46,64 +46,64 @@ public struct AbsorbedDose {
 
     /// The yottagray unit of absorbed dose.
     public static let yottagray: Self = .init(.yotta)
-    
+
     /// The zettagray unit of absorbed dose.
     public static let zettagray: Self = .init(.zetta)
-    
+
     /// The exagray unit of absorbed dose.
     public static let exagray: Self = .init(.exa)
-    
+
     /// The petagray unit of absorbed dose.
     public static let petagray: Self = .init(.peta)
-    
+
     /// The teragray unit of absorbed dose.
     public static let teragray: Self = .init(.tera)
-    
+
     /// The gigagray unit of absorbed dose.
     public static let gigagray: Self = .init(.giga)
-    
+
     /// The megagray unit of absorbed dose.
     public static let megagray: Self = .init(.mega)
-    
+
     /// The kilogray unit of absorbed dose.
     public static let kilogray: Self = .init(.kilo)
-    
+
     /// The hectogray unit of absorbed dose.
     public static let hectogray: Self = .init(.hecto)
-    
+
     /// The decagray unit of absorbed dose.
     public static let decagray: Self = .init(.deca)
-    
+
     /// The gray unit of absorbed dose.
     public static let gray: Self = .init(.none)
-    
+
     /// The decigray unit of absorbed dose.
     public static let decigray: Self = .init(.deci)
-    
+
     /// The centigray unit of absorbed dose.
     public static let centigray: Self = .init(.centi)
-    
+
     /// The milligray unit of absorbed dose.
     public static let milligray: Self = .init(.milli)
-    
+
     /// The microgray unit of absorbed dose.
     public static let microgray: Self = .init(.micro)
-    
+
     /// The nanogray unit of absorbed dose.
     public static let nanogray: Self = .init(.nano)
-    
+
     /// The picogray unit of absorbed dose.
     public static let picogray: Self = .init(.pico)
-    
+
     /// The femtogray unit of absorbed dose.
     public static let femtogray: Self = .init(.femto)
-    
+
     /// The attogray unit of absorbed dose.
     public static let attogray: Self = .init(.atto)
-    
+
     /// The zeptogray unit of absorbed dose.
     public static let zeptogray: Self = .init(.zepto)
-    
+
     /// The yoctogray unit of absorbed dose.
     public static let yoctogray: Self = .init(.yocto)
 

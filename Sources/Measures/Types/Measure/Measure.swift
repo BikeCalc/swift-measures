@@ -11,36 +11,36 @@ import NumericsExtended
 /// A representation of a measure.
 public struct Measure<Unit>
 where Unit: Equatable & Measurable {
-	/// The unit.
-	public typealias Unit = Unit
-    
+    /// The unit.
+    public typealias Unit = Unit
+
     /// The value of this measure.
     public let value: Double
-    
+
     /// The unit of this measure.
     public let unit: Unit
-	
-	/// Creates a new instance with the specified value and unit.
-	///
-	/// - parameter value: The value.
-	/// - parameter unit: The unit.
-	/// - warning: A measure can not be negative.
-	public init<Value>(_ value: Value, _ unit: Unit)
-	where Value: BinaryFloatingPoint {
+
+    /// Creates a new instance with the specified value and unit.
+    ///
+    /// - parameter value: The value.
+    /// - parameter unit: The unit.
+    /// - warning: A measure can not be negative.
+    public init<Value>(_ value: Value, _ unit: Unit)
+    where Value: BinaryFloatingPoint {
         self.value = .init(max(.zero, value))
-		self.unit = unit
-	}
-	
-	/// Creates a new instance with the specified value and unit.
-	///
-	/// - parameter value: The value.
-	/// - parameter unit: The unit.
-	/// - warning: A measure can not be negative.
-	public init<Value>(_ value: Value, _ unit: Unit)
-	where Value: BinaryInteger {
+        self.unit = unit
+    }
+
+    /// Creates a new instance with the specified value and unit.
+    ///
+    /// - parameter value: The value.
+    /// - parameter unit: The unit.
+    /// - warning: A measure can not be negative.
+    public init<Value>(_ value: Value, _ unit: Unit)
+    where Value: BinaryInteger {
         self.value = .init(max(.zero, value))
-		self.unit = unit
-	}
+        self.unit = unit
+    }
 }
 
 // MARK: - Addable
@@ -50,7 +50,7 @@ extension Measure: Addable {
         let lhsValue: Double = lhs.value
         let rhsValue: Double = rhs.converted(to: lhs.unit).value
         let newValue: Double = lhsValue + rhsValue
-        
+
         return .init(newValue, lhs.unit)
     }
 }
@@ -65,7 +65,7 @@ extension Measure: Comparable {
     public static func < (_ lhs: Self, _ rhs: Self) -> Bool {
         let lhsValue: Double = lhs.value
         let rhsValue: Double = rhs.converted(to: lhs.unit).value
-        
+
         return lhsValue < rhsValue
     }
 }
@@ -78,7 +78,7 @@ extension Measure: Convertible {
         let newValue: Double = self.value * self.unit.coefficient + self.unit.constant
         return .init(newValue, .base)
     }
-    
+
     /// Returns this measure converted to the specified unit.
     ///
     /// ```swift
@@ -93,7 +93,7 @@ extension Measure: Convertible {
         let newValue: Double = (self.convertedToBase().value - rhs.constant) / rhs.coefficient
         return .init(newValue, rhs)
     }
-    
+
     /// Returns this measure converted to the specified unit.
     ///
     /// ```swift
@@ -109,7 +109,7 @@ extension Measure: Convertible {
         let newValue: Double = (self.convertedToBase().value - rhs.constant) / rhs.coefficient
         return .init(1 / newValue, rhs)
     }
-    
+
     /// Converts this measure to the specified unit.
     ///
     /// ```swift
@@ -146,10 +146,10 @@ extension Measure: Decodable
 where Unit: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: MeasureCodingKeys.self)
-        
+
         let value: Double = try container.decode(Double.self, forKey: .value)
         let unit: Unit = try container.decode(Unit.self, forKey: .unit)
-        
+
         self.init(value, unit)
     }
 }
@@ -165,10 +165,10 @@ extension Measure {
     public static func / (_ lhs: Self, _ rhs: Double) -> Self {
         let lhsValue: Double = lhs.value
         let newValue: Double = lhsValue / rhs
-        
+
         return .init(newValue, lhs.unit)
     }
-    
+
     /// Returns the quotient of dividing the first specified value by the second.
     ///
     /// - parameter lhs: The dividend.
@@ -177,10 +177,10 @@ extension Measure {
     public static func / (_ lhs: Double, _ rhs: Self) -> Self {
         let rhsValue: Double = rhs.value
         let newValue: Double = lhs / rhsValue
-        
+
         return .init(newValue, rhs.unit)
     }
-    
+
     /// Divides the first specified value by the second and stores the quotient in the left-hand-side variable.
     ///
     /// - parameter lhs: The dividend.
@@ -188,7 +188,7 @@ extension Measure {
     public static func /= (_ lhs: inout Self, _ rhs: Double) {
         lhs = lhs / rhs
     }
-    
+
     /// Returns the quotient of dividing this value by the specified value.
     ///
     /// - parameter divisor: The divisor.
@@ -196,21 +196,21 @@ extension Measure {
     public func dividing(by divisor: Double) -> Self {
         return self / divisor
     }
-    
+
     /// Divides this value by the specified value and produces the quotient.
     ///
     /// - parameter divisor: The divisor.
     public mutating func divide(by divisor: Double) {
         self /= divisor
     }
-    
+
     /// Returns this value halved.
     ///
     /// - returns: The value halved.
     public func halved() -> Self {
         return self / 2
     }
-    
+
     /// Halves this value.
     ///
     public mutating func halve() {
@@ -224,7 +224,7 @@ extension Measure: Encodable
 where Unit: Encodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: MeasureCodingKeys.self)
-        
+
         try container.encode(self.value, forKey: .value)
         try container.encode(self.unit, forKey: .unit)
     }
@@ -257,7 +257,7 @@ extension Measure: CanonicallyEquatable {
     public func isCanonicallyEquatable(to rhs: Self) -> Bool {
         let lhsValue: Double = self.value
         let rhsValue: Double = rhs.converted(to: self.unit).value
-        
+
         return lhsValue == rhsValue
     }
 }
@@ -283,10 +283,10 @@ extension Measure {
     public static func * (_ lhs: Self, _ rhs: Double) -> Self {
         let lhsValue: Double = lhs.value
         let newValue: Double = lhsValue * rhs
-        
+
         return .init(newValue, lhs.unit)
     }
-    
+
     /// Returns the product of multiplying the two specified values.
     ///
     /// - parameter lhs: The multiplicand.
@@ -295,10 +295,10 @@ extension Measure {
     public static func * (_ lhs: Double, _ rhs: Self) -> Self {
         let rhsValue: Double = rhs.value
         let newValue: Double = lhs * rhsValue
-        
+
         return .init(newValue, rhs.unit)
     }
-    
+
     /// Multiplies the two specified values and stores the product in the left-hand-side variable.
     ///
     /// - parameter lhs: The multiplicand.
@@ -306,7 +306,7 @@ extension Measure {
     public static func *= (_ lhs: inout Self, _ rhs: Double) {
         lhs = lhs * rhs
     }
-    
+
     /// Returns the product of multiplying this value by the specified value.
     ///
     /// - parameter multiplicator: The multiplicator.
@@ -314,21 +314,21 @@ extension Measure {
     public func multiplying(by multiplicator: Double) -> Self {
         return self * multiplicator
     }
-    
+
     /// Multiplies this value by the specified value and produces the product.
     ///
     /// - parameter multiplicator: The multiplicator.
     public mutating func multiply(by multiplicator: Double) {
         self *= multiplicator
     }
-    
+
     /// Returns this value doubled.
     ///
     ///  - returns: The value doubled.
     public func doubled() -> Self {
         return self * 2
     }
-    
+
     /// Doubles this value.
     public mutating func double() {
         self = self.doubled()
@@ -354,7 +354,7 @@ extension Measure: Subtractable {
         let lhsValue: Double = lhs.value
         let rhsValue: Double = rhs.converted(to: lhs.unit).value
         let newValue: Double = lhsValue - rhsValue
-        
+
         return .init(newValue, lhs.unit)
     }
 }

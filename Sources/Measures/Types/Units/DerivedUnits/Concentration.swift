@@ -9,23 +9,23 @@
 /// A unit of measure for concentration.
 public struct Concentration {
     public let coefficient: Double
-    
+
     public let constant: Double
-    
+
     public let symbol: String
-    
-	public init(
-		coefficient: Double,
-		constant: Double = 0,
-		symbol: String
-	) {
-		self.coefficient = coefficient
-		self.constant = constant
-		self.symbol = symbol
-	}
-    
+
+    public init(
+        coefficient: Double,
+        constant: Double = 0,
+        symbol: String
+    ) {
+        self.coefficient = coefficient
+        self.constant = constant
+        self.symbol = symbol
+    }
+
     // MARK: Composed Units
-    
+
     /// The grams per liter unit of concentration.
     public static let gramsPerLiter: Self = Mass.gram.dividing(by: .liter)
 }

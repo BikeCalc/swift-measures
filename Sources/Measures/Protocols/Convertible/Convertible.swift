@@ -9,17 +9,17 @@
 /// Representing a type that can be converted.
 public protocol Convertible {
     ///
-	associatedtype Unit
-	where Unit: Measurable
-	
-	/// Returns this measure converted to the specified unit.
-	///
-	/// - parameter rhs: The unit to convert to.
-	/// - returns: The converted measure.
-	func converted(to rhs: Unit) -> Self
-	
-	/// Converts this measure to the specified unit.
-	///
-	/// - parameter rhs: The unit to convert to.
-	mutating func convert(to rhs: Unit)
+    associatedtype Unit
+    where Unit: Measurable
+
+    /// Returns this measure converted to the specified unit.
+    ///
+    /// - parameter rhs: The unit to convert to.
+    /// - returns: The converted measure.
+    func converted(to rhs: Unit) -> Self
+
+    /// Converts this measure to the specified unit.
+    ///
+    /// - parameter rhs: The unit to convert to.
+    mutating func convert(to rhs: Unit)
 }
