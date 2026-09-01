@@ -122,16 +122,16 @@ extension ElectricCurrent: Codable {}
 
 extension ElectricCurrent: Comparable {}
 
-// MARK: - Divisible
+// MARK: - Multipliable
 
 extension ElectricCurrent {
     /// Returns the quotient of dividing this value by the specified value.
     ///
     /// - parameter time: A unit of time.
-    /// - returns: A unit of electric tension.
-    public func dividing(by time: Time) -> ElectricTension {
-        let coefficient: Double = self.coefficient * (1 / time.coefficient)
-        let symbol: String = self.symbol + "/" + time.symbol
+    /// - returns: A unit of electric charge.
+    public func multiplying(by time: Time) -> ElectricCharge {
+        let coefficient: Double = self.coefficient * time.coefficient
+        let symbol: String = self.symbol + "⋅" + time.symbol
         
         return .init(
             coefficient: coefficient,
