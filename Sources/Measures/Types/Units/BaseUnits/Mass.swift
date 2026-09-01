@@ -147,8 +147,8 @@ public struct Mass {
     /// The zettagram unit of mass.
     public static let zettagram: Self = .init(.zetta)
     
-    /// The hexagram unit of mass.
-    public static let hexagram: Self = .init(.hexa)
+    /// The exagram unit of mass.
+    public static let exagram: Self = .init(.exa)
     
     /// The petagram unit of mass.
     public static let petagram: Self = .init(.peta)

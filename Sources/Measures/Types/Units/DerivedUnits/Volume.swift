@@ -51,8 +51,8 @@ public struct Volume {
     /// The zettaliter unit of volume.
     public static let zettaliter: Self = .init(.zetta)
     
-    /// The hexaliter unit of volume.
-    public static let hexaliter: Self = .init(.hexa)
+    /// The exaliter unit of volume.
+    public static let exaliter: Self = .init(.exa)
     
     /// The petaliter unit of volume.
     public static let petaliter: Self = .init(.peta)

@@ -60,8 +60,8 @@ public struct Power {
     /// The zettawatt unit of power.
     public static let zettawatt: Self = .init(.zetta)
     
-    /// The hexawatt unit of power.
-    public static let hexawatt: Self = .init(.hexa)
+    /// The exawatt unit of power.
+    public static let exawatt: Self = .init(.exa)
     
     /// The petawatt unit of power.
     public static let petawatt: Self = .init(.peta)

@@ -50,8 +50,8 @@ public struct Frequency {
     /// The zettahertz unit of frequency.
     public static let zettahertz: Self = .init(.zetta)
     
-    /// The hexahertz unit of frequency.
-    public static let hexahertz: Self = .init(.hexa)
+    /// The exahertz unit of frequency.
+    public static let exahertz: Self = .init(.exa)
     
     /// The petahertz unit of frequency.
     public static let petahertz: Self = .init(.peta)

@@ -50,8 +50,8 @@ public struct AbsorbedDose {
     /// The zettagray unit of absorbed dose.
     public static let zettagray: Self = .init(.zetta)
     
-    /// The hexagray unit of absorbed dose.
-    public static let hexagray: Self = .init(.hexa)
+    /// The exagray unit of absorbed dose.
+    public static let exagray: Self = .init(.exa)
     
     /// The petagray unit of absorbed dose.
     public static let petagray: Self = .init(.peta)

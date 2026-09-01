@@ -50,8 +50,8 @@ public struct CatalyticActivity {
     /// The zettakatal unit of catalytic activity.
     public static let zettakatal: Self = .init(.zetta)
     
-    /// The hexakatal unit of catalytic activity.
-    public static let hexakatal: Self = .init(.hexa)
+    /// The exakatal unit of catalytic activity.
+    public static let exakatal: Self = .init(.exa)
     
     /// The petakatal unit of catalytic activity.
     public static let petakatal: Self = .init(.peta)

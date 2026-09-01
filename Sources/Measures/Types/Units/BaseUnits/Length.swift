@@ -169,8 +169,8 @@ public struct Length {
     /// The zettameter unit of length.
     public static let zettameter: Self = .init(.zetta)
     
-    /// The hexameter unit of length.
-    public static let hexameter: Self = .init(.hexa)
+    /// The exameter unit of length.
+    public static let exameter: Self = .init(.exa)
     
     /// The petameter unit of length.
     public static let petameter: Self = .init(.peta)

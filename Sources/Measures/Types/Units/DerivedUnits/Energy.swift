@@ -61,8 +61,8 @@ public struct Energy {
     /// The zettajoule unit of energy.
     public static let zettajoule: Self = .init(.zetta)
     
-    /// The hexajoule unit of energy.
-    public static let hexajoule: Self = .init(.hexa)
+    /// The exajoule unit of energy.
+    public static let exajoule: Self = .init(.exa)
     
     /// The petajoule unit of energy.
     public static let petajoule: Self = .init(.peta)

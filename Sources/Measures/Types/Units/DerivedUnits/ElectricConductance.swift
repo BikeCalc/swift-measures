@@ -50,8 +50,8 @@ public struct ElectricConductance {
     /// The zettasiemens unit of electric conductance.
     public static let zettasiemens: Self = .init(.zetta)
     
-    /// The hexasiemens unit of electric conductance.
-    public static let hexasiemens: Self = .init(.hexa)
+    /// The exasiemens unit of electric conductance.
+    public static let exasiemens: Self = .init(.exa)
     
     /// The petasiemens unit of electric conductance.
     public static let petasiemens: Self = .init(.peta)

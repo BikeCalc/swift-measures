@@ -50,8 +50,8 @@ public struct ElectricalInductance {
     /// The zettahenry unit of electrical inductance.
     public static let zettahenry: Self = .init(.zetta)
     
-    /// The hexahenry unit of electrical inductance.
-    public static let hexahenry: Self = .init(.hexa)
+    /// The exahenry unit of electrical inductance.
+    public static let exahenry: Self = .init(.exa)
     
     /// The petahenry unit of electrical inductance.
     public static let petahenry: Self = .init(.peta)

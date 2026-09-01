@@ -50,8 +50,8 @@ public struct ElectricalCapacitance {
     /// The zettafarad unit of electrical capacitance.
     public static let zettafarad: Self = .init(.zetta)
     
-    /// The hexafarad unit of electrical capacitance.
-    public static let hexafarad: Self = .init(.hexa)
+    /// The exafarad unit of electrical capacitance.
+    public static let exafarad: Self = .init(.exa)
     
     /// The petafarad unit of electrical capacitance.
     public static let petafarad: Self = .init(.peta)

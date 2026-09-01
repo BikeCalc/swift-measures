@@ -92,8 +92,8 @@ public struct Memory {
     /// The zettabit unit of memory.
     public static let zettabit: Self = .bit(.zetta)
     
-    /// The hexabit unit of memory.
-    public static let hexabit: Self = .bit(.hexa)
+    /// The exabit unit of memory.
+    public static let exabit: Self = .bit(.exa)
     
     /// The petabit unit of memory.
     public static let petabit: Self = .bit(.peta)
@@ -187,8 +187,8 @@ public struct Memory {
     /// The zettabyte unit of memory.
     public static let zettabyte: Self = .byte(.zetta)
     
-    /// The hexabyte unit of memory.
-    public static let hexabyte: Self = .byte(.hexa)
+    /// The exabyte unit of memory.
+    public static let exabyte: Self = .byte(.exa)
     
     /// The petabyte unit of memory.
     public static let petabyte: Self = .byte(.peta)

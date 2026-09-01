@@ -61,8 +61,8 @@ public struct Pressure {
     /// The zettapascal unit of pressure.
     public static let zettapascal: Self = .init(.zetta)
     
-    /// The hexapascal unit of pressure.
-    public static let hexapascal: Self = .init(.hexa)
+    /// The exapascal unit of pressure.
+    public static let exapascal: Self = .init(.exa)
     
     /// The petapascal unit of pressure.
     public static let petapascal: Self = .init(.peta)

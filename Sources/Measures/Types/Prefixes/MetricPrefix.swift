@@ -23,8 +23,8 @@ public enum MetricPrefix: String {
     /// A prefix that divides the base unit by 1e+21.
     case zetta
     
-    /// A prefix that divides the base unit by 1e+18.
-    case hexa
+    /// A prefix that multiplies the base unit by 1e+18.
+    case exa
     
     /// A prefix that divides the base unit by 1e+15.
     case peta
@@ -99,7 +99,7 @@ extension MetricPrefix {
 			return .septillion
 		case .zetta:
 			return .sextillion
-		case .hexa:
+		case .exa:
 			return .quintillion
 		case .peta:
 			return .quadrillion
@@ -160,7 +160,7 @@ extension MetricPrefix {
 			return "Y"
 		case .zetta:
 			return "Z"
-		case .hexa:
+		case .exa:
 			return "E"
 		case .peta:
 			return "P"

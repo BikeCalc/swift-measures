@@ -50,8 +50,8 @@ public struct Time {
     /// The zettasecond unit of time.
     public static let zettasecond: Self = .init(.zetta)
     
-    /// The hexasecond unit of time.
-    public static let hexasecond: Self = .init(.hexa)
+    /// The exasecond unit of time.
+    public static let exasecond: Self = .init(.exa)
     
     /// The petasecond unit of time.
     public static let petasecond: Self = .init(.peta)

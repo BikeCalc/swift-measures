@@ -50,8 +50,8 @@ public struct ElectricCurrent {
     /// The zettaampere unit of electric current.
     public static let zettaampere: Self = .init(.zetta)
     
-    /// The hexaampere unit of electric current.
-    public static let hexaampere: Self = .init(.hexa)
+    /// The exaampere unit of electric current.
+    public static let exaampere: Self = .init(.exa)
     
     /// The petaampere unit of electric current.
     public static let petaampere: Self = .init(.peta)

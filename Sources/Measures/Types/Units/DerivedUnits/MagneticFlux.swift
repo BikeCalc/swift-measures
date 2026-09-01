@@ -50,8 +50,8 @@ public struct MagneticFlux {
     /// The zettaweber unit of magnetic flux.
     public static let zettaweber: Self = .init(.zetta)
     
-    /// The hexaweber unit of magnetic flux.
-    public static let hexaweber: Self = .init(.hexa)
+    /// The exaweber unit of magnetic flux.
+    public static let exaweber: Self = .init(.exa)
     
     /// The petaweber unit of magnetic flux.
     public static let petaweber: Self = .init(.peta)

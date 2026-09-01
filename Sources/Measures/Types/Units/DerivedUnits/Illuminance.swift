@@ -50,8 +50,8 @@ public struct Illuminance {
     /// The zettalux unit of illuminance.
     public static let zettalux: Self = .init(.zetta)
     
-    /// The hexalux unit of illuminance.
-    public static let hexalux: Self = .init(.hexa)
+    /// The exalux unit of illuminance.
+    public static let exalux: Self = .init(.exa)
     
     /// The petalux unit of illuminance.
     public static let petalux: Self = .init(.peta)

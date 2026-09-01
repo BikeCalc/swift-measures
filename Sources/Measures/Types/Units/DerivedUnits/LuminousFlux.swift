@@ -50,8 +50,8 @@ public struct LuminousFlux {
     /// The zettalumen unit of luminous flux.
     public static let zettalumen: Self = .init(.zetta)
     
-    /// The hexalumen unit of luminous flux.
-    public static let hexalumen: Self = .init(.hexa)
+    /// The exalumen unit of luminous flux.
+    public static let exalumen: Self = .init(.exa)
     
     /// The petalumen unit of luminous flux.
     public static let petalumen: Self = .init(.peta)

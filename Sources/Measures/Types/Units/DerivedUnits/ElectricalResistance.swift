@@ -50,8 +50,8 @@ public struct ElectricalResistance {
     /// The zettaohm unit of electrical resistance.
     public static let zettaohm: Self = .init(.zetta)
     
-    /// The hexaohm unit of electrical resistance.
-    public static let hexaohm: Self = .init(.hexa)
+    /// The exaohm unit of electrical resistance.
+    public static let exaohm: Self = .init(.exa)
     
     /// The petaohm unit of electrical resistance.
     public static let petaohm: Self = .init(.peta)

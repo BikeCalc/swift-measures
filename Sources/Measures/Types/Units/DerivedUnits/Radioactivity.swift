@@ -50,8 +50,8 @@ public struct Radioactivity {
     /// The zettabecquerel unit of radioactivity.
     public static let zettabecquerel: Self = .init(.zetta)
     
-    /// The hexabecquerel unit of radioactivity.
-    public static let hexabecquerel: Self = .init(.hexa)
+    /// The exabecquerel unit of radioactivity.
+    public static let exabecquerel: Self = .init(.exa)
     
     /// The petabecquerel unit of radioactivity.
     public static let petabecquerel: Self = .init(.peta)

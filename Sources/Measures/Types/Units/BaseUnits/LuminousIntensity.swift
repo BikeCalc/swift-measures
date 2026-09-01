@@ -50,8 +50,8 @@ public struct LuminousIntensity {
     /// The zettacandela unit of luminous intensity.
     public static let zettacandela: Self = .init(.zetta)
     
-    /// The hexacandela unit of luminous intensity.
-    public static let hexacandela: Self = .init(.hexa)
+    /// The exacandela unit of luminous intensity.
+    public static let exacandela: Self = .init(.exa)
     
     /// The petacandela unit of luminous intensity.
     public static let petacandela: Self = .init(.peta)

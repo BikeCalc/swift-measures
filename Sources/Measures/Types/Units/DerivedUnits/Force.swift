@@ -50,8 +50,8 @@ public struct Force {
     /// The zettanewton unit of force.
     public static let zettanewton: Self = .init(.zetta)
     
-    /// The hexanewton unit of force.
-    public static let hexanewton: Self = .init(.hexa)
+    /// The exanewton unit of force.
+    public static let exanewton: Self = .init(.exa)
     
     /// The petanewton unit of force.
     public static let petanewton: Self = .init(.peta)

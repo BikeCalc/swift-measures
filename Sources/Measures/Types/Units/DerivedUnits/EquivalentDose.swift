@@ -50,8 +50,8 @@ public struct EquivalentDose {
     /// The zettasievert unit of equivalent dose.
     public static let zettasievert: Self = .init(.zetta)
     
-    /// The hexasievert unit of equivalent dose.
-    public static let hexasievert: Self = .init(.hexa)
+    /// The exasievert unit of equivalent dose.
+    public static let exasievert: Self = .init(.exa)
     
     /// The petasievert unit of equivalent dose.
     public static let petasievert: Self = .init(.peta)

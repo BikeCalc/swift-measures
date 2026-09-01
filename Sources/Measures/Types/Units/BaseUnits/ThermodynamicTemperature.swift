@@ -61,8 +61,8 @@ public struct ThermodynamicTemperature {
     /// The zettakelvin unit of thermodynamic temperature.
     public static let zettakelvin: Self = .init(.zetta)
     
-    /// The hexakelvin unit of thermodynamic temperature.
-    public static let hexakelvin: Self = .init(.hexa)
+    /// The exakelvin unit of thermodynamic temperature.
+    public static let exakelvin: Self = .init(.exa)
     
     /// The petakelvin unit of thermodynamic temperature.
     public static let petakelvin: Self = .init(.peta)

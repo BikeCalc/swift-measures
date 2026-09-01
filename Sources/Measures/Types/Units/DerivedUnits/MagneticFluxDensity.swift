@@ -50,8 +50,8 @@ public struct MagneticFluxDensity {
     /// The zettatesla unit of magnetic flux density.
     public static let zettatesla: Self = .init(.zetta)
     
-    /// The hexatesla unit of magnetic flux density.
-    public static let hexatesla: Self = .init(.hexa)
+    /// The exatesla unit of magnetic flux density.
+    public static let exatesla: Self = .init(.exa)
     
     /// The petatesla unit of magnetic flux density.
     public static let petatesla: Self = .init(.peta)

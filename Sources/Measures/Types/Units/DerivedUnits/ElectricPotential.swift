@@ -50,8 +50,8 @@ public struct ElectricPotential {
     /// The zettavolt unit of electric potential.
     public static let zettavolt: Self = .init(.zetta)
     
-    /// The hexavolt unit of electric potential.
-    public static let hexavolt: Self = .init(.hexa)
+    /// The exavolt unit of electric potential.
+    public static let exavolt: Self = .init(.exa)
     
     /// The petavolt unit of electric potential.
     public static let petavolt: Self = .init(.peta)

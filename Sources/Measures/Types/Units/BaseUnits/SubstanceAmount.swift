@@ -50,8 +50,8 @@ public struct SubstanceAmount {
     /// The zettamole unit of substance amount.
     public static let zettamole: Self = .init(.zetta)
     
-    /// The hexamole unit of substance amount.
-    public static let hexamole: Self = .init(.hexa)
+    /// The examole unit of substance amount.
+    public static let examole: Self = .init(.exa)
     
     /// The petamole unit of substance amount.
     public static let petamole: Self = .init(.peta)
