@@ -309,6 +309,24 @@ extension Mass: Measurable {
     public static let base: Self = .kilogram
 }
 
+// MARK: - Multipliable
+
+extension Mass {
+    /// Returns the product of multiplying this value by the specified value.
+    ///
+    /// - parameter acceleration: A unit of acceleration.
+    /// - returns: A unit of force.
+    public func multiplying(by acceleration: Acceleration) -> Force {
+        let coefficient: Double = self.coefficient * acceleration.coefficient
+        let symbol: String = self.symbol + "⋅" + acceleration.symbol
+
+        return .init(
+            coefficient: coefficient,
+            symbol: symbol
+        )
+    }
+}
+
 // MARK: - Sendable
 
 extension Mass: Sendable {}

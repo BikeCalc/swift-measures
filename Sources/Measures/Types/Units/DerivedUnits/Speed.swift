@@ -29,6 +29,9 @@ public struct Speed {
     /// The miles per hour unit of speed.
     public static let milesPerHour: Self = Length.mile.dividing(by: .hour)
 
+    /// The feet per second unit of speed.
+    public static let feetPerSecond: Self = Length.foot.dividing(by: .second)
+
     // MARK: Metric Units
 
     /// The kilometers per hour unit of speed.

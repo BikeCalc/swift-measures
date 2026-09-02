@@ -29,6 +29,9 @@ public struct ElectricCharge {
     /// The ampere hour unit of electric charge.
     public static let ampereHour: Self = ElectricCurrent.ampere.multiplying(by: .hour)
 
+    /// The milliampere-hour unit of electric charge.
+    public static let milliampereHour: Self = ElectricCurrent.milliampere.multiplying(by: .hour)
+
     /// The ampere second unit of electric charge.
     public static let ampereSecond: Self = ElectricCurrent.ampere.multiplying(by: .second)
 

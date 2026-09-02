@@ -26,14 +26,17 @@ public struct Pressure {
 
     // MARK: Composed Units
 
-    /// The newtons per square meter unit of pressure.
-    public static let newtonsPerSquareMeter: Self = Force.newton.dividing(by: Length.meter.squared())
-
     /// The pounds per square inch unit of pressure.
     public static let poundsPerSquareInch: Self = .init(
         coefficient: Force.poundForce.coefficient / Length.inch.squared().coefficient,
         symbol: "psi"
     )
+
+    /// The pounds per square foot unit of pressure.
+    public static let poundsPerSquareFoot: Self = Force.poundForce.dividing(by: Length.foot.squared())
+
+    /// The newtons per square meter unit of pressure.
+    public static let newtonsPerSquareMeter: Self = Force.newton.dividing(by: Length.meter.squared())
 
     // MARK: Metric Units
 

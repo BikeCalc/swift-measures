@@ -19,3 +19,4 @@
 ### Composed Units
 
 - ``meterPerSquareSecond``
+- ``footPerSquareSecond``

@@ -16,6 +16,10 @@
 
 - ``base``
 
+### Composed Units
+
+- ``joulePerSecond``
+
 ### Metric Units
 
 - ``quettawatt``

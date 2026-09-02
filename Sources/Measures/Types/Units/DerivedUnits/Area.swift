@@ -98,6 +98,24 @@ extension Area: Measurable {
     public static let base: Self = Length.meter.squared()
 }
 
+// MARK: - Multipliable
+
+extension Area {
+    /// Returns the product of multiplying this value by the specified value.
+    ///
+    /// - parameter length: A unit of length.
+    /// - returns: A unit of volume.
+    public func multiplying(by length: Length) -> Volume {
+        let coefficient: Double = self.coefficient * length.coefficient
+        let symbol: String = self.symbol + "⋅" + length.symbol
+
+        return .init(
+            coefficient: coefficient,
+            symbol: symbol
+        )
+    }
+}
+
 // MARK: - Sendable
 
 extension Area: Sendable {}

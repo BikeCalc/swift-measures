@@ -172,6 +172,24 @@ extension Force: Measurable {
     public static let base: Self = .newton
 }
 
+// MARK: - Multipliable
+
+extension Force {
+    /// Returns the product of multiplying this value by the specified value.
+    ///
+    /// - parameter length: A unit of length.
+    /// - returns: A unit of energy.
+    public func multiplying(by length: Length) -> Energy {
+        let coefficient: Double = self.coefficient * length.coefficient
+        let symbol: String = self.symbol + "⋅" + length.symbol
+
+        return .init(
+            coefficient: coefficient,
+            symbol: symbol
+        )
+    }
+}
+
 // MARK: - Sendable
 
 extension Force: Sendable {}

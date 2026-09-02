@@ -18,4 +18,6 @@
 
 ### Composed Units
 
+- ``kilogramsPerCubicMeter``
 - ``gramsPerLiter``
+- ``milligramsPerLiter``

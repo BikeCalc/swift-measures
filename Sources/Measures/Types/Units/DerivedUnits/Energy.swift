@@ -32,6 +32,9 @@ public struct Energy {
     /// The kilowatt hour unit of energy.
     public static let kilowattHour: Self = Power.kilowatt.multiplying(by: .hour)
 
+    /// The watt-hour unit of energy.
+    public static let wattHour: Self = Power.watt.multiplying(by: .hour)
+
     /// The kilowatt second unit of energy.
     public static let kilowattSecond: Self = Power.kilowatt.multiplying(by: .second)
 
@@ -173,6 +176,24 @@ extension Energy: Hashable {}
 
 extension Energy: Measurable {
     public static let base: Self = .joule
+}
+
+// MARK: - Divisible
+
+extension Energy {
+    /// Returns the quotient of dividing this value by the specified value.
+    ///
+    /// - parameter time: A unit of time.
+    /// - returns: A unit of power.
+    public func dividing(by time: Time) -> Power {
+        let coefficient: Double = self.coefficient * (1 / time.coefficient)
+        let symbol: String = self.symbol + "/" + time.symbol
+
+        return .init(
+            coefficient: coefficient,
+            symbol: symbol
+        )
+    }
 }
 
 // MARK: - Sendable

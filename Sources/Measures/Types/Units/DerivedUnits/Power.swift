@@ -24,6 +24,11 @@ public struct Power {
         self.symbol = symbol
     }
 
+    // MARK: Composed Units
+
+    /// The joule per second unit of power.
+    public static let joulePerSecond: Self = Energy.joule.dividing(by: .second)
+
     // MARK: Metric Units
 
     /// Creates a new instance with the specified metric prefix.

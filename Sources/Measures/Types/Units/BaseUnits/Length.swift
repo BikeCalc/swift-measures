@@ -273,6 +273,24 @@ extension Length: Measurable {
     public static let base: Self = .meter
 }
 
+// MARK: - Multipliable
+
+extension Length {
+    /// Returns the product of multiplying this value by the specified value.
+    ///
+    /// - parameter length: A unit of length.
+    /// - returns: A unit of area.
+    public func multiplying(by length: Length) -> Area {
+        let coefficient: Double = self.coefficient * length.coefficient
+        let symbol: String = self.symbol + "⋅" + length.symbol
+
+        return .init(
+            coefficient: coefficient,
+            symbol: symbol
+        )
+    }
+}
+
 // MARK: - Raisable
 
 extension Length {
@@ -280,12 +298,11 @@ extension Length {
     ///
     /// - returns: A unit of area.
     public func squared() -> Area {
-        let coefficient: Double = self.coefficient.raising(to: 2)
-        let symbol: String = self.symbol + "²"
+        let unit: Area = self.multiplying(by: self)
 
         return .init(
-            coefficient: coefficient,
-            symbol: symbol
+            coefficient: unit.coefficient,
+            symbol: self.symbol + "²"
         )
     }
 
@@ -293,12 +310,11 @@ extension Length {
     ///
     /// - returns: A unit of volume.
     public func cubed() -> Volume {
-        let coefficient: Double = self.coefficient.raising(to: 3)
-        let symbol: String = self.symbol + "³"
+        let unit: Volume = self.squared().multiplying(by: self)
 
         return .init(
-            coefficient: coefficient,
-            symbol: symbol
+            coefficient: unit.coefficient,
+            symbol: self.symbol + "³"
         )
     }
 }

@@ -19,6 +19,7 @@
 ### Customary and Imperial Units
 
 - ``milesPerHour``
+- ``feetPerSecond``
 
 ### Metric Units
 

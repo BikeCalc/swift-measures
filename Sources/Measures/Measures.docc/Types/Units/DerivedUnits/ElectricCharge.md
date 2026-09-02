@@ -19,6 +19,7 @@
 ### Composed Units
 
 - ``ampereHour``
+- ``milliampereHour``
 - ``ampereSecond``
 
 ### Metric Units

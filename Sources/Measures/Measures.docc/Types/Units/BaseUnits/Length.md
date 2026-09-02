@@ -72,6 +72,10 @@
 
 - ``dividing(by:)``
 
+### Multiplying Units
+
+- ``multiplying(by:)``
+
 ### Raising Units
 
 - ``squared()``

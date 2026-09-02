@@ -18,8 +18,9 @@
 
 ### Composed Units
 
-- ``newtonsPerSquareMeter``
 - ``poundsPerSquareInch``
+- ``poundsPerSquareFoot``
+- ``newtonsPerSquareMeter``
 
 ### Metric Units
 

@@ -20,6 +20,7 @@
 
 - ``kilowattYear``
 - ``kilowattHour``
+- ``wattHour``
 - ``kilowattSecond``
 
 ### Metric Units
@@ -59,3 +60,7 @@
 
 - ``kilocalorie``
 - ``calorie``
+
+### Dividing Units
+
+- ``dividing(by:)``
