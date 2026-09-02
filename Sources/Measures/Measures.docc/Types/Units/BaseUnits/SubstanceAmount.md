@@ -43,3 +43,7 @@
 - ``yoctomole``
 - ``rontomole``
 - ``quectomole``
+
+### Dividing Units
+
+- ``dividing(by:)``

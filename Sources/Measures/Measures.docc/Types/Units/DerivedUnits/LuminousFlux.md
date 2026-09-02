@@ -43,3 +43,7 @@
 - ``yoctolumen``
 - ``rontolumen``
 - ``quectolumen``
+
+### Dividing Units
+
+- ``dividing(by:)``

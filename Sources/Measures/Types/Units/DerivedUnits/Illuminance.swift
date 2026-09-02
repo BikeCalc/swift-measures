@@ -24,6 +24,11 @@ public struct Illuminance {
         self.symbol = symbol
     }
 
+    // MARK: Composed Units
+
+    /// The lumen per square meter unit of illuminance.
+    public static let lumenPerSquareMeter: Self = LuminousFlux.lumen.dividing(by: .squareMeter)
+
     // MARK: Metric Units
 
     /// Creates a new instance with the specified metric prefix.

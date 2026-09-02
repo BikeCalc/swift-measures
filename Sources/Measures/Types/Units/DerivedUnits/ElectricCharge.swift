@@ -133,6 +133,38 @@ extension ElectricCharge: Codable {}
 
 extension ElectricCharge: Comparable {}
 
+// MARK: - Divisible
+
+extension ElectricCharge {
+    /// Returns the quotient of dividing this value by the specified value.
+    ///
+    /// - parameter electricPotential: A unit of electric potential.
+    /// - returns: A unit of electrical capacitance.
+    public func dividing(by electricPotential: ElectricPotential) -> ElectricalCapacitance {
+        let coefficient: Double = self.coefficient * (1 / electricPotential.coefficient)
+        let symbol: String = self.symbol + "/" + electricPotential.symbol
+
+        return .init(
+            coefficient: coefficient,
+            symbol: symbol
+        )
+    }
+
+    /// Returns the quotient of dividing this value by the specified value.
+    ///
+    /// - parameter time: A unit of time.
+    /// - returns: A unit of electric current.
+    public func dividing(by time: Time) -> ElectricCurrent {
+        let coefficient: Double = self.coefficient * (1 / time.coefficient)
+        let symbol: String = self.symbol + "/" + time.symbol
+
+        return .init(
+            coefficient: coefficient,
+            symbol: symbol
+        )
+    }
+}
+
 // MARK: - Equatable
 
 extension ElectricCharge: Equatable {}

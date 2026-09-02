@@ -24,6 +24,11 @@ public struct MagneticFluxDensity {
         self.symbol = symbol
     }
 
+    // MARK: Composed Units
+
+    /// The weber per square meter unit of magnetic flux density.
+    public static let weberPerSquareMeter: Self = MagneticFlux.weber.dividing(by: .squareMeter)
+
     // MARK: Metric Units
 
     /// Creates a new instance with the specified metric prefix.

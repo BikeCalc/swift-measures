@@ -16,6 +16,10 @@
 
 - ``base``
 
+### Composed Units
+
+- ``lumenPerSquareMeter``
+
 ### Metric Units
 
 - ``quettalux``

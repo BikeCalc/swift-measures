@@ -122,6 +122,24 @@ extension LuminousFlux: Codable {}
 
 extension LuminousFlux: Comparable {}
 
+// MARK: - Divisible
+
+extension LuminousFlux {
+    /// Returns the quotient of dividing this value by the specified value.
+    ///
+    /// - parameter area: A unit of area.
+    /// - returns: A unit of illuminance.
+    public func dividing(by area: Area) -> Illuminance {
+        let coefficient: Double = self.coefficient * (1 / area.coefficient)
+        let symbol: String = self.symbol + "/" + area.symbol
+
+        return .init(
+            coefficient: coefficient,
+            symbol: symbol
+        )
+    }
+}
+
 // MARK: - Equatable
 
 extension LuminousFlux: Equatable {}

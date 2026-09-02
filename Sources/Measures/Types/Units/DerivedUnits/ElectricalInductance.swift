@@ -24,6 +24,11 @@ public struct ElectricalInductance {
         self.symbol = symbol
     }
 
+    // MARK: Composed Units
+
+    /// The weber per ampere unit of electrical inductance.
+    public static let weberPerAmpere: Self = MagneticFlux.weber.dividing(by: .ampere)
+
     // MARK: Metric Units
 
     /// Creates a new instance with the specified metric prefix.

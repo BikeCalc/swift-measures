@@ -16,6 +16,10 @@
 
 - ``base``
 
+### Composed Units
+
+- ``voltSecond``
+
 ### Metric Units
 
 - ``quettaweber``
@@ -43,3 +47,7 @@
 - ``yoctoweber``
 - ``rontoweber``
 - ``quectoweber``
+
+### Dividing Units
+
+- ``dividing(by:)``

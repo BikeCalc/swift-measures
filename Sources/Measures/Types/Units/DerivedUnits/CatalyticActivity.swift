@@ -24,6 +24,11 @@ public struct CatalyticActivity {
         self.symbol = symbol
     }
 
+    // MARK: Composed Units
+
+    /// The mole per second unit of catalytic activity.
+    public static let molePerSecond: Self = SubstanceAmount.mole.dividing(by: .second)
+
     // MARK: Metric Units
 
     /// Creates a new instance with the specified metric prefix.

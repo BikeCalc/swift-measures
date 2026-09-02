@@ -16,6 +16,10 @@
 
 - ``base``
 
+### Composed Units
+
+- ``molePerSecond``
+
 ### Metric Units
 
 - ``quettakatal``

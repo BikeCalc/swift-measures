@@ -16,6 +16,10 @@
 
 - ``base``
 
+### Composed Units
+
+- ``coulombPerSecond``
+
 ### Metric Units
 
 - ``quettaampere``
@@ -47,3 +51,7 @@
 ### Dividing Units
 
 - ``dividing(by:)``
+
+### Multiplying Units
+
+- ``multiplying(by:)``

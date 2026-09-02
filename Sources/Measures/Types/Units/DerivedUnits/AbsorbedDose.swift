@@ -24,6 +24,11 @@ public struct AbsorbedDose {
         self.symbol = symbol
     }
 
+    // MARK: Composed Units
+
+    /// The joule per kilogram unit of absorbed dose.
+    public static let joulePerKilogram: Self = Energy.joule.dividing(by: .kilogram)
+
     // MARK: Metric Units
 
     /// Creates a new instance with the specified metric prefix.

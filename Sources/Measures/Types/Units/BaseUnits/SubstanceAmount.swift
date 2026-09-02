@@ -122,6 +122,24 @@ extension SubstanceAmount: Codable {}
 
 extension SubstanceAmount: Comparable {}
 
+// MARK: - Divisible
+
+extension SubstanceAmount {
+    /// Returns the quotient of dividing this value by the specified value.
+    ///
+    /// - parameter time: A unit of time.
+    /// - returns: A unit of catalytic activity.
+    public func dividing(by time: Time) -> CatalyticActivity {
+        let coefficient: Double = self.coefficient * (1 / time.coefficient)
+        let symbol: String = self.symbol + "/" + time.symbol
+
+        return .init(
+            coefficient: coefficient,
+            symbol: symbol
+        )
+    }
+}
+
 // MARK: - Equatable
 
 extension SubstanceAmount: Equatable {}
@@ -139,4 +157,3 @@ extension SubstanceAmount: Measurable {
 // MARK: - Sendable
 
 extension SubstanceAmount: Sendable {}
-

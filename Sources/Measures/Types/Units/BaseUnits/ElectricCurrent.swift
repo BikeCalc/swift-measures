@@ -24,6 +24,11 @@ public struct ElectricCurrent {
         self.symbol = symbol
     }
 
+    // MARK: Composed Units
+
+    /// The coulomb per second unit of electric current.
+    public static let coulombPerSecond: Self = ElectricCharge.coulomb.dividing(by: .second)
+
     // MARK: Metric Units
 
     /// Creates a new instance with the specified metric prefix.
@@ -132,6 +137,38 @@ extension ElectricCurrent {
     public func multiplying(by time: Time) -> ElectricCharge {
         let coefficient: Double = self.coefficient * time.coefficient
         let symbol: String = self.symbol + "⋅" + time.symbol
+
+        return .init(
+            coefficient: coefficient,
+            symbol: symbol
+        )
+    }
+
+    /// Returns the product of multiplying this value by the specified value.
+    ///
+    /// - parameter electricPotential: A unit of electric potential.
+    /// - returns: A unit of power.
+    public func multiplying(by electricPotential: ElectricPotential) -> Power {
+        let coefficient: Double = self.coefficient * electricPotential.coefficient
+        let symbol: String = self.symbol + "⋅" + electricPotential.symbol
+
+        return .init(
+            coefficient: coefficient,
+            symbol: symbol
+        )
+    }
+}
+
+// MARK: - Divisible
+
+extension ElectricCurrent {
+    /// Returns the quotient of dividing this value by the specified value.
+    ///
+    /// - parameter electricPotential: A unit of electric potential.
+    /// - returns: A unit of electric conductance.
+    public func dividing(by electricPotential: ElectricPotential) -> ElectricConductance {
+        let coefficient: Double = self.coefficient * (1 / electricPotential.coefficient)
+        let symbol: String = self.symbol + "/" + electricPotential.symbol
 
         return .init(
             coefficient: coefficient,

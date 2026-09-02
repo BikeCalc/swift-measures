@@ -24,6 +24,11 @@ public struct MagneticFlux {
         self.symbol = symbol
     }
 
+    // MARK: Composed Units
+
+    /// The volt-second unit of magnetic flux.
+    public static let voltSecond: Self = ElectricPotential.volt.multiplying(by: .second)
+
     // MARK: Metric Units
 
     /// Creates a new instance with the specified metric prefix.
@@ -121,6 +126,38 @@ extension MagneticFlux: Codable {}
 // MARK: - Comparable
 
 extension MagneticFlux: Comparable {}
+
+// MARK: - Divisible
+
+extension MagneticFlux {
+    /// Returns the quotient of dividing this value by the specified value.
+    ///
+    /// - parameter area: A unit of area.
+    /// - returns: A unit of magnetic flux density.
+    public func dividing(by area: Area) -> MagneticFluxDensity {
+        let coefficient: Double = self.coefficient * (1 / area.coefficient)
+        let symbol: String = self.symbol + "/" + area.symbol
+
+        return .init(
+            coefficient: coefficient,
+            symbol: symbol
+        )
+    }
+
+    /// Returns the quotient of dividing this value by the specified value.
+    ///
+    /// - parameter electricCurrent: A unit of electric current.
+    /// - returns: A unit of electrical inductance.
+    public func dividing(by electricCurrent: ElectricCurrent) -> ElectricalInductance {
+        let coefficient: Double = self.coefficient * (1 / electricCurrent.coefficient)
+        let symbol: String = self.symbol + "/" + electricCurrent.symbol
+
+        return .init(
+            coefficient: coefficient,
+            symbol: symbol
+        )
+    }
+}
 
 // MARK: - Equatable
 

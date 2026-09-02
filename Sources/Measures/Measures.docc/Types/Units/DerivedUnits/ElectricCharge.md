@@ -49,3 +49,7 @@
 - ``yoctocoulomb``
 - ``rontocoulomb``
 - ``quectocoulomb``
+
+### Dividing Units
+
+- ``dividing(by:)``

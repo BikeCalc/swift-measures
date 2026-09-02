@@ -136,6 +136,24 @@ extension ElectricalResistance: Measurable {
     public static let base: Self = .ohm
 }
 
+// MARK: - Multipliable
+
+extension ElectricalResistance {
+    /// Returns the product of multiplying this value by the specified value.
+    ///
+    /// - parameter time: A unit of time.
+    /// - returns: A unit of electrical inductance.
+    public func multiplying(by time: Time) -> ElectricalInductance {
+        let coefficient: Double = self.coefficient * time.coefficient
+        let symbol: String = self.symbol + "⋅" + time.symbol
+
+        return .init(
+            coefficient: coefficient,
+            symbol: symbol
+        )
+    }
+}
+
 // MARK: - Sendable
 
 extension ElectricalResistance: Sendable {}

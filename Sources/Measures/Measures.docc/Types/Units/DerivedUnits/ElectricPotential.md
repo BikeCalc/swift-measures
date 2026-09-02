@@ -43,3 +43,11 @@
 - ``yoctovolt``
 - ``rontovolt``
 - ``quectovolt``
+
+### Dividing Units
+
+- ``dividing(by:)``
+
+### Multiplying Units
+
+- ``multiplying(by:)``

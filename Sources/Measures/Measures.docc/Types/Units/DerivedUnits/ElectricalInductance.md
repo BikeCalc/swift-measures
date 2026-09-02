@@ -16,6 +16,10 @@
 
 - ``base``
 
+### Composed Units
+
+- ``weberPerAmpere``
+
 ### Metric Units
 
 - ``quettahenry``

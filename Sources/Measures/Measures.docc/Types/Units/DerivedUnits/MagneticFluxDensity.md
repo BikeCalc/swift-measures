@@ -16,6 +16,10 @@
 
 - ``base``
 
+### Composed Units
+
+- ``weberPerSquareMeter``
+
 ### Metric Units
 
 - ``quettatesla``

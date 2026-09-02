@@ -16,6 +16,10 @@
 
 - ``base``
 
+### Composed Units
+
+- ``joulePerKilogram``
+
 ### Metric Units
 
 - ``quettagray``

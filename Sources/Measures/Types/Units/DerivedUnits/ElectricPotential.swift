@@ -136,6 +136,56 @@ extension ElectricPotential: Measurable {
     public static let base: Self = .volt
 }
 
+// MARK: - Divisible
+
+extension ElectricPotential {
+    /// Returns the quotient of dividing this value by the specified value.
+    ///
+    /// - parameter electricCurrent: A unit of electric current.
+    /// - returns: A unit of electrical resistance.
+    public func dividing(by electricCurrent: ElectricCurrent) -> ElectricalResistance {
+        let coefficient: Double = self.coefficient * (1 / electricCurrent.coefficient)
+        let symbol: String = self.symbol + "/" + electricCurrent.symbol
+
+        return .init(
+            coefficient: coefficient,
+            symbol: symbol
+        )
+    }
+}
+
+// MARK: - Multipliable
+
+extension ElectricPotential {
+    /// Returns the product of multiplying this value by the specified value.
+    ///
+    /// - parameter electricCharge: A unit of electric charge.
+    /// - returns: A unit of energy.
+    public func multiplying(by electricCharge: ElectricCharge) -> Energy {
+        let coefficient: Double = self.coefficient * electricCharge.coefficient
+        let symbol: String = self.symbol + "⋅" + electricCharge.symbol
+
+        return .init(
+            coefficient: coefficient,
+            symbol: symbol
+        )
+    }
+
+    /// Returns the product of multiplying this value by the specified value.
+    ///
+    /// - parameter time: A unit of time.
+    /// - returns: A unit of magnetic flux.
+    public func multiplying(by time: Time) -> MagneticFlux {
+        let coefficient: Double = self.coefficient * time.coefficient
+        let symbol: String = self.symbol + "⋅" + time.symbol
+
+        return .init(
+            coefficient: coefficient,
+            symbol: symbol
+        )
+    }
+}
+
 // MARK: - Sendable
 
 extension ElectricPotential: Sendable {}
