@@ -14,7 +14,6 @@ No overview available.
 
 ### Converting Values
 
-- <doc:Demonstration>
 - ``Convertible``
 - ``Measure``
 - ``Converted``
