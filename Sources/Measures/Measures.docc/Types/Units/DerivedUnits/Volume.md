@@ -16,6 +16,17 @@
 
 - ``base``
 
+### Composed Units
+
+- ``cubicMile``
+- ``cubicKilometer``
+- ``cubicMeter``
+- ``cubicYard``
+- ``cubicFoot``
+- ``cubicInch``
+- ``cubicCentimeter``
+- ``cubicMillimeter``
+
 ### Imperial Units
 
 - ``imperialGallon``

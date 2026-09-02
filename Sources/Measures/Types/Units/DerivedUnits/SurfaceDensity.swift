@@ -26,11 +26,14 @@ public struct SurfaceDensity {
 
     // MARK: Composed Units
 
+    /// The pounds per square foot unit of surface density.
+    public static let poundsPerSquareFoot: Self = Mass.pound.dividing(by: .squareFoot)
+
     /// The kilograms per square meter unit of surface density.
-    public static let kilogramsPerSquareMeter: Self = Mass.kilogram.dividing(by: Length.meter.squared())
+    public static let kilogramsPerSquareMeter: Self = Mass.kilogram.dividing(by: .squareMeter)
 
     /// The grams per square meter unit of surface density.
-    public static let gramsPerSquareMeter: Self = Mass.gram.dividing(by: Length.meter.squared())
+    public static let gramsPerSquareMeter: Self = Mass.gram.dividing(by: .squareMeter)
 }
 
 // MARK: - Codable

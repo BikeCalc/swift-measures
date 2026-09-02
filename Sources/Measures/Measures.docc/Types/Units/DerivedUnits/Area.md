@@ -16,6 +16,17 @@
 
 - ``base``
 
+### Composed Units
+
+- ``squareMile``
+- ``squareKilometer``
+- ``squareMeter``
+- ``squareYard``
+- ``squareFoot``
+- ``squareInch``
+- ``squareCentimeter``
+- ``squareMillimeter``
+
 ### Customary and Imperial Units
 
 - ``acre``

@@ -24,6 +24,32 @@ public struct Area {
         self.symbol = symbol
     }
 
+    // MARK: Composed Units
+
+    /// The square mile unit of area.
+    public static let squareMile: Self = Length.mile.squared()
+
+    /// The square kilometer unit of area.
+    public static let squareKilometer: Self = Length.kilometer.squared()
+
+    /// The square meter unit of area.
+    public static let squareMeter: Self = Length.meter.squared()
+
+    /// The square yard unit of area.
+    public static let squareYard: Self = Length.yard.squared()
+
+    /// The square foot unit of area.
+    public static let squareFoot: Self = Length.foot.squared()
+
+    /// The square inch unit of area.
+    public static let squareInch: Self = Length.inch.squared()
+
+    /// The square centimeter unit of area.
+    public static let squareCentimeter: Self = Length.centimeter.squared()
+
+    /// The square millimeter unit of area.
+    public static let squareMillimeter: Self = Length.millimeter.squared()
+
     // MARK: Customary and Imperial Units
 
     /// The acre unit of area.
@@ -45,7 +71,7 @@ public struct Area {
 
     /// The township unit of area.
     public static let township: Self = .init(
-        coefficient: Length.mile.squared().coefficient * 36,
+        coefficient: Self.squareMile.coefficient * 36,
         symbol: "twp"
     )
 
@@ -95,7 +121,7 @@ extension Area: Hashable {}
 // MARK: - Measurable
 
 extension Area: Measurable {
-    public static let base: Self = Length.meter.squared()
+    public static let base: Self = .squareMeter
 }
 
 // MARK: - Multipliable

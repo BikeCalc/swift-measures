@@ -16,6 +16,10 @@
 
 - ``base``
 
+### Composed Units
+
+- ``kilogramMeterPerSquareSecond``
+
 ### Metric Units
 
 - ``quettanewton``

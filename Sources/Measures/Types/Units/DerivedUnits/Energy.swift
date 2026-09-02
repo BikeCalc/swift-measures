@@ -38,6 +38,12 @@ public struct Energy {
     /// The kilowatt second unit of energy.
     public static let kilowattSecond: Self = Power.kilowatt.multiplying(by: .second)
 
+    /// The newton-meter unit of energy.
+    public static let newtonMeter: Self = Force.newton.multiplying(by: .meter)
+
+    /// The watt-second unit of energy.
+    public static let wattSecond: Self = Power.watt.multiplying(by: .second)
+
     // MARK: Metric Units
 
     /// Creates a new instance with the specified metric prefix.

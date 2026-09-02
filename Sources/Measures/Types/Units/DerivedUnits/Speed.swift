@@ -40,6 +40,9 @@ public struct Speed {
     /// The meter per second unit of speed.
     public static let metersPerSecond: Self = Length.meter.dividing(by: .second)
 
+    /// The centimeters per second unit of speed.
+    public static let centimetersPerSecond: Self = Length.centimeter.dividing(by: .second)
+
     // MARK: Other Units
 
     /// The knot unit of speed.

@@ -18,5 +18,6 @@
 
 ### Composed Units
 
+- ``poundsPerSquareFoot``
 - ``kilogramsPerSquareMeter``
 - ``gramsPerSquareMeter``

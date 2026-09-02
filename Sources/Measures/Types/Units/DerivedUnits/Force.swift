@@ -24,6 +24,13 @@ public struct Force {
         self.symbol = symbol
     }
 
+    // MARK: Composed Units
+
+    /// The kilogram-meter per square second unit of force.
+    public static let kilogramMeterPerSquareSecond: Self = Mass.kilogram.multiplying(
+        by: Acceleration.meterPerSquareSecond
+    )
+
     // MARK: Metric Units
 
     /// Creates a new instance with the specified metric prefix.

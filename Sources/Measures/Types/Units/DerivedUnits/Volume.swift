@@ -24,6 +24,32 @@ public struct Volume {
         self.symbol = symbol
     }
 
+    // MARK: Composed Units
+
+    /// The cubic mile unit of volume.
+    public static let cubicMile: Self = Length.mile.cubed()
+
+    /// The cubic kilometer unit of volume.
+    public static let cubicKilometer: Self = Length.kilometer.cubed()
+
+    /// The cubic meter unit of volume.
+    public static let cubicMeter: Self = Length.meter.cubed()
+
+    /// The cubic yard unit of volume.
+    public static let cubicYard: Self = Length.yard.cubed()
+
+    /// The cubic foot unit of volume.
+    public static let cubicFoot: Self = Length.foot.cubed()
+
+    /// The cubic inch unit of volume.
+    public static let cubicInch: Self = Length.inch.cubed()
+
+    /// The cubic centimeter unit of volume.
+    public static let cubicCentimeter: Self = Length.centimeter.cubed()
+
+    /// The cubic millimeter unit of volume.
+    public static let cubicMillimeter: Self = Length.millimeter.cubed()
+
     // MARK: Imperial Units
 
     /// The imperial gallon unit of volume.
@@ -192,7 +218,7 @@ public struct Volume {
 
     /// The U.S. dry bushel unit of volume.
     public static let usDryBushel: Self = .init(
-        coefficient: Length.inch.cubed().coefficient * 2_150.42,
+        coefficient: Self.cubicInch.coefficient * 2_150.42,
         symbol: "US bu"
     )
 
@@ -218,7 +244,7 @@ public struct Volume {
 
     /// The U.S. liquid gallon unit of volume.
     public static let usLiquidGallon: Self = .init(
-        coefficient: Length.inch.cubed().coefficient * 231,
+        coefficient: Self.cubicInch.coefficient * 231,
         symbol: "US gal"
     )
 
@@ -277,10 +303,7 @@ public struct Volume {
     )
 
     /// The acre-foot unit of volume.
-    public static let acreFoot: Self = .init(
-        coefficient: Area.acre.coefficient * Length.foot.coefficient,
-        symbol: "acre·ft"
-    )
+    public static let acreFoot: Self = Area.acre.multiplying(by: .foot)
 
     // MARK: U.S. Nutrition Labeling Units
 
@@ -328,7 +351,7 @@ extension Volume: Hashable {}
 // MARK: - Measurable
 
 extension Volume: Measurable {
-    public static let base: Self = Length.meter.cubed()
+    public static let base: Self = .cubicMeter
 }
 
 // MARK: - Sendable

@@ -27,7 +27,7 @@ public struct Concentration {
     // MARK: Composed Units
 
     /// The kilograms per cubic meter unit of concentration.
-    public static let kilogramsPerCubicMeter: Self = Mass.kilogram.dividing(by: Length.meter.cubed())
+    public static let kilogramsPerCubicMeter: Self = Mass.kilogram.dividing(by: .cubicMeter)
 
     /// The grams per liter unit of concentration.
     public static let gramsPerLiter: Self = Mass.gram.dividing(by: .liter)

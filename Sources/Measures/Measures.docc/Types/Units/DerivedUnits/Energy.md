@@ -22,6 +22,8 @@
 - ``kilowattHour``
 - ``wattHour``
 - ``kilowattSecond``
+- ``newtonMeter``
+- ``wattSecond``
 
 ### Metric Units
 

@@ -25,6 +25,7 @@
 
 - ``kilometersPerHour``
 - ``metersPerSecond``
+- ``centimetersPerSecond``
 
 ### Other Units
 
