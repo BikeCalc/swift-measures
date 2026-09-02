@@ -70,8 +70,7 @@
 
 ### Dividing Units
 
-- ``dividing(by:)-5h1ry``
-- ``dividing(by:)-6hl56``
+- ``dividing(by:)``
 
 ### Raising Units
 

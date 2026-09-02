@@ -247,20 +247,6 @@ extension Length {
     /// Returns the quotient of dividing this value by the specified value.
     ///
     /// - parameter time: A unit of time.
-    /// - returns: A unit of acceleration.
-    public func dividing(by time: Time) -> Acceleration {
-        let coefficient: Double = self.coefficient * (1 / time.coefficient.raising(to: 2))
-        let symbol: String = self.symbol + "/" + time.symbol + "²"
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
-
-    /// Returns the quotient of dividing this value by the specified value.
-    ///
-    /// - parameter time: A unit of time.
     /// - returns: A unit of speed.
     public func dividing(by time: Time) -> Speed {
         let coefficient: Double =  self.coefficient * (1 / time.coefficient)

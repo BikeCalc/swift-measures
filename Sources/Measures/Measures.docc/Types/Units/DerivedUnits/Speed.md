@@ -28,3 +28,7 @@
 ### Other Units
 
 - ``knot``
+
+### Dividing Units
+
+- ``dividing(by:)``

@@ -130,16 +130,16 @@ extension Power: Codable {}
 
 extension Power: Comparable {}
 
-// MARK: - Divisible
+// MARK: - Multipliable
 
 extension Power {
-    /// Returns the quotient of dividing this value by the specified value.
+    /// Returns the product of multiplying this value by the specified value.
     ///
     /// - parameter time: A unit of time.
     /// - returns: A unit of energy.
-    public func dividing(by time: Time) -> Energy {
-        let coefficient: Double = self.coefficient * (1 / time.coefficient)
-        let symbol: String = self.symbol + "/" + time.symbol
+    public func multiplying(by time: Time) -> Energy {
+        let coefficient: Double = self.coefficient * time.coefficient
+        let symbol: String = self.symbol + "⋅" + time.symbol
 
         return .init(
             coefficient: coefficient,

@@ -27,7 +27,7 @@ public struct Acceleration {
     // MARK: Composed Units
 
     /// The meter per square second unit of acceleration.
-    public static let meterPerSquareSecond: Self = Length.meter.dividing(by: .second)
+    public static let meterPerSquareSecond: Self = Speed.metersPerSecond.dividing(by: .second)
 }
 
 // MARK: - Codable

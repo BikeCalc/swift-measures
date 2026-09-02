@@ -48,6 +48,6 @@
 
 - ``mechanicalHorsepower``
 
-### Dividing Units
+### Multiplying Units
 
-- ``dividing(by:)``
+- ``multiplying(by:)``

@@ -27,13 +27,13 @@ public struct Energy {
     // MARK: Composed Units
 
     /// The kilowatt year unit of energy.
-    public static let kilowattYear: Self = Power.kilowatt.dividing(by: .year)
+    public static let kilowattYear: Self = Power.kilowatt.multiplying(by: .year)
 
     /// The kilowatt hour unit of energy.
-    public static let kilowattHour: Self = Power.kilowatt.dividing(by: .hour)
+    public static let kilowattHour: Self = Power.kilowatt.multiplying(by: .hour)
 
     /// The kilowatt second unit of energy.
-    public static let kilowattSecond: Self = Power.kilowatt.dividing(by: .second)
+    public static let kilowattSecond: Self = Power.kilowatt.multiplying(by: .second)
 
     // MARK: Metric Units
 
@@ -142,14 +142,14 @@ public struct Energy {
 
     /// The kilocalorie unit of energy.
     public static let kilocalorie: Self = .init(
-        coefficient: Self.kilocalorie.coefficient * 1_000,
-        symbol: "kCal"
+        coefficient: Self.calorie.coefficient * 1_000,
+        symbol: "kcal"
     )
 
     /// The calorie unit of energy.
     public static let calorie: Self = .init(
         coefficient: 4.184,
-        symbol: "Cal"
+        symbol: "cal"
     )
 }
 
