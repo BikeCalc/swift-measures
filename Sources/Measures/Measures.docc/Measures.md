@@ -17,6 +17,10 @@ No overview available.
 
 - <doc:UnderstandingTheInternationalSystemOfUnits>
 
+### Tutorials
+
+- <doc:/tutorials/Measures/CreatingACustomDimension>
+
 ### Converting Values
 
 - ``Convertible``

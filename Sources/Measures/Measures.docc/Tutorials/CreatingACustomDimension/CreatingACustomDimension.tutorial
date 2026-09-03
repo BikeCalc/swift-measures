@@ -1,0 +1,252 @@
+@Tutorial(time: 20) {
+    @Intro(title: "Creating a Custom Dimension") {
+        Define a data-transfer-rate dimension, add custom units, convert between them, and use a property wrapper to
+        keep assigned values expressed in a preferred unit.
+    }
+
+    @Section(title: "Define the dimension") {
+        @ContentAndMedia {
+            Build a custom dimension, define its valid range, and compose reusable units from existing memory and
+            time units.
+        }
+
+        @Steps {
+            @Step {
+                Import `Measures` to make its dimensions, protocols, and conversion APIs available.
+
+                @Code(name: "DataTransferRate.swift", file: "01-01.swift")
+            }
+
+            @Step {
+                Declare a type to represent the data-transfer-rate dimension.
+
+                @Code(name: "DataTransferRate.swift", file: "01-02.swift")
+            }
+
+            @Step {
+                Conform `DataTransferRate` to `Measurable` to describe a dimension whose units can be measured and
+                converted.
+
+                @Code(name: "DataTransferRate.swift", file: "01-03.swift")
+            }
+
+            @Step {
+                Add the coefficient, constant, and symbol required by `Measurable`.
+
+                @Code(name: "DataTransferRate.swift", file: "01-04.swift")
+            }
+
+            @Step {
+                Add an initializer for creating units. Give `constant` a default value of zero because most units only
+                scale relative to their base unit and don't require an additive offset.
+
+                @Code(name: "DataTransferRate.swift", file: "01-05.swift")
+            }
+
+            @Step {
+                Define the base unit as one bit per second. Its coefficient is `1` because every other unit is
+                expressed relative to it, and its symbol is `b/s`.
+
+                @Code(name: "DataTransferRate.swift", file: "01-06.swift")
+            }
+
+            @Step {
+                Declare that valid data-transfer rates begin at zero by adding `validRange` below `base`.
+
+                @Code(name: "DataTransferRate.swift", file: "01-07.swift")
+            }
+
+            @Step {
+                Extend `Memory` with a `dividing(by:)` function that accepts a unit of time and returns a
+                `DataTransferRate` unit.
+
+                @Code(name: "DataTransferRate.swift", file: "01-08.swift")
+            }
+
+            @Step {
+                Calculate the new unit's coefficient by dividing the memory unit's coefficient by the time unit's
+                coefficient.
+
+                @Code(name: "DataTransferRate.swift", file: "01-09.swift")
+            }
+
+            @Step {
+                Build the new unit's symbol by joining the memory and time symbols with a slash.
+
+                @Code(name: "DataTransferRate.swift", file: "01-10.swift")
+            }
+
+            @Step {
+                Return a data-transfer-rate unit using the calculated coefficient and symbol.
+
+                @Code(name: "DataTransferRate.swift", file: "01-11.swift")
+            }
+
+            @Step {
+                Use the composition function to create four reusable units, then use bits per second as the base unit.
+
+                @Code(name: "DataTransferRate.swift", file: "01-12.swift")
+            }
+
+            @Step {
+                Add `Equatable` to the `DataTransferRate` declaration so its units can be compared and used with the
+                `Converted` property wrapper.
+
+                @Code(name: "DataTransferRate.swift", file: "01-13.swift")
+            }
+        }
+    }
+
+    @Section(title: "Work with measures") {
+        @ContentAndMedia {
+            Create data-transfer-rate measures, convert them between units, perform arithmetic, keep their units
+            consistent, and check whether their values are valid.
+        }
+
+        @Steps {
+            @Step {
+                Start a new file by importing `Measures`.
+
+                @Code(name: "main.swift", file: "02-01.swift")
+            }
+
+            @Step {
+                Declare `downloadRate` as a `Measure<DataTransferRate>`. The generic argument identifies the dimension
+                measured by the value.
+
+                @Code(name: "main.swift", file: "02-02.swift")
+            }
+
+            @Step {
+                Initialize the download rate with a value of `100` and the megabits-per-second unit.
+
+                @Code(name: "main.swift", file: "02-03.swift")
+            }
+
+            @Step {
+                Print the download rate to see its original value and unit.
+
+                @Code(name: "main.swift", file: "02-04.swift")
+            }
+
+            @Step {
+                Declare `convertedDownloadRate` with the same `Measure<DataTransferRate>` type.
+
+                @Code(name: "main.swift", file: "02-05.swift")
+            }
+
+            @Step {
+                Convert the download rate to megabytes per second and assign the result to `convertedDownloadRate`.
+
+                @Code(name: "main.swift", file: "02-06.swift")
+            }
+
+            @Step {
+                Print the converted rate and compare `12.5 MB/s` with the original `100 Mb/s`.
+
+                @Code(name: "main.swift", file: "02-07.swift")
+            }
+
+            @Step {
+                Return to the original declaration, keeping its print statement but removing `convertedDownloadRate`
+                and the converted-rate print.
+
+                @Code(name: "main.swift", file: "02-08.swift")
+            }
+
+            @Step {
+                Change `downloadRate` from a constant to a variable so that its stored unit and value can change.
+
+                @Code(name: "main.swift", file: "02-09.swift")
+            }
+
+            @Step {
+                Convert `downloadRate` in place to megabytes per second with the mutating `convert(to:)` method.
+
+                @Code(name: "main.swift", file: "02-10.swift")
+            }
+
+            @Step {
+                Print the updated download rate. The same variable now stores `12.5 MB/s`.
+
+                @Code(name: "main.swift", file: "02-11.swift")
+            }
+
+            @Step {
+                Before exploring arithmetic, remove the conversion and its later print while retaining the initial
+                download-rate print.
+
+                @Code(name: "main.swift", file: "02-12.swift")
+            }
+
+            @Step {
+                Add `25 Mb/s` to the download rate using the addition-assignment operator.
+
+                @Code(name: "main.swift", file: "02-13.swift")
+            }
+
+            @Step {
+                Print the download rate to see the result of `125 Mb/s`.
+
+                @Code(name: "main.swift", file: "02-14.swift")
+            }
+
+            @Step {
+                Add another `8 Mb/s` to the download rate.
+
+                @Code(name: "main.swift", file: "02-15.swift")
+            }
+
+            @Step {
+                Print the download rate again to see the new result of `133 Mb/s`.
+
+                @Code(name: "main.swift", file: "02-16.swift")
+            }
+
+            @Step {
+                Add `@Converted(to: .megabytesPerSecond)` so that `downloadRate` always stores assigned values in
+                megabytes per second, regardless of the unit used by the assigned measure.
+
+                @Code(name: "main.swift", file: "02-17.swift")
+            }
+
+            @Step {
+                Remove the arithmetic and its later print statements, retaining the initial print as a clean starting
+                point for subtraction.
+
+                @Code(name: "main.swift", file: "02-18.swift")
+            }
+
+            @Step {
+                Subtract `2.5 MB/s` from the download rate using the subtraction-assignment operator.
+
+                @Code(name: "main.swift", file: "02-19.swift")
+            }
+
+            @Step {
+                Print the download rate to see the result of `10 MB/s`.
+
+                @Code(name: "main.swift", file: "02-20.swift")
+            }
+
+            @Step {
+                Subtract another `15 MB/s`, taking the download rate below its valid range.
+
+                @Code(name: "main.swift", file: "02-21.swift")
+            }
+
+            @Step {
+                Print the download rate to see that arithmetic can produce the negative value `-5 MB/s`.
+
+                @Code(name: "main.swift", file: "02-22.swift")
+            }
+
+            @Step {
+                Print `isWithinValidRange` to check the result against the range defined by `DataTransferRate`.
+                Because the rate is negative, the property returns `false`.
+
+                @Code(name: "main.swift", file: "02-23.swift")
+            }
+        }
+    }
+}

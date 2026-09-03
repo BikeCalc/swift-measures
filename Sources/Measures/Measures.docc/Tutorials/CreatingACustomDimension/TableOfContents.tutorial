@@ -1,0 +1,14 @@
+@Tutorials(name: "Swift Measures") {
+    @Intro(title: "Build with Measures") {
+        Create custom dimensions and units, convert values, and keep measures expressed in a preferred unit.
+    }
+
+    @Chapter(name: "Custom Dimensions") {
+        @Image(
+            source: "CustomDimensions.png",
+            alt: "The Swift Measures logo beside illustrations of measuring instruments."
+        )
+
+        @TutorialReference(tutorial: "doc:CreatingACustomDimension")
+    }
+}

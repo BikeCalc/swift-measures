@@ -162,12 +162,7 @@ then established a permanent international framework for improving and unifying 
 
 ## Further Reading
 
-- [The International System of Units]
-- [The Metre Convention]
-- [NIST guidance on U.S. customary terminology]
-- [UK guidance on units of measurement]
-
-[The International System of Units]: https://www.bipm.org/en/publications/si-brochure/
-[The Metre Convention]: https://www.bipm.org/en/metre-convention
-[NIST guidance on U.S. customary terminology]: https://www.nist.gov/pml/owm/faqs/us-metrication-faqs
-[UK guidance on units of measurement]: https://www.gov.uk/weights-measures-and-packaging-the-law
+- [The International System of Units](https://www.bipm.org/en/publications/si-brochure/)
+- [The Metre Convention](https://www.bipm.org/en/metre-convention)
+- [NIST guidance on U.S. customary terminology](https://www.nist.gov/pml/owm/faqs/us-metrication-faqs)
+- [UK guidance on units of measurement](https://www.gov.uk/weights-measures-and-packaging-the-law)
