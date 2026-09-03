@@ -7,7 +7,7 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 /// Representing a type that can be measured.
-public protocol Measurable
+public protocol Measurable: RangeValidatable
 where Self: Sendable {
     /// Creates a new instance with the specified coefficient, constant and symbol.
     ///

@@ -30,10 +30,9 @@ where Unit: Equatable & Measurable {
     ///
     /// - parameter value: The value.
     /// - parameter unit: The unit.
-    /// - warning: A measure can not be negative.
     public init<Value>(_ value: Value, _ unit: Unit)
     where Value: BinaryFloatingPoint {
-        self.value = .init(max(.zero, value))
+        self.value = .init(value)
         self.unit = unit
     }
 
@@ -41,11 +40,17 @@ where Unit: Equatable & Measurable {
     ///
     /// - parameter value: The value.
     /// - parameter unit: The unit.
-    /// - warning: A measure can not be negative.
     public init<Value>(_ value: Value, _ unit: Unit)
     where Value: BinaryInteger {
-        self.value = .init(max(.zero, value))
+        self.value = .init(value)
         self.unit = unit
+    }
+
+    /// A Boolean value indicating whether this measure is within its dimension's valid range.
+    public var isWithinValidRange: Bool {
+        let baseValue: Double = self.value * self.unit.coefficient + self.unit.constant
+
+        return Unit.validRange.contains(baseValue)
     }
 }
 

@@ -156,6 +156,12 @@ extension ThermodynamicTemperature: Measurable {
     public static let base: Self = .kelvin
 }
 
+// MARK: - RangeValidatable
+
+extension ThermodynamicTemperature {
+    public static let validRange: ClosedRange<Double> = .zero ... .infinity
+}
+
 // MARK: - Sendable
 
 extension ThermodynamicTemperature: Sendable {}
