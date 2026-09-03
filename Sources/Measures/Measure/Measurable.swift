@@ -33,6 +33,13 @@ where Self: Sendable {
     static var base: Self { get }
 }
 
+/// The keys used to encode and decode a measurable unit.
+fileprivate enum UnitCodingKeys: String, CodingKey {
+    case coefficient
+    case constant
+    case symbol
+}
+
 extension Measurable
 where Self: Comparable {
     public static func < (_ lhs: Self, _ rhs: Self) -> Bool {
@@ -43,7 +50,9 @@ where Self: Comparable {
 extension Measurable
 where Self: Decodable {
     public init(from decoder: Decoder) throws {
-        let container: KeyedDecodingContainer<MeasurableCodingKeys> = try decoder.container(keyedBy: MeasurableCodingKeys.self)
+        let container: KeyedDecodingContainer<UnitCodingKeys> = try decoder.container(
+            keyedBy: UnitCodingKeys.self
+        )
 
         let coefficient: Double = try container.decode(Double.self, forKey: .coefficient)
         let constant: Double = try container.decodeIfPresent(Double.self, forKey: .constant) ?? .zero
@@ -60,7 +69,7 @@ where Self: Decodable {
 extension Measurable
 where Self: Encodable {
     public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: MeasurableCodingKeys.self)
+        var container = encoder.container(keyedBy: UnitCodingKeys.self)
 
         try container.encode(self.coefficient, forKey: .coefficient)
         try container.encode(self.constant, forKey: .constant)

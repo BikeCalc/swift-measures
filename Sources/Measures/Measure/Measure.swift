@@ -11,6 +11,12 @@ import NumericsExtended
 /// A representation of a measure.
 public struct Measure<Unit>
 where Unit: Equatable & Measurable {
+    /// The keys used to encode and decode a measure.
+    private enum CodingKeys: String, CodingKey {
+        case value = "value"
+        case unit = "unit"
+    }
+
     /// The unit.
     public typealias Unit = Unit
 
@@ -145,7 +151,7 @@ extension Measure: CustomStringConvertible {
 extension Measure: Decodable
 where Unit: Decodable {
     public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: MeasureCodingKeys.self)
+        let container: KeyedDecodingContainer<Self.CodingKeys> = try decoder.container(keyedBy: Self.CodingKeys.self)
 
         let value: Double = try container.decode(Double.self, forKey: .value)
         let unit: Unit = try container.decode(Unit.self, forKey: .unit)
@@ -223,7 +229,7 @@ extension Measure {
 extension Measure: Encodable
 where Unit: Encodable {
     public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: MeasureCodingKeys.self)
+        var container: KeyedEncodingContainer<Self.CodingKeys> = encoder.container(keyedBy: Self.CodingKeys.self)
 
         try container.encode(self.value, forKey: .value)
         try container.encode(self.unit, forKey: .unit)
