@@ -174,6 +174,14 @@ where Unit: Decodable {
 // MARK: - Divisible
 
 extension Measure {
+    /// Returns a Boolean value indicating whether this measure's value is divisible by the specified value.
+    ///
+    /// - parameter other: The value to test.
+    /// - returns: `true` if this measure's value is divisible by the specified value, and `false` otherwise.
+    public func isDivisible(by other: Double) -> Bool {
+        return self.value.isDivisible(by: other)
+    }
+
     /// Returns the quotient of dividing the first specified value by the second.
     ///
     /// - parameter lhs: The dividend.
@@ -184,18 +192,6 @@ extension Measure {
         let newValue: Double = lhsValue / rhs
 
         return .init(newValue, lhs.unit)
-    }
-
-    /// Returns the quotient of dividing the first specified value by the second.
-    ///
-    /// - parameter lhs: The dividend.
-    /// - parameter rhs: The divisor.
-    /// - returns: The quotient.
-    public static func / (_ lhs: Double, _ rhs: Self) -> Self {
-        let rhsValue: Double = rhs.value
-        let newValue: Double = lhs / rhsValue
-
-        return .init(newValue, rhs.unit)
     }
 
     /// Divides the first specified value by the second and stores the quotient in the left-hand-side variable.
@@ -292,6 +288,14 @@ where Unit: Hashable {
 // MARK: - Multipliable
 
 extension Measure {
+    /// Returns a Boolean value indicating whether this measure's value is a multiple of the specified value.
+    ///
+    /// - parameter other: The value to test.
+    /// - returns: `true` if this measure's value is a multiple of the specified value, and `false` otherwise.
+    public func isMultiple(of other: Double) -> Bool {
+        return self.value.isMultiple(of: other)
+    }
+
     /// Returns the product of multiplying the two specified values.
     ///
     /// - parameter lhs: The multiplicand.
