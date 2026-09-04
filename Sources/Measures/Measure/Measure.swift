@@ -136,6 +136,18 @@ extension Measure: Convertible {
     }
 }
 
+// MARK: - CustomDebugStringConvertible
+
+extension Measure: CustomDebugStringConvertible {
+    /// A textual representation of this instance suitable for debugging.
+    public var debugDescription: String {
+        let value: String = String(reflecting: self.value)
+        let unit: String = String(reflecting: self.unit)
+
+        return "Measure<\(Unit.self)>(\(value), \(unit))"
+    }
+}
+
 // MARK: - CustomStringConvertible
 
 extension Measure: CustomStringConvertible {
