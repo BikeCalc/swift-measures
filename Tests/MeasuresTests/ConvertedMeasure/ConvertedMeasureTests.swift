@@ -43,7 +43,7 @@ internal struct ConvertedMeasureTests {
         value: Measure<Length>,
         result: Measure<Length>
     ) {
-        @Converted(to: .meter) var convertedValue: Measure<Length> = .zero
+        @Converted(to: .meter) var convertedValue: Measure<Length> = .init(0, .base)
         convertedValue = value
 
         #expect(convertedValue == result)
