@@ -16,3 +16,7 @@
 
 - ``isBase``
 - ``base``
+
+### Valid Range
+
+- ``validRange``

@@ -16,5 +16,5 @@ downloadRate -= .init(15, .megabytesPerSecond)
 print(downloadRate)
 // Prints "-5.0 MB/s"
 
-print(downloadRate.isWithinValidRange)
+print(downloadRate.isValid)
 // Prints "false"

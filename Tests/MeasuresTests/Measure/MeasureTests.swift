@@ -62,7 +62,7 @@ internal struct MeasureTests {
         measure: Measure<ThermodynamicTemperature>,
         result: Bool
     ) {
-        #expect(measure.isWithinValidRange == result)
+        #expect(measure.isValid == result)
     }
 
     @Test(
@@ -74,6 +74,31 @@ internal struct MeasureTests {
         ]
     )
     internal func unboundedValidRangeSucceeds(measure: Measure<Length>) {
-        #expect(measure.isWithinValidRange)
+        #expect(measure.isValid)
+    }
+
+    @Test(
+        "Invalid conversion makes measure invalid",
+        arguments: [
+            (Measure<Length>(1, .meter), true),
+            (Measure<Length>(-1, .meter), true),
+            (Measure<Length>(Double.infinity, .meter), false),
+            (Measure<Length>(-Double.infinity, .meter), false),
+            (Measure<Length>(Double.nan, .meter), false),
+            (Measure<Length>(1, Length(coefficient: 0, symbol: "u")), false),
+            (Measure<Length>(1, Length(coefficient: -0.0, symbol: "u")), false),
+            (Measure<Length>(1, Length(coefficient: .infinity, symbol: "u")), false),
+            (Measure<Length>(1, Length(coefficient: -.infinity, symbol: "u")), false),
+            (Measure<Length>(1, Length(coefficient: .nan, symbol: "u")), false),
+            (Measure<Length>(1, Length(coefficient: 1, constant: .infinity, symbol: "u")), false),
+            (Measure<Length>(1, Length(coefficient: 1, constant: -.infinity, symbol: "u")), false),
+            (Measure<Length>(1, Length(coefficient: 1, constant: .nan, symbol: "u")), false)
+        ]
+    )
+    internal func invalidConversionMakesMeasureInvalid(
+        measure: Measure<Length>,
+        result: Bool
+    ) {
+        #expect(measure.isValid == result)
     }
 }

@@ -154,11 +154,7 @@ extension ThermodynamicTemperature: Hashable {}
 
 extension ThermodynamicTemperature: Measurable {
     public static let base: Self = .kelvin
-}
 
-// MARK: - RangeValidatable
-
-extension ThermodynamicTemperature {
     public static let validRange: ClosedRange<Double> = .zero ... .infinity
 }
 

@@ -7,8 +7,7 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 /// Representing a type that can be measured.
-public protocol Measurable: RangeValidatable
-where Self: Sendable {
+public protocol Measurable {
     /// Creates a new instance with the specified coefficient, constant and symbol.
     ///
     /// - parameter coefficient: The coefficient.
@@ -31,6 +30,9 @@ where Self: Sendable {
 
     /// The base unit of this instance's dimension.
     static var base: Self { get }
+
+    /// The valid range expressed in the base unit.
+    static var validRange: ClosedRange<Double> { get }
 }
 
 /// The keys used to encode and decode a measurable unit.
@@ -38,6 +40,12 @@ fileprivate enum UnitCodingKeys: String, CodingKey {
     case coefficient
     case constant
     case symbol
+}
+
+extension Measurable {
+    public static var validRange: ClosedRange<Double> {
+        return -.infinity ... .infinity
+    }
 }
 
 extension Measurable

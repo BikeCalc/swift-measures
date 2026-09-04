@@ -12,6 +12,10 @@
 - ``value``
 - ``unit-swift.property``
 
+### Validating Measures
+
+- ``isValid``
+
 ### Converting Measures
 
 - ``converted(to:)-9vj7w``

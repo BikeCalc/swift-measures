@@ -242,8 +242,8 @@
             }
 
             @Step {
-                Print `isWithinValidRange` to check the result against the range defined by `DataTransferRate`.
-                Because the rate is negative, the property returns `false`.
+                Print `isValid` to check the result against the range defined by `DataTransferRate`. Because the rate
+                is negative, the property returns `false`.
 
                 @Code(name: "main.swift", file: "02-23.swift")
             }

@@ -8,7 +8,7 @@
 
 /// A representation of a measure.
 public struct Measure<Unit>
-where Unit: Equatable & Measurable {
+where Unit: Equatable & Measurable & Sendable {
     /// The keys used to encode and decode a measure.
     private enum CodingKeys: String, CodingKey {
         case value = "value"
@@ -44,11 +44,25 @@ where Unit: Equatable & Measurable {
         self.unit = unit
     }
 
+    /// A Boolean value indicating whether this measure is valid.
+    public var isValid: Bool {
+        return self.isValidForConversion
+            && self.isWithinValidRange
+    }
+
     /// A Boolean value indicating whether this measure is within its dimension's valid range.
-    public var isWithinValidRange: Bool {
+    internal var isWithinValidRange: Bool {
         let baseValue: Double = self.value * self.unit.coefficient + self.unit.constant
 
         return Unit.validRange.contains(baseValue)
+    }
+
+    /// A Boolean value indicating whether this measure defines a finite, invertible conversion.
+    internal var isValidForConversion: Bool {
+        return self.value.isFinite
+            && self.unit.coefficient.isFinite
+            && !self.unit.coefficient.isZero
+            && self.unit.constant.isFinite
     }
 }
 

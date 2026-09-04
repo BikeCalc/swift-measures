@@ -30,7 +30,6 @@ No overview available.
 ### Measuring Values
 
 - ``Measurable``
-- ``RangeValidatable``
 
 ### Base Units
 

@@ -9,7 +9,7 @@
 /// A property wrapper that keeps a measure expressed in a specified unit.
 @propertyWrapper
 public struct Converted<Unit>
-where Unit: Equatable & Measurable {
+where Unit: Equatable & Measurable & Sendable {
     /// The converted stored measure.
     private var value: Measure<Unit>
 
@@ -146,7 +146,3 @@ where Unit: Hashable {
         hasher.combine(self.wrappedValue)
     }
 }
-
-// MARK: - Sendable
-
-extension Converted: Sendable {}
