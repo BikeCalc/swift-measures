@@ -1,11 +1,15 @@
 # ``Measures``
 
-A package containing a set of objects and protocols to create and convert units of measure, for the Swift programming
-language.
+A Swift package for defining, converting, and composing units of measure.
 
 ## Overview
 
-No overview available.
+Measures provides strongly typed values and units for physical dimensions. It includes SI base and derived units,
+metric and binary prefixes, commonly used customary and imperial units, and dimensional composition for related
+units such as area, volume, speed, force, energy, and electrical quantities.
+
+Applications can define domain-specific dimensions by creating a unit type that conforms to `Measurable`. Values can
+then be represented with `Measure`, converted between compatible units, or converted automatically with `Converted`.
 
 ## Topics
 
@@ -23,9 +27,9 @@ No overview available.
 
 ### Converting Values
 
-- ``Convertible``
 - ``Measure``
 - ``Converted``
+- ``Convertible``
 
 ### Measuring Values
 
@@ -33,29 +37,31 @@ No overview available.
 
 ### Base Units
 
+Dimensions defined by the seven base units of the International System of Units.
+
 - ``ElectricCurrent``
 - ``Length``
 - ``LuminousIntensity``
 - ``Mass``
-- ``Memory``
 - ``SubstanceAmount``
 - ``ThermodynamicTemperature``
 - ``Time``
 
 ### Derived Units
 
+Dimensions derived from the base dimensions of the International System of Units.
+
 - ``AbsorbedDose``
 - ``Acceleration``
 - ``Area``
-- ``Cadence``
 - ``CatalyticActivity``
 - ``Concentration``
+- ``ElectricCharge``
+- ``ElectricConductance``
+- ``ElectricPotential``
 - ``ElectricalCapacitance``
 - ``ElectricalInductance``
 - ``ElectricalResistance``
-- ``ElectricConductance``
-- ``ElectricPotential``
-- ``ElectricCharge``
 - ``Energy``
 - ``EquivalentDose``
 - ``Force``
@@ -68,9 +74,17 @@ No overview available.
 - ``Power``
 - ``Pressure``
 - ``Radioactivity``
-- ``SurfaceDensity``
 - ``Speed``
+- ``SurfaceDensity``
 - ``Volume``
+
+### Additional Units
+
+Dimensions provided beyond the International System of Units, including generally useful and community-requested
+additions.
+
+- ``Cadence``
+- ``Memory``
 
 ### Prefixes
 

@@ -50,4 +50,5 @@
 
 ### Multiplying Units
 
-- ``multiplying(by:)``
+- ``multiplying(by:)->Energy``
+- ``multiplying(by:)->MagneticFlux``

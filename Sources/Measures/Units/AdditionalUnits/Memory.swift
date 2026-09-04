@@ -6,7 +6,7 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-/// A unit of measure for memory.
+/// A unit for measuring digital information.
 public struct Memory {
     public let coefficient: Double
 

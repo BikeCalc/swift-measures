@@ -6,7 +6,7 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-/// A unit of measure for absorbed dose.
+/// A unit for measuring cadence.
 public struct Cadence {
     public let coefficient: Double
 
@@ -49,7 +49,7 @@ extension Cadence: Comparable {}
 extension Cadence {
     /// Returns the quotient of dividing this value by the specified value.
     ///
-    /// - parameter volume: A unit of time.
+    /// - parameter time: A unit of time.
     /// - returns: A unit of cadence.
     fileprivate static func dividing(by time: Time) -> Self {
         let coefficient: Double = Time.base.coefficient * (1 / time.coefficient)

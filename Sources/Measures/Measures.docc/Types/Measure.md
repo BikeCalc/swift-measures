@@ -4,11 +4,12 @@
 
 ### Creating Measures
 
-- ``init(_:_:)``
-- ``init(_:_:)``
+- ``init(_:_:)-1r77s``
+- ``init(_:_:)-8lj6g``
 
 ### Measure Properties
 
+- ``Unit``
 - ``value``
 - ``unit-swift.property``
 
@@ -25,12 +26,14 @@
 ### Adding Values
 
 - ``+(_:_:)``
+- ``+=(_:_:)``
 - ``adding(_:)``
 - ``add(_:)``
 
 ### Subtracting Values
 
 - ``-(_:_:)``
+- ``-=(_:_:)``
 - ``subtracting(_:)``
 - ``subtract(_:)``
 
@@ -38,7 +41,7 @@
 
 - ``Measure/*(_:_:)-1gc1z``
 - ``Measure/*(_:_:)-30uhd``
-- ``Measure/*=(lhs:rhs:)``
+- ``*=(_:_:)``
 - ``multiplying(by:)``
 - ``multiply(by:)``
 
@@ -50,8 +53,7 @@
 ### Dividing Values
 
 - ``Measure//(_:_:)-3vdi4``
-- ``Measure//(_:_:)-1y3ev``
-- ``Measure//=(lhs:rhs:)``
+- ``/=(_:_:)``
 - ``dividing(by:)``
 - ``divide(by:)``
 
@@ -59,3 +61,33 @@
 
 - ``halved()``
 - ``halve()``
+
+### Calculating Remainders
+
+- ``%(_:_:)``
+- ``%=(_:_:)``
+
+### Inspecting Values
+
+- ``isDivisible(by:)``
+- ``isMultiple(of:)``
+- ``isCanonicallyEquatable(to:)``
+
+### Comparing Values
+
+- ``==(_:_:)``
+- ``<(_:_:)``
+
+### Describing Values
+
+- ``description``
+- ``debugDescription``
+
+### Encoding and Decoding
+
+- ``init(from:)``
+- ``encode(to:)``
+
+### Hashing Values
+
+- ``hash(into:)``

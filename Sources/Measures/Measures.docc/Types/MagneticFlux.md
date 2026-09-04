@@ -50,4 +50,5 @@
 
 ### Dividing Units
 
-- ``dividing(by:)``
+- ``dividing(by:)->ElectricalInductance``
+- ``dividing(by:)->MagneticFluxDensity``

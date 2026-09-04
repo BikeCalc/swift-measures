@@ -103,7 +103,7 @@ extension Measure: Convertible {
     /// ```swift
     /// let measure: Measure<Length> = .init(1, .meter).converted(to: .centimeter)
     /// print(measure)
-    /// // Prints "100cm"
+    /// // Prints "100.0 cm"
     /// ```
     ///
     /// - parameter rhs: The unit to convert to.
@@ -118,7 +118,7 @@ extension Measure: Convertible {
     /// ```swift
     /// let measure: Measure<Frequency> = .init(1, .hertz).converted(to: .second)
     /// print(measure)
-    /// // Prints "1s"
+    /// // Prints "1.0 s"
     /// ```
     ///
     /// - parameter rhs: The unit to convert to.
@@ -135,7 +135,7 @@ extension Measure: Convertible {
     /// var measure: Measure<Length> = .init(1, .meter)
     /// measure.convert(to: .centimeter)
     /// print(measure)
-    /// // Prints "100cm"
+    /// // Prints "100.0 cm"
     /// ```
     ///
     /// - parameter rhs: The unit to convert to.
@@ -164,7 +164,7 @@ extension Measure: CustomStringConvertible {
     /// ```swift
     /// let measure: Measure<Length> = .init(1, .meter)
     /// print(measure)
-    /// // Prints "1 m"
+    /// // Prints "1.0 m"
     /// ```
     public var description: String {
         return self.value.description + " " + self.unit.symbol
@@ -295,7 +295,7 @@ extension Measure: CanonicallyEquatable {
     /// ```swift
     /// let oneMeter: Measure<Length> = .init(1, .meter)
     /// let oneHundredCentimeters: Measure<Length> = .init(100, .centimeter)
-    /// print(oneMeter.isEquivalent(to: oneHundredCentimeters))
+    /// print(oneMeter.isCanonicallyEquatable(to: oneHundredCentimeters))
     /// // Prints "true"
     /// ```
     ///
@@ -333,7 +333,7 @@ extension Measure {
     /// Returns the product of multiplying the two specified values.
     ///
     /// - parameter lhs: The multiplicand.
-    /// - parameter rhs: The multiplicator.
+    /// - parameter rhs: The multiplier.
     /// - returns: The product.
     public static func * (_ lhs: Self, _ rhs: Double) -> Self {
         let lhsValue: Double = lhs.value
@@ -345,7 +345,7 @@ extension Measure {
     /// Returns the product of multiplying the two specified values.
     ///
     /// - parameter lhs: The multiplicand.
-    /// - parameter rhs: The multiplicator.
+    /// - parameter rhs: The multiplier.
     /// - returns: The product.
     public static func * (_ lhs: Double, _ rhs: Self) -> Self {
         let rhsValue: Double = rhs.value
@@ -357,24 +357,24 @@ extension Measure {
     /// Multiplies the two specified values and stores the product in the left-hand-side variable.
     ///
     /// - parameter lhs: The multiplicand.
-    /// - parameter rhs: The multiplicator.
+    /// - parameter rhs: The multiplier.
     public static func *= (_ lhs: inout Self, _ rhs: Double) {
         lhs = lhs * rhs
     }
 
     /// Returns the product of multiplying this value by the specified value.
     ///
-    /// - parameter multiplicator: The multiplicator.
+    /// - parameter multiplier: The multiplier.
     /// - returns: The product.
-    public func multiplying(by multiplicator: Double) -> Self {
-        return self * multiplicator
+    public func multiplying(by multiplier: Double) -> Self {
+        return self * multiplier
     }
 
     /// Multiplies this value by the specified value and produces the product.
     ///
-    /// - parameter multiplicator: The multiplicator.
-    public mutating func multiply(by multiplicator: Double) {
-        self *= multiplicator
+    /// - parameter multiplier: The multiplier.
+    public mutating func multiply(by multiplier: Double) {
+        self *= multiplier
     }
 
     /// Returns this value doubled.

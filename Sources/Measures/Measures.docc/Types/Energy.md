@@ -65,4 +65,5 @@
 
 ### Dividing Units
 
-- ``dividing(by:)``
+- ``dividing(by:)->AbsorbedDose``
+- ``dividing(by:)->Power``

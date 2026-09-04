@@ -6,7 +6,7 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-/// Representing a type that can be measured.
+/// A type that represents a unit in a measurable dimension.
 public protocol Measurable {
     /// Creates a new instance with the specified coefficient, constant and symbol.
     ///

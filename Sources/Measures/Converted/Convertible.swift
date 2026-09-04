@@ -6,9 +6,9 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-/// Representing a type that can be converted.
+/// A type whose value can be converted between units.
 public protocol Convertible {
-    ///
+    /// The type of unit used by this value.
     associatedtype Unit
     where Unit: Measurable
 

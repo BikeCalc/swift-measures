@@ -54,4 +54,5 @@
 
 ### Multiplying Units
 
-- ``multiplying(by:)``
+- ``multiplying(by:)->ElectricCharge``
+- ``multiplying(by:)->Power``
