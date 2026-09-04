@@ -202,6 +202,26 @@ extension Measure {
         lhs = lhs / rhs
     }
 
+    /// Returns the remainder of dividing the first specified value by the second.
+    ///
+    /// - parameter lhs: The dividend.
+    /// - parameter rhs: The divisor.
+    /// - returns: The remainder.
+    public static func % (_ lhs: Self, _ rhs: Double) -> Self {
+        let lhsValue: Double = lhs.value
+        let newValue: Double = lhsValue.truncatingRemainder(dividingBy: rhs)
+
+        return .init(newValue, lhs.unit)
+    }
+
+    /// Divides the first specified value by the second and stores the remainder in the left-hand-side variable.
+    ///
+    /// - parameter lhs: The dividend.
+    /// - parameter rhs: The divisor.
+    public static func %= (_ lhs: inout Self, _ rhs: Double) {
+        lhs = lhs % rhs
+    }
+
     /// Returns the quotient of dividing this value by the specified value.
     ///
     /// - parameter divisor: The divisor.

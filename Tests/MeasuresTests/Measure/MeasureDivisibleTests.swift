@@ -26,6 +26,14 @@ internal struct MeasureDivisibleTests {
         (Measure<Length>(100, .centimeter), Measure<Length>(50, .centimeter))
     ]
 
+    private static let remainderArguments: [(Measure<Length>, Double, Measure<Length>)] = [
+        (Measure<Length>(10, .meter), 3, Measure<Length>(1, .meter)),
+        (Measure<Length>(10.5, .meter), 3, Measure<Length>(1.5, .meter)),
+        (Measure<Length>(-10, .meter), 3, Measure<Length>(-1, .meter)),
+        (Measure<Length>(10, .meter), -3, Measure<Length>(1, .meter)),
+        (Measure<Length>(150, .centimeter), 40, Measure<Length>(30, .centimeter))
+    ]
+
     @Test(
         "Is divisible by succeeds",
         arguments: [
@@ -96,6 +104,32 @@ internal struct MeasureDivisibleTests {
         var runningQuotient: Measure<Length> = dividend
         runningQuotient.divide(by: divisor)
         #expect(runningQuotient == quotient)
+    }
+
+    @Test(
+        "Remainder succeeds",
+        arguments: Self.remainderArguments
+    )
+    internal func remainderSucceeds(
+        dividend: Measure<Length>,
+        divisor: Double,
+        remainder: Measure<Length>
+    ) {
+        #expect(dividend % divisor == remainder)
+    }
+
+    @Test(
+        "Remainder equal succeeds",
+        arguments: Self.remainderArguments
+    )
+    internal func remainderEqualSucceeds(
+        dividend: Measure<Length>,
+        divisor: Double,
+        remainder: Measure<Length>
+    ) {
+        var runningRemainder: Measure<Length> = dividend
+        runningRemainder %= divisor
+        #expect(runningRemainder == remainder)
     }
 
     @Test(
