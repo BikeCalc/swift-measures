@@ -6,8 +6,6 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-import NumericsExtended
-
 /// A representation of a binary prefix.
 @frozen
 public enum BinaryPrefix: String {
