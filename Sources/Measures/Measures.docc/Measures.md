@@ -16,6 +16,7 @@ then be represented with `Measure`, converted between compatible units, or conve
 ### Start Here
 
 - <doc:Installation>
+- <doc:PackageArchitecture>
 
 ### Articles
 
