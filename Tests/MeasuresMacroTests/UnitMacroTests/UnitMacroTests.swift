@@ -21,10 +21,13 @@ internal struct UnitMacroTests {
         assertExpansion(
             """
             @BasicScaleUnits(name: "bite", symbol: "B", coefficient: 2)
-            struct Biscuit {}
+            struct Biscuit {
+                init(coefficient: Double, constant: Double, symbol: String) {}
+            }
             """,
             expandedSource: """
             struct Biscuit {
+                init(coefficient: Double, constant: Double, symbol: String) {}
 
                 /// Creates a unit by applying a prefix to the unprefixed unit.
                 ///
@@ -33,6 +36,7 @@ internal struct UnitMacroTests {
                 private static func bite(_ prefix: BasicScaleUnitPrefix) -> Self {
                     return self.init(
                         coefficient: prefix.coefficient * 2,
+                        constant: 0,
                         symbol: prefix.symbol + "B"
                     )
                 }
@@ -57,11 +61,13 @@ internal struct UnitMacroTests {
             @BasicScaleUnits(name: "bite", symbol: "B")
             struct Biscuit {
                 static let largebite: Self
+                init(coefficient: Double, constant: Double, symbol: String) {}
             }
             """,
             expandedSource: """
             struct Biscuit {
                 static let largebite: Self
+                init(coefficient: Double, constant: Double, symbol: String) {}
 
                 /// Creates a unit by applying a prefix to the unprefixed unit.
                 ///
@@ -70,6 +76,7 @@ internal struct UnitMacroTests {
                 private static func bite(_ prefix: BasicScaleUnitPrefix) -> Self {
                     return self.init(
                         coefficient: prefix.coefficient * 1,
+                        constant: 0,
                         symbol: prefix.symbol + "B"
                     )
                 }
@@ -92,10 +99,13 @@ internal struct UnitMacroTests {
             """
             @BasicScaleUnits(name: "bite", symbol: "B")
             @ExtendedScaleUnits(name: "bite", symbol: "B")
-            struct Biscuit {}
+            struct Biscuit {
+                init(coefficient: Double, constant: Double, symbol: String) {}
+            }
             """,
             expandedSource: """
             struct Biscuit {
+                init(coefficient: Double, constant: Double, symbol: String) {}
             
                 /// Creates a unit by applying a prefix to the unprefixed unit.
                 ///
@@ -104,6 +114,7 @@ internal struct UnitMacroTests {
                 private static func bite(_ prefix: BasicScaleUnitPrefix) -> Self {
                     return self.init(
                         coefficient: prefix.coefficient * 1,
+                        constant: 0,
                         symbol: prefix.symbol + "B"
                     )
                 }
@@ -124,6 +135,7 @@ internal struct UnitMacroTests {
                 private static func bite(_ prefix: ExtendedScaleUnitPrefix) -> Self {
                     return self.init(
                         coefficient: prefix.coefficient * 1,
+                        constant: 0,
                         symbol: prefix.symbol + "B"
                     )
                 }
@@ -160,6 +172,27 @@ internal struct UnitMacroTests {
             diagnostics: [
                 DiagnosticSpec(
                     message: "@BasicScaleUnits can only be attached to a structure.",
+                    line: 1,
+                    column: 1
+                )
+            ]
+        )
+    }
+
+    @Test("Requires the initializer")
+    internal func initializer() {
+        assertExpansion(
+            """
+            @BasicScaleUnits(name: "bite", symbol: "B")
+            struct Biscuit {}
+            """,
+            expandedSource: """
+            struct Biscuit {}
+            """,
+            diagnostics: [
+                DiagnosticSpec(
+                    message: "The structure must declare an initializer with coefficient, constant and symbol "
+                        + "parameters.",
                     line: 1,
                     column: 1
                 )

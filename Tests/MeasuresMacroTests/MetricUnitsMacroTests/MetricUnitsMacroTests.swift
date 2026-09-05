@@ -22,10 +22,13 @@ internal struct MetricUnitsMacroTests {
         assertMacroExpansion(
             """
             @MetricUnits(name: "wibble", symbol: "w")
-            struct Nonsense {}
+            struct Nonsense {
+                init(coefficient: Double, constant: Double, symbol: String) {}
+            }
             """,
             expandedSource: """
             struct Nonsense {
+                init(coefficient: Double, constant: Double, symbol: String) {}
 
                 /// Creates a unit by applying a prefix to the unprefixed unit.
                 ///
@@ -34,6 +37,7 @@ internal struct MetricUnitsMacroTests {
                 private static func wibble(_ prefix: MetricUnitPrefix) -> Self {
                     return self.init(
                         coefficient: prefix.coefficient * 1,
+                        constant: 0,
                         symbol: prefix.symbol + "w"
                     )
                 }

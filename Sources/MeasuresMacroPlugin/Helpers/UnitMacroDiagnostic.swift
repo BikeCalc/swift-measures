@@ -21,6 +21,9 @@ internal enum UnitMacroDiagnostic {
     /// - Parameter argument: The name of the argument that requires a string literal.
     case literalRequired(_ argument: String)
 
+    /// The attached structure does not declare the required initializer.
+    case initializerRequired
+
     /// A unit macro is attached to a declaration other than a structure.
     ///
     /// - Parameter macro: The name of the unit macro that requires a structure.
@@ -47,6 +50,11 @@ extension UnitMacroDiagnostic: DiagnosticMessage {
                 domain: "Measures.UnitMacros",
                 id: "literal-required"
             )
+        case .initializerRequired:
+            return MessageID(
+                domain: "Measures.UnitMacros",
+                id: "initializer-required"
+            )
         case .structOnly:
             return MessageID(
                 domain: "Measures.UnitMacros",
@@ -63,6 +71,8 @@ extension UnitMacroDiagnostic: DiagnosticMessage {
             return "The unit symbol cannot be empty."
         case .literalRequired(let argument):
             return "The \(argument) must be a string literal."
+        case .initializerRequired:
+            return "The structure must declare an initializer with coefficient, constant and symbol parameters."
         case .structOnly(let macro):
             return "@\(macro) can only be attached to a structure."
         }

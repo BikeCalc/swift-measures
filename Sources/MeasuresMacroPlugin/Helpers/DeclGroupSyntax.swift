@@ -9,6 +9,24 @@
 import SwiftSyntax
 
 extension DeclGroupSyntax {
+    /// A Boolean value indicating whether this declaration contains the initializer required by a unit macro.
+    internal var hasUnitInitializer: Bool {
+        return self.memberBlock.members.contains { member in
+            guard let initializer = member.decl.as(InitializerDeclSyntax.self) else {
+                return false
+            }
+
+            let parameters = initializer.signature.parameterClause.parameters
+            let labels = parameters.map(\.firstName.text)
+
+            return labels == [
+                "coefficient",
+                "constant",
+                "symbol"
+            ]
+        }
+    }
+
     /// The names of the static properties declared directly by this declaration.
     internal var staticPropertyNames: Set<String> {
         return self.memberBlock.members.reduce(into: Set<String>()) { result, member in

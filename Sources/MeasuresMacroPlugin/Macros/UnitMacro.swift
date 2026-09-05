@@ -33,7 +33,7 @@ extension UnitMacro {
         providingMembersOf declaration: some DeclGroupSyntax,
         in context: some MacroExpansionContext
     ) throws -> Array<DeclSyntax> {
-        // Unit families require the stored properties and initializer supplied by measurable structures.
+        // Unit families can only be generated for structures.
         guard declaration.is(StructDeclSyntax.self) else {
             context.diagnose(
                 Diagnostic(
@@ -100,6 +100,18 @@ extension UnitMacro {
             return []
         }
 
+        // The generated factory requires an initializer with coefficient, constant and symbol parameters.
+        guard declaration.hasUnitInitializer else {
+            context.diagnose(
+                Diagnostic(
+                    node: Syntax(declaration),
+                    message: UnitMacroDiagnostic.initializerRequired
+                )
+            )
+
+            return []
+        }
+
         let coefficient: ExprSyntax = arguments.first(where: { $0.label?.text == "coefficient" })?.expression ?? "1"
         let typeName: String = declaration.cast(StructDeclSyntax.self).name.text
         let dimension: String = typeName.splitBeforeUppercase().lowercased()
@@ -119,6 +131,7 @@ extension UnitMacro {
             private static func \(raw: name)(_ prefix: \(raw: prefixTypeName)) -> Self {
                 return self.init(
                     coefficient: prefix.coefficient * \(coefficient),
+                    constant: 0,
                     symbol: prefix.symbol + \(literal: symbol)
                 )
             }
