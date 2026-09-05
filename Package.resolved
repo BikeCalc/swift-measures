@@ -1,12 +1,13 @@
 {
+  "originHash" : "05fa57f0da2b7286c8f99fa17dd9e63d6ad54003385f6eab9ea7f54127a48b97",
   "pins" : [
     {
       "identity" : "swift-docc-plugin",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swiftlang/swift-docc-plugin.git",
       "state" : {
-        "revision" : "2eb22993b3dfd0c0d32729b357c8dabb6cd44680",
-        "version" : "1.4.2"
+        "revision" : "647c708be89f834fa6a6d4945442793a77ddf5b6",
+        "version" : "1.5.0"
       }
     },
     {
@@ -19,14 +20,23 @@
       }
     },
     {
-      "identity" : "swift-numeric-protocols",
+      "identity" : "swift-numerics-extended",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/bikecalc/swift-numeric-protocols.git",
+      "location" : "https://github.com/bikecalc/swift-numerics-extended.git",
       "state" : {
-        "revision" : "072f1f3a85216adebb7a584077043e4bf2a84769",
-        "version" : "1.0.0"
+        "revision" : "3c49f17591e2c141f127dedc68a7d8fd7b40bd3d",
+        "version" : "2.0.0"
+      }
+    },
+    {
+      "identity" : "swift-syntax",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-syntax.git",
+      "state" : {
+        "revision" : "79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1",
+        "version" : "603.0.2"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

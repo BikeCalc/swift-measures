@@ -1,0 +1,54 @@
+name: Documentation
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy Documentation
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: macos-26
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Get Swift Version
+        run: |
+          swift --version
+      - name: Build Documentation
+        run: |
+          swift package --allow-writing-to-directory ./docs \
+            generate-documentation \
+            --enable-experimental-combined-documentation \
+            --target CoreMeasureTypes \
+            --target CoreMeasureUnits \
+            --target AdditionalMeasureUnits \
+            --target Measures \
+            --output-path ./docs \
+            --transform-for-static-hosting \
+            --hosting-base-path "swift-measures"
+          echo '<meta http-equiv="refresh" content="0; url=documentation/">' > docs/index.html
+      - name: Setup GitHub Pages
+        id: pages
+        uses: actions/configure-pages@v5
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: "docs"
+      - name: Deploy Documentation
+        id: deployment
+        uses: actions/deploy-pages@v4

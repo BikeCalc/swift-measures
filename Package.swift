@@ -1,39 +1,124 @@
-// swift-tools-version:5.9
+// swift-tools-version:6.3
 
+import CompilerPluginSupport
 import PackageDescription
 
-let package: Package = .init(
+let package = Package(
     name: "swift-measures",
     defaultLocalization: "en",
+    platforms: [
+        .macOS(.v13)
+    ],
     products: [
-        .library(name: "Measures", targets: ["Measures"])
+        .library(
+            name: "Measures",
+            targets: [
+                "Measures"
+            ]
+        )
     ],
     dependencies: [
-        .package(url: "https://github.com/bikecalc/swift-numeric-protocols.git", from: "1.0.0"),
-        .package(url: "https://github.com/swiftlang/swift-docc-plugin.git", from: "1.4.2")
+        .package(
+            url: "https://github.com/bikecalc/swift-numerics-extended.git",
+            from: "2.0.0"
+        ),
+        .package(
+            url: "https://github.com/swiftlang/swift-docc-plugin.git",
+            from: "1.5.0"
+        ),
+        .package(
+            url: "https://github.com/swiftlang/swift-syntax.git",
+            from: "603.0.2"
+        )
     ],
     targets: [
+        .macro(
+            name: "MeasuresMacroPlugin",
+            dependencies: [
+                "CoreMeasureTypes",
+                .product(
+                    name: "SwiftCompilerPlugin",
+                    package: "swift-syntax"
+                ),
+                .product(
+                    name: "SwiftDiagnostics",
+                    package: "swift-syntax"
+                ),
+                .product(
+                    name: "SwiftSyntax",
+                    package: "swift-syntax"
+                ),
+                .product(
+                    name: "SwiftSyntaxBuilder",
+                    package: "swift-syntax"
+                ),
+                .product(
+                    name: "SwiftSyntaxMacros",
+                    package: "swift-syntax"
+                )
+            ]
+        ),
+        .target(
+            name: "AdditionalMeasureUnits",
+            dependencies: [
+                "CoreMeasureTypes",
+                "CoreMeasureUnits",
+                "MeasuresMacro"
+            ]
+        ),
+        .target(
+            name: "CoreMeasureTypes",
+            dependencies: [
+                .product(
+                    name: "NumericsExtended",
+                    package: "swift-numerics-extended"
+                )
+            ]
+        ),
+        .target(
+            name: "CoreMeasureUnits",
+            dependencies: [
+                "CoreMeasureTypes",
+                "MeasuresMacro"
+            ]
+        ),
         .target(
             name: "Measures",
             dependencies: [
-                .product(name: "NumericProtocols", package: "swift-numeric-protocols")
-            ],
-            path: "Sources",
-            swiftSettings: [
-                .enableExperimentalFeature("StrictConcurrency=complete")
+                "AdditionalMeasureUnits",
+                "CoreMeasureTypes",
+                "CoreMeasureUnits",
+                "MeasuresMacro",
+                .product(
+                    name: "NumericsExtended",
+                    package: "swift-numerics-extended"
+                )
+            ]
+        ),
+        .target(
+            name: "MeasuresMacro",
+            dependencies: [
+                "MeasuresMacroPlugin"
+            ]
+        ),
+        .testTarget(
+            name: "MeasuresMacroTests",
+            dependencies: [
+                "CoreMeasureTypes",
+                "Measures",
+                "MeasuresMacroPlugin",
+                .product(
+                    name: "SwiftSyntaxMacrosGenericTestSupport",
+                    package: "swift-syntax"
+                )
             ]
         ),
         .testTarget(
             name: "MeasuresTests",
-            dependencies: ["Measures"],
-            path: "Tests",
-            resources: [
-                .process("MeasuresTests/Resources")
-            ],
-            swiftSettings: [
-                .enableExperimentalFeature("StrictConcurrency=complete")
+            dependencies: [
+                "Measures"
             ]
         )
     ],
-    swiftLanguageVersions: [.v5]
+    swiftLanguageModes: [.v6]
 )
