@@ -1,4 +1,4 @@
-# ``Measures/Mass``
+# ``CoreMeasureUnits/Mass``
 
 ## Topics
 

@@ -1,4 +1,4 @@
-# ``Measures/ThermodynamicTemperature``
+# ``CoreMeasureUnits/ThermodynamicTemperature``
 
 ## Topics
 

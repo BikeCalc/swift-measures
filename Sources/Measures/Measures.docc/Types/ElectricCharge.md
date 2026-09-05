@@ -1,4 +1,4 @@
-# ``Measures/ElectricCharge``
+# ``CoreMeasureUnits/ElectricCharge``
 
 ## Topics
 

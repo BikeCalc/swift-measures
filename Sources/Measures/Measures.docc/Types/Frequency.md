@@ -1,4 +1,4 @@
-# ``Measures/Frequency``
+# ``CoreMeasureUnits/Frequency``
 
 ## Topics
 

@@ -33,6 +33,10 @@ jobs:
         run: |
           swift package --allow-writing-to-directory ./docs \
             generate-documentation \
+            --enable-experimental-combined-documentation \
+            --target CoreMeasureTypes \
+            --target CoreMeasureUnits \
+            --target AdditionalMeasureUnits \
             --target Measures \
             --output-path ./docs \
             --transform-for-static-hosting \

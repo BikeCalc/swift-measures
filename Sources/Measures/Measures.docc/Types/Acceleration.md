@@ -1,4 +1,4 @@
-# ``Measures/Acceleration``
+# ``CoreMeasureUnits/Acceleration``
 
 ## Topics
 

@@ -1,11 +1,11 @@
-# ``Measures/Measure``
+# ``CoreMeasureTypes/Measure``
 
 ## Topics
 
 ### Creating Measures
 
-- ``init(_:_:)-1r77s``
-- ``init(_:_:)-8lj6g``
+- ``init(_:_:)-3zs2p``
+- ``init(_:_:)-8g4nb``
 
 ### Measure Properties
 
@@ -19,8 +19,7 @@
 
 ### Converting Measures
 
-- ``converted(to:)-9vj7w``
-- ``converted(to:)-1jl7q``
+- ``converted(to:)``
 - ``convert(to:)``
 
 ### Adding Values
@@ -39,8 +38,8 @@
 
 ### Multiplying Values
 
-- ``Measure/*(_:_:)-1gc1z``
-- ``Measure/*(_:_:)-30uhd``
+- ``Measure/*(_:_:)-(Double,_)``
+- ``Measure/*(_:_:)-(_,Double)``
 - ``*=(_:_:)``
 - ``multiplying(by:)``
 - ``multiply(by:)``
@@ -52,7 +51,7 @@
 
 ### Dividing Values
 
-- ``Measure//(_:_:)-3vdi4``
+- ``Measure//(_:_:)``
 - ``/=(_:_:)``
 - ``dividing(by:)``
 - ``divide(by:)``

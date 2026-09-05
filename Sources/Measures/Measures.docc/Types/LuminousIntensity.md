@@ -1,4 +1,4 @@
-# ``Measures/LuminousIntensity``
+# ``CoreMeasureUnits/LuminousIntensity``
 
 ## Topics
 

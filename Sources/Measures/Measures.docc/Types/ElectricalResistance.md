@@ -1,4 +1,4 @@
-# ``Measures/ElectricalResistance``
+# ``CoreMeasureUnits/ElectricalResistance``
 
 ## Topics
 

@@ -1,4 +1,4 @@
-# ``Measures/ElectricCurrent``
+# ``CoreMeasureUnits/ElectricCurrent``
 
 ## Topics
 

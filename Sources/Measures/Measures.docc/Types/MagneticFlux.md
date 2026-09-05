@@ -1,4 +1,4 @@
-# ``Measures/MagneticFlux``
+# ``CoreMeasureUnits/MagneticFlux``
 
 ## Topics
 

@@ -28,61 +28,61 @@ then be represented with `Measure`, converted between compatible units, or conve
 
 ### Converting Values
 
-- ``Measure``
-- ``Converted``
-- ``Convertible``
+- ``/CoreMeasureTypes/Measure``
+- ``/CoreMeasureTypes/Converted``
+- ``/CoreMeasureTypes/Convertible``
 
 ### Measuring Values
 
-- ``Measurable``
+- ``/CoreMeasureTypes/Measurable``
 
 ### Base Units
 
 Dimensions defined by the seven base units of the International System of Units.
 
-- ``ElectricCurrent``
-- ``Length``
-- ``LuminousIntensity``
-- ``Mass``
-- ``SubstanceAmount``
-- ``ThermodynamicTemperature``
-- ``Time``
+- ``/CoreMeasureUnits/ElectricCurrent``
+- ``/CoreMeasureUnits/Length``
+- ``/CoreMeasureUnits/LuminousIntensity``
+- ``/CoreMeasureUnits/Mass``
+- ``/CoreMeasureUnits/SubstanceAmount``
+- ``/CoreMeasureUnits/ThermodynamicTemperature``
+- ``/CoreMeasureUnits/Time``
 
 ### Derived Units
 
 Dimensions derived from the base dimensions of the International System of Units.
 
-- ``AbsorbedDose``
-- ``Acceleration``
-- ``Area``
-- ``CatalyticActivity``
-- ``Concentration``
-- ``ElectricCharge``
-- ``ElectricConductance``
-- ``ElectricPotential``
-- ``ElectricalCapacitance``
-- ``ElectricalInductance``
-- ``ElectricalResistance``
-- ``Energy``
-- ``EquivalentDose``
-- ``Force``
-- ``Frequency``
-- ``Illuminance``
-- ``LuminousFlux``
-- ``MagneticFlux``
-- ``MagneticFluxDensity``
-- ``MolarMass``
-- ``Power``
-- ``Pressure``
-- ``Radioactivity``
-- ``Speed``
-- ``SurfaceDensity``
-- ``Volume``
+- ``/CoreMeasureUnits/AbsorbedDose``
+- ``/CoreMeasureUnits/Acceleration``
+- ``/CoreMeasureUnits/Area``
+- ``/CoreMeasureUnits/CatalyticActivity``
+- ``/CoreMeasureUnits/Concentration``
+- ``/CoreMeasureUnits/ElectricCharge``
+- ``/CoreMeasureUnits/ElectricConductance``
+- ``/CoreMeasureUnits/ElectricPotential``
+- ``/CoreMeasureUnits/ElectricalCapacitance``
+- ``/CoreMeasureUnits/ElectricalInductance``
+- ``/CoreMeasureUnits/ElectricalResistance``
+- ``/CoreMeasureUnits/Energy``
+- ``/CoreMeasureUnits/EquivalentDose``
+- ``/CoreMeasureUnits/Force``
+- ``/CoreMeasureUnits/Frequency``
+- ``/CoreMeasureUnits/Illuminance``
+- ``/CoreMeasureUnits/LuminousFlux``
+- ``/CoreMeasureUnits/MagneticFlux``
+- ``/CoreMeasureUnits/MagneticFluxDensity``
+- ``/CoreMeasureUnits/MolarMass``
+- ``/CoreMeasureUnits/Power``
+- ``/CoreMeasureUnits/Pressure``
+- ``/CoreMeasureUnits/Radioactivity``
+- ``/CoreMeasureUnits/Speed``
+- ``/CoreMeasureUnits/SurfaceDensity``
+- ``/CoreMeasureUnits/Volume``
 
 ### Additional Units
 
 Dimensions provided beyond the International System of Units, including generally useful and community-requested
 additions.
 
-- ``Cadence``
-- ``Memory``
+- ``/AdditionalMeasureUnits/Cadence``
+- ``/AdditionalMeasureUnits/Memory``

@@ -1,4 +1,4 @@
-# ``Measures/Power``
+# ``CoreMeasureUnits/Power``
 
 ## Topics
 

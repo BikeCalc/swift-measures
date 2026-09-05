@@ -1,4 +1,4 @@
-# ``Measures/Energy``
+# ``CoreMeasureUnits/Energy``
 
 ## Topics
 

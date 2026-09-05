@@ -1,4 +1,4 @@
-# ``Measures/SubstanceAmount``
+# ``CoreMeasureUnits/SubstanceAmount``
 
 ## Topics
 

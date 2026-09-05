@@ -1,4 +1,4 @@
-# ``Measures/CatalyticActivity``
+# ``CoreMeasureUnits/CatalyticActivity``
 
 ## Topics
 

@@ -1,4 +1,4 @@
-# ``Measures/LuminousFlux``
+# ``CoreMeasureUnits/LuminousFlux``
 
 ## Topics
 

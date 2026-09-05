@@ -1,4 +1,4 @@
-# ``Measures/Convertible``
+# ``CoreMeasureTypes/Convertible``
 
 ## Topics
 

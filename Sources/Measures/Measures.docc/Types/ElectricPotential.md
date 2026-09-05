@@ -1,4 +1,4 @@
-# ``Measures/ElectricPotential``
+# ``CoreMeasureUnits/ElectricPotential``
 
 ## Topics
 

@@ -1,4 +1,4 @@
-# ``Measures/Illuminance``
+# ``CoreMeasureUnits/Illuminance``
 
 ## Topics
 

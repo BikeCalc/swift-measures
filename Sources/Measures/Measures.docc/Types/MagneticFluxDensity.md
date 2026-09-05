@@ -1,4 +1,4 @@
-# ``Measures/MagneticFluxDensity``
+# ``CoreMeasureUnits/MagneticFluxDensity``
 
 ## Topics
 

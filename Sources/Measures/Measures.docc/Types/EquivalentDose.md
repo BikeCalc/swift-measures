@@ -1,4 +1,4 @@
-# ``Measures/EquivalentDose``
+# ``CoreMeasureUnits/EquivalentDose``
 
 ## Topics
 

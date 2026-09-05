@@ -1,4 +1,4 @@
-# ``Measures/Radioactivity``
+# ``CoreMeasureUnits/Radioactivity``
 
 ## Topics
 

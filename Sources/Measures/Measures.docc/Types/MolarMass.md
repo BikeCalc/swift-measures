@@ -1,4 +1,4 @@
-# ``Measures/MolarMass``
+# ``CoreMeasureUnits/MolarMass``
 
 ## Topics
 

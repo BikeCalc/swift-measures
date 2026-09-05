@@ -1,4 +1,4 @@
-# ``Measures/Speed``
+# ``CoreMeasureUnits/Speed``
 
 ## Topics
 

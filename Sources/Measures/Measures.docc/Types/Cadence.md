@@ -1,4 +1,4 @@
-# ``Measures/Cadence``
+# ``AdditionalMeasureUnits/Cadence``
 
 ## Topics
 

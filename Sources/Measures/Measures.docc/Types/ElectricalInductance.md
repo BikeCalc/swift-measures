@@ -1,4 +1,4 @@
-# ``Measures/ElectricalInductance``
+# ``CoreMeasureUnits/ElectricalInductance``
 
 ## Topics
 

@@ -1,4 +1,4 @@
-# ``Measures/Time``
+# ``CoreMeasureUnits/Time``
 
 ## Topics
 

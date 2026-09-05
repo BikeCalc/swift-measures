@@ -1,4 +1,4 @@
-# ``Measures/SurfaceDensity``
+# ``CoreMeasureUnits/SurfaceDensity``
 
 ## Topics
 

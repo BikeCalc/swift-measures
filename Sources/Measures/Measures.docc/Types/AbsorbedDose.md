@@ -1,4 +1,4 @@
-# ``Measures/AbsorbedDose``
+# ``CoreMeasureUnits/AbsorbedDose``
 
 ## Topics
 

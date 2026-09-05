@@ -1,4 +1,4 @@
-# ``Measures/Measurable``
+# ``CoreMeasureTypes/Measurable``
 
 ## Topics
 
