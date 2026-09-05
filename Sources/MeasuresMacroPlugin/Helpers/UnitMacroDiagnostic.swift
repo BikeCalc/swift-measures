@@ -10,6 +10,7 @@ import SwiftDiagnostics
 
 internal enum UnitMacroDiagnostic {
     case emptyName
+    case emptySymbol
     case literalRequired(String)
     case structOnly(String)
 }
@@ -23,6 +24,11 @@ extension UnitMacroDiagnostic: DiagnosticMessage {
             return MessageID(
                 domain: "Measures.UnitMacros",
                 id: "empty-name"
+            )
+        case .emptySymbol:
+            return MessageID(
+                domain: "Measures.UnitMacros",
+                id: "empty-symbol"
             )
         case .literalRequired:
             return MessageID(
@@ -41,6 +47,8 @@ extension UnitMacroDiagnostic: DiagnosticMessage {
         switch self {
         case .emptyName:
             return "The unit name cannot be empty."
+        case .emptySymbol:
+            return "The unit symbol cannot be empty."
         case .literalRequired(let argument):
             return "The \(argument) must be a string literal."
         case .structOnly(let macro):

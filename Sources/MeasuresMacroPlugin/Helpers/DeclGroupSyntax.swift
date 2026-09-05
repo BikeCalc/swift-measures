@@ -28,8 +28,7 @@ extension DeclGroupSyntax {
 
     internal func unitMacroOwner(named name: String) -> String? {
         for element in self.attributes {
-            guard case let .attribute(attribute) = element,
-                  ["BinaryUnits", "MetricUnits"].contains(attribute.attributeName.trimmedDescription) else {
+            guard case let .attribute(attribute) = element else {
                 continue
             }
 

@@ -74,6 +74,17 @@ extension UnitMacro {
             return []
         }
 
+        guard !symbol.isEmpty else {
+            context.diagnose(
+                Diagnostic(
+                    node: Syntax(symbolArgument.expression),
+                    message: UnitMacroDiagnostic.emptySymbol
+                )
+            )
+
+            return []
+        }
+
         let coefficient: ExprSyntax = arguments.first(where: { $0.label?.text == "coefficient" })?.expression ?? "1"
         let typeName: String = declaration.cast(StructDeclSyntax.self).name.text
         let dimension: String = typeName.splitBeforeUppercase().lowercased()
