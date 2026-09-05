@@ -28,11 +28,9 @@ public struct ThermodynamicTemperature {
     // MARK: Customary and Imperial Units
 
     /// The Fahrenheit unit of thermodynamic temperature.
-    ///
-    /// - Warning: The result of converting this unit is not 100% accurate.
     public static let fahrenheit: Self = .init(
-        coefficient: 5/9,
-        constant: 2.5537222222222427e+2,
+        coefficient: 5 / 9,
+        constant: 459.67 * 5 / 9,
         symbol: "°F"
     )
 
