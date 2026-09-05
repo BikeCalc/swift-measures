@@ -35,7 +35,7 @@ let package = Package(
         .macro(
             name: "MeasuresMacroPlugin",
             dependencies: [
-                "MeasuresMacroSupport",
+                "CoreMeasureTypes",
                 .product(
                     name: "SwiftCompilerPlugin",
                     package: "swift-syntax"
@@ -59,10 +59,36 @@ let package = Package(
             ]
         ),
         .target(
+            name: "AdditionalMeasureUnits",
+            dependencies: [
+                "CoreMeasureTypes",
+                "CoreMeasureUnits",
+                "MeasuresMacro"
+            ]
+        ),
+        .target(
+            name: "CoreMeasureTypes",
+            dependencies: [
+                .product(
+                    name: "NumericsExtended",
+                    package: "swift-numerics-extended"
+                )
+            ]
+        ),
+        .target(
+            name: "CoreMeasureUnits",
+            dependencies: [
+                "CoreMeasureTypes",
+                "MeasuresMacro"
+            ]
+        ),
+        .target(
             name: "Measures",
             dependencies: [
+                "AdditionalMeasureUnits",
+                "CoreMeasureTypes",
+                "CoreMeasureUnits",
                 "MeasuresMacro",
-                "MeasuresMacroSupport",
                 .product(
                     name: "NumericsExtended",
                     package: "swift-numerics-extended"
@@ -75,21 +101,12 @@ let package = Package(
                 "MeasuresMacroPlugin"
             ]
         ),
-        .target(
-            name: "MeasuresMacroSupport",
-            dependencies: [
-                .product(
-                    name: "NumericsExtended",
-                    package: "swift-numerics-extended"
-                )
-            ]
-        ),
         .testTarget(
             name: "MeasuresMacroTests",
             dependencies: [
+                "CoreMeasureTypes",
                 "Measures",
                 "MeasuresMacroPlugin",
-                "MeasuresMacroSupport",
                 .product(
                     name: "SwiftSyntaxMacrosGenericTestSupport",
                     package: "swift-syntax"

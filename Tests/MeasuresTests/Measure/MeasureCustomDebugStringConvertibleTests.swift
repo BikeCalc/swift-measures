@@ -16,15 +16,15 @@ internal struct MeasureCustomDebugStringConvertibleTests {
         arguments: [
             (
                 Measure<Length>(1, .meter),
-                "Measure<Length>(1.0, Measures.Length(coefficient: 1.0, constant: 0.0, symbol: \"m\"))"
+                "Measure<Length>(1.0, CoreMeasureUnits.Length(coefficient: 1.0, constant: 0.0, symbol: \"m\"))"
             ),
             (
                 Measure<Length>(-1, .meter),
-                "Measure<Length>(-1.0, Measures.Length(coefficient: 1.0, constant: 0.0, symbol: \"m\"))"
+                "Measure<Length>(-1.0, CoreMeasureUnits.Length(coefficient: 1.0, constant: 0.0, symbol: \"m\"))"
             ),
             (
                 Measure<Length>(100, .centimeter),
-                "Measure<Length>(100.0, Measures.Length(coefficient: 0.01, constant: 0.0, symbol: \"cm\"))"
+                "Measure<Length>(100.0, CoreMeasureUnits.Length(coefficient: 0.01, constant: 0.0, symbol: \"cm\"))"
             )
         ]
     )

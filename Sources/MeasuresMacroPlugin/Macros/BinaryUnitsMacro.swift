@@ -6,7 +6,7 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-import MeasuresMacroSupport
+import CoreMeasureTypes
 import SwiftSyntax
 import SwiftSyntaxMacros
 

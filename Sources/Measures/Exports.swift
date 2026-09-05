@@ -6,6 +6,8 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
+@_exported import AdditionalMeasureUnits
+@_exported import CoreMeasureTypes
+@_exported import CoreMeasureUnits
 @_exported import MeasuresMacro
-@_exported import MeasuresMacroSupport
 @_exported import NumericsExtended

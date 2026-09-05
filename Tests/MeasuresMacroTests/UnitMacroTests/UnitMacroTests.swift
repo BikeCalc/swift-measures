@@ -12,7 +12,7 @@ import SwiftSyntaxMacros
 import SwiftSyntaxMacrosGenericTestSupport
 import Testing
 @testable import MeasuresMacroPlugin
-@testable import MeasuresMacroSupport
+@testable import CoreMeasureTypes
 
 @Suite("UnitMacro")
 internal struct UnitMacroTests {

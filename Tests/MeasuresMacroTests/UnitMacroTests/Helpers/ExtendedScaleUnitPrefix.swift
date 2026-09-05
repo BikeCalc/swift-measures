@@ -6,7 +6,7 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-@testable import MeasuresMacroSupport
+@testable import CoreMeasureTypes
 
 internal enum ExtendedScaleUnitPrefix: String {
     case extralarge
