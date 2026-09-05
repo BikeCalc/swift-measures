@@ -7,6 +7,7 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 /// A unit of measure for mass.
+@MetricUnits(name: "gram", symbol: "g", coefficient: 1e-3)
 public struct Mass {
     public let coefficient: Double
 
@@ -63,96 +64,6 @@ public struct Mass {
         coefficient: Self.pound.coefficient * 14,
         symbol: "st"
     )
-
-    // MARK: Metric Units
-
-    /// Creates a new instance with the specified metric prefix.
-    ///
-    /// - parameter prefix: The prefix.
-    fileprivate init(_ prefix: MetricPrefix) {
-        let coefficient: Double = prefix.coefficient / 1000
-        let symbol: String = prefix.symbol + "g"
-
-        self.init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
-
-    /// The quettagram unit of mass.
-    public static let quettagram: Self = .init(.quetta)
-
-    /// The ronnagram unit of mass.
-    public static let ronnagram: Self = .init(.ronna)
-
-    /// The yottagram unit of mass.
-    public static let yottagram: Self = .init(.yotta)
-
-    /// The zettagram unit of mass.
-    public static let zettagram: Self = .init(.zetta)
-
-    /// The exagram unit of mass.
-    public static let exagram: Self = .init(.exa)
-
-    /// The petagram unit of mass.
-    public static let petagram: Self = .init(.peta)
-
-    /// The teragram unit of mass.
-    public static let teragram: Self = .init(.tera)
-
-    /// The gigagram unit of mass.
-    public static let gigagram: Self = .init(.giga)
-
-    /// The megagram unit of mass.
-    public static let megagram: Self = .init(.mega)
-
-    /// The kilogram unit of mass.
-    public static let kilogram: Self = .init(.kilo)
-
-    /// The hectogram unit of mass.
-    public static let hectogram: Self = .init(.hecto)
-
-    /// The decagram unit of mass.
-    public static let decagram: Self = .init(.deca)
-
-    /// The gram unit of mass.
-    public static let gram: Self = .init(.none)
-
-    /// The decigram unit of mass.
-    public static let decigram: Self = .init(.deci)
-
-    /// The centigram unit of mass.
-    public static let centigram: Self = .init(.centi)
-
-    /// The milligram unit of mass.
-    public static let milligram: Self = .init(.milli)
-
-    /// The microgram unit of mass.
-    public static let microgram: Self = .init(.micro)
-
-    /// The nanogram unit of mass.
-    public static let nanogram: Self = .init(.nano)
-
-    /// The picogram unit of mass.
-    public static let picogram: Self = .init(.pico)
-
-    /// The femtogram unit of mass.
-    public static let femtogram: Self = .init(.femto)
-
-    /// The attogram unit of mass.
-    public static let attogram: Self = .init(.atto)
-
-    /// The zeptogram unit of mass.
-    public static let zeptogram: Self = .init(.zepto)
-
-    /// The yoctogram unit of mass.
-    public static let yoctogram: Self = .init(.yocto)
-
-    /// The rontogram unit of mass.
-    public static let rontogram: Self = .init(.ronto)
-
-    /// The quectogram unit of mass.
-    public static let quectogram: Self = .init(.quecto)
 
     // MARK: Other Metric Units
 

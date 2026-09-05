@@ -7,6 +7,7 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 /// A unit of measure for equivalent dose.
+@MetricUnits(name: "sievert", symbol: "Sv")
 public struct EquivalentDose {
     public let coefficient: Double
 
@@ -23,95 +24,6 @@ public struct EquivalentDose {
         self.constant = constant
         self.symbol = symbol
     }
-
-    // MARK: Metric Units
-
-    /// Creates a new instance with the specified metric prefix.
-    ///
-    /// - parameter prefix: The prefix.
-    fileprivate init(_ prefix: MetricPrefix) {
-        let symbol: String = prefix.symbol + "Sv"
-
-        self.init(
-            coefficient: prefix.coefficient,
-            symbol: symbol
-        )
-    }
-
-    /// The quettasievert unit of equivalent dose.
-    public static let quettasievert: Self = .init(.quetta)
-
-    /// The ronnasievert unit of equivalent dose.
-    public static let ronnasievert: Self = .init(.ronna)
-
-    /// The yottasievert unit of equivalent dose.
-    public static let yottasievert: Self = .init(.yotta)
-
-    /// The zettasievert unit of equivalent dose.
-    public static let zettasievert: Self = .init(.zetta)
-
-    /// The exasievert unit of equivalent dose.
-    public static let exasievert: Self = .init(.exa)
-
-    /// The petasievert unit of equivalent dose.
-    public static let petasievert: Self = .init(.peta)
-
-    /// The terasievert unit of equivalent dose.
-    public static let terasievert: Self = .init(.tera)
-
-    /// The gigasievert unit of equivalent dose.
-    public static let gigasievert: Self = .init(.giga)
-
-    /// The megasievert unit of equivalent dose.
-    public static let megasievert: Self = .init(.mega)
-
-    /// The kilosievert unit of equivalent dose.
-    public static let kilosievert: Self = .init(.kilo)
-
-    /// The hectosievert unit of equivalent dose.
-    public static let hectosievert: Self = .init(.hecto)
-
-    /// The decasievert unit of equivalent dose.
-    public static let decasievert: Self = .init(.deca)
-
-    /// The sievert unit of equivalent dose.
-    public static let sievert: Self = .init(.none)
-
-    /// The decisievert unit of equivalent dose.
-    public static let decisievert: Self = .init(.deci)
-
-    /// The centisievert unit of equivalent dose.
-    public static let centisievert: Self = .init(.centi)
-
-    /// The millisievert unit of equivalent dose.
-    public static let millisievert: Self = .init(.milli)
-
-    /// The microsievert unit of equivalent dose.
-    public static let microsievert: Self = .init(.micro)
-
-    /// The nanosievert unit of equivalent dose.
-    public static let nanosievert: Self = .init(.nano)
-
-    /// The picosievert unit of equivalent dose.
-    public static let picosievert: Self = .init(.pico)
-
-    /// The femtosievert unit of equivalent dose.
-    public static let femtosievert: Self = .init(.femto)
-
-    /// The attosievert unit of equivalent dose.
-    public static let attosievert: Self = .init(.atto)
-
-    /// The zeptosievert unit of equivalent dose.
-    public static let zeptosievert: Self = .init(.zepto)
-
-    /// The yoctosievert unit of equivalent dose.
-    public static let yoctosievert: Self = .init(.yocto)
-
-    /// The rontosievert unit of equivalent dose.
-    public static let rontosievert: Self = .init(.ronto)
-
-    /// The quectosievert unit of equivalent dose.
-    public static let quectosievert: Self = .init(.quecto)
 }
 
 // MARK: - Codable

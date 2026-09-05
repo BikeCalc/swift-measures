@@ -7,6 +7,7 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 /// A unit of measure for magnetic flux density.
+@MetricUnits(name: "tesla", symbol: "T")
 public struct MagneticFluxDensity {
     public let coefficient: Double
 
@@ -28,95 +29,6 @@ public struct MagneticFluxDensity {
 
     /// The weber per square meter unit of magnetic flux density.
     public static let weberPerSquareMeter: Self = MagneticFlux.weber.dividing(by: .squareMeter)
-
-    // MARK: Metric Units
-
-    /// Creates a new instance with the specified metric prefix.
-    ///
-    /// - parameter prefix: The prefix.
-    fileprivate init(_ prefix: MetricPrefix) {
-        let symbol: String = prefix.symbol + "T"
-
-        self.init(
-            coefficient: prefix.coefficient,
-            symbol: symbol
-        )
-    }
-
-    /// The quettatesla unit of magnetic flux density.
-    public static let quettatesla: Self = .init(.quetta)
-
-    /// The ronnatesla unit of magnetic flux density.
-    public static let ronnatesla: Self = .init(.ronna)
-
-    /// The yottatesla unit of magnetic flux density.
-    public static let yottatesla: Self = .init(.yotta)
-
-    /// The zettatesla unit of magnetic flux density.
-    public static let zettatesla: Self = .init(.zetta)
-
-    /// The exatesla unit of magnetic flux density.
-    public static let exatesla: Self = .init(.exa)
-
-    /// The petatesla unit of magnetic flux density.
-    public static let petatesla: Self = .init(.peta)
-
-    /// The teratesla unit of magnetic flux density.
-    public static let teratesla: Self = .init(.tera)
-
-    /// The gigatesla unit of magnetic flux density.
-    public static let gigatesla: Self = .init(.giga)
-
-    /// The megatesla unit of magnetic flux density.
-    public static let megatesla: Self = .init(.mega)
-
-    /// The kilotesla unit of magnetic flux density.
-    public static let kilotesla: Self = .init(.kilo)
-
-    /// The hectotesla unit of magnetic flux density.
-    public static let hectotesla: Self = .init(.hecto)
-
-    /// The decatesla unit of magnetic flux density.
-    public static let decatesla: Self = .init(.deca)
-
-    /// The tesla unit of magnetic flux density.
-    public static let tesla: Self = .init(.none)
-
-    /// The decitesla unit of magnetic flux density.
-    public static let decitesla: Self = .init(.deci)
-
-    /// The centitesla unit of magnetic flux density.
-    public static let centitesla: Self = .init(.centi)
-
-    /// The millitesla unit of magnetic flux density.
-    public static let millitesla: Self = .init(.milli)
-
-    /// The microtesla unit of magnetic flux density.
-    public static let microtesla: Self = .init(.micro)
-
-    /// The nanotesla unit of magnetic flux density.
-    public static let nanotesla: Self = .init(.nano)
-
-    /// The picotesla unit of magnetic flux density.
-    public static let picotesla: Self = .init(.pico)
-
-    /// The femtotesla unit of magnetic flux density.
-    public static let femtotesla: Self = .init(.femto)
-
-    /// The attotesla unit of magnetic flux density.
-    public static let attotesla: Self = .init(.atto)
-
-    /// The zeptotesla unit of magnetic flux density.
-    public static let zeptotesla: Self = .init(.zepto)
-
-    /// The yoctotesla unit of magnetic flux density.
-    public static let yoctotesla: Self = .init(.yocto)
-
-    /// The rontotesla unit of magnetic flux density.
-    public static let rontotesla: Self = .init(.ronto)
-
-    /// The quectotesla unit of magnetic flux density.
-    public static let quectotesla: Self = .init(.quecto)
 }
 
 // MARK: - Codable

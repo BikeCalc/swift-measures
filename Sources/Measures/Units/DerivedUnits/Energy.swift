@@ -7,6 +7,7 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 /// A unit of measure for energy.
+@MetricUnits(name: "joule", symbol: "J")
 public struct Energy {
     public let coefficient: Double
 
@@ -43,95 +44,6 @@ public struct Energy {
 
     /// The watt-second unit of energy.
     public static let wattSecond: Self = Power.watt.multiplying(by: .second)
-
-    // MARK: Metric Units
-
-    /// Creates a new instance with the specified metric prefix.
-    ///
-    /// - parameter prefix: The prefix.
-    fileprivate init(_ prefix: MetricPrefix) {
-        let symbol: String = prefix.symbol + "J"
-
-        self.init(
-            coefficient: prefix.coefficient,
-            symbol: symbol
-        )
-    }
-
-    /// The quettajoule unit of energy.
-    public static let quettajoule: Self = .init(.quetta)
-
-    /// The ronnajoule unit of energy.
-    public static let ronnajoule: Self = .init(.ronna)
-
-    /// The yottajoule unit of energy.
-    public static let yottajoule: Self = .init(.yotta)
-
-    /// The zettajoule unit of energy.
-    public static let zettajoule: Self = .init(.zetta)
-
-    /// The exajoule unit of energy.
-    public static let exajoule: Self = .init(.exa)
-
-    /// The petajoule unit of energy.
-    public static let petajoule: Self = .init(.peta)
-
-    /// The terajoule unit of energy.
-    public static let terajoule: Self = .init(.tera)
-
-    /// The gigajoule unit of energy.
-    public static let gigajoule: Self = .init(.giga)
-
-    /// The megajoule unit of energy.
-    public static let megajoule: Self = .init(.mega)
-
-    /// The kilojoule unit of energy.
-    public static let kilojoule: Self = .init(.kilo)
-
-    /// The hectojoule unit of energy.
-    public static let hectojoule: Self = .init(.hecto)
-
-    /// The decajoule unit of energy.
-    public static let decajoule: Self = .init(.deca)
-
-    /// The joule unit of energy.
-    public static let joule: Self = .init(.none)
-
-    /// The decijoule unit of energy.
-    public static let decijoule: Self = .init(.deci)
-
-    /// The centijoule unit of energy.
-    public static let centijoule: Self = .init(.centi)
-
-    /// The millijoule unit of energy.
-    public static let millijoule: Self = .init(.milli)
-
-    /// The microjoule unit of energy.
-    public static let microjoule: Self = .init(.micro)
-
-    /// The nanojoule unit of energy.
-    public static let nanojoule: Self = .init(.nano)
-
-    /// The picojoule unit of energy.
-    public static let picojoule: Self = .init(.pico)
-
-    /// The femtojoule unit of energy.
-    public static let femtojoule: Self = .init(.femto)
-
-    /// The attojoule unit of energy.
-    public static let attojoule: Self = .init(.atto)
-
-    /// The zeptojoule unit of energy.
-    public static let zeptojoule: Self = .init(.zepto)
-
-    /// The yoctojoule unit of energy.
-    public static let yoctojoule: Self = .init(.yocto)
-
-    /// The rontojoule unit of energy.
-    public static let rontojoule: Self = .init(.ronto)
-
-    /// The quectojoule unit of energy.
-    public static let quectojoule: Self = .init(.quecto)
 
     // MARK: U.S. Customary and Imperial Units
 

@@ -7,6 +7,7 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 /// A unit of measure for length.
+@MetricUnits(name: "meter", symbol: "m")
 public struct Length {
     public let coefficient: Double
 
@@ -140,95 +141,6 @@ public struct Length {
         coefficient: Self.inch.coefficient / 1_000,
         symbol: "th"
     )
-
-    // MARK: Metric Units
-
-    /// Creates a new instance with the specified metric prefix.
-    ///
-    /// - parameter prefix: The prefix.
-    fileprivate init(_ prefix: MetricPrefix) {
-        let symbol: String = prefix.symbol + "m"
-
-        self.init(
-            coefficient: prefix.coefficient,
-            symbol: symbol
-        )
-    }
-
-    /// The quettameter unit of length.
-    public static let quettameter: Self = .init(.quetta)
-
-    /// The ronnameter unit of length.
-    public static let ronnameter: Self = .init(.ronna)
-
-    /// The yottameter unit of length.
-    public static let yottameter: Self = .init(.yotta)
-
-    /// The zettameter unit of length.
-    public static let zettameter: Self = .init(.zetta)
-
-    /// The exameter unit of length.
-    public static let exameter: Self = .init(.exa)
-
-    /// The petameter unit of length.
-    public static let petameter: Self = .init(.peta)
-
-    /// The terameter unit of length.
-    public static let terameter: Self = .init(.tera)
-
-    /// The gigameter unit of length.
-    public static let gigameter: Self = .init(.giga)
-
-    /// The megameter unit of length.
-    public static let megameter: Self = .init(.mega)
-
-    /// The kilometer unit of length.
-    public static let kilometer: Self = .init(.kilo)
-
-    /// The hectometer unit of length.
-    public static let hectometer: Self = .init(.hecto)
-
-    /// The decameter unit of length.
-    public static let decameter: Self = .init(.deca)
-
-    /// The meter unit of length.
-    public static let meter: Self = .init(.none)
-
-    /// The decimeter unit of length.
-    public static let decimeter: Self = .init(.deci)
-
-    /// The centimeter unit of length.
-    public static let centimeter: Self = .init(.centi)
-
-    /// The millimeter unit of length.
-    public static let millimeter: Self = .init(.milli)
-
-    /// The micrometer unit of length.
-    public static let micrometer: Self = .init(.micro)
-
-    /// The nanometer unit of length.
-    public static let nanometer: Self = .init(.nano)
-
-    /// The picometer unit of length.
-    public static let picometer: Self = .init(.pico)
-
-    /// The femtometer unit of length.
-    public static let femtometer: Self = .init(.femto)
-
-    /// The attometer unit of length.
-    public static let attometer: Self = .init(.atto)
-
-    /// The zeptometer unit of length.
-    public static let zeptometer: Self = .init(.zepto)
-
-    /// The yoctometer unit of length.
-    public static let yoctometer: Self = .init(.yocto)
-
-    /// The rontometer unit of length.
-    public static let rontometer: Self = .init(.ronto)
-
-    /// The quectometer unit of length.
-    public static let quectometer: Self = .init(.quecto)
 }
 
 // MARK: - Codable
