@@ -6,6 +6,13 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-@_exported import MeasuresMacro
-@_exported import MeasuresMacroSupport
-@_exported import NumericsExtended
+import SwiftSyntax
+import SwiftSyntaxMacroExpansion
+import SwiftSyntaxMacros
+import SwiftSyntaxMacrosGenericTestSupport
+import Testing
+@testable import MeasuresMacroPlugin
+
+@Suite("BinaryUnitsMacro")
+struct BinaryUnitsMacroTests {
+}

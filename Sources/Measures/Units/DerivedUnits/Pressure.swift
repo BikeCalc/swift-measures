@@ -7,6 +7,7 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 /// A unit of measure for pressure.
+@MetricUnits(name: "pascal", symbol: "Pa")
 public struct Pressure {
     public let coefficient: Double
 
@@ -37,95 +38,6 @@ public struct Pressure {
 
     /// The newtons per square meter unit of pressure.
     public static let newtonsPerSquareMeter: Self = Force.newton.dividing(by: .squareMeter)
-
-    // MARK: Metric Units
-
-    /// Creates a new instance with the specified metric prefix.
-    ///
-    /// - parameter prefix: The prefix.
-    fileprivate init(_ prefix: MetricPrefix) {
-        let symbol: String = prefix.symbol + "Pa"
-
-        self.init(
-            coefficient: prefix.coefficient,
-            symbol: symbol
-        )
-    }
-
-    /// The quettapascal unit of pressure.
-    public static let quettapascal: Self = .init(.quetta)
-
-    /// The ronnapascal unit of pressure.
-    public static let ronnapascal: Self = .init(.ronna)
-
-    /// The yottapascal unit of pressure.
-    public static let yottapascal: Self = .init(.yotta)
-
-    /// The zettapascal unit of pressure.
-    public static let zettapascal: Self = .init(.zetta)
-
-    /// The exapascal unit of pressure.
-    public static let exapascal: Self = .init(.exa)
-
-    /// The petapascal unit of pressure.
-    public static let petapascal: Self = .init(.peta)
-
-    /// The terapascal unit of pressure.
-    public static let terapascal: Self = .init(.tera)
-
-    /// The gigapascal unit of pressure.
-    public static let gigapascal: Self = .init(.giga)
-
-    /// The megapascal unit of pressure.
-    public static let megapascal: Self = .init(.mega)
-
-    /// The kilopascal unit of pressure.
-    public static let kilopascal: Self = .init(.kilo)
-
-    /// The hectopascal unit of pressure.
-    public static let hectopascal: Self = .init(.hecto)
-
-    /// The decapascal unit of pressure.
-    public static let decapascal: Self = .init(.deca)
-
-    /// The pascal unit of pressure.
-    public static let pascal: Self = .init(.none)
-
-    /// The decipascal unit of pressure.
-    public static let decipascal: Self = .init(.deci)
-
-    /// The centipascal unit of pressure.
-    public static let centipascal: Self = .init(.centi)
-
-    /// The millipascal unit of pressure.
-    public static let millipascal: Self = .init(.milli)
-
-    /// The micropascal unit of pressure.
-    public static let micropascal: Self = .init(.micro)
-
-    /// The nanopascal unit of pressure.
-    public static let nanopascal: Self = .init(.nano)
-
-    /// The picopascal unit of pressure.
-    public static let picopascal: Self = .init(.pico)
-
-    /// The femtopascal unit of pressure.
-    public static let femtopascal: Self = .init(.femto)
-
-    /// The attopascal unit of pressure.
-    public static let attopascal: Self = .init(.atto)
-
-    /// The zeptopascal unit of pressure.
-    public static let zeptopascal: Self = .init(.zepto)
-
-    /// The yoctopascal unit of pressure.
-    public static let yoctopascal: Self = .init(.yocto)
-
-    /// The rontopascal unit of pressure.
-    public static let rontopascal: Self = .init(.ronto)
-
-    /// The quectopascal unit of pressure.
-    public static let quectopascal: Self = .init(.quecto)
 
     // MARK: Other Metric Units
 

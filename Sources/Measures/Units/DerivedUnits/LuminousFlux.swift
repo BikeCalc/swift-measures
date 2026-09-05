@@ -7,6 +7,7 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 /// A unit of measure for luminous flux.
+@MetricUnits(name: "lumen", symbol: "lm")
 public struct LuminousFlux {
     public let coefficient: Double
 
@@ -23,95 +24,6 @@ public struct LuminousFlux {
         self.constant = constant
         self.symbol = symbol
     }
-
-    // MARK: Metric Units
-
-    /// Creates a new instance with the specified metric prefix.
-    ///
-    /// - parameter prefix: The prefix.
-    fileprivate init(_ prefix: MetricPrefix) {
-        let symbol: String = prefix.symbol + "lm"
-
-        self.init(
-            coefficient: prefix.coefficient,
-            symbol: symbol
-        )
-    }
-
-    /// The quettalumen unit of luminous flux.
-    public static let quettalumen: Self = .init(.quetta)
-
-    /// The ronnalumen unit of luminous flux.
-    public static let ronnalumen: Self = .init(.ronna)
-
-    /// The yottalumen unit of luminous flux.
-    public static let yottalumen: Self = .init(.yotta)
-
-    /// The zettalumen unit of luminous flux.
-    public static let zettalumen: Self = .init(.zetta)
-
-    /// The exalumen unit of luminous flux.
-    public static let exalumen: Self = .init(.exa)
-
-    /// The petalumen unit of luminous flux.
-    public static let petalumen: Self = .init(.peta)
-
-    /// The teralumen unit of luminous flux.
-    public static let teralumen: Self = .init(.tera)
-
-    /// The gigalumen unit of luminous flux.
-    public static let gigalumen: Self = .init(.giga)
-
-    /// The megalumen unit of luminous flux.
-    public static let megalumen: Self = .init(.mega)
-
-    /// The kilolumen unit of luminous flux.
-    public static let kilolumen: Self = .init(.kilo)
-
-    /// The hectolumen unit of luminous flux.
-    public static let hectolumen: Self = .init(.hecto)
-
-    /// The decalumen unit of luminous flux.
-    public static let decalumen: Self = .init(.deca)
-
-    /// The lumen unit of luminous flux.
-    public static let lumen: Self = .init(.none)
-
-    /// The decilumen unit of luminous flux.
-    public static let decilumen: Self = .init(.deci)
-
-    /// The centilumen unit of luminous flux.
-    public static let centilumen: Self = .init(.centi)
-
-    /// The millilumen unit of luminous flux.
-    public static let millilumen: Self = .init(.milli)
-
-    /// The microlumen unit of luminous flux.
-    public static let microlumen: Self = .init(.micro)
-
-    /// The nanolumen unit of luminous flux.
-    public static let nanolumen: Self = .init(.nano)
-
-    /// The picolumen unit of luminous flux.
-    public static let picolumen: Self = .init(.pico)
-
-    /// The femtolumen unit of luminous flux.
-    public static let femtolumen: Self = .init(.femto)
-
-    /// The attolumen unit of luminous flux.
-    public static let attolumen: Self = .init(.atto)
-
-    /// The zeptolumen unit of luminous flux.
-    public static let zeptolumen: Self = .init(.zepto)
-
-    /// The yoctolumen unit of luminous flux.
-    public static let yoctolumen: Self = .init(.yocto)
-
-    /// The rontolumen unit of luminous flux.
-    public static let rontolumen: Self = .init(.ronto)
-
-    /// The quectolumen unit of luminous flux.
-    public static let quectolumen: Self = .init(.quecto)
 }
 
 // MARK: - Codable

@@ -7,6 +7,7 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 /// A unit of measure for catalytic activity.
+@MetricUnits(name: "katal", symbol: "kat")
 public struct CatalyticActivity {
     public let coefficient: Double
 
@@ -29,94 +30,6 @@ public struct CatalyticActivity {
     /// The mole per second unit of catalytic activity.
     public static let molePerSecond: Self = SubstanceAmount.mole.dividing(by: .second)
 
-    // MARK: Metric Units
-
-    /// Creates a new instance with the specified metric prefix.
-    ///
-    /// - parameter prefix: The prefix.
-    fileprivate init(_ prefix: MetricPrefix) {
-        let symbol: String = prefix.symbol + "kat"
-
-        self.init(
-            coefficient: prefix.coefficient,
-            symbol: symbol
-        )
-    }
-
-    /// The quettakatal unit of catalytic activity.
-    public static let quettakatal: Self = .init(.quetta)
-
-    /// The ronnakatal unit of catalytic activity.
-    public static let ronnakatal: Self = .init(.ronna)
-
-    /// The yottakatal unit of catalytic activity.
-    public static let yottakatal: Self = .init(.yotta)
-
-    /// The zettakatal unit of catalytic activity.
-    public static let zettakatal: Self = .init(.zetta)
-
-    /// The exakatal unit of catalytic activity.
-    public static let exakatal: Self = .init(.exa)
-
-    /// The petakatal unit of catalytic activity.
-    public static let petakatal: Self = .init(.peta)
-
-    /// The terakatal unit of catalytic activity.
-    public static let terakatal: Self = .init(.tera)
-
-    /// The gigakatal unit of catalytic activity.
-    public static let gigakatal: Self = .init(.giga)
-
-    /// The megakatal unit of catalytic activity.
-    public static let megakatal: Self = .init(.mega)
-
-    /// The kilokatal unit of catalytic activity.
-    public static let kilokatal: Self = .init(.kilo)
-
-    /// The hectokatal unit of catalytic activity.
-    public static let hectokatal: Self = .init(.hecto)
-
-    /// The decakatal unit of catalytic activity.
-    public static let decakatal: Self = .init(.deca)
-
-    /// The katal unit of catalytic activity.
-    public static let katal: Self = .init(.none)
-
-    /// The decikatal unit of catalytic activity.
-    public static let decikatal: Self = .init(.deci)
-
-    /// The centikatal unit of catalytic activity.
-    public static let centikatal: Self = .init(.centi)
-
-    /// The millikatal unit of catalytic activity.
-    public static let millikatal: Self = .init(.milli)
-
-    /// The microkatal unit of catalytic activity.
-    public static let microkatal: Self = .init(.micro)
-
-    /// The nanokatal unit of catalytic activity.
-    public static let nanokatal: Self = .init(.nano)
-
-    /// The picokatal unit of catalytic activity.
-    public static let picokatal: Self = .init(.pico)
-
-    /// The femtokatal unit of catalytic activity.
-    public static let femtokatal: Self = .init(.femto)
-
-    /// The attokatal unit of catalytic activity.
-    public static let attokatal: Self = .init(.atto)
-
-    /// The zeptokatal unit of catalytic activity.
-    public static let zeptokatal: Self = .init(.zepto)
-
-    /// The yoctokatal unit of catalytic activity.
-    public static let yoctokatal: Self = .init(.yocto)
-
-    /// The rontokatal unit of catalytic activity.
-    public static let rontokatal: Self = .init(.ronto)
-
-    /// The quectokatal unit of catalytic activity.
-    public static let quectokatal: Self = .init(.quecto)
 }
 
 // MARK: - Codable

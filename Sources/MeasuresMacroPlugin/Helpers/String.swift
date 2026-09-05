@@ -6,6 +6,14 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-@_exported import MeasuresMacro
-@_exported import MeasuresMacroSupport
-@_exported import NumericsExtended
+extension String {
+    internal func splitBeforeUppercase() -> String {
+        return self.reduce(into: "") { result, character in
+            if character.isUppercase && !result.isEmpty {
+                result.append(" ")
+            }
+
+            result.append(character)
+        }
+    }
+}

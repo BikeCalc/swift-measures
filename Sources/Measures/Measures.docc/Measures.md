@@ -85,8 +85,3 @@ additions.
 
 - ``Cadence``
 - ``Memory``
-
-### Prefixes
-
-- ``BinaryPrefix``
-- ``MetricPrefix``

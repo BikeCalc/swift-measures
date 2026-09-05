@@ -28,7 +28,7 @@ public protocol Measurable {
     /// The symbol of this instance.
     var symbol: String { get }
 
-    /// The base unit of this instance's dimension.
+    /// The base unit through which values of this dimension are converted.
     static var base: Self { get }
 
     /// The valid range expressed in the base unit.
