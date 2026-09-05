@@ -165,8 +165,8 @@ extension Mass: Comparable {}
 extension Mass {
     /// Returns the quotient of dividing this value by the specified value.
     ///
-    /// - parameter area: A unit of area.
-    /// - returns: A unit of surface density.
+    /// - Parameter area: A unit of area.
+    /// - Returns: A unit of surface density.
     public func dividing(by area: Area) -> SurfaceDensity {
         let coefficient: Double = self.coefficient * (1 / area.coefficient)
         let symbol: String = self.symbol + "/" + area.symbol
@@ -179,8 +179,8 @@ extension Mass {
 
     /// Returns the quotient of dividing this value by the specified value.
     ///
-    /// - parameter substanceAmount: A unit of substance amount.
-    /// - returns: A unit of molar mass.
+    /// - Parameter substanceAmount: A unit of substance amount.
+    /// - Returns: A unit of molar mass.
     public func dividing(by substanceAmount: SubstanceAmount) -> MolarMass {
         let coefficient: Double = self.coefficient * (1 / substanceAmount.coefficient)
         let symbol: String = self.symbol + "/" + substanceAmount.symbol
@@ -193,8 +193,8 @@ extension Mass {
 
     /// Returns the quotient of dividing this value by the specified value.
     ///
-    /// - parameter volume: A unit of volume.
-    /// - returns: A unit of concentration.
+    /// - Parameter volume: A unit of volume.
+    /// - Returns: A unit of concentration.
     public func dividing(by volume: Volume) -> Concentration {
         let coefficient: Double = self.coefficient * (1 / volume.coefficient)
         let symbol: String = self.symbol + "/" + volume.symbol
@@ -225,8 +225,8 @@ extension Mass: Measurable {
 extension Mass {
     /// Returns the product of multiplying this value by the specified value.
     ///
-    /// - parameter acceleration: A unit of acceleration.
-    /// - returns: A unit of force.
+    /// - Parameter acceleration: A unit of acceleration.
+    /// - Returns: A unit of force.
     public func multiplying(by acceleration: Acceleration) -> Force {
         let coefficient: Double = self.coefficient * acceleration.coefficient
         let symbol: String = self.symbol + "⋅" + acceleration.symbol

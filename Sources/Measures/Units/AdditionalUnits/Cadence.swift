@@ -49,8 +49,8 @@ extension Cadence: Comparable {}
 extension Cadence {
     /// Returns the quotient of dividing this value by the specified value.
     ///
-    /// - parameter time: A unit of time.
-    /// - returns: A unit of cadence.
+    /// - Parameter time: A unit of time.
+    /// - Returns: A unit of cadence.
     fileprivate static func dividing(by time: Time) -> Self {
         let coefficient: Double = Time.base.coefficient * (1 / time.coefficient)
         let symbol: String = "r" + "/" + time.symbol

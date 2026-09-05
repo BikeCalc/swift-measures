@@ -44,8 +44,8 @@ extension ElectricCurrent: Comparable {}
 extension ElectricCurrent {
     /// Returns the product of multiplying this value by the specified value.
     ///
-    /// - parameter time: A unit of time.
-    /// - returns: A unit of electric charge.
+    /// - Parameter time: A unit of time.
+    /// - Returns: A unit of electric charge.
     public func multiplying(by time: Time) -> ElectricCharge {
         let coefficient: Double = self.coefficient * time.coefficient
         let symbol: String = self.symbol + "⋅" + time.symbol
@@ -58,8 +58,8 @@ extension ElectricCurrent {
 
     /// Returns the product of multiplying this value by the specified value.
     ///
-    /// - parameter electricPotential: A unit of electric potential.
-    /// - returns: A unit of power.
+    /// - Parameter electricPotential: A unit of electric potential.
+    /// - Returns: A unit of power.
     public func multiplying(by electricPotential: ElectricPotential) -> Power {
         let coefficient: Double = self.coefficient * electricPotential.coefficient
         let symbol: String = self.symbol + "⋅" + electricPotential.symbol
@@ -76,8 +76,8 @@ extension ElectricCurrent {
 extension ElectricCurrent {
     /// Returns the quotient of dividing this value by the specified value.
     ///
-    /// - parameter electricPotential: A unit of electric potential.
-    /// - returns: A unit of electric conductance.
+    /// - Parameter electricPotential: A unit of electric potential.
+    /// - Returns: A unit of electric conductance.
     public func dividing(by electricPotential: ElectricPotential) -> ElectricConductance {
         let coefficient: Double = self.coefficient * (1 / electricPotential.coefficient)
         let symbol: String = self.symbol + "/" + electricPotential.symbol

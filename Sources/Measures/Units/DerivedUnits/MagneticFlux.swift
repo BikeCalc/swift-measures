@@ -44,8 +44,8 @@ extension MagneticFlux: Comparable {}
 extension MagneticFlux {
     /// Returns the quotient of dividing this value by the specified value.
     ///
-    /// - parameter area: A unit of area.
-    /// - returns: A unit of magnetic flux density.
+    /// - Parameter area: A unit of area.
+    /// - Returns: A unit of magnetic flux density.
     public func dividing(by area: Area) -> MagneticFluxDensity {
         let coefficient: Double = self.coefficient * (1 / area.coefficient)
         let symbol: String = self.symbol + "/" + area.symbol
@@ -58,8 +58,8 @@ extension MagneticFlux {
 
     /// Returns the quotient of dividing this value by the specified value.
     ///
-    /// - parameter electricCurrent: A unit of electric current.
-    /// - returns: A unit of electrical inductance.
+    /// - Parameter electricCurrent: A unit of electric current.
+    /// - Returns: A unit of electrical inductance.
     public func dividing(by electricCurrent: ElectricCurrent) -> ElectricalInductance {
         let coefficient: Double = self.coefficient * (1 / electricCurrent.coefficient)
         let symbol: String = self.symbol + "/" + electricCurrent.symbol

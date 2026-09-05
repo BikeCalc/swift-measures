@@ -101,8 +101,8 @@ extension Energy: Measurable {
 extension Energy {
     /// Returns the quotient of dividing this value by the specified value.
     ///
-    /// - parameter mass: A unit of mass.
-    /// - returns: A unit of absorbed dose.
+    /// - Parameter mass: A unit of mass.
+    /// - Returns: A unit of absorbed dose.
     public func dividing(by mass: Mass) -> AbsorbedDose {
         let coefficient: Double = self.coefficient * (1 / mass.coefficient)
         let symbol: String = self.symbol + "/" + mass.symbol
@@ -115,8 +115,8 @@ extension Energy {
 
     /// Returns the quotient of dividing this value by the specified value.
     ///
-    /// - parameter time: A unit of time.
-    /// - returns: A unit of power.
+    /// - Parameter time: A unit of time.
+    /// - Returns: A unit of power.
     public func dividing(by time: Time) -> Power {
         let coefficient: Double = self.coefficient * (1 / time.coefficient)
         let symbol: String = self.symbol + "/" + time.symbol

@@ -64,8 +64,8 @@ extension Force: Comparable {}
 extension Force {
     /// Returns the quotient of dividing this value by the specified value.
     ///
-    /// - parameter area: A unit of area.
-    /// - returns: A unit of pressure.
+    /// - Parameter area: A unit of area.
+    /// - Returns: A unit of pressure.
     public func dividing(by area: Area) -> Pressure {
         let coefficient: Double = self.coefficient * (1 / area.coefficient)
         let symbol: String = self.symbol + "/" + area.symbol
@@ -96,8 +96,8 @@ extension Force: Measurable {
 extension Force {
     /// Returns the product of multiplying this value by the specified value.
     ///
-    /// - parameter length: A unit of length.
-    /// - returns: A unit of energy.
+    /// - Parameter length: A unit of length.
+    /// - Returns: A unit of energy.
     public func multiplying(by length: Length) -> Energy {
         let coefficient: Double = self.coefficient * length.coefficient
         let symbol: String = self.symbol + "⋅" + length.symbol

@@ -156,8 +156,8 @@ extension Length: Comparable {}
 extension Length {
     /// Returns the quotient of dividing this value by the specified value.
     ///
-    /// - parameter time: A unit of time.
-    /// - returns: A unit of speed.
+    /// - Parameter time: A unit of time.
+    /// - Returns: A unit of speed.
     public func dividing(by time: Time) -> Speed {
         let coefficient: Double =  self.coefficient * (1 / time.coefficient)
         let symbol: String = self.symbol + "/" + time.symbol
@@ -188,8 +188,8 @@ extension Length: Measurable {
 extension Length {
     /// Returns the product of multiplying this value by the specified value.
     ///
-    /// - parameter length: A unit of length.
-    /// - returns: A unit of area.
+    /// - Parameter length: A unit of length.
+    /// - Returns: A unit of area.
     public func multiplying(by length: Length) -> Area {
         let coefficient: Double = self.coefficient * length.coefficient
         let symbol: String = self.symbol + "⋅" + length.symbol
@@ -206,7 +206,7 @@ extension Length {
 extension Length {
     /// Returns the result of raising this value to its square.
     ///
-    /// - returns: A unit of area.
+    /// - Returns: A unit of area.
     public func squared() -> Area {
         let unit: Area = self.multiplying(by: self)
 
@@ -218,7 +218,7 @@ extension Length {
 
     /// Returns the result of raising this value to its cube.
     ///
-    /// - returns: A unit of volume.
+    /// - Returns: A unit of volume.
     public func cubed() -> Volume {
         let unit: Volume = self.squared().multiplying(by: self)
 

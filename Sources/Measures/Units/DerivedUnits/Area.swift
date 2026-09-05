@@ -129,8 +129,8 @@ extension Area: Measurable {
 extension Area {
     /// Returns the product of multiplying this value by the specified value.
     ///
-    /// - parameter length: A unit of length.
-    /// - returns: A unit of volume.
+    /// - Parameter length: A unit of length.
+    /// - Returns: A unit of volume.
     public func multiplying(by length: Length) -> Volume {
         let coefficient: Double = self.coefficient * length.coefficient
         let symbol: String = self.symbol + "⋅" + length.symbol

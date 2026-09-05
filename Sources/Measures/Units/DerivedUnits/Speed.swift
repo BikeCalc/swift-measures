@@ -62,8 +62,8 @@ extension Speed: Comparable {}
 extension Speed {
     /// Returns the quotient of dividing this value by the specified value.
     ///
-    /// - parameter time: A unit of time.
-    /// - returns: A unit of acceleration.
+    /// - Parameter time: A unit of time.
+    /// - Returns: A unit of acceleration.
     public func dividing(by time: Time) -> Acceleration {
         let coefficient: Double = self.coefficient * (1 / time.coefficient)
         let symbol: String = self.symbol + "/" + time.symbol

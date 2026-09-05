@@ -29,7 +29,7 @@ public struct ThermodynamicTemperature {
 
     /// The Fahrenheit unit of thermodynamic temperature.
     ///
-    /// - warning: The result of converting this unit is not 100% accurate.
+    /// - Warning: The result of converting this unit is not 100% accurate.
     public static let fahrenheit: Self = .init(
         coefficient: 5/9,
         constant: 2.5537222222222427e+2,

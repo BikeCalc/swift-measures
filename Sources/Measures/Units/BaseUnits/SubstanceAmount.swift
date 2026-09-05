@@ -39,8 +39,8 @@ extension SubstanceAmount: Comparable {}
 extension SubstanceAmount {
     /// Returns the quotient of dividing this value by the specified value.
     ///
-    /// - parameter time: A unit of time.
-    /// - returns: A unit of catalytic activity.
+    /// - Parameter time: A unit of time.
+    /// - Returns: A unit of catalytic activity.
     public func dividing(by time: Time) -> CatalyticActivity {
         let coefficient: Double = self.coefficient * (1 / time.coefficient)
         let symbol: String = self.symbol + "/" + time.symbol

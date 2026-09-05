@@ -53,8 +53,8 @@ extension ElectricalResistance: Measurable {
 extension ElectricalResistance {
     /// Returns the product of multiplying this value by the specified value.
     ///
-    /// - parameter time: A unit of time.
-    /// - returns: A unit of electrical inductance.
+    /// - Parameter time: A unit of time.
+    /// - Returns: A unit of electrical inductance.
     public func multiplying(by time: Time) -> ElectricalInductance {
         let coefficient: Double = self.coefficient * time.coefficient
         let symbol: String = self.symbol + "⋅" + time.symbol

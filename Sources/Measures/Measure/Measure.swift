@@ -26,8 +26,8 @@ where Unit: Equatable & Measurable & Sendable {
 
     /// Creates a new instance with the specified value and unit.
     ///
-    /// - parameter value: The value.
-    /// - parameter unit: The unit.
+    /// - Parameter value: The value.
+    /// - Parameter unit: The unit.
     public init<Value>(_ value: Value, _ unit: Unit)
     where Value: BinaryFloatingPoint {
         self.value = .init(value)
@@ -36,8 +36,8 @@ where Unit: Equatable & Measurable & Sendable {
 
     /// Creates a new instance with the specified value and unit.
     ///
-    /// - parameter value: The value.
-    /// - parameter unit: The unit.
+    /// - Parameter value: The value.
+    /// - Parameter unit: The unit.
     public init<Value>(_ value: Value, _ unit: Unit)
     where Value: BinaryInteger {
         self.value = .init(value)
@@ -106,8 +106,8 @@ extension Measure: Convertible {
     /// // Prints "100.0 cm"
     /// ```
     ///
-    /// - parameter rhs: The unit to convert to.
-    /// - returns: The converted measure.
+    /// - Parameter rhs: The unit to convert to.
+    /// - Returns: The converted measure.
     public func converted(to rhs: Unit) -> Self {
         let newValue: Double = (self.convertedToBase().value - rhs.constant) / rhs.coefficient
         return .init(newValue, rhs)
@@ -121,8 +121,8 @@ extension Measure: Convertible {
     /// // Prints "1.0 s"
     /// ```
     ///
-    /// - parameter rhs: The unit to convert to.
-    /// - returns: The converted measure.
+    /// - Parameter rhs: The unit to convert to.
+    /// - Returns: The converted measure.
     public func converted(to rhs: Time) -> Measure<Time>
     where Unit == Frequency {
         let newValue: Double = (self.convertedToBase().value - rhs.constant) / rhs.coefficient
@@ -138,7 +138,7 @@ extension Measure: Convertible {
     /// // Prints "100.0 cm"
     /// ```
     ///
-    /// - parameter rhs: The unit to convert to.
+    /// - Parameter rhs: The unit to convert to.
     public mutating func convert(to rhs: Unit) {
         self = self.converted(to: rhs)
     }
@@ -190,17 +190,17 @@ where Unit: Decodable {
 extension Measure {
     /// Returns a Boolean value indicating whether this measure's value is divisible by the specified value.
     ///
-    /// - parameter other: The value to test.
-    /// - returns: `true` if this measure's value is divisible by the specified value, and `false` otherwise.
+    /// - Parameter other: The value to test.
+    /// - Returns: `true` if this measure's value is divisible by the specified value, and `false` otherwise.
     public func isDivisible(by other: Double) -> Bool {
         return self.value.isDivisible(by: other)
     }
 
     /// Returns the quotient of dividing the first specified value by the second.
     ///
-    /// - parameter lhs: The dividend.
-    /// - parameter rhs: The divisor.
-    /// - returns: The quotient.
+    /// - Parameter lhs: The dividend.
+    /// - Parameter rhs: The divisor.
+    /// - Returns: The quotient.
     public static func / (_ lhs: Self, _ rhs: Double) -> Self {
         let lhsValue: Double = lhs.value
         let newValue: Double = lhsValue / rhs
@@ -210,17 +210,17 @@ extension Measure {
 
     /// Divides the first specified value by the second and stores the quotient in the left-hand-side variable.
     ///
-    /// - parameter lhs: The dividend.
-    /// - parameter rhs: The divisor.
+    /// - Parameter lhs: The dividend.
+    /// - Parameter rhs: The divisor.
     public static func /= (_ lhs: inout Self, _ rhs: Double) {
         lhs = lhs / rhs
     }
 
     /// Returns the remainder of dividing the first specified value by the second.
     ///
-    /// - parameter lhs: The dividend.
-    /// - parameter rhs: The divisor.
-    /// - returns: The remainder.
+    /// - Parameter lhs: The dividend.
+    /// - Parameter rhs: The divisor.
+    /// - Returns: The remainder.
     public static func % (_ lhs: Self, _ rhs: Double) -> Self {
         let lhsValue: Double = lhs.value
         let newValue: Double = lhsValue.truncatingRemainder(dividingBy: rhs)
@@ -230,30 +230,30 @@ extension Measure {
 
     /// Divides the first specified value by the second and stores the remainder in the left-hand-side variable.
     ///
-    /// - parameter lhs: The dividend.
-    /// - parameter rhs: The divisor.
+    /// - Parameter lhs: The dividend.
+    /// - Parameter rhs: The divisor.
     public static func %= (_ lhs: inout Self, _ rhs: Double) {
         lhs = lhs % rhs
     }
 
     /// Returns the quotient of dividing this value by the specified value.
     ///
-    /// - parameter divisor: The divisor.
-    /// - returns: The quotient.
+    /// - Parameter divisor: The divisor.
+    /// - Returns: The quotient.
     public func dividing(by divisor: Double) -> Self {
         return self / divisor
     }
 
     /// Divides this value by the specified value and produces the quotient.
     ///
-    /// - parameter divisor: The divisor.
+    /// - Parameter divisor: The divisor.
     public mutating func divide(by divisor: Double) {
         self /= divisor
     }
 
     /// Returns this value halved.
     ///
-    /// - returns: The value halved.
+    /// - Returns: The value halved.
     public func halved() -> Self {
         return self / 2
     }
@@ -299,8 +299,8 @@ extension Measure: CanonicallyEquatable {
     /// // Prints "true"
     /// ```
     ///
-    /// - parameter rhs: An instance to compare.
-    /// - returns: `true` if is equivalent, and `false` otherwise.
+    /// - Parameter rhs: An instance to compare.
+    /// - Returns: `true` if is equivalent, and `false` otherwise.
     public func isCanonicallyEquatable(to rhs: Self) -> Bool {
         let lhsValue: Double = self.value
         let rhsValue: Double = rhs.converted(to: self.unit).value
@@ -324,17 +324,17 @@ where Unit: Hashable {
 extension Measure {
     /// Returns a Boolean value indicating whether this measure's value is a multiple of the specified value.
     ///
-    /// - parameter other: The value to test.
-    /// - returns: `true` if this measure's value is a multiple of the specified value, and `false` otherwise.
+    /// - Parameter other: The value to test.
+    /// - Returns: `true` if this measure's value is a multiple of the specified value, and `false` otherwise.
     public func isMultiple(of other: Double) -> Bool {
         return self.value.isMultiple(of: other)
     }
 
     /// Returns the product of multiplying the two specified values.
     ///
-    /// - parameter lhs: The multiplicand.
-    /// - parameter rhs: The multiplier.
-    /// - returns: The product.
+    /// - Parameter lhs: The multiplicand.
+    /// - Parameter rhs: The multiplier.
+    /// - Returns: The product.
     public static func * (_ lhs: Self, _ rhs: Double) -> Self {
         let lhsValue: Double = lhs.value
         let newValue: Double = lhsValue * rhs
@@ -344,9 +344,9 @@ extension Measure {
 
     /// Returns the product of multiplying the two specified values.
     ///
-    /// - parameter lhs: The multiplicand.
-    /// - parameter rhs: The multiplier.
-    /// - returns: The product.
+    /// - Parameter lhs: The multiplicand.
+    /// - Parameter rhs: The multiplier.
+    /// - Returns: The product.
     public static func * (_ lhs: Double, _ rhs: Self) -> Self {
         let rhsValue: Double = rhs.value
         let newValue: Double = lhs * rhsValue
@@ -356,30 +356,30 @@ extension Measure {
 
     /// Multiplies the two specified values and stores the product in the left-hand-side variable.
     ///
-    /// - parameter lhs: The multiplicand.
-    /// - parameter rhs: The multiplier.
+    /// - Parameter lhs: The multiplicand.
+    /// - Parameter rhs: The multiplier.
     public static func *= (_ lhs: inout Self, _ rhs: Double) {
         lhs = lhs * rhs
     }
 
     /// Returns the product of multiplying this value by the specified value.
     ///
-    /// - parameter multiplier: The multiplier.
-    /// - returns: The product.
+    /// - Parameter multiplier: The multiplier.
+    /// - Returns: The product.
     public func multiplying(by multiplier: Double) -> Self {
         return self * multiplier
     }
 
     /// Multiplies this value by the specified value and produces the product.
     ///
-    /// - parameter multiplier: The multiplier.
+    /// - Parameter multiplier: The multiplier.
     public mutating func multiply(by multiplier: Double) {
         self *= multiplier
     }
 
     /// Returns this value doubled.
     ///
-    ///  - returns: The value doubled.
+    ///  - Returns: The value doubled.
     public func doubled() -> Self {
         return self * 2
     }

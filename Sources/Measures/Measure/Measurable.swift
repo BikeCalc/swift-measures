@@ -10,9 +10,9 @@
 public protocol Measurable {
     /// Creates a new instance with the specified coefficient, constant and symbol.
     ///
-    /// - parameter coefficient: The coefficient.
-    /// - parameter constant: The constant.
-    /// - parameter symbol: The symbol.
+    /// - Parameter coefficient: The coefficient.
+    /// - Parameter constant: The constant.
+    /// - Parameter symbol: The symbol.
     init(
         coefficient: Double,
         constant: Double,

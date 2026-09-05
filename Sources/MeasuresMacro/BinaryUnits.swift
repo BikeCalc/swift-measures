@@ -8,9 +8,9 @@
 
 /// Generates the complete family of binary-prefixed units for a measurable dimension.
 ///
-/// - parameter name: The unprefixed unit name.
-/// - parameter symbol: The unprefixed unit symbol.
-/// - parameter coefficient: The unprefixed unit's coefficient relative to the dimension's base unit.
+/// - Parameter name: The unprefixed unit name.
+/// - Parameter symbol: The unprefixed unit symbol.
+/// - Parameter coefficient: The unprefixed unit's coefficient relative to the dimension's base unit.
 @attached(member, names: arbitrary)
 package macro BinaryUnits(
     name: String,

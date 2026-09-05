@@ -52,8 +52,8 @@ extension Power: Comparable {}
 extension Power {
     /// Returns the product of multiplying this value by the specified value.
     ///
-    /// - parameter time: A unit of time.
-    /// - returns: A unit of energy.
+    /// - Parameter time: A unit of time.
+    /// - Returns: A unit of energy.
     public func multiplying(by time: Time) -> Energy {
         let coefficient: Double = self.coefficient * time.coefficient
         let symbol: String = self.symbol + "⋅" + time.symbol

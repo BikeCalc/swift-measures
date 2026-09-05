@@ -14,12 +14,12 @@ public protocol Convertible {
 
     /// Returns this measure converted to the specified unit.
     ///
-    /// - parameter rhs: The unit to convert to.
-    /// - returns: The converted measure.
+    /// - Parameter rhs: The unit to convert to.
+    /// - Returns: The converted measure.
     func converted(to rhs: Unit) -> Self
 
     /// Converts this measure to the specified unit.
     ///
-    /// - parameter rhs: The unit to convert to.
+    /// - Parameter rhs: The unit to convert to.
     mutating func convert(to rhs: Unit)
 }

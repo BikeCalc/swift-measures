@@ -28,8 +28,8 @@ public struct Acceleration {
 
     /// Creates a new instance with the specified length and squared time units.
     ///
-    /// - parameter length: A unit of length.
-    /// - parameter time: A unit of time.
+    /// - Parameter length: A unit of length.
+    /// - Parameter time: A unit of time.
     fileprivate init(
         _ length: Length,
         perSquare time: Time

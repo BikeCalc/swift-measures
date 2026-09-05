@@ -53,8 +53,8 @@ extension ElectricPotential: Measurable {
 extension ElectricPotential {
     /// Returns the quotient of dividing this value by the specified value.
     ///
-    /// - parameter electricCurrent: A unit of electric current.
-    /// - returns: A unit of electrical resistance.
+    /// - Parameter electricCurrent: A unit of electric current.
+    /// - Returns: A unit of electrical resistance.
     public func dividing(by electricCurrent: ElectricCurrent) -> ElectricalResistance {
         let coefficient: Double = self.coefficient * (1 / electricCurrent.coefficient)
         let symbol: String = self.symbol + "/" + electricCurrent.symbol
@@ -71,8 +71,8 @@ extension ElectricPotential {
 extension ElectricPotential {
     /// Returns the product of multiplying this value by the specified value.
     ///
-    /// - parameter electricCharge: A unit of electric charge.
-    /// - returns: A unit of energy.
+    /// - Parameter electricCharge: A unit of electric charge.
+    /// - Returns: A unit of energy.
     public func multiplying(by electricCharge: ElectricCharge) -> Energy {
         let coefficient: Double = self.coefficient * electricCharge.coefficient
         let symbol: String = self.symbol + "⋅" + electricCharge.symbol
@@ -85,8 +85,8 @@ extension ElectricPotential {
 
     /// Returns the product of multiplying this value by the specified value.
     ///
-    /// - parameter time: A unit of time.
-    /// - returns: A unit of magnetic flux.
+    /// - Parameter time: A unit of time.
+    /// - Returns: A unit of magnetic flux.
     public func multiplying(by time: Time) -> MagneticFlux {
         let coefficient: Double = self.coefficient * time.coefficient
         let symbol: String = self.symbol + "⋅" + time.symbol
