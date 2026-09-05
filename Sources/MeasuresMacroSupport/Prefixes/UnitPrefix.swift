@@ -6,15 +6,21 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
+/// A prefix that scales a unit and contributes to its name and symbol.
 package protocol UnitPrefix
 where Self: CaseIterable & Equatable & RawRepresentable, Self.RawValue == String {
+    /// The multiplier represented by this prefix.
     var coefficient: Double { get }
+
+    /// The symbol prepended to the unprefixed unit symbol.
     var symbol: String { get }
 
+    /// The prefix that leaves a unit unchanged.
     static var none: Self { get }
 }
 
 extension UnitPrefix {
+    /// The name used to refer to this prefix.
     package var name: String {
         return self == .none ? "none" : self.rawValue
     }

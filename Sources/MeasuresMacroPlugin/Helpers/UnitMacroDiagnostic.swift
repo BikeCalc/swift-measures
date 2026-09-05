@@ -8,11 +8,23 @@
 
 import SwiftDiagnostics
 
+/// An error emitted while expanding a unit macro.
 internal enum UnitMacroDiagnostic {
+    /// The supplied unit name is empty.
     case emptyName
+
+    /// The supplied unit symbol is empty.
     case emptySymbol
-    case literalRequired(String)
-    case structOnly(String)
+
+    /// A required macro argument is not an uninterpolated string literal.
+    ///
+    /// - Parameter argument: The name of the argument that requires a string literal.
+    case literalRequired(_ argument: String)
+
+    /// A unit macro is attached to a declaration other than a structure.
+    ///
+    /// - Parameter macro: The name of the unit macro that requires a structure.
+    case structOnly(_ macro: String)
 }
 
 // MARK: - DiagnosticMessage

@@ -9,6 +9,7 @@
 import SwiftSyntax
 
 extension DeclGroupSyntax {
+    /// The names of the static properties declared directly by this declaration.
     internal var staticPropertyNames: Set<String> {
         return self.memberBlock.members.reduce(into: Set<String>()) { result, member in
             guard let variable = member.decl.as(VariableDeclSyntax.self),
@@ -26,6 +27,12 @@ extension DeclGroupSyntax {
         }
     }
 
+    /// Returns the first attached macro that declares a unit with the given name.
+    ///
+    /// When multiple unit macros declare the same unprefixed unit, the first macro owns its generation.
+    ///
+    /// - Parameter name: The unprefixed unit name.
+    /// - Returns: The name of the owning macro, or `nil` when no matching macro is attached.
     internal func unitMacroOwner(named name: String) -> String? {
         for element in self.attributes {
             guard case let .attribute(attribute) = element else {

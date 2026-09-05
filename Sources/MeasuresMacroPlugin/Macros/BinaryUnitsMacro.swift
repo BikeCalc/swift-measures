@@ -10,6 +10,7 @@ import MeasuresMacroSupport
 import SwiftSyntax
 import SwiftSyntaxMacros
 
+/// The implementation of the `BinaryUnits` macro.
 package struct BinaryUnitsMacro {}
 
 // MARK: - UnitMacro

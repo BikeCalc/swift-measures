@@ -12,18 +12,28 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
+/// A member macro that generates a family of units from a unit-prefix type.
 internal protocol UnitMacro {
+    /// The prefixes used to generate the unit family.
     associatedtype Prefix: UnitPrefix
 
+    /// The name of the concrete macro declaration.
     static var macroName: String { get }
 }
 
 extension UnitMacro {
+    /// Generates the prefixed unit members for a structure.
+    ///
+    /// - Parameter node: The attribute that initiated the expansion.
+    /// - Parameter declaration: The declaration to which the macro is attached.
+    /// - Parameter context: The context in which the macro is expanded.
+    /// - Returns: The generated unit factory and static unit properties.
     internal static func unitExpansion(
         of node: AttributeSyntax,
         providingMembersOf declaration: some DeclGroupSyntax,
         in context: some MacroExpansionContext
     ) throws -> Array<DeclSyntax> {
+        // Unit families require the stored properties and initializer supplied by measurable structures.
         guard declaration.is(StructDeclSyntax.self) else {
             context.diagnose(
                 Diagnostic(
@@ -35,10 +45,12 @@ extension UnitMacro {
             return []
         }
 
+        // Read the arguments from the attached macro attribute before validating their individual values.
         guard case let .argumentList(arguments) = node.arguments else {
             return []
         }
 
+        // A literal name is required because it becomes part of every generated Swift identifier.
         guard let nameArgument = arguments.first,
               let name = nameArgument.expression.stringLiteralValue else {
             context.diagnose(
@@ -51,6 +63,7 @@ extension UnitMacro {
             return []
         }
 
+        // An empty name cannot form a valid factory method or static property name.
         guard !name.isEmpty else {
             context.diagnose(
                 Diagnostic(
@@ -62,6 +75,7 @@ extension UnitMacro {
             return []
         }
 
+        // A literal symbol is required because the generated factory combines it with each prefix symbol.
         guard let symbolArgument = arguments.first(where: { $0.label?.text == "symbol" }),
               let symbol = symbolArgument.expression.stringLiteralValue else {
             context.diagnose(
@@ -74,6 +88,7 @@ extension UnitMacro {
             return []
         }
 
+        // Every generated unit must retain a visible symbol after its prefix is applied.
         guard !symbol.isEmpty else {
             context.diagnose(
                 Diagnostic(
@@ -89,9 +104,12 @@ extension UnitMacro {
         let typeName: String = declaration.cast(StructDeclSyntax.self).name.text
         let dimension: String = typeName.splitBeforeUppercase().lowercased()
         let declaredProperties: Set<String> = declaration.staticPropertyNames
+
+        // The first attached unit macro with this name owns the shared unprefixed unit.
         let generatesUnprefixedUnit: Bool = declaration.unitMacroOwner(named: name) == macroName
         let prefixTypeName: String = String(describing: Prefix.self)
 
+        // Generate one factory so every static property applies its prefix consistently.
         var members: Array<DeclSyntax> = [
             """
             /// Creates a unit by applying a prefix to the unprefixed unit.
@@ -107,6 +125,7 @@ extension UnitMacro {
             """
         ]
 
+        // Generate each missing prefixed property while respecting declared units.
         members.append(contentsOf: Prefix.allCases.compactMap { prefix in
             let propertyName: String = prefix.rawValue + name
 

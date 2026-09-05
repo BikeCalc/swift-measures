@@ -7,6 +7,7 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 extension String {
+    /// Returns this string with a space inserted before each uppercase character except the first.
     internal func splitBeforeUppercase() -> String {
         return self.reduce(into: "") { result, character in
             if character.isUppercase && !result.isEmpty {

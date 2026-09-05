@@ -9,6 +9,7 @@
 import SwiftSyntax
 
 extension ExprSyntax {
+    /// The uninterpolated value represented by this expression when it is a string literal.
     internal var stringLiteralValue: String? {
         guard let literal = self.as(StringLiteralExprSyntax.self),
               literal.segments.count == 1,

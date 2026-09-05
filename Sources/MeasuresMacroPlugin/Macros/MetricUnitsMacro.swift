@@ -10,6 +10,7 @@ import MeasuresMacroSupport
 import SwiftSyntax
 import SwiftSyntaxMacros
 
+/// The implementation of the `MetricUnits` macro.
 package struct MetricUnitsMacro {}
 
 // MARK: - UnitMacro
