@@ -46,7 +46,7 @@
 
 ### Other Units
 
-- ``millenium``
+- ``millennium``
 - ``century``
 - ``decade``
 - ``year``

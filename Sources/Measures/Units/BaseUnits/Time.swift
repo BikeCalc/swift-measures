@@ -27,8 +27,8 @@ public struct Time {
 
     // MARK: Other Units
 
-    /// The millenium unit of time.
-    public static let millenium: Self = .init(
+    /// The millennium unit of time.
+    public static let millennium: Self = .init(
         coefficient: 3.1556952e+10,
         symbol: "mil"
     )
