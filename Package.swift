@@ -20,7 +20,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/bikecalc/swift-numerics-extended.git",
-            from: "2.0.0"
+            from: "2.1.0"
         ),
         .package(
             url: "https://github.com/swiftlang/swift-docc-plugin.git",

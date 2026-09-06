@@ -92,6 +92,7 @@ internal struct MeasureComparableTests {
         upperBound: Measure<Length>
     ) {
         let range: ClosedRange<Measure<Length>> = lowerBound ... upperBound
+
         #expect(value.isWithin(range) == range.contains(value))
     }
 
@@ -101,8 +102,9 @@ internal struct MeasureComparableTests {
         lowerBound: Measure<Length>,
         upperBound: Measure<Length>
     ) {
-        let isWithin: Bool = value.isWithin(lowerBound, through: upperBound)
-        #expect(isWithin == (value >= lowerBound && value <= upperBound))
+        let valueIsWithinBounds: Bool = value.isWithin(lowerBound, upperBound) == true
+
+        #expect(valueIsWithinBounds == (value >= lowerBound && value <= upperBound))
     }
 
     @Test("Is between bounds", arguments: Self.rangeArguments)
@@ -111,7 +113,8 @@ internal struct MeasureComparableTests {
         lowerBound: Measure<Length>,
         upperBound: Measure<Length>
     ) {
-        let isBetween: Bool = value.isBetween(lowerBound, and: upperBound)
-        #expect(isBetween == (value > lowerBound && value < upperBound))
+        let valueIsBetweenBounds: Bool = value.isBetween(lowerBound, upperBound) == true
+
+        #expect(valueIsBetweenBounds == (value > lowerBound && value < upperBound))
     }
 }
