@@ -1,0 +1,6 @@
+# Agents
+
+- Treat this repository as the Swift package for Measures.
+- Read and follow `CONTRIBUTING.md` in full for all repository work, including issues, milestones, branches, source
+  code, tests, documentation, commits, pull requests, releases, and tags.
+- Read and follow `CODING_STYLE.md` in full when changing source code, tests, documentation, or configuration files.

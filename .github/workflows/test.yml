@@ -1,0 +1,22 @@
+name: Test
+
+on:
+  push:
+    branches: ["main", "release/**"]
+  pull_request:
+    branches: ["main", "release/**"]
+    types: ["opened", "edited", "reopened", "synchronize"]
+
+jobs:
+  build:
+    name: Build and Test Package
+    runs-on: macos-26
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+      - name: Get Swift Version
+        run: swift --version
+      - name: Build Package
+        run: swift build --target Measures
+      - name: Test Package
+        run: swift test
