@@ -318,6 +318,25 @@ associated types alongside type aliases at the beginning. Order protocol-conform
 protocol name, and follow the applicable declaration order within each extension while keeping related requirements and
 implementations together.
 
+#### Formatting Tools
+
+Use the Swift Format lint plugin to report formatting issues without changing source files:
+
+```text
+swift package plugin lint-source-code
+```
+
+The plugin is also available from Xcode's package commands. Formatting remains an explicit action; the repository does
+not automatically format files when they are saved or committed. When you intend to apply the configured formatting to
+the package's source targets, run the Format Source Code package command in Xcode or use:
+
+```text
+swift package plugin --allow-writing-to-package-directory format-source-code
+```
+
+The `.swift-format` file at the package root contains the shared configuration. Continuous integration runs the linter
+and reports its findings, but formatting findings do not fail the build while the configuration is being evaluated.
+
 ### Tests
 
 Changes to numeric behavior should include tests. New tests should use Swift Testing. Do not add new XCTest suites.

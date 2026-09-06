@@ -1,0 +1,31 @@
+{
+  "fileScopedDeclarationPrivacy" : {
+    "accessLevel" : "fileprivate"
+  },
+  "indentBlankLines" : false,
+  "indentConditionalCompilationBlocks" : false,
+  "indentSwitchCaseLabels" : false,
+  "indentation" : {
+    "spaces" : 4
+  },
+  "lineBreakAroundMultilineExpressionChainComponents" : false,
+  "lineLength" : 120,
+  "maximumBlankLines" : 1,
+  "multiElementCollectionTrailingCommas" : false,
+  "orderedImports" : {
+    "includeConditionalImports" : true
+  },
+  "reflowMultilineStringLiterals" : "never",
+  "respectsExistingLineBreaks" : true,
+  "rules" : {
+    "AllPublicDeclarationsHaveDocumentation" : true,
+    "FileScopedDeclarationPrivacy" : true,
+    "OrderedImports" : true,
+    "UseLetInEveryBoundCaseVariable" : false,
+    "UseShorthandTypeNames" : false,
+    "UseSynthesizedInitializer" : false
+  },
+  "spacesAroundRangeFormationOperators" : true,
+  "spacesBeforeEndOfLineComments" : 1,
+  "version" : 1
+}

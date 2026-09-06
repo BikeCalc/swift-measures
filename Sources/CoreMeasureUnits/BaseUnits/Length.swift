@@ -162,7 +162,7 @@ extension Length {
     /// - Parameter time: A unit of time.
     /// - Returns: A unit of speed.
     public func dividing(by time: Time) -> Speed {
-        let coefficient: Double =  self.coefficient * (1 / time.coefficient)
+        let coefficient: Double = self.coefficient * (1 / time.coefficient)
         let symbol: String = self.symbol + "/" + time.symbol
 
         return .init(

@@ -121,7 +121,7 @@ internal struct ConvertedMeasureComparableTests {
         let valueWrapper: Converted<Length> = .init(wrappedValue: value, to: value.unit)
         let lowerBoundWrapper: Converted<Length> = .init(wrappedValue: lowerBound, to: lowerBound.unit)
         let upperBoundWrapper: Converted<Length> = .init(wrappedValue: upperBound, to: upperBound.unit)
-        let range: ClosedRange<Converted<Length>> = lowerBoundWrapper...upperBoundWrapper
+        let range: ClosedRange<Converted<Length>> = lowerBoundWrapper ... upperBoundWrapper
 
         #expect(valueWrapper.isWithin(range) == range.contains(valueWrapper))
     }

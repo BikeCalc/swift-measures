@@ -27,6 +27,10 @@ let package = Package(
             from: "1.5.0"
         ),
         .package(
+            url: "https://github.com/swiftlang/swift-format.git",
+            from: "603.0.0"
+        ),
+        .package(
             url: "https://github.com/swiftlang/swift-syntax.git",
             from: "603.0.2"
         )

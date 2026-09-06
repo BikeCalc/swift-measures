@@ -11,13 +11,14 @@ import SwiftSyntaxMacroExpansion
 import SwiftSyntaxMacros
 import SwiftSyntaxMacrosGenericTestSupport
 import Testing
-@testable import MeasuresMacroPlugin
 @testable import CoreMeasureTypes
+@testable import MeasuresMacroPlugin
 
 @Suite("UnitMacro")
 internal struct UnitMacroTests {
     @Test("Expands prefixed units")
     internal func expansion() {
+        // swift-format-ignore
         assertExpansion(
             """
             @BasicScaleUnits(name: "bite", symbol: "B", coefficient: 2)
@@ -56,6 +57,7 @@ internal struct UnitMacroTests {
 
     @Test("Preserves explicitly declared units")
     internal func explicitUnit() {
+        // swift-format-ignore
         assertExpansion(
             """
             @BasicScaleUnits(name: "bite", symbol: "B")
@@ -95,6 +97,7 @@ internal struct UnitMacroTests {
     internal func sharedUnprefixedUnit() {
         var failures: Array<TestFailureSpec> = []
 
+        // swift-format-ignore
         assertMacroExpansion(
             """
             @BasicScaleUnits(name: "bite", symbol: "B")
@@ -106,7 +109,7 @@ internal struct UnitMacroTests {
             expandedSource: """
             struct Biscuit {
                 init(coefficient: Double, constant: Double, symbol: String) {}
-            
+
                 /// Creates a unit by applying a prefix to the unprefixed unit.
                 ///
                 /// - Parameter prefix: The prefix to apply.
@@ -118,13 +121,13 @@ internal struct UnitMacroTests {
                         symbol: prefix.symbol + "B"
                     )
                 }
-            
+
                 /// The largebite unit of biscuit.
                 public static let largebite: Self = .bite(.large)
-            
+
                 /// The bite unit of biscuit.
                 public static let bite: Self = .bite(BasicScaleUnitPrefix.none)
-            
+
                 /// The smallbite unit of biscuit.
                 public static let smallbite: Self = .bite(.small)
 
@@ -161,6 +164,7 @@ internal struct UnitMacroTests {
 
     @Test("Rejects a non-structure declaration")
     internal func nonStructure() {
+        // swift-format-ignore
         assertExpansion(
             """
             @BasicScaleUnits(name: "bite", symbol: "B")
@@ -181,6 +185,7 @@ internal struct UnitMacroTests {
 
     @Test("Requires the initializer")
     internal func initializer() {
+        // swift-format-ignore
         assertExpansion(
             """
             @BasicScaleUnits(name: "bite", symbol: "B")
@@ -202,6 +207,7 @@ internal struct UnitMacroTests {
 
     @Test("Rejects an empty unit name")
     internal func emptyName() {
+        // swift-format-ignore
         assertExpansion(
             """
             @BasicScaleUnits(name: "", symbol: "B")
@@ -222,6 +228,7 @@ internal struct UnitMacroTests {
 
     @Test("Rejects an empty unit symbol")
     internal func emptySymbol() {
+        // swift-format-ignore
         assertExpansion(
             """
             @BasicScaleUnits(name: "bite", symbol: "")
@@ -242,6 +249,7 @@ internal struct UnitMacroTests {
 
     @Test("Requires a unit name string literal")
     internal func nameLiteral() {
+        // swift-format-ignore
         assertExpansion(
             """
             @BasicScaleUnits(name: biteName, symbol: "B")
@@ -262,6 +270,7 @@ internal struct UnitMacroTests {
 
     @Test("Requires a unit symbol string literal")
     internal func symbolLiteral() {
+        // swift-format-ignore
         assertExpansion(
             """
             @BasicScaleUnits(name: "bite", symbol: biteSymbol)

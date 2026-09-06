@@ -33,7 +33,7 @@ where Unit: Equatable & Measurable & Sendable {
         get {
             return self.value
         }
-        set (newValue) {
+        set(newValue) {
             self.value = newValue.converted(to: self.unit)
         }
     }
