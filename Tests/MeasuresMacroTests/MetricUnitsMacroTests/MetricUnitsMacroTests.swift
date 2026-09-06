@@ -10,8 +10,8 @@ import SwiftSyntaxMacroExpansion
 import SwiftSyntaxMacros
 import SwiftSyntaxMacrosGenericTestSupport
 import Testing
-@testable import MeasuresMacroPlugin
 @testable import CoreMeasureTypes
+@testable import MeasuresMacroPlugin
 
 @Suite("MetricUnitsMacro")
 internal struct MetricUnitsMacroTests {
@@ -19,6 +19,7 @@ internal struct MetricUnitsMacroTests {
     internal func expansion() {
         var failures: Array<TestFailureSpec> = []
 
+        // swift-format-ignore
         assertMacroExpansion(
             """
             @MetricUnits(name: "wibble", symbol: "w")

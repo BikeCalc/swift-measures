@@ -31,7 +31,8 @@ extension DeclGroupSyntax {
     internal var staticPropertyNames: Set<String> {
         return self.memberBlock.members.reduce(into: Set<String>()) { result, member in
             guard let variable = member.decl.as(VariableDeclSyntax.self),
-                  variable.modifiers.contains(where: { $0.name.text == "static" }) else {
+                variable.modifiers.contains(where: { $0.name.text == "static" })
+            else {
                 return
             }
 
@@ -53,12 +54,13 @@ extension DeclGroupSyntax {
     /// - Returns: The name of the owning macro, or `nil` when no matching macro is attached.
     internal func unitMacroOwner(named name: String) -> String? {
         for element in self.attributes {
-            guard case let .attribute(attribute) = element else {
+            guard case .attribute(let attribute) = element else {
                 continue
             }
 
-            guard case let .argumentList(arguments) = attribute.arguments,
-                  arguments.first?.expression.stringLiteralValue == name else {
+            guard case .argumentList(let arguments) = attribute.arguments,
+                arguments.first?.expression.stringLiteralValue == name
+            else {
                 continue
             }
 

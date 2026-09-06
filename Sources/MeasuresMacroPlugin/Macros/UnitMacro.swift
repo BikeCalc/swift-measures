@@ -24,10 +24,12 @@ internal protocol UnitMacro {
 extension UnitMacro {
     /// Generates the prefixed unit members for a structure.
     ///
-    /// - Parameter node: The attribute that initiated the expansion.
-    /// - Parameter declaration: The declaration to which the macro is attached.
-    /// - Parameter context: The context in which the macro is expanded.
+    /// - Parameters:
+    ///   - node: The attribute that initiated the expansion.
+    ///   - declaration: The declaration to which the macro is attached.
+    ///   - context: The context in which the macro is expanded.
     /// - Returns: The generated unit factory and static unit properties.
+    /// - Throws: An error if the generated declarations cannot be constructed.
     internal static func unitExpansion(
         of node: AttributeSyntax,
         providingMembersOf declaration: some DeclGroupSyntax,
@@ -46,13 +48,14 @@ extension UnitMacro {
         }
 
         // Read the arguments from the attached macro attribute before validating their individual values.
-        guard case let .argumentList(arguments) = node.arguments else {
+        guard case .argumentList(let arguments) = node.arguments else {
             return []
         }
 
         // A literal name is required because it becomes part of every generated Swift identifier.
         guard let nameArgument = arguments.first,
-              let name = nameArgument.expression.stringLiteralValue else {
+            let name = nameArgument.expression.stringLiteralValue
+        else {
             context.diagnose(
                 Diagnostic(
                     node: Syntax(node),
@@ -77,7 +80,8 @@ extension UnitMacro {
 
         // A literal symbol is required because the generated factory combines it with each prefix symbol.
         guard let symbolArgument = arguments.first(where: { $0.label?.text == "symbol" }),
-              let symbol = symbolArgument.expression.stringLiteralValue else {
+            let symbol = symbolArgument.expression.stringLiteralValue
+        else {
             context.diagnose(
                 Diagnostic(
                     node: Syntax(node),
@@ -139,21 +143,24 @@ extension UnitMacro {
         ]
 
         // Generate each missing prefixed property while respecting declared units.
-        members.append(contentsOf: Prefix.allCases.compactMap { prefix in
+        for prefix in Prefix.allCases {
             let propertyName: String = prefix.rawValue + name
 
             guard !declaredProperties.contains(propertyName),
-                  prefix != .none || generatesUnprefixedUnit else {
-                return nil
+                prefix != .none || generatesUnprefixedUnit
+            else {
+                continue
             }
 
             let prefixExpression: String = prefix == .none ? "\(prefixTypeName).none" : ".\(prefix.name)"
 
-            return """
-            /// The \(raw: propertyName) unit of \(raw: dimension).
-            public static let \(raw: propertyName): Self = .\(raw: name)(\(raw: prefixExpression))
-            """
-        })
+            members.append(
+                """
+                /// The \(raw: propertyName) unit of \(raw: dimension).
+                public static let \(raw: propertyName): Self = .\(raw: name)(\(raw: prefixExpression))
+                """
+            )
+        }
 
         return members
     }

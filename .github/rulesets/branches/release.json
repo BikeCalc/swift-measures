@@ -48,13 +48,13 @@
         "do_not_enforce_on_create": true,
         "required_status_checks": [
           {
-            "context": "Validate Branch Route"
-          },
-          {
             "context": "Build and Test Package"
           },
           {
-            "context": "Compare Benchmarks"
+            "context": "Lint Source Formatting"
+          },
+          {
+            "context": "Validate Branch Route"
           },
           {
             "context": "Validate Pull Request Title"

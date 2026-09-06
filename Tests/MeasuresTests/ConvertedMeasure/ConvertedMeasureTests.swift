@@ -7,6 +7,7 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import Testing
+
 @testable import Measures
 
 @Suite("Converted Measure Tests")
@@ -30,7 +31,8 @@ internal struct ConvertedMeasureTests {
         value: Measure<Length>,
         result: Measure<Length>
     ) {
-        @Converted(to: .meter) var convertedValue: Measure<Length> = value
+        @Converted(to: .meter)
+        var convertedValue: Measure<Length> = value
 
         #expect(convertedValue == result)
     }
@@ -43,7 +45,9 @@ internal struct ConvertedMeasureTests {
         value: Measure<Length>,
         result: Measure<Length>
     ) {
-        @Converted(to: .meter) var convertedValue: Measure<Length> = .init(0, .base)
+        @Converted(to: .meter)
+        var convertedValue: Measure<Length> = .init(0, .base)
+
         convertedValue = value
 
         #expect(convertedValue == result)

@@ -28,8 +28,9 @@ where Unit: Equatable & Measurable & Sendable {
 
     /// Creates a new instance with the specified value and unit.
     ///
-    /// - Parameter value: The value.
-    /// - Parameter unit: The unit.
+    /// - Parameters:
+    ///   - value: The value.
+    ///   - unit: The unit.
     public init<Value>(_ value: Value, _ unit: Unit)
     where Value: BinaryFloatingPoint {
         self.value = .init(value)
@@ -38,8 +39,9 @@ where Unit: Equatable & Measurable & Sendable {
 
     /// Creates a new instance with the specified value and unit.
     ///
-    /// - Parameter value: The value.
-    /// - Parameter unit: The unit.
+    /// - Parameters:
+    ///   - value: The value.
+    ///   - unit: The unit.
     public init<Value>(_ value: Value, _ unit: Unit)
     where Value: BinaryInteger {
         self.value = .init(value)
@@ -184,8 +186,9 @@ extension Measure {
 
     /// Returns the quotient of dividing the first specified value by the second.
     ///
-    /// - Parameter lhs: The dividend.
-    /// - Parameter rhs: The divisor.
+    /// - Parameters:
+    ///   - lhs: The dividend.
+    ///   - rhs: The divisor.
     /// - Returns: The quotient.
     public static func / (_ lhs: Self, _ rhs: Double) -> Self {
         let lhsValue: Double = lhs.value
@@ -196,16 +199,18 @@ extension Measure {
 
     /// Divides the first specified value by the second and stores the quotient in the left-hand-side variable.
     ///
-    /// - Parameter lhs: The dividend.
-    /// - Parameter rhs: The divisor.
+    /// - Parameters:
+    ///   - lhs: The dividend.
+    ///   - rhs: The divisor.
     public static func /= (_ lhs: inout Self, _ rhs: Double) {
         lhs = lhs / rhs
     }
 
     /// Returns the remainder of dividing the first specified value by the second.
     ///
-    /// - Parameter lhs: The dividend.
-    /// - Parameter rhs: The divisor.
+    /// - Parameters:
+    ///   - lhs: The dividend.
+    ///   - rhs: The divisor.
     /// - Returns: The remainder.
     public static func % (_ lhs: Self, _ rhs: Double) -> Self {
         let lhsValue: Double = lhs.value
@@ -216,8 +221,9 @@ extension Measure {
 
     /// Divides the first specified value by the second and stores the remainder in the left-hand-side variable.
     ///
-    /// - Parameter lhs: The dividend.
-    /// - Parameter rhs: The divisor.
+    /// - Parameters:
+    ///   - lhs: The dividend.
+    ///   - rhs: The divisor.
     public static func %= (_ lhs: inout Self, _ rhs: Double) {
         lhs = lhs % rhs
     }
@@ -318,8 +324,9 @@ extension Measure {
 
     /// Returns the product of multiplying the two specified values.
     ///
-    /// - Parameter lhs: The multiplicand.
-    /// - Parameter rhs: The multiplier.
+    /// - Parameters:
+    ///   - lhs: The multiplicand.
+    ///   - rhs: The multiplier.
     /// - Returns: The product.
     public static func * (_ lhs: Self, _ rhs: Double) -> Self {
         let lhsValue: Double = lhs.value
@@ -330,8 +337,9 @@ extension Measure {
 
     /// Returns the product of multiplying the two specified values.
     ///
-    /// - Parameter lhs: The multiplicand.
-    /// - Parameter rhs: The multiplier.
+    /// - Parameters:
+    ///   - lhs: The multiplicand.
+    ///   - rhs: The multiplier.
     /// - Returns: The product.
     public static func * (_ lhs: Double, _ rhs: Self) -> Self {
         let rhsValue: Double = rhs.value
@@ -342,8 +350,9 @@ extension Measure {
 
     /// Multiplies the two specified values and stores the product in the left-hand-side variable.
     ///
-    /// - Parameter lhs: The multiplicand.
-    /// - Parameter rhs: The multiplier.
+    /// - Parameters:
+    ///   - lhs: The multiplicand.
+    ///   - rhs: The multiplier.
     public static func *= (_ lhs: inout Self, _ rhs: Double) {
         lhs = lhs * rhs
     }

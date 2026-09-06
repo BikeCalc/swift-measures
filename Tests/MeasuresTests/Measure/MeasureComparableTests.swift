@@ -91,7 +91,7 @@ internal struct MeasureComparableTests {
         lowerBound: Measure<Length>,
         upperBound: Measure<Length>
     ) {
-        let range: ClosedRange<Measure<Length>> = lowerBound...upperBound
+        let range: ClosedRange<Measure<Length>> = lowerBound ... upperBound
         #expect(value.isWithin(range) == range.contains(value))
     }
 

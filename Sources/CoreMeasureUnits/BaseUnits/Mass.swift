@@ -44,7 +44,7 @@ public struct Mass {
 
     /// The jupiter unit of mass.
     public static let earth: Self = .init(
-        coefficient: Self.pound.coefficient *  5.9742e+24,
+        coefficient: Self.pound.coefficient * 5.9742e+24,
         symbol: "Me"
     )
 
