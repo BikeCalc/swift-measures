@@ -1,19 +1,18 @@
 # Contributing
 
-Everyone is welcome to contribute to Measures. Contributing does not just mean submitting pull requests. There
+Everyone is welcome to contribute to this project. Contributing does not just mean submitting pull requests. There
 are many different ways for you to get involved, including participating in discussions, reporting or triaging bugs, and
 contributing code.
 
 No matter how you want to get involved, please first learn what is expected of anyone who participates in this project.
 If you are contributing code, you should also be comfortable writing Swift and working with Swift Package Manager.
 
-By submitting a pull request, you represent that you have the right to license your contribution and agree that your
-contribution is licensed under the Apache License v2.0 with Runtime Library Exception. See `LICENSE.md` for license
-information.
+By submitting a pull request, you represent that you have the right to license your contribution and agree that it is
+licensed under the terms described in `LICENSE.md`.
 
 ## Reporting Bugs
 
-Reporting bugs is a great way for anyone to help improve Measures. This open source project uses GitHub issues
+Reporting bugs is a great way for anyone to help improve the project. This open source project uses GitHub issues
 for tracking bugs.
 
 When opening an issue, please use the bug report issue template and include the following:
@@ -36,8 +35,7 @@ Security vulnerabilities should not be reported through public issues. Follow th
 Reporting bugs is an important part of improving software. Nearly as important is triaging those bugs to ensure that
 they are reproducible, small, and unique.
 
-There are a number of things you can do to help triage bugs in the repository's
-[issues](https://github.com/bikecalc/swift-measures/issues).
+There are a number of things you can do to help triage bugs in the repository's Issues page.
 
 - **Reproduce bugs.** For a bug to be actionable, it needs to be reproducible. If you cannot reproduce the bug, try to
   figure out why. Get in touch with the submitter if you need more information.
@@ -189,20 +187,20 @@ to test files by matching each filename to its test suite.
 
 #### File Headers
 
-The license and copyright protections for Measures code are called out at the top of every source code file. On
-the rare occasion you contribute a change that includes a new source file, ensure that the header is filled out
-appropriately.
+The license and copyright protections for the project are called out at the top of every source code file. When adding
+a source file, copy the current header from a neighboring file. When adapting this guide for a repository, replace each
+placeholder in the following template with that repository's values.
 
 For Swift source files the code header should look like this:
 
 ```swift
-// This source file is part of the Measures open source project
+// This source file is part of the <project name> open source project
 //
-// Copyright (c) 2021-2026 A. H. de Quatre Ltd. and the Measures project authors
-// Licensed under Apache License v2.0 with Runtime Library Exception
+// Copyright (c) <start year>-<current year> <copyright holder> and the <project name> project authors
+// Licensed under <license type>
 //
 // See LICENSE.md for license information
-// See CONTRIBUTORS.txt for the list of Measures project authors
+// See CONTRIBUTORS.txt for the list of <project name> project authors
 ```
 
 `Package.swift` must keep the Swift tools version declaration as the first line.
@@ -232,15 +230,14 @@ The `.swift-format` file at the package root is the authoritative automated form
 
 ### Tests
 
-Changes to numeric behavior should include tests. New tests should use Swift Testing. Do not add new XCTest suites.
-Prefer focused Swift Testing suites that match the existing structure by numeric type and protocol.
+Behavior changes should include tests. New tests should use Swift Testing. Do not add new XCTest suites. Prefer focused
+Swift Testing suites that match the existing project structure.
 
 When adding argument-based tests, keep the existing conventions in mind:
 
 - Use small, readable values.
-- Keep signed and unsigned examples aligned where possible.
-- Keep floating-point and binary integer examples aligned where possible.
-- Put special values such as zero, one, minimum, maximum, infinity, and NaN in rule-specific tests.
+- Keep related examples aligned where possible.
+- Put boundary values, failure conditions, and other exceptional inputs in focused tests.
 - Prefer explicit expected results over deriving expectations from the implementation being tested.
 - Compare Boolean properties and function results explicitly with `true`, `false`, or an argument-provided expected
   result.
@@ -248,7 +245,7 @@ When adding argument-based tests, keep the existing conventions in mind:
 ### Docs
 
 Document new and changed public APIs and user-facing behavior as part of the same change. Use documentation comments for
-APIs and the `Measures.docc` catalog for concepts, tutorials, and guides. Follow [Coding Style](CODING_STYLE.md) for
+APIs and the DocC catalog for concepts, tutorials, and guides. Follow [Coding Style](CODING_STYLE.md) for
 documentation structure, formatting, and examples.
 
 ### Commits

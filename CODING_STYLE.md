@@ -1,6 +1,6 @@
 # Coding Style
 
-This guide describes the coding style for Measures. Follow it when changing source code, tests, documentation, and
+This guide describes the project's coding style. Follow it when changing source code, tests, documentation, and
 configuration files.
 
 The `.swift-format` file is authoritative for formatting that Swift Format can enforce. The Swift Format section
@@ -115,6 +115,44 @@ prefer wrapping the import with `#if canImport(Foundation)`.
 Prefer Swift standard-library types and Swift-native API overlays when they provide equivalent behavior. Use
 Objective-C types and APIs only when required for interoperability or when no suitable Swift-native alternative exists.
 Prefer current, nondeprecated APIs that support the package's deployment targets.
+
+### Identifier Naming
+
+#### Acronyms
+
+Preserve every letter of an acronym in the same case. Use uppercase acronyms in type-style names and lowercase an
+acronym only when it begins a value-style name.
+
+Types, protocols, type aliases, associated types, and their matching filenames use UpperCamelCase. Keep an acronym
+uppercase whether it appears at the beginning or end of one of these names:
+
+```swift
+protocol HTTPRequest {}
+struct RemoteURL {}
+```
+
+Functions, properties, parameters, local variables, and enum cases use lowerCamelCase. Lowercase an acronym at the
+beginning of one of these names, but keep it uppercase when it appears at the end:
+
+```swift
+let httpRequest = "HTTP Client"
+let remoteURL = "Remote URL"
+func httpRequest() {}
+func remoteURL() {}
+```
+
+When an acronym is the complete value name, write the entire name in lowercase, such as `url` or `http`.
+
+#### Shortened Words
+
+Some shortened words are not acronyms. For example, treat `Id` as a shortened form of `identifier`. Use `UserId` in
+type-style names, `userId` in value-style names, and `id` when it is the complete value name:
+
+```swift
+struct UserId {}
+let userId = "User Identifier"
+func userId() {}
+```
 
 ### Declaration Order
 
