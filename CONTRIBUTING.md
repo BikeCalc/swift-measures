@@ -152,10 +152,10 @@ sub-issues.
 
 Branch names should follow [Conventional Branch](https://conventionalbranch.org/).
 
-Use lowercase branch names in the form:
+Use lowercase branch names with hyphen-separated words in the form:
 
 ```text
-<type>/<description>
+<type>/<short-description>
 ```
 
 The `main` branch is protected and represents the released package history. Release branches are also protected and
@@ -207,116 +207,10 @@ For Swift source files the code header should look like this:
 
 `Package.swift` must keep the Swift tools version declaration as the first line.
 
-#### Line Length
-
-Limit text-based project files to 120 characters per line, including source code, tests, documentation, and
-configuration. An indivisible token, such as a literal URL, may exceed the limit when it cannot be represented safely
-within it.
-
 ### Source Code
 
-#### Imports
-
-Avoid importing Foundation unless it is required. When Foundation is only needed for a specific platform or feature,
-prefer wrapping the import with `#if canImport(Foundation)`.
-
-#### APIs
-
-Prefer Swift standard-library types and Swift-native API overlays when they provide equivalent behavior. Use Objective-C
-types and APIs only when required for interoperability or when no suitable Swift-native alternative exists. Prefer
-current, nondeprecated APIs that support the package's deployment targets.
-
-#### Indentation
-
-Indent Swift source code with four spaces per level. Do not use tabs for indentation.
-
-#### Numeric Formatting
-
-Use a period as the decimal separator. In Swift numeric literals, group thousands with underscores, such as `1_000.25`.
-In prose and explanatory tables, group thousands with commas, such as `1,000.25`.
-
-#### Declaration Layout
-
-Expand parameter and argument lists that contain more than one item. Keep the opening parenthesis on the declaration
-line, place each parameter or argument on its own line, and place the closing parenthesis on its own line.
-
-A short call to an initializer designed as tuple-like value construction may remain on one line when its unlabeled
-arguments fit comfortably within the line limit, such as `Fraction(1, 2)`. Keep the initializer declaration expanded so
-that its parameter names remain visible.
-
-Keep tuple types and tuple literals on one line when they fit within the 120-character limit and remain readable. Expand
-them only when their labels, types, or expressions make the single-line form difficult to understand.
-
-Keep a short collection literal on the same line as its argument when it remains readable. Expand a longer collection
-literal vertically, placing each element on its own line.
-
-For example:
-
-```swift
-func foo(bar: String) {
-    print(bar)
-}
-
-func foo(
-    bar: String,
-    baz: Array<String>
-) {
-    print([bar] + baz)
-}
-
-foo(bar: "foo")
-
-foo(
-    bar: "foo",
-    baz: ["foo", "bar", "baz"]
-)
-
-foo(
-    bar: "foo",
-    baz: [
-        "foo",
-        "bar",
-        "baz",
-        "qux",
-        "quux",
-        "quuz",
-        "corge",
-        "grault",
-        "garply",
-        "waldo",
-        "fred",
-        "plugh",
-        "xyzzy",
-        "thud"
-    ]
-)
-```
-
-#### Declaration Order
-
-Organize declarations by their role and relationship rather than alphabetically or by access level. Use the following
-order as a baseline, but keep closely related declarations, overloads, and paired operations together when that makes
-the API easier to understand. Within each category, place fundamental behavior before convenience behavior.
-
-Within a concrete type, use the following order when applicable:
-
-1. Enumeration cases
-2. Type aliases
-3. Nested types
-4. Stored instance properties
-5. Initializers
-6. Deinitializers
-7. Computed instance properties
-8. Type properties
-9. Instance subscripts
-10. Type subscripts
-11. Instance functions
-12. Type functions and operators
-
-Apply the same relative order to protocols and extensions, omitting categories that do not apply. Protocols place
-associated types alongside type aliases at the beginning. Order protocol-conformance extensions alphabetically by
-protocol name, and follow the applicable declaration order within each extension while keeping related requirements and
-implementations together.
+Read and follow [Coding Style](CODING_STYLE.md) for source code, tests, documentation, and configuration files. It
+documents the repository's coding conventions and every rule configured in `.swift-format`.
 
 #### Formatting Tools
 
@@ -334,8 +228,7 @@ the package's source targets, run the Format Source Code package command in Xcod
 swift package plugin --allow-writing-to-package-directory format-source-code
 ```
 
-The `.swift-format` file at the package root contains the shared configuration. Continuous integration runs the linter
-and reports its findings, but formatting findings do not fail the build while the configuration is being evaluated.
+The `.swift-format` file at the package root is the authoritative automated formatting configuration.
 
 ### Tests
 
@@ -354,27 +247,9 @@ When adding argument-based tests, keep the existing conventions in mind:
 
 ### Docs
 
-Public APIs should have clear documentation comments. User-facing concepts, tutorials, and guides should be documented
-with DocC in the `Measures.docc` catalog.
-
-Protocol and protocol-extension documentation should describe requirements and guarantees without Swift examples that
-assume a particular conforming type's behavior. Place examples only on public concrete types and their public
-declarations, where their results are guaranteed. Keep examples short and focused on illustrating ordinary usage; use
-tests instead for comprehensive cases and edge conditions. Introduce every example with `For example:` on its own
-documentation line. Print the demonstrated value and show the expected output with a `// Prints "..."` comment.
-
-For example, document a public declaration as follows:
-
-````text
-/// For example:
-///
-/// ```swift
-/// let value = 2 + 2
-///
-/// print(value)
-/// // Prints "4"
-/// ```
-````
+Document new and changed public APIs and user-facing behavior as part of the same change. Use documentation comments for
+APIs and the `Measures.docc` catalog for concepts, tutorials, and guides. Follow [Coding Style](CODING_STYLE.md) for
+documentation structure, formatting, and examples.
 
 ### Commits
 
@@ -404,8 +279,7 @@ Use the Conventional Commit form described above for the pull request title:
 <type>[optional scope]: <description>
 ```
 
-Link the pull request to its issue in GitHub. Configured workflows run automatically, and their results appear on the
-pull request, so do not repeat them in its description.
+Link the pull request to its issue in GitHub.
 
 Each issue included in a release should normally have its own pull request into the release branch. If work is already
 present without a dedicated pull request, create or update the issue to document the delivered outcome, assign it to the
@@ -415,7 +289,17 @@ create a retrospective pull request solely to reproduce a relationship that did 
 Once the release checklist is complete and its sub-issues are closed, open a pull request from the release branch into
 `main` and link it to the release issue.
 
-Pull requests must target a branch allowed by the branch routing rules.
+### Workflows
+
+Configured workflows run automatically for pull requests and publish their checks on the pull request. Review their
+results, address reported failures, and ensure every required check passes before merging.
+
+### Rule Sets
+
+Repository rule sets protect the main and release branches, enforce the allowed pull request routes, and require
+applicable checks and review conversations to be resolved before a pull request can be merged. In exceptional cases
+where a requirement cannot reasonably be satisfied, contact a repository administrator. Administrators may override a
+rule set when necessary, but an override should not replace the normal review and validation process.
 
 ### Code Reviews
 
