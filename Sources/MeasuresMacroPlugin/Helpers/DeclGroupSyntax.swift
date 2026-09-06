@@ -53,11 +53,11 @@ extension DeclGroupSyntax {
     /// - Returns: The name of the owning macro, or `nil` when no matching macro is attached.
     internal func unitMacroOwner(named name: String) -> String? {
         for element in self.attributes {
-            guard case let .attribute(attribute) = element else {
+            guard case .attribute(let attribute) = element else {
                 continue
             }
 
-            guard case let .argumentList(arguments) = attribute.arguments,
+            guard case .argumentList(let arguments) = attribute.arguments,
                   arguments.first?.expression.stringLiteralValue == name else {
                 continue
             }

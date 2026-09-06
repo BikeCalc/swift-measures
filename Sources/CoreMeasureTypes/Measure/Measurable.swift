@@ -10,9 +10,10 @@
 public protocol Measurable {
     /// Creates a new instance with the specified coefficient, constant and symbol.
     ///
-    /// - Parameter coefficient: The coefficient.
-    /// - Parameter constant: The constant.
-    /// - Parameter symbol: The symbol.
+    /// - Parameters:
+    ///   - coefficient: The coefficient.
+    ///   - constant: The constant.
+    ///   - symbol: The symbol.
     init(
         coefficient: Double,
         constant: Double,
@@ -88,6 +89,7 @@ where Self: Encodable {
 extension Measurable
 where Self: Equatable {
     /// A boolean value indicating whether this instance is the base.
+    @available(*, deprecated)
     public var isBase: Bool {
         return self == Self.base
     }

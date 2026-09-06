@@ -18,8 +18,9 @@ where Unit: Equatable & Measurable & Sendable {
 
     /// Creates a wrapper containing the specified measure converted to the specified unit.
     ///
-    /// - Parameter wrappedValue: The measure to convert and store.
-    /// - Parameter unit: The unit in which to store the measure.
+    /// - Parameters:
+    ///   - wrappedValue: The measure to convert and store.
+    ///   - unit: The unit in which to store the measure.
     public init(
         wrappedValue: Measure<Unit>,
         to unit: Measure<Unit>.Unit
@@ -44,8 +45,9 @@ where Unit: Equatable & Measurable & Sendable {
 extension Converted: Comparable {
     /// Returns a boolean value indicating whether the first converted measure precedes the second.
     ///
-    /// - Parameter lhs: The first converted measure to compare.
-    /// - Parameter rhs: The second converted measure to compare.
+    /// - Parameters:
+    ///   - lhs: The first converted measure to compare.
+    ///   - rhs: The second converted measure to compare.
     /// - Returns: The result of comparing the wrapped measures.
     public static func < (
         _ lhs: Self,
@@ -56,8 +58,9 @@ extension Converted: Comparable {
 
     /// Returns a boolean value indicating whether the first converted measure precedes or equals the second.
     ///
-    /// - Parameter lhs: The first converted measure to compare.
-    /// - Parameter rhs: The second converted measure to compare.
+    /// - Parameters:
+    ///   - lhs: The first converted measure to compare.
+    ///   - rhs: The second converted measure to compare.
     /// - Returns: `true` when the first measure precedes or equals the second, and `false` otherwise.
     public static func <= (
         _ lhs: Self,
@@ -68,8 +71,9 @@ extension Converted: Comparable {
 
     /// Returns a boolean value indicating whether the first converted measure follows the second.
     ///
-    /// - Parameter lhs: The first converted measure to compare.
-    /// - Parameter rhs: The second converted measure to compare.
+    /// - Parameters:
+    ///   - lhs: The first converted measure to compare.
+    ///   - rhs: The second converted measure to compare.
     /// - Returns: `true` when the first measure follows the second, and `false` otherwise.
     public static func > (
         _ lhs: Self,
@@ -80,8 +84,9 @@ extension Converted: Comparable {
 
     /// Returns a boolean value indicating whether the first converted measure follows or equals the second.
     ///
-    /// - Parameter lhs: The first converted measure to compare.
-    /// - Parameter rhs: The second converted measure to compare.
+    /// - Parameters:
+    ///   - lhs: The first converted measure to compare.
+    ///   - rhs: The second converted measure to compare.
     /// - Returns: `true` when the first measure follows or equals the second, and `false` otherwise.
     public static func >= (
         _ lhs: Self,
@@ -127,8 +132,9 @@ where Unit: Encodable {
 extension Converted: Equatable {
     /// Returns a boolean value indicating whether two converted measures are equal.
     ///
-    /// - Parameter lhs: The first converted value to compare.
-    /// - Parameter rhs: The second converted value to compare.
+    /// - Parameters:
+    ///   - lhs: The first converted value to compare.
+    ///   - rhs: The second converted value to compare.
     /// - Returns: The result of comparing the wrapped measures for equality.
     public static func == (_ lhs: Self, _ rhs: Self) -> Bool {
         return lhs.wrappedValue == rhs.wrappedValue

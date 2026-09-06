@@ -13,7 +13,7 @@ extension ExprSyntax {
     internal var stringLiteralValue: String? {
         guard let literal = self.as(StringLiteralExprSyntax.self),
               literal.segments.count == 1,
-              case let .stringSegment(segment)? = literal.segments.first else {
+              case .stringSegment(let segment)? = literal.segments.first else {
             return nil
         }
 

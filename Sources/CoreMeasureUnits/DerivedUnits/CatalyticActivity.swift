@@ -32,7 +32,6 @@ public struct CatalyticActivity {
 
     /// The mole per second unit of catalytic activity.
     public static let molePerSecond: Self = SubstanceAmount.mole.dividing(by: .second)
-
 }
 
 // MARK: - Codable

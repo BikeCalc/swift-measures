@@ -24,10 +24,12 @@ internal protocol UnitMacro {
 extension UnitMacro {
     /// Generates the prefixed unit members for a structure.
     ///
-    /// - Parameter node: The attribute that initiated the expansion.
-    /// - Parameter declaration: The declaration to which the macro is attached.
-    /// - Parameter context: The context in which the macro is expanded.
+    /// - Parameters:
+    ///   - node: The attribute that initiated the expansion.
+    ///   - declaration: The declaration to which the macro is attached.
+    ///   - context: The context in which the macro is expanded.
     /// - Returns: The generated unit factory and static unit properties.
+    /// - Throws: An error if the generated declarations cannot be constructed.
     internal static func unitExpansion(
         of node: AttributeSyntax,
         providingMembersOf declaration: some DeclGroupSyntax,
@@ -46,7 +48,7 @@ extension UnitMacro {
         }
 
         // Read the arguments from the attached macro attribute before validating their individual values.
-        guard case let .argumentList(arguments) = node.arguments else {
+        guard case .argumentList(let arguments) = node.arguments else {
             return []
         }
 
