@@ -9,6 +9,7 @@
 #if canImport(Foundation)
 import Foundation
 import Testing
+
 @testable import Measures
 
 @Suite("Converted Measure Encodable Tests")
@@ -25,7 +26,9 @@ internal struct ConvertedMeasureEncodableTests {
         value: Measure<Length>,
         json: String
     ) throws {
-        @Converted(to: .meter) var convertedValue: Measure<Length> = value
+        @Converted(to: .meter)
+        var convertedValue: Measure<Length> = value
+
         let encoder: JSONEncoder = .init()
         encoder.outputFormatting = .sortedKeys
 

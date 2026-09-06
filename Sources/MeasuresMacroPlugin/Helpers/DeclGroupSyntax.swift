@@ -31,7 +31,8 @@ extension DeclGroupSyntax {
     internal var staticPropertyNames: Set<String> {
         return self.memberBlock.members.reduce(into: Set<String>()) { result, member in
             guard let variable = member.decl.as(VariableDeclSyntax.self),
-                  variable.modifiers.contains(where: { $0.name.text == "static" }) else {
+                variable.modifiers.contains(where: { $0.name.text == "static" })
+            else {
                 return
             }
 
@@ -58,7 +59,8 @@ extension DeclGroupSyntax {
             }
 
             guard case .argumentList(let arguments) = attribute.arguments,
-                  arguments.first?.expression.stringLiteralValue == name else {
+                arguments.first?.expression.stringLiteralValue == name
+            else {
                 continue
             }
 

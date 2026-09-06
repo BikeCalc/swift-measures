@@ -82,7 +82,8 @@ public struct Length {
 
     /// The furlong unit of length.
     public static let furlong: Self = .init(
-        coefficient: 2.01168e+2, symbol: "fur"
+        coefficient: 2.01168e+2,
+        symbol: "fur"
     )
 
     /// The chain unit of length.

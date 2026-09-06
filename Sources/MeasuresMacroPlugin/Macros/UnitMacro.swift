@@ -54,7 +54,8 @@ extension UnitMacro {
 
         // A literal name is required because it becomes part of every generated Swift identifier.
         guard let nameArgument = arguments.first,
-              let name = nameArgument.expression.stringLiteralValue else {
+            let name = nameArgument.expression.stringLiteralValue
+        else {
             context.diagnose(
                 Diagnostic(
                     node: Syntax(node),
@@ -79,7 +80,8 @@ extension UnitMacro {
 
         // A literal symbol is required because the generated factory combines it with each prefix symbol.
         guard let symbolArgument = arguments.first(where: { $0.label?.text == "symbol" }),
-              let symbol = symbolArgument.expression.stringLiteralValue else {
+            let symbol = symbolArgument.expression.stringLiteralValue
+        else {
             context.diagnose(
                 Diagnostic(
                     node: Syntax(node),
@@ -141,21 +143,24 @@ extension UnitMacro {
         ]
 
         // Generate each missing prefixed property while respecting declared units.
-        members.append(contentsOf: Prefix.allCases.compactMap { prefix in
+        for prefix in Prefix.allCases {
             let propertyName: String = prefix.rawValue + name
 
             guard !declaredProperties.contains(propertyName),
-                  prefix != .none || generatesUnprefixedUnit else {
-                return nil
+                prefix != .none || generatesUnprefixedUnit
+            else {
+                continue
             }
 
             let prefixExpression: String = prefix == .none ? "\(prefixTypeName).none" : ".\(prefix.name)"
 
-            return """
-            /// The \(raw: propertyName) unit of \(raw: dimension).
-            public static let \(raw: propertyName): Self = .\(raw: name)(\(raw: prefixExpression))
-            """
-        })
+            members.append(
+                """
+                /// The \(raw: propertyName) unit of \(raw: dimension).
+                public static let \(raw: propertyName): Self = .\(raw: name)(\(raw: prefixExpression))
+                """
+            )
+        }
 
         return members
     }
