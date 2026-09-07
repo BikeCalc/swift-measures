@@ -144,7 +144,7 @@ sub-issues of the release issue. The release issue should summarize the included
 a high-level checklist without duplicating the detailed acceptance criteria or testing scenarios tracked by its
 sub-issues.
 
-## Implementing Changes
+## Making Changes
 
 ### Branches
 
@@ -163,17 +163,17 @@ should use the form:
 release/<semantic version>
 ```
 
-Use `feature`, `bugfix`, `chore`, `docs`, or `test` branches for regular work. These branches should be merged into a
-release branch. Use `hotfix` branches only for urgent fixes that need to be merged directly into `main`.
+Use `feature`, `bugfix`, `chore`, `docs`, or `test` branches for regular work. These branches may be merged directly
+into `main` or included in a release branch. Use `hotfix` branches for urgent fixes.
 
 Delete short-lived branches after they are merged.
 
 Allowed pull request routes are:
 
-- `release/*` or `hotfix/*` into `main`.
+- Any branch into `main`.
 - `feature/*`, `bugfix/*`, `chore/*`, `docs/*`, or `test/*` into `release/*`.
 
-### Project Files
+### Files
 
 #### File Names
 
@@ -205,29 +205,6 @@ For Swift source files the code header should look like this:
 
 `Package.swift` must keep the Swift tools version declaration as the first line.
 
-### Source Code
-
-Read and follow [Coding Style](CODING_STYLE.md) for source code, tests, documentation, and configuration files. It
-documents the repository's coding conventions and every rule configured in `.swift-format`.
-
-#### Formatting Tools
-
-Use the Swift Format lint plugin to report formatting issues without changing source files:
-
-```text
-swift package plugin lint-source-code
-```
-
-The plugin is also available from Xcode's package commands. Formatting remains an explicit action; the repository does
-not automatically format files when they are saved or committed. When you intend to apply the configured formatting to
-the package's source targets, run the Format Source Code package command in Xcode or use:
-
-```text
-swift package plugin --allow-writing-to-package-directory format-source-code
-```
-
-The `.swift-format` file at the package root is the authoritative automated formatting configuration.
-
 ### Tests
 
 Behavior changes should include tests. New tests should use Swift Testing. Do not add new XCTest suites. Prefer focused
@@ -245,8 +222,14 @@ When adding argument-based tests, keep the existing conventions in mind:
 ### Docs
 
 Document new and changed public APIs and user-facing behavior as part of the same change. Use documentation comments for
-APIs and the DocC catalog for concepts, tutorials, and guides. Follow [Coding Style](CODING_STYLE.md) for
-documentation structure, formatting, and examples.
+APIs and the DocC catalog for concepts, tutorials, and guides.
+
+### Tools
+
+#### Formatting
+
+The package provides a plugin for checking formatting. See the
+[formatting documentation](Docs/Formatting.md) for additional details.
 
 ### Commits
 
@@ -293,10 +276,11 @@ results, address reported failures, and ensure every required check passes befor
 
 ### Rule Sets
 
-Repository rule sets protect the main and release branches, enforce the allowed pull request routes, and require
-applicable checks and review conversations to be resolved before a pull request can be merged. In exceptional cases
-where a requirement cannot reasonably be satisfied, contact a repository administrator. Administrators may override a
-rule set when necessary, but an override should not replace the normal review and validation process.
+Repository rule sets protect the main and release branches, enforce the allowed pull request routes into release
+branches, and require applicable checks and review conversations to be resolved before a pull request can be merged. In
+exceptional cases where a requirement cannot reasonably be satisfied, contact a repository administrator.
+Administrators may override a rule set when necessary, but an override should not replace the normal review and
+validation process.
 
 ### Code Reviews
 

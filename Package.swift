@@ -20,7 +20,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/bikecalc/swift-numerics-extended.git",
-            from: "2.1.0"
+            from: "2.2.0"
         ),
         .package(
             url: "https://github.com/swiftlang/swift-docc-plugin.git",
@@ -36,6 +36,21 @@ let package = Package(
         )
     ],
     targets: [
+        .plugin(
+            name: "MeasuresLinterPlugin",
+            capability: .command(
+                intent: .custom(
+                    verb: "lint",
+                    description: "Lint all Measures Swift source files"
+                )
+            ),
+            dependencies: [
+                .product(
+                    name: "swift-format",
+                    package: "swift-format"
+                )
+            ]
+        ),
         .macro(
             name: "MeasuresMacroPlugin",
             dependencies: [
