@@ -63,6 +63,30 @@ Measures is written in Swift and avoids platform-specific APIs where possible.
     import Measures
     ```
 
+## Demonstration
+
+Keep a measure in one unit while calculating with another:
+
+```swift
+@Converted(to: .metersPerSecond)
+var speed: Measure<Speed> = .init(36, .kilometersPerHour)
+print(speed)
+// Prints "10.0 m/s"
+
+speed += .init(18, .kilometersPerHour)
+print(speed)
+// Prints "15.0 m/s"
+
+speed *= 2
+print(speed)
+// Prints "30.0 m/s"
+
+print(speed.converted(to: .kilometersPerHour))
+// Prints "108.0 km/h"
+```
+
+Beyond the operations shown here, `Measure` also supports subtraction, division by a scalar, and comparisons.
+
 ## Documentation
 
 You can read more about this package by visiting the
