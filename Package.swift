@@ -41,7 +41,7 @@ let package = Package(
             capability: .command(
                 intent: .custom(
                     verb: "lint",
-                    description: "Lint all Measures Swift source files"
+                    description: "Lint all Swift source files"
                 )
             ),
             dependencies: [
