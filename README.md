@@ -1,4 +1,4 @@
-![](Assets/GitHubBanner.png)
+![](/Assets/GitHubBanner.png)
 
 # Swift Measures
 
@@ -94,16 +94,17 @@ You can read more about this package by visiting the
 
 ## Contributing
 
-Everyone is welcome to contribute to Measures. See [Contributing](CONTRIBUTING.md) for contribution guidelines, branch
+Everyone is welcome to contribute to Measures. See [Contributing](/CONTRIBUTING.md) for contribution guidelines, branch
 conventions, pull request expectations, and testing instructions.
 
 If you find a bug, please create an [issue](https://github.com/bikecalc/swift-measures/issues). Security vulnerabilities
-should be reported using the instructions in the [security policy](SECURITY.md).
+should be reported using the instructions in the [Security Policy](/SECURITY.md).
 
 ## Code of Conduct
 
-This project follows a [code of conduct](CODE_OF_CONDUCT.md).
+This project follows a [Code of Conduct](/CODE_OF_CONDUCT.md).
 
 ## License
 
-Distributed under Apache License v2.0 with Runtime Library Exception. See the [license](LICENSE.md) for more information.
+Distributed under Apache License v2.0 with Runtime Library Exception. See the [License](/LICENSE.md) for more
+information.
