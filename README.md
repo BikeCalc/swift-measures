@@ -94,8 +94,7 @@ You can read more about this package by visiting the
 
 ## Contributing
 
-Everyone is welcome to contribute to Measures. See [Contributing](/CONTRIBUTING.md) for contribution guidelines, branch
-conventions, pull request expectations, and testing instructions.
+Everyone is welcome to contribute to Measures. See the [Contributing](/CONTRIBUTING.md) guide to get started.
 
 If you find a bug, please create an [issue](https://github.com/bikecalc/swift-measures/issues). Security vulnerabilities
 should be reported using the instructions in the [Security Policy](/SECURITY.md).
