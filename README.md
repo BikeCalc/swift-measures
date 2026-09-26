@@ -65,7 +65,7 @@ Measures is written in Swift and avoids platform-specific APIs where possible.
 
 ## Demonstration
 
-Keep a measure in one unit while calculating with another:
+Keep a `Measure` in one unit while calculating with another:
 
 ```swift
 @Converted(to: .metersPerSecond)
