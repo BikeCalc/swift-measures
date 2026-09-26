@@ -133,7 +133,7 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "MeasuresTests",
+            name: "MeasuresUnitTests",
             dependencies: [
                 "Measures"
             ]

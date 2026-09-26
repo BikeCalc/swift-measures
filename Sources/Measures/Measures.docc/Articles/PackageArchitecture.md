@@ -22,7 +22,7 @@ MeasuresLinterPlugin
 MeasuresMacroTests
 └─> depends on Measures and MeasuresMacroPlugin
 
-MeasuresTests
+MeasuresUnitTests
 └─> depends on Measures
 ```
 
