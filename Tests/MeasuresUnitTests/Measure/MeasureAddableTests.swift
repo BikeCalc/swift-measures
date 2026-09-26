@@ -82,6 +82,6 @@ extension MeasureAddableTests {
         addend: Measure<Length>,
         sum _: Measure<Length>
     ) {
-        #expect((augend + addend).isCanonicallyEquatable(to: addend + augend))
+        #expect((augend + addend).isCanonicallyEqual(to: addend + augend))
     }
 }

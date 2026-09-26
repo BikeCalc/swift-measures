@@ -20,6 +20,7 @@ internal struct MeasureCanonicallyEquatableTests {
             (Measure<Length>(1, .meter), Measure<Length>(100, .centimeter), true),
             (Measure<Length>(100, .centimeter), Measure<Length>(1, .meter), true),
             (Measure<Length>(1, .foot), Measure<Length>(12, .inch), true),
+            (Measure<Length>(12, .inch), Measure<Length>(1, .foot), true),
             (Measure<Length>(-1, .meter), Measure<Length>(-100, .centimeter), true),
             (Measure<Length>(0, .meter), Measure<Length>(0, .foot), true),
             (Measure<Length>(1, .meter), Measure<Length>(99, .centimeter), false),
@@ -32,6 +33,6 @@ internal struct MeasureCanonicallyEquatableTests {
         rhs: Measure<Length>,
         result: Bool
     ) {
-        #expect(lhs.isCanonicallyEquatable(to: rhs) == result)
+        #expect(lhs.isCanonicallyEqual(to: rhs) == result)
     }
 }

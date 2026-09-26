@@ -63,8 +63,12 @@ where Unit: Equatable & Measurable & Sendable {
 
     /// A Boolean value indicating whether this measure defines a finite, invertible conversion.
     internal var isValidForConversion: Bool {
-        return self.value.isFinite
-            && self.unit.coefficient.isFinite
+        return self.value.isFinite && self.hasValidConversionUnit
+    }
+
+    /// A Boolean value indicating whether the unit defines a finite, invertible conversion.
+    private var hasValidConversionUnit: Bool {
+        return self.unit.coefficient.isFinite
             && !self.unit.coefficient.isZero
             && self.unit.constant.isFinite
     }
@@ -79,6 +83,104 @@ extension Measure: Addable {
         let newValue: Double = lhsValue + rhsValue
 
         return .init(newValue, lhs.unit)
+    }
+}
+
+// MARK: - ApproximatelyEquatable
+
+extension Measure: ApproximatelyEquatable {
+    /// The measure type used to express an absolute difference.
+    public typealias AbsoluteTolerance = Self
+
+    /// The floating-point type used to express a dimensionless relative difference.
+    public typealias RelativeTolerance = Double
+
+    /// Returns whether this value and another agree within either of the specified tolerances.
+    ///
+    /// Absolute tolerance represents a difference and ignores the unit's offset. Relative tolerance scales the larger
+    /// magnitude in the base unit. Matching infinities compare equal; NaN, invalid conversions or tolerances, and
+    /// conversion overflow return `false`.
+    ///
+    /// For example:
+    ///
+    /// ```swift
+    /// let calculated: Measure<Length> = .init(0.1 + 0.2, .meter)
+    /// let expected: Measure<Length> = .init(0.3, .meter)
+    /// print(calculated.isApproximatelyEqual(to: expected, absoluteTolerance: .init(0.001, .millimeter)))
+    /// // Prints "true"
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - other: The value to compare.
+    ///   - absoluteTolerance: The nonnegative, finite maximum absolute difference.
+    ///   - relativeTolerance: The relative difference allowed, between zero and one inclusive.
+    /// - Returns: `true` if the values agree within either tolerance, and `false` otherwise.
+    public func isApproximatelyEqual(
+        to other: Self,
+        absoluteTolerance: Self.AbsoluteTolerance,
+        relativeTolerance: Self.RelativeTolerance = 0
+    ) -> Bool {
+        guard self.hasValidConversionUnit,
+            other.hasValidConversionUnit,
+            absoluteTolerance.isValidForConversion,
+            absoluteTolerance.value >= 0,
+            relativeTolerance.isFinite,
+            relativeTolerance >= 0,
+            relativeTolerance <= 1
+        else {
+            return false
+        }
+
+        let lhsValue: Double = self.converted(to: .base).value
+        let rhsValue: Double = other.converted(to: .base).value
+        let toleranceValue: Double = absoluteTolerance.value * abs(absoluteTolerance.unit.coefficient)
+
+        // Allow an infinite converted value only when its input was already infinite. A finite input that becomes
+        // infinite during conversion has overflowed and must not compare equal to another infinity. NaN passes neither
+        // check.
+        guard toleranceValue.isFinite,
+            lhsValue.isFinite || (self.value.isInfinite && lhsValue.isInfinite),
+            rhsValue.isFinite || (other.value.isInfinite && rhsValue.isInfinite)
+        else {
+            return false
+        }
+
+        if lhsValue == rhsValue {
+            return true
+        }
+
+        let difference: Double = abs(lhsValue - rhsValue)
+        let scale: Double = max(abs(lhsValue), abs(rhsValue))
+        let bound: Double = max(toleranceValue, relativeTolerance * scale)
+
+        return difference.isFinite && difference <= bound
+    }
+}
+
+// MARK: - CanonicallyEquatable
+
+extension Measure: CanonicallyEquatable {
+    /// Returns a boolean value indicating whether this value is canonically equal to the specified value.
+    ///
+    /// Conversion can introduce floating-point rounding. Use
+    /// `isApproximatelyEqual(to:absoluteTolerance:relativeTolerance:)` when a tolerance is appropriate.
+    ///
+    /// For example:
+    ///
+    /// ```swift
+    /// let oneMeter: Measure<Length> = .init(1, .meter)
+    /// let oneHundredCentimeters: Measure<Length> = .init(100, .centimeter)
+    /// print(oneMeter.isCanonicallyEqual(to: oneHundredCentimeters))
+    /// // Prints "true"
+    /// ```
+    ///
+    /// - Parameter rhs: An instance to compare.
+    /// - Returns: `true` if the converted base values are exactly equal, and `false` otherwise.
+    public func isCanonicallyEqual(to rhs: Self) -> Bool {
+        let lhsValue: Double = self.converted(to: .base).value
+        let rhsValue: Double = rhs.converted(to: .base).value
+
+        return lhsValue == rhsValue
     }
 }
 
@@ -276,28 +378,6 @@ where Unit: Equatable {
     public static func == (_ lhs: Self, _ rhs: Self) -> Bool {
         return lhs.value == rhs.value
             && lhs.unit == rhs.unit
-    }
-}
-
-// MARK: - Equivalentable
-
-extension Measure: CanonicallyEquatable {
-    /// Returns a boolean value indicating whether the two specified instances are equivalent.
-    ///
-    /// ```swift
-    /// let oneMeter: Measure<Length> = .init(1, .meter)
-    /// let oneHundredCentimeters: Measure<Length> = .init(100, .centimeter)
-    /// print(oneMeter.isCanonicallyEquatable(to: oneHundredCentimeters))
-    /// // Prints "true"
-    /// ```
-    ///
-    /// - Parameter rhs: An instance to compare.
-    /// - Returns: `true` if is equivalent, and `false` otherwise.
-    public func isCanonicallyEquatable(to rhs: Self) -> Bool {
-        let lhsValue: Double = self.value
-        let rhsValue: Double = rhs.converted(to: self.unit).value
-
-        return lhsValue == rhsValue
     }
 }
 

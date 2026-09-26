@@ -70,10 +70,13 @@
 
 - ``isDivisible(by:)``
 - ``isMultiple(of:)``
-- ``isCanonicallyEquatable(to:)``
 
 ### Comparing Values
 
+- ``AbsoluteTolerance``
+- ``RelativeTolerance``
+- ``isApproximatelyEqual(to:absoluteTolerance:relativeTolerance:)``
+- ``isCanonicallyEqual(to:)``
 - ``==(_:_:)``
 - ``<(_:_:)``
 

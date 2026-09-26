@@ -82,6 +82,6 @@ extension MeasureSubtractableTests {
         subtrahend: Measure<Length>,
         difference _: Measure<Length>
     ) {
-        #expect(!(minuend - subtrahend).isCanonicallyEquatable(to: subtrahend - minuend))
+        #expect(!(minuend - subtrahend).isCanonicallyEqual(to: subtrahend - minuend))
     }
 }
