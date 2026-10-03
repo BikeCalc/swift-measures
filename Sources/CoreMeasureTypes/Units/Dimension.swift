@@ -29,7 +29,7 @@ import NumericsExtended
 /// // Prints "-1"
 /// ```
 public struct Dimension {
-    /// The keys used to encode and decode a dimension using snake case keys.
+    /// The keys used to encode and decode a dimension.
     private enum CodingKeys: String, CodingKey {
         /// The exponent of length.
         case length = "length"

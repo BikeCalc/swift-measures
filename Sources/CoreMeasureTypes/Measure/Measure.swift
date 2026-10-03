@@ -9,30 +9,33 @@
 import NumericsExtended
 
 /// A representation of a measure.
-public struct Measure<Unit>
-where Unit: Equatable & Measurable & Sendable {
+public struct Measure<UnitType>
+where UnitType: Unit {
     /// The keys used to encode and decode a measure.
     private enum CodingKeys: String, CodingKey {
+        /// The value of the measure.
         case value = "value"
+
+        /// The unit associated with the measure.
         case unit = "unit"
     }
-
-    /// The unit.
-    public typealias Unit = Unit
 
     /// The value of this measure.
     public let value: Double
 
-    /// The unit of this measure.
-    public let unit: Unit
+    /// The unit associated with this measure.
+    public let unit: UnitType
 
     /// Creates a new instance with the specified value and unit.
     ///
     /// - Parameters:
     ///   - value: The value.
     ///   - unit: The unit.
-    public init<Value>(_ value: Value, _ unit: Unit)
-    where Value: BinaryFloatingPoint {
+    public init<Source>(
+        _ value: Source,
+        _ unit: UnitType
+    )
+    where Source: BinaryFloatingPoint {
         self.value = .init(value)
         self.unit = unit
     }
@@ -42,8 +45,11 @@ where Unit: Equatable & Measurable & Sendable {
     /// - Parameters:
     ///   - value: The value.
     ///   - unit: The unit.
-    public init<Value>(_ value: Value, _ unit: Unit)
-    where Value: BinaryInteger {
+    public init<Source>(
+        _ value: Source,
+        _ unit: UnitType
+    )
+    where Source: BinaryInteger {
         self.value = .init(value)
         self.unit = unit
     }
@@ -58,25 +64,27 @@ where Unit: Equatable & Measurable & Sendable {
     internal var isWithinValidRange: Bool {
         let baseValue: Double = self.value * self.unit.coefficient + self.unit.constant
 
-        return Unit.validRange.contains(baseValue)
+        return UnitType.validRange.contains(baseValue)
     }
 
     /// A Boolean value indicating whether this measure defines a finite, invertible conversion.
     internal var isValidForConversion: Bool {
-        return self.value.isFinite && self.hasValidConversionUnit
+        return self.value.isFinite
+            && self.hasValidConversionUnit
     }
 
     /// A Boolean value indicating whether the unit defines a finite, invertible conversion.
     private var hasValidConversionUnit: Bool {
         return self.unit.coefficient.isFinite
-            && !self.unit.coefficient.isZero
+            && self.unit.coefficient.isZero == false
             && self.unit.constant.isFinite
     }
 }
 
 // MARK: - Addable
 
-extension Measure: Addable {
+extension Measure: Addable
+where UnitType: Equatable {
     public static func + (_ lhs: Self, _ rhs: Self) -> Self {
         let lhsValue: Double = lhs.value
         let rhsValue: Double = rhs.converted(to: lhs.unit).value
@@ -120,7 +128,9 @@ extension Measure: ApproximatelyEquatable {
         absoluteTolerance: Self.AbsoluteTolerance,
         relativeTolerance: Self.RelativeTolerance = 0
     ) -> Bool {
-        guard self.hasValidConversionUnit,
+        guard self.unit.isCompatible(with: other.unit),
+            self.unit.isCompatible(with: absoluteTolerance.unit),
+            self.hasValidConversionUnit,
             other.hasValidConversionUnit,
             absoluteTolerance.isValidForConversion,
             absoluteTolerance.value >= 0,
@@ -131,8 +141,8 @@ extension Measure: ApproximatelyEquatable {
             return false
         }
 
-        let lhsValue: Double = self.converted(to: .base).value
-        let rhsValue: Double = other.converted(to: .base).value
+        let lhsValue: Double = (self.value * self.unit.coefficient + self.unit.constant)
+        let rhsValue: Double = (other.value * other.unit.coefficient + other.unit.constant)
         let toleranceValue: Double = absoluteTolerance.value * abs(absoluteTolerance.unit.coefficient)
 
         // Allow an infinite converted value only when its input was already infinite. A finite input that becomes
@@ -174,11 +184,15 @@ extension Measure: CanonicallyEquatable {
     /// // Prints "true"
     /// ```
     ///
-    /// - Parameter rhs: An instance to compare.
+    /// - Parameter other: An instance to compare.
     /// - Returns: `true` if the converted base values are exactly equal, and `false` otherwise.
-    public func isCanonicallyEqual(to rhs: Self) -> Bool {
-        let lhsValue: Double = self.converted(to: .base).value
-        let rhsValue: Double = rhs.converted(to: .base).value
+    public func isCanonicallyEqual(to other: Self) -> Bool {
+        guard self.unit.isCompatible(with: other.unit) else {
+            return false
+        }
+
+        let lhsValue: Double = self.value * self.unit.coefficient + self.unit.constant
+        let rhsValue: Double = other.value * other.unit.coefficient + other.unit.constant
 
         return lhsValue == rhsValue
     }
@@ -186,8 +200,12 @@ extension Measure: CanonicallyEquatable {
 
 // MARK: - Comparable
 
-extension Measure: Comparable {
-    public static func < (_ lhs: Self, _ rhs: Self) -> Bool {
+extension Measure: Comparable
+where UnitType: Equatable {
+    public static func < (
+        _ lhs: Self,
+        _ rhs: Self
+    ) -> Bool {
         let lhsValue: Double = lhs.value
         let rhsValue: Double = rhs.converted(to: lhs.unit).value
 
@@ -198,12 +216,6 @@ extension Measure: Comparable {
 // MARK: - Convertible
 
 extension Measure: Convertible {
-    /// The value of this unit in terms of the base unit of its dimension.
-    private func convertedToBase() -> Self {
-        let newValue: Double = self.value * self.unit.coefficient + self.unit.constant
-        return .init(newValue, .base)
-    }
-
     /// Returns this measure converted to the specified unit.
     ///
     /// ```swift
@@ -212,11 +224,14 @@ extension Measure: Convertible {
     /// // Prints "100.0 cm"
     /// ```
     ///
-    /// - Parameter rhs: The unit to convert to.
+    /// - Parameter unit: The unit to convert to.
     /// - Returns: The converted measure.
-    public func converted(to rhs: Unit) -> Self {
-        let newValue: Double = (self.convertedToBase().value - rhs.constant) / rhs.coefficient
-        return .init(newValue, rhs)
+    public func converted(to unit: UnitType) -> Self {
+        precondition(self.unit.isCompatible(with: unit))
+
+        let lhsValue: Double = self.value * self.unit.coefficient + self.unit.constant
+        let newValue: Double = (lhsValue - unit.constant) / unit.coefficient
+        return .init(newValue, unit)
     }
 
     /// Converts this measure to the specified unit.
@@ -228,9 +243,9 @@ extension Measure: Convertible {
     /// // Prints "100.0 cm"
     /// ```
     ///
-    /// - Parameter rhs: The unit to convert to.
-    public mutating func convert(to rhs: Unit) {
-        self = self.converted(to: rhs)
+    /// - Parameter unit: The unit to convert to.
+    public mutating func convert(to unit: UnitType) {
+        self = self.converted(to: unit)
     }
 }
 
@@ -239,10 +254,7 @@ extension Measure: Convertible {
 extension Measure: CustomDebugStringConvertible {
     /// A textual representation of this instance suitable for debugging.
     public var debugDescription: String {
-        let value: String = String(reflecting: self.value)
-        let unit: String = String(reflecting: self.unit)
-
-        return "Measure<\(Unit.self)>(\(value), \(unit))"
+        return "Measure<\(UnitType.self)>(\(self.value), \(self.unit))"
     }
 }
 
@@ -264,12 +276,12 @@ extension Measure: CustomStringConvertible {
 // MARK: - Decodable
 
 extension Measure: Decodable
-where Unit: Decodable {
+where UnitType: Decodable {
     public init(from decoder: Decoder) throws {
         let container: KeyedDecodingContainer<Self.CodingKeys> = try decoder.container(keyedBy: Self.CodingKeys.self)
 
         let value: Double = try container.decode(Double.self, forKey: .value)
-        let unit: Unit = try container.decode(Unit.self, forKey: .unit)
+        let unit: UnitType = try container.decode(UnitType.self, forKey: .unit)
 
         self.init(value, unit)
     }
@@ -349,7 +361,7 @@ extension Measure {
 // MARK: - Encodable
 
 extension Measure: Encodable
-where Unit: Encodable {
+where UnitType: Encodable {
     public func encode(to encoder: Encoder) throws {
         var container: KeyedEncodingContainer<Self.CodingKeys> = encoder.container(keyedBy: Self.CodingKeys.self)
 
@@ -361,8 +373,11 @@ where Unit: Encodable {
 // MARK: - Equatable
 
 extension Measure: Equatable
-where Unit: Equatable {
-    public static func == (_ lhs: Self, _ rhs: Self) -> Bool {
+where UnitType: Equatable {
+    public static func == (
+        _ lhs: Self,
+        _ rhs: Self
+    ) -> Bool {
         return lhs.value == rhs.value
             && lhs.unit == rhs.unit
     }
@@ -371,7 +386,7 @@ where Unit: Equatable {
 // MARK: - Hashable
 
 extension Measure: Hashable
-where Unit: Hashable {
+where UnitType: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(self.value)
         hasher.combine(self.unit)
@@ -442,11 +457,13 @@ extension Measure {
 
 // MARK: - Sendable
 
-extension Measure: Sendable {}
+extension Measure: Sendable
+where UnitType: Sendable {}
 
 // MARK: - Subtractable
 
-extension Measure: Subtractable {
+extension Measure: Subtractable
+where UnitType: Equatable {
     public static func - (_ lhs: Self, _ rhs: Self) -> Self {
         let lhsValue: Double = lhs.value
         let rhsValue: Double = rhs.converted(to: lhs.unit).value
