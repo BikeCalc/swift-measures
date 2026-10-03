@@ -45,12 +45,12 @@ internal struct ConvertedMeasureComparableTests {
         isLessThanOrEqual _: Bool,
         isGreater _: Bool,
         isGreaterThanOrEqual _: Bool
-    ) {
+    ) throws {
         let lhsWrapper: Converted<Length> = .init(wrappedValue: lhs, to: lhs.unit)
         let rhsWrapper: Converted<Length> = .init(wrappedValue: rhs, to: rhs.unit)
 
         #expect((lhsWrapper < rhsWrapper) == isLess)
-        #expect(lhsWrapper.isLess(than: rhsWrapper) == isLess)
+        #expect(try lhsWrapper.isLess(than: rhsWrapper) == isLess)
     }
 
     @Test(
@@ -64,12 +64,12 @@ internal struct ConvertedMeasureComparableTests {
         isLessThanOrEqual: Bool,
         isGreater _: Bool,
         isGreaterThanOrEqual _: Bool
-    ) {
+    ) throws {
         let lhsWrapper: Converted<Length> = .init(wrappedValue: lhs, to: lhs.unit)
         let rhsWrapper: Converted<Length> = .init(wrappedValue: rhs, to: rhs.unit)
 
         #expect((lhsWrapper <= rhsWrapper) == isLessThanOrEqual)
-        #expect(lhsWrapper.isLessThanOrEqual(to: rhsWrapper) == isLessThanOrEqual)
+        #expect(try lhsWrapper.isLessThanOrEqual(to: rhsWrapper) == isLessThanOrEqual)
     }
 
     @Test(
@@ -83,12 +83,12 @@ internal struct ConvertedMeasureComparableTests {
         isLessThanOrEqual _: Bool,
         isGreater: Bool,
         isGreaterThanOrEqual _: Bool
-    ) {
+    ) throws {
         let lhsWrapper: Converted<Length> = .init(wrappedValue: lhs, to: lhs.unit)
         let rhsWrapper: Converted<Length> = .init(wrappedValue: rhs, to: rhs.unit)
 
         #expect((lhsWrapper > rhsWrapper) == isGreater)
-        #expect(lhsWrapper.isGreater(than: rhsWrapper) == isGreater)
+        #expect(try lhsWrapper.isGreater(than: rhsWrapper) == isGreater)
     }
 
     @Test(
@@ -102,12 +102,12 @@ internal struct ConvertedMeasureComparableTests {
         isLessThanOrEqual _: Bool,
         isGreater _: Bool,
         isGreaterThanOrEqual: Bool
-    ) {
+    ) throws {
         let lhsWrapper: Converted<Length> = .init(wrappedValue: lhs, to: lhs.unit)
         let rhsWrapper: Converted<Length> = .init(wrappedValue: rhs, to: rhs.unit)
 
         #expect((lhsWrapper >= rhsWrapper) == isGreaterThanOrEqual)
-        #expect(lhsWrapper.isGreaterThanOrEqual(to: rhsWrapper) == isGreaterThanOrEqual)
+        #expect(try lhsWrapper.isGreaterThanOrEqual(to: rhsWrapper) == isGreaterThanOrEqual)
     }
 
     @Test(
@@ -118,13 +118,13 @@ internal struct ConvertedMeasureComparableTests {
         value: Measure<Length>,
         lowerBound: Measure<Length>,
         upperBound: Measure<Length>
-    ) {
+    ) throws {
         let valueWrapper: Converted<Length> = .init(wrappedValue: value, to: value.unit)
         let lowerBoundWrapper: Converted<Length> = .init(wrappedValue: lowerBound, to: lowerBound.unit)
         let upperBoundWrapper: Converted<Length> = .init(wrappedValue: upperBound, to: upperBound.unit)
         let range: ClosedRange<Converted<Length>> = lowerBoundWrapper ... upperBoundWrapper
 
-        #expect(valueWrapper.isWithin(range) == range.contains(valueWrapper))
+        #expect(try valueWrapper.isWithin(range) == range.contains(valueWrapper))
     }
 
     @Test(
@@ -135,11 +135,11 @@ internal struct ConvertedMeasureComparableTests {
         value: Measure<Length>,
         lowerBound: Measure<Length>,
         upperBound: Measure<Length>
-    ) {
+    ) throws {
         let valueWrapper: Converted<Length> = .init(wrappedValue: value, to: value.unit)
         let lowerBoundWrapper: Converted<Length> = .init(wrappedValue: lowerBound, to: lowerBound.unit)
         let upperBoundWrapper: Converted<Length> = .init(wrappedValue: upperBound, to: upperBound.unit)
-        let valueIsWithinBounds: Bool = valueWrapper.isWithin(lowerBoundWrapper, upperBoundWrapper) == true
+        let valueIsWithinBounds: Bool = try valueWrapper.isWithin(lowerBoundWrapper, upperBoundWrapper) == true
 
         #expect(valueIsWithinBounds == (valueWrapper >= lowerBoundWrapper && valueWrapper <= upperBoundWrapper))
     }
@@ -152,11 +152,11 @@ internal struct ConvertedMeasureComparableTests {
         value: Measure<Length>,
         lowerBound: Measure<Length>,
         upperBound: Measure<Length>
-    ) {
+    ) throws {
         let valueWrapper: Converted<Length> = .init(wrappedValue: value, to: value.unit)
         let lowerBoundWrapper: Converted<Length> = .init(wrappedValue: lowerBound, to: lowerBound.unit)
         let upperBoundWrapper: Converted<Length> = .init(wrappedValue: upperBound, to: upperBound.unit)
-        let valueIsBetweenBounds: Bool = valueWrapper.isBetween(lowerBoundWrapper, upperBoundWrapper) == true
+        let valueIsBetweenBounds: Bool = try valueWrapper.isBetween(lowerBoundWrapper, upperBoundWrapper) == true
 
         #expect(valueIsBetweenBounds == (valueWrapper > lowerBoundWrapper && valueWrapper < upperBoundWrapper))
     }

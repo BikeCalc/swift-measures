@@ -53,8 +53,8 @@ internal struct LengthMeasureEquatableTests {
         lhs: Measure<Length>,
         rhs: Measure<Length>,
         result: Bool
-    ) {
-        #expect(lhs.isEqual(to: rhs) == result)
+    ) throws {
+        #expect(try lhs.isEqual(to: rhs) == result)
     }
 
     @Test(
@@ -65,7 +65,7 @@ internal struct LengthMeasureEquatableTests {
         lhs: Measure<Length>,
         rhs: Measure<Length>,
         result: Bool
-    ) {
-        #expect(lhs.isUnequal(to: rhs) == !result)
+    ) throws {
+        #expect(try lhs.isUnequal(to: rhs) == !result)
     }
 }
