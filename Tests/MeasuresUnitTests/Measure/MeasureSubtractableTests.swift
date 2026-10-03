@@ -54,8 +54,8 @@ internal struct MeasureSubtractableTests {
         minuend: Measure<Length>,
         subtrahend: Measure<Length>.Subtrahend,
         difference: Measure<Length>
-    ) {
-        #expect(minuend.subtracting(subtrahend) == difference)
+    ) throws {
+        #expect(try minuend.subtracting(subtrahend) == difference)
     }
 
     @Test(
@@ -66,9 +66,9 @@ internal struct MeasureSubtractableTests {
         minuend: Measure<Length>,
         subtrahend: Measure<Length>.Subtrahend,
         difference: Measure<Length>
-    ) {
+    ) throws {
         var runningDifference: Measure<Length> = minuend
-        runningDifference.subtract(subtrahend)
+        try runningDifference.subtract(subtrahend)
         #expect(runningDifference == difference)
     }
 }

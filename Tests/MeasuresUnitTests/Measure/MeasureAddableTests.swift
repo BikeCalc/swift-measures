@@ -54,8 +54,8 @@ internal struct MeasureAddableTests {
         augend: Measure<Length>,
         addend: Measure<Length>.Addend,
         sum: Measure<Length>
-    ) {
-        #expect(augend.adding(addend) == sum)
+    ) throws {
+        #expect(try augend.adding(addend) == sum)
     }
 
     @Test(
@@ -66,9 +66,9 @@ internal struct MeasureAddableTests {
         augend: Measure<Length>,
         addend: Measure<Length>.Addend,
         sum: Measure<Length>
-    ) {
+    ) throws {
         var runningSum: Measure<Length> = augend
-        runningSum.add(addend)
+        try runningSum.add(addend)
         #expect(runningSum == sum)
     }
 }

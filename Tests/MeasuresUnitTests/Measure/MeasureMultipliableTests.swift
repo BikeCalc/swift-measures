@@ -74,8 +74,8 @@ internal struct MeasureMultipliableTests {
         multiplicand: Measure<Length>,
         multiplier: Measure<Length>.Multiplier,
         product: Measure<Length>
-    ) {
-        #expect(multiplicand.multiplying(by: multiplier) == product)
+    ) throws {
+        #expect(try multiplicand.multiplying(by: multiplier) == product)
     }
 
     @Test(
@@ -86,9 +86,9 @@ internal struct MeasureMultipliableTests {
         multiplicand: Measure<Length>,
         multiplier: Measure<Length>.Multiplier,
         product: Measure<Length>
-    ) {
+    ) throws {
         var runningProduct: Measure<Length> = multiplicand
-        runningProduct.multiply(by: multiplier)
+        try runningProduct.multiply(by: multiplier)
         #expect(runningProduct == product)
     }
 }

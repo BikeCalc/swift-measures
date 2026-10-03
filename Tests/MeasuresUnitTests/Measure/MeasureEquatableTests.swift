@@ -44,8 +44,8 @@ internal struct MeasureEquatableTests {
         lhs: Measure<Length>,
         rhs: Measure<Length>,
         result: Bool
-    ) {
-        #expect(lhs.isEqual(to: rhs) == result)
+    ) throws {
+        #expect(try lhs.isEqual(to: rhs) == result)
     }
 
     @Test("Is unequal succeeds", arguments: Self.equalityArguments)
@@ -53,7 +53,7 @@ internal struct MeasureEquatableTests {
         lhs: Measure<Length>,
         rhs: Measure<Length>,
         result: Bool
-    ) {
-        #expect(lhs.isUnequal(to: rhs) == !result)
+    ) throws {
+        #expect(try lhs.isUnequal(to: rhs) == !result)
     }
 }
