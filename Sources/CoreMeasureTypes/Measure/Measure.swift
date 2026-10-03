@@ -85,7 +85,12 @@ where UnitType: Unit {
 
 extension Measure: Addable
 where UnitType: Equatable {
-    public static func + (_ lhs: Self, _ rhs: Self) -> Self {
+    public typealias Addend = Self
+
+    public static func + (
+        _ lhs: Self,
+        _ rhs: Self.Addend
+    ) -> Self {
         let lhsValue: Double = lhs.value
         let rhsValue: Double = rhs.converted(to: lhs.unit).value
         let newValue: Double = lhsValue + rhsValue
@@ -289,72 +294,71 @@ where UnitType: Decodable {
 
 // MARK: - Divisible
 
-extension Measure {
-    /// Returns a Boolean value indicating whether this measure's value is divisible by the specified value.
-    ///
-    /// - Parameter other: The value to test.
-    /// - Returns: `true` if this measure's value is divisible by the specified value, and `false` otherwise.
-    public func isDivisible(by other: Double) -> Bool {
-        return self.value.isDivisible(by: other)
+extension Measure: Divisible
+where UnitType: Equatable {
+    public typealias Divisor = Double
+    public typealias RemainderDivisor = Double
+
+    @available(*, deprecated)
+    public var reciprocal: Self? {
+        // TODO: Fix Measure reciprocal
+        // Add a Reciprocal associated type to Divisible so composable measures can return Measure<ComposedUnit>
+        // The reciprocal of 2 m is 0.5 m⁻¹, which cannot be represented by Self.
+        return nil
     }
 
-    /// Returns the quotient of dividing the first specified value by the second.
-    ///
-    /// - Parameters:
-    ///   - lhs: The dividend.
-    ///   - rhs: The divisor.
-    /// - Returns: The quotient.
-    public static func / (_ lhs: Self, _ rhs: Double) -> Self {
+    @available(*, deprecated)
+    public var isInvertible: Bool {
+        // TODO: Fix Measure isInvertible
+        // Implement alongside reciprocal after Divisible supports a different reciprocal type. Apply the unit's
+        // coefficient and constant first, then require a finite, nonzero base value and a finite, nonzero reciprocal.
+        // For example, 0 °C is invertible, but 0 K is not.
+        return false
+    }
+
+    public func isDivisible(by other: Self) -> Bool {
+        guard self.unit.isCompatible(with: other.unit),
+            self.isValidForConversion,
+            other.isValidForConversion
+        else {
+            return false
+        }
+
+        // Equal scales cancel when neither unit has an offset; avoid introducing conversion rounding.
+        if self.unit.coefficient == other.unit.coefficient,
+            self.unit.constant == 0,
+            other.unit.constant == 0 {
+            return self.value.isDivisible(by: other.value)
+        }
+
+        let lhsValue: Double = self.value * self.unit.coefficient + self.unit.constant
+        let rhsValue: Double = other.value * other.unit.coefficient + other.unit.constant
+
+        guard lhsValue.isFinite, rhsValue.isFinite else {
+            return false
+        }
+
+        return lhsValue.isDivisible(by: rhsValue)
+    }
+
+    public static func / (
+        _ lhs: Self,
+        _ rhs: Self.Divisor
+    ) -> Self {
         let lhsValue: Double = lhs.value
         let newValue: Double = lhsValue / rhs
 
         return .init(newValue, lhs.unit)
     }
 
-    /// Divides the first specified value by the second and stores the quotient in the left-hand-side variable.
-    ///
-    /// - Parameters:
-    ///   - lhs: The dividend.
-    ///   - rhs: The divisor.
-    public static func /= (_ lhs: inout Self, _ rhs: Double) {
-        lhs = lhs / rhs
-    }
-
-    /// Returns the remainder of dividing the first specified value by the second.
-    ///
-    /// - Parameters:
-    ///   - lhs: The dividend.
-    ///   - rhs: The divisor.
-    /// - Returns: The remainder.
-    public static func % (_ lhs: Self, _ rhs: Double) -> Self {
+    public static func % (
+        _ lhs: Self,
+        _ rhs: Self.RemainderDivisor
+    ) -> Self {
         let lhsValue: Double = lhs.value
         let newValue: Double = lhsValue.truncatingRemainder(dividingBy: rhs)
 
         return .init(newValue, lhs.unit)
-    }
-
-    /// Divides the first specified value by the second and stores the remainder in the left-hand-side variable.
-    ///
-    /// - Parameters:
-    ///   - lhs: The dividend.
-    ///   - rhs: The divisor.
-    public static func %= (_ lhs: inout Self, _ rhs: Double) {
-        lhs = lhs % rhs
-    }
-
-    /// Returns the quotient of dividing this value by the specified value.
-    ///
-    /// - Parameter divisor: The divisor.
-    /// - Returns: The quotient.
-    public func dividing(by divisor: Double) -> Self {
-        return self / divisor
-    }
-
-    /// Divides this value by the specified value and produces the quotient.
-    ///
-    /// - Parameter divisor: The divisor.
-    public mutating func divide(by divisor: Double) {
-        self /= divisor
     }
 }
 
@@ -395,63 +399,43 @@ where UnitType: Hashable {
 
 // MARK: - Multipliable
 
-extension Measure {
-    /// Returns a Boolean value indicating whether this measure's value is a multiple of the specified value.
-    ///
-    /// - Parameter other: The value to test.
-    /// - Returns: `true` if this measure's value is a multiple of the specified value, and `false` otherwise.
-    public func isMultiple(of other: Double) -> Bool {
-        return self.value.isMultiple(of: other)
+extension Measure: Multipliable
+where UnitType: Equatable {
+    public typealias Multiplier = Double
+
+    public func isMultiple(of other: Self) -> Bool {
+        guard self.unit.isCompatible(with: other.unit),
+            self.isValidForConversion,
+            other.isValidForConversion
+        else {
+            return false
+        }
+
+        // Equal scales cancel when neither unit has an offset; avoid introducing conversion rounding.
+        if self.unit.coefficient == other.unit.coefficient,
+            self.unit.constant == 0,
+            other.unit.constant == 0 {
+            return self.value.isMultiple(of: other.value)
+        }
+
+        let lhsValue: Double = self.value * self.unit.coefficient + self.unit.constant
+        let rhsValue: Double = other.value * other.unit.coefficient + other.unit.constant
+
+        guard lhsValue.isFinite, rhsValue.isFinite else {
+            return false
+        }
+
+        return lhsValue.isMultiple(of: rhsValue)
     }
 
-    /// Returns the product of multiplying the two specified values.
-    ///
-    /// - Parameters:
-    ///   - lhs: The multiplicand.
-    ///   - rhs: The multiplier.
-    /// - Returns: The product.
-    public static func * (_ lhs: Self, _ rhs: Double) -> Self {
+    public static func * (
+        _ lhs: Self,
+        _ rhs: Self.Multiplier
+    ) -> Self {
         let lhsValue: Double = lhs.value
         let newValue: Double = lhsValue * rhs
 
         return .init(newValue, lhs.unit)
-    }
-
-    /// Returns the product of multiplying the two specified values.
-    ///
-    /// - Parameters:
-    ///   - lhs: The multiplicand.
-    ///   - rhs: The multiplier.
-    /// - Returns: The product.
-    public static func * (_ lhs: Double, _ rhs: Self) -> Self {
-        let rhsValue: Double = rhs.value
-        let newValue: Double = lhs * rhsValue
-
-        return .init(newValue, rhs.unit)
-    }
-
-    /// Multiplies the two specified values and stores the product in the left-hand-side variable.
-    ///
-    /// - Parameters:
-    ///   - lhs: The multiplicand.
-    ///   - rhs: The multiplier.
-    public static func *= (_ lhs: inout Self, _ rhs: Double) {
-        lhs = lhs * rhs
-    }
-
-    /// Returns the product of multiplying this value by the specified value.
-    ///
-    /// - Parameter multiplier: The multiplier.
-    /// - Returns: The product.
-    public func multiplying(by multiplier: Double) -> Self {
-        return self * multiplier
-    }
-
-    /// Multiplies this value by the specified value and produces the product.
-    ///
-    /// - Parameter multiplier: The multiplier.
-    public mutating func multiply(by multiplier: Double) {
-        self *= multiplier
     }
 }
 
@@ -464,7 +448,12 @@ where UnitType: Sendable {}
 
 extension Measure: Subtractable
 where UnitType: Equatable {
-    public static func - (_ lhs: Self, _ rhs: Self) -> Self {
+    public typealias Subtrahend = Self
+
+    public static func - (
+        _ lhs: Self,
+        _ rhs: Self.Subtrahend
+    ) -> Self {
         let lhsValue: Double = lhs.value
         let rhsValue: Double = rhs.converted(to: lhs.unit).value
         let newValue: Double = lhsValue - rhsValue
