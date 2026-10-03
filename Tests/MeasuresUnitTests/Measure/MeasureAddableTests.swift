@@ -12,7 +12,7 @@ import Testing
 
 @Suite("Measure Addable Tests")
 internal struct MeasureAddableTests {
-    private static let additionArguments: [(Measure<Length>, Measure<Length>, Measure<Length>)] = [
+    private static let additionArguments: [(Measure<Length>, Measure<Length>.Addend, Measure<Length>)] = [
         (Measure<Length>(1, .meter), Measure<Length>(2, .meter), Measure<Length>(3, .meter)),
         (Measure<Length>(1, .meter), Measure<Length>(100, .centimeter), Measure<Length>(2, .meter)),
         (Measure<Length>(100, .centimeter), Measure<Length>(1, .meter), Measure<Length>(200, .centimeter)),
@@ -26,7 +26,7 @@ internal struct MeasureAddableTests {
     )
     internal func additionSucceeds(
         augend: Measure<Length>,
-        addend: Measure<Length>,
+        addend: Measure<Length>.Addend,
         sum: Measure<Length>
     ) {
         #expect(augend + addend == sum)
@@ -38,7 +38,7 @@ internal struct MeasureAddableTests {
     )
     internal func additionEqualSucceeds(
         augend: Measure<Length>,
-        addend: Measure<Length>,
+        addend: Measure<Length>.Addend,
         sum: Measure<Length>
     ) {
         var runningSum: Measure<Length> = augend
@@ -52,7 +52,7 @@ internal struct MeasureAddableTests {
     )
     internal func addingSucceeds(
         augend: Measure<Length>,
-        addend: Measure<Length>,
+        addend: Measure<Length>.Addend,
         sum: Measure<Length>
     ) {
         #expect(augend.adding(addend) == sum)
@@ -64,7 +64,7 @@ internal struct MeasureAddableTests {
     )
     internal func addSucceeds(
         augend: Measure<Length>,
-        addend: Measure<Length>,
+        addend: Measure<Length>.Addend,
         sum: Measure<Length>
     ) {
         var runningSum: Measure<Length> = augend
@@ -80,7 +80,7 @@ extension MeasureAddableTests {
     )
     internal func additionIsCanonicallyCommutative(
         augend: Measure<Length>,
-        addend: Measure<Length>,
+        addend: Measure<Length>.Addend,
         sum _: Measure<Length>
     ) {
         #expect((augend + addend).isCanonicallyEqual(to: addend + augend))

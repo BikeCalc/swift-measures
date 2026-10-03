@@ -12,7 +12,7 @@ import Testing
 
 @Suite("Measure Subtractable Tests")
 internal struct MeasureSubtractableTests {
-    private static let subtractionArguments: [(Measure<Length>, Measure<Length>, Measure<Length>)] = [
+    private static let subtractionArguments: [(Measure<Length>, Measure<Length>.Subtrahend, Measure<Length>)] = [
         (Measure<Length>(3, .meter), Measure<Length>(1, .meter), Measure<Length>(2, .meter)),
         (Measure<Length>(2, .meter), Measure<Length>(50, .centimeter), Measure<Length>(1.5, .meter)),
         (Measure<Length>(200, .centimeter), Measure<Length>(1, .meter), Measure<Length>(100, .centimeter)),
@@ -26,7 +26,7 @@ internal struct MeasureSubtractableTests {
     )
     internal func subtractionSucceeds(
         minuend: Measure<Length>,
-        subtrahend: Measure<Length>,
+        subtrahend: Measure<Length>.Subtrahend,
         difference: Measure<Length>
     ) {
         #expect(minuend - subtrahend == difference)
@@ -38,7 +38,7 @@ internal struct MeasureSubtractableTests {
     )
     internal func subtractionEqualSucceeds(
         minuend: Measure<Length>,
-        subtrahend: Measure<Length>,
+        subtrahend: Measure<Length>.Subtrahend,
         difference: Measure<Length>
     ) {
         var runningDifference: Measure<Length> = minuend
@@ -52,7 +52,7 @@ internal struct MeasureSubtractableTests {
     )
     internal func subtractingSucceeds(
         minuend: Measure<Length>,
-        subtrahend: Measure<Length>,
+        subtrahend: Measure<Length>.Subtrahend,
         difference: Measure<Length>
     ) {
         #expect(minuend.subtracting(subtrahend) == difference)
@@ -64,7 +64,7 @@ internal struct MeasureSubtractableTests {
     )
     internal func subtractSucceeds(
         minuend: Measure<Length>,
-        subtrahend: Measure<Length>,
+        subtrahend: Measure<Length>.Subtrahend,
         difference: Measure<Length>
     ) {
         var runningDifference: Measure<Length> = minuend
@@ -80,7 +80,7 @@ extension MeasureSubtractableTests {
     )
     internal func subtractionIsNotCanonicallyCommutative(
         minuend: Measure<Length>,
-        subtrahend: Measure<Length>,
+        subtrahend: Measure<Length>.Subtrahend,
         difference _: Measure<Length>
     ) {
         #expect(!(minuend - subtrahend).isCanonicallyEqual(to: subtrahend - minuend))
