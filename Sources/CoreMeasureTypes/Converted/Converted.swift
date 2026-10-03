@@ -8,13 +8,13 @@
 
 /// A property wrapper that keeps a measure expressed in a specified unit.
 @propertyWrapper
-public struct Converted<Unit>
-where Unit: Equatable & Measurable & Sendable {
+public struct Converted<UnitType>
+where UnitType: Unit {
     /// The converted stored measure.
-    private var value: Measure<Unit>
+    private var value: Measure<UnitType>
 
     /// The unit in which the wrapped measure is stored.
-    private let unit: Measure<Unit>.Unit
+    private let unit: UnitType
 
     /// Creates a wrapper containing the specified measure converted to the specified unit.
     ///
@@ -22,15 +22,15 @@ where Unit: Equatable & Measurable & Sendable {
     ///   - wrappedValue: The measure to convert and store.
     ///   - unit: The unit in which to store the measure.
     public init(
-        wrappedValue: Measure<Unit>,
-        to unit: Measure<Unit>.Unit
+        wrappedValue: Measure<UnitType>,
+        to unit: UnitType
     ) {
         self.unit = unit
         self.value = wrappedValue.converted(to: unit)
     }
 
     /// The wrapped measure, converted whenever it is assigned.
-    public var wrappedValue: Measure<Unit> {
+    public var wrappedValue: Measure<UnitType> {
         get {
             return self.value
         }
@@ -42,7 +42,8 @@ where Unit: Equatable & Measurable & Sendable {
 
 // MARK: - Comparable
 
-extension Converted: Comparable {
+extension Converted: Comparable
+where UnitType: Equatable {
     /// Returns a boolean value indicating whether the first converted measure precedes the second.
     ///
     /// - Parameters:
@@ -99,13 +100,13 @@ extension Converted: Comparable {
 // MARK: - Decodable
 
 extension Converted: Decodable
-where Unit: Decodable {
+where UnitType: Decodable {
     /// Creates a wrapper by decoding a converted measure.
     ///
     /// - Parameter decoder: The decoder to read data from.
     /// - Throws: Any error thrown while decoding the wrapped measure.
     public init(from decoder: any Decoder) throws {
-        let value: Measure<Unit> = try .init(from: decoder)
+        let value: Measure<UnitType> = try .init(from: decoder)
 
         self.init(
             wrappedValue: value,
@@ -117,7 +118,7 @@ where Unit: Decodable {
 // MARK: - Encodable
 
 extension Converted: Encodable
-where Unit: Encodable {
+where UnitType: Encodable {
     /// Encodes the converted wrapped measure.
     ///
     /// - Parameter encoder: The encoder to write data to.
@@ -129,14 +130,18 @@ where Unit: Encodable {
 
 // MARK: - Equatable
 
-extension Converted: Equatable {
+extension Converted: Equatable
+where UnitType: Equatable {
     /// Returns a boolean value indicating whether two converted measures are equal.
     ///
     /// - Parameters:
     ///   - lhs: The first converted value to compare.
     ///   - rhs: The second converted value to compare.
     /// - Returns: The result of comparing the wrapped measures for equality.
-    public static func == (_ lhs: Self, _ rhs: Self) -> Bool {
+    public static func == (
+        _ lhs: Self,
+        _ rhs: Self
+    ) -> Bool {
         return lhs.wrappedValue == rhs.wrappedValue
     }
 }
@@ -144,7 +149,7 @@ extension Converted: Equatable {
 // MARK: - Hashable
 
 extension Converted: Hashable
-where Unit: Hashable {
+where UnitType: Hashable {
     /// Hashes the wrapped measure by feeding it to the specified hasher.
     ///
     /// - Parameter hasher: The hasher to use when combining the components of this instance.

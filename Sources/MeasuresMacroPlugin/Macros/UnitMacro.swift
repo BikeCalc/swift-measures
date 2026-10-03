@@ -12,9 +12,9 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
-/// A member macro that generates a family of units from a unit-prefix type.
+/// A member macro that generates prefixed units from a unit-prefix type.
 internal protocol UnitMacro {
-    /// The prefixes used to generate the unit family.
+    /// The prefixes used to generate the units.
     associatedtype Prefix: UnitPrefix
 
     /// The name of the concrete macro declaration.
@@ -35,7 +35,7 @@ extension UnitMacro {
         providingMembersOf declaration: some DeclGroupSyntax,
         in context: some MacroExpansionContext
     ) throws -> Array<DeclSyntax> {
-        // Unit families can only be generated for structures.
+        // Prefixed units can only be generated for structures.
         guard declaration.is(StructDeclSyntax.self) else {
             context.diagnose(
                 Diagnostic(

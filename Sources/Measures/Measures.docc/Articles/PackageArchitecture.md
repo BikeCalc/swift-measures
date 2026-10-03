@@ -6,7 +6,7 @@ Understand how the targets in Measures are organized and how they depend on one 
 
 Measures separates its core measure types from its core and additional units. Core measure types form the foundation;
 core measure units provide the base and derived dimensions above them, and additional measure units extend the package
-with dimensions outside that primary collection. The macro targets generate consistently prefixed unit families.
+with dimensions outside that primary collection. The macro targets generate units with consistent prefixes.
 
 The package also contains a command plugin and two test targets. These targets support development and validation
 without becoming part of the public library product.
