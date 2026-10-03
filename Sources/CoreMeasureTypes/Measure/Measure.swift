@@ -234,6 +234,13 @@ extension Measure: Convertible {
     public func converted(to unit: UnitType) -> Self {
         precondition(self.unit.isCompatible(with: unit))
 
+        // Identical valid scales and offsets cancel; preserve the value without conversion rounding.
+        if self.hasValidConversionUnit,
+            self.unit.coefficient == unit.coefficient,
+            self.unit.constant == unit.constant {
+            return .init(self.value, unit)
+        }
+
         let lhsValue: Double = self.value * self.unit.coefficient + self.unit.constant
         let newValue: Double = (lhsValue - unit.constant) / unit.coefficient
         return .init(newValue, unit)
