@@ -132,6 +132,32 @@ In standalone scripts, use `fileprivate` for file-scoped types and declarations 
 Their initializers and members accessed elsewhere in the same file should also be `fileprivate`. Use `private` for
 implementation details needed only within their enclosing type. Do not use `internal` merely because it is the default.
 
+### Explicit Self
+
+Always use explicit `self.` when accessing the current instance's properties or calling its methods, even when Swift
+allows it to be omitted. Apply this rule in initializers, computed properties, methods, and closures.
+
+For example:
+
+```swift
+internal func foo(bar: String) {
+    self.bar = bar
+    self.baz()
+}
+```
+
+Use `Self` rather than repeating the enclosing type's name when referring to the current type, wherever Swift permits
+it and it preserves the intended meaning. Qualify its type properties, type methods, nested types, type aliases, and
+associated types with `Self.` rather than leaving them unqualified.
+
+For example:
+
+```swift
+internal func foo(bar: Self) -> Self {
+    return Self.baz(bar: bar)
+}
+```
+
 ### Identifier Naming
 
 #### Acronyms
@@ -200,58 +226,119 @@ implementations together.
 
 Expand parameter and argument lists that contain more than one item, even when Swift Format could keep them on one
 line. Keep the opening parenthesis on the declaration or call line, place each parameter or argument on its own line,
-and place the closing parenthesis on its own line.
+and place the closing parenthesis on its own line. The examples below distinguish this rule from the exceptions for
+unlabeled initializer calls, unlabeled tuples, and collection literals.
 
-A short initializer call designed as tuple-like value construction may remain on one line when its unlabeled arguments
-fit comfortably within the line limit, such as `Foo(1, 2)`. Keep the initializer declaration expanded so its parameter
-names remain visible.
+#### Initializer Declarations and Calls
 
-Keep tuple types and tuple literals on one line when they fit within the line limit and remain readable. Expand them
-only when their labels, types, or expressions make the single-line form difficult to understand.
-
-Keep a short collection literal on the same line as its argument when it remains readable. Expand a longer collection
-literal vertically, placing each element on its own line.
+Expand initializer declarations with multiple parameters and initializer calls with multiple labeled arguments.
 
 For example:
 
 ```swift
-func foo(bar: String) {
+internal init(
+    bar: String,
+    baz: String
+) {
+    self.bar = bar
+    self.baz = baz
+}
+
+let foo = Foo(
+    bar: "bar",
+    baz: "baz"
+)
+```
+
+A short initializer call designed as tuple-like value construction may remain on one line when its unlabeled arguments
+fit comfortably within the line limit. Keep the initializer declaration expanded so its parameter names remain visible.
+
+For example:
+
+```swift
+internal init(
+    _ bar: String
+    _ baz: String,
+) {
+    self.bar = bar
+    self.baz = baz
+}
+
+let foo: Foo = .init("bar", "baz")
+```
+
+#### Tuple Types and Literals
+
+Expand tuple types and tuple literals that contain labeled elements, even when they fit on one line. Keep the opening
+parenthesis on the declaration, assignment, or return line, place each element on its own line, and place the closing
+parenthesis on its own line.
+
+For example:
+
+```swift
+internal typealias Foo = (
+    bar: String,
+    baz: String
+)
+
+return (
+    bar: "bar",
+    baz: "baz"
+)
+```
+
+Keep unlabeled tuple types and tuple literals on one line when they fit within the line limit and remain readable.
+Expand them when their types or expressions make the single-line form difficult to understand.
+
+For example:
+
+```swift
+let foo: (String, String) = ("bar", "baz")
+```
+
+#### Function Declarations and Calls
+
+A single parameter or argument may remain on the same line. Expand declarations and calls with multiple parameters or
+arguments.
+
+For example:
+
+```swift
+internal func foo(bar: String) {
     print(bar)
 }
 
-func foo(
+internal func foo(
     bar: String,
-    baz: Array<String>
+    baz: String
 ) {
-    print([bar] + baz)
+    print(bar, baz)
 }
 
-foo(bar: "foo")
+foo(bar: "bar")
 
 foo(
-    bar: "foo",
-    baz: ["foo", "bar", "baz"]
+    bar: "bar",
+    baz: "baz"
 )
+```
 
-foo(
-    bar: "foo",
-    baz: [
-        "foo",
-        "bar",
-        "baz",
-        "qux",
-        "quux",
-        "quuz",
-        "corge",
-        "grault",
-        "garply",
-        "waldo",
-        "fred",
-        "plugh",
-        "xyzzy",
-        "thud"
-    ]
-)
+#### Array and Other Collection Literals
+
+Multiple elements do not require a collection literal to be expanded. Keep short array and other collection literals on
+one line when they fit within the line limit and remain readable, including when used as an argument in a multiline
+call. Expand longer literals vertically, placing each element on its own line.
+
+For example:
+
+```swift
+let bar: Array<String> = ["foo", "bar", "baz"]
+
+let baz: Array<String> = [
+    "foo",
+    "bar",
+    "baz"
+]
 ```
 
 ### Initializers
