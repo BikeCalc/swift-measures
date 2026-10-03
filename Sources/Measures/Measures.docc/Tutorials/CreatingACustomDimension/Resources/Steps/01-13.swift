@@ -1,6 +1,6 @@
 import Measures
 
-struct DataTransferRate: Equatable, Measurable {
+struct DataTransferRate: Equatable, Unit {
     let coefficient: Double
     let constant: Double
     let symbol: String

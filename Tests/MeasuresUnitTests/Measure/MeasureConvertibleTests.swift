@@ -7,25 +7,11 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import Testing
+
 @testable import Measures
 
 @Suite("Measure Convertible Tests")
 internal struct MeasureConvertibleTests {
-    private func expectConversion<Unit>(
-        _ source: Measure<Unit>,
-        to unit: Unit,
-        equals expected: Measure<Unit>
-    ) where Unit: Equatable & Measurable {
-        let converted: Measure<Unit> = source.converted(to: unit)
-        var mutated: Measure<Unit> = source
-        mutated.convert(to: unit)
-
-        #expect(abs(converted.value - expected.value) < 1e-10)
-        #expect(converted.unit == expected.unit)
-        #expect(abs(mutated.value - expected.value) < 1e-10)
-        #expect(mutated.unit == expected.unit)
-    }
-
     @Test(
         "Length conversion succeeds",
         arguments: [
@@ -41,7 +27,14 @@ internal struct MeasureConvertibleTests {
         unit: Length,
         expected: Measure<Length>
     ) {
-        self.expectConversion(source, to: unit, equals: expected)
+        let converted: Measure<Length> = source.converted(to: unit)
+        var mutated: Measure<Length> = source
+        mutated.convert(to: unit)
+
+        #expect(abs(converted.value - expected.value) < 1e-10)
+        #expect(converted.unit == expected.unit)
+        #expect(abs(mutated.value - expected.value) < 1e-10)
+        #expect(mutated.unit == expected.unit)
     }
 
     @Test(
@@ -56,7 +49,14 @@ internal struct MeasureConvertibleTests {
         unit: Speed,
         expected: Measure<Speed>
     ) {
-        self.expectConversion(source, to: unit, equals: expected)
+        let converted: Measure<Speed> = source.converted(to: unit)
+        var mutated: Measure<Speed> = source
+        mutated.convert(to: unit)
+
+        #expect(abs(converted.value - expected.value) < 1e-10)
+        #expect(converted.unit == expected.unit)
+        #expect(abs(mutated.value - expected.value) < 1e-10)
+        #expect(mutated.unit == expected.unit)
     }
 
     @Test(
@@ -84,7 +84,14 @@ internal struct MeasureConvertibleTests {
         unit: ThermodynamicTemperature,
         expected: Measure<ThermodynamicTemperature>
     ) {
-        self.expectConversion(source, to: unit, equals: expected)
+        let converted: Measure<ThermodynamicTemperature> = source.converted(to: unit)
+        var mutated: Measure<ThermodynamicTemperature> = source
+        mutated.convert(to: unit)
+
+        #expect(abs(converted.value - expected.value) < 1e-10)
+        #expect(converted.unit == expected.unit)
+        #expect(abs(mutated.value - expected.value) < 1e-10)
+        #expect(mutated.unit == expected.unit)
     }
 
     @Test("Frequency converts to time")

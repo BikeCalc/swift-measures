@@ -8,8 +8,8 @@ Measures provides strongly typed values and units for physical dimensions. It in
 metric and binary prefixes, commonly used customary and imperial units, and dimensional composition for related
 units such as area, volume, speed, force, energy, and electrical quantities.
 
-Applications can define domain-specific dimensions by creating a unit type that conforms to `Measurable`. Values can
-then be represented with `Measure`, converted between compatible units, or converted automatically with `Converted`.
+Applications can define domain-specific dimensions by creating a unit type that conforms to `Unit`. Values can then be
+represented with `Measure`, converted between compatible units, or converted automatically with `Converted`.
 
 ## Topics
 
@@ -32,9 +32,15 @@ then be represented with `Measure`, converted between compatible units, or conve
 - ``/CoreMeasureTypes/Converted``
 - ``/CoreMeasureTypes/Convertible``
 
-### Measuring Values
+### Defining Units
 
-- ``/CoreMeasureTypes/Measurable``
+- ``/CoreMeasureTypes/Unit``
+- ``/CoreMeasureTypes/ComposableUnit``
+- ``/CoreMeasureTypes/NamedUnit``
+
+### Composing Units
+
+- ``/CoreMeasureTypes/Dimension``
 
 ### Base Units
 

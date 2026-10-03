@@ -16,7 +16,7 @@ constants of nature, making the system stable and reproducible without relying o
 
 ## The Metric System
 
-The term *metric system* describes a family of decimal measurement systems that began in France during the French
+The term *metric system* describes related decimal measurement systems that began in France during the French
 Revolution. The SI is its modern international form.
 
 Not every metric unit belongs to the SI. Historical systems such as Centimetre-Gram-Second used different coherent

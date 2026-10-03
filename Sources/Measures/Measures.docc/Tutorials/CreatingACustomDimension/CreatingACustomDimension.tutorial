@@ -24,14 +24,14 @@
             }
 
             @Step {
-                Conform `DataTransferRate` to `Measurable` to describe a dimension whose units can be measured and
+                Conform `DataTransferRate` to `Unit` to describe a dimension whose units can be measured and
                 converted.
 
                 @Code(name: "DataTransferRate.swift", file: "01-03.swift")
             }
 
             @Step {
-                Add the coefficient, constant, and symbol required by `Measurable`.
+                Add the coefficient, constant, and symbol required by `Unit`.
 
                 @Code(name: "DataTransferRate.swift", file: "01-04.swift")
             }

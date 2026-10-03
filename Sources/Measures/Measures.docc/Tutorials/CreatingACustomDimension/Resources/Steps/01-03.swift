@@ -1,3 +1,3 @@
 import Measures
 
-struct DataTransferRate: Measurable {}
+struct DataTransferRate: Unit {}

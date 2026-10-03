@@ -41,7 +41,18 @@ public struct Cadence {
 
 // MARK: - Codable
 
-extension Cadence: Codable {}
+extension Cadence: Codable {
+    private typealias CodingKeys = UnitCodingKeys
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Self.CodingKeys.self)
+        self.init(
+            coefficient: try container.decode(Double.self, forKey: .coefficient),
+            constant: try container.decodeIfPresent(Double.self, forKey: .constant) ?? 0,
+            symbol: try container.decode(String.self, forKey: .symbol)
+        )
+    }
+}
 
 // MARK: - Comparable
 
@@ -73,9 +84,9 @@ extension Cadence: Equatable {}
 
 extension Cadence: Hashable {}
 
-// MARK: - Measurable
+// MARK: - Unit
 
-extension Cadence: Measurable {
+extension Cadence: Unit {
     public static let base: Self = .revolutionsPerSecond
 }
 

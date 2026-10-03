@@ -7,7 +7,7 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 // swift-format-ignore
-/// Generates the complete family of SI-prefixed units for a measurable dimension.
+/// Generates the complete set of SI-prefixed units for a measurable dimension.
 ///
 /// - Parameter name: The unprefixed unit name.
 /// - Parameter symbol: The unprefixed unit symbol.
