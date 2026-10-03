@@ -344,19 +344,6 @@ extension Measure {
     public mutating func divide(by divisor: Double) {
         self /= divisor
     }
-
-    /// Returns this value halved.
-    ///
-    /// - Returns: The value halved.
-    public func halved() -> Self {
-        return self / 2
-    }
-
-    /// Halves this value.
-    ///
-    public mutating func halve() {
-        self = self.halved()
-    }
 }
 
 // MARK: - Encodable
@@ -450,18 +437,6 @@ extension Measure {
     /// - Parameter multiplier: The multiplier.
     public mutating func multiply(by multiplier: Double) {
         self *= multiplier
-    }
-
-    /// Returns this value doubled.
-    ///
-    ///  - Returns: The value doubled.
-    public func doubled() -> Self {
-        return self * 2
-    }
-
-    /// Doubles this value.
-    public mutating func double() {
-        self = self.doubled()
     }
 }
 

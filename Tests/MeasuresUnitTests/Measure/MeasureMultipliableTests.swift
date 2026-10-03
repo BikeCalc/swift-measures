@@ -30,13 +30,6 @@ internal struct MeasureMultipliableTests {
         (Measure<Length>(50, .centimeter), 3, Measure<Length>(150, .centimeter))
     ]
 
-    private static let doublingArguments: [(Measure<Length>, Measure<Length>)] = [
-        (Measure<Length>(1, .meter), Measure<Length>(2, .meter)),
-        (Measure<Length>(1.5, .meter), Measure<Length>(3, .meter)),
-        (Measure<Length>(-1, .meter), Measure<Length>(-2, .meter)),
-        (Measure<Length>(50, .centimeter), Measure<Length>(100, .centimeter))
-    ]
-
     @Test(
         "Is multiple of succeeds",
         arguments: Self.multipleArguments
@@ -98,30 +91,6 @@ internal struct MeasureMultipliableTests {
     ) {
         var runningProduct: Measure<Length> = multiplicand
         runningProduct.multiply(by: multiplier)
-        #expect(runningProduct == product)
-    }
-
-    @Test(
-        "Doubled succeeds",
-        arguments: Self.doublingArguments
-    )
-    internal func doubledSucceeds(
-        multiplicand: Measure<Length>,
-        product: Measure<Length>
-    ) {
-        #expect(multiplicand.doubled() == product)
-    }
-
-    @Test(
-        "Double succeeds",
-        arguments: Self.doublingArguments
-    )
-    internal func doubleSucceeds(
-        multiplicand: Measure<Length>,
-        product: Measure<Length>
-    ) {
-        var runningProduct: Measure<Length> = multiplicand
-        runningProduct.double()
         #expect(runningProduct == product)
     }
 }

@@ -20,13 +20,6 @@ internal struct MeasureDivisibleTests {
         (Measure<Length>(150, .centimeter), 3, Measure<Length>(50, .centimeter))
     ]
 
-    private static let halvingArguments: [(Measure<Length>, Measure<Length>)] = [
-        (Measure<Length>(2, .meter), Measure<Length>(1, .meter)),
-        (Measure<Length>(3, .meter), Measure<Length>(1.5, .meter)),
-        (Measure<Length>(-2, .meter), Measure<Length>(-1, .meter)),
-        (Measure<Length>(100, .centimeter), Measure<Length>(50, .centimeter))
-    ]
-
     private static let remainderArguments: [(Measure<Length>, Double, Measure<Length>)] = [
         (Measure<Length>(10, .meter), 3, Measure<Length>(1, .meter)),
         (Measure<Length>(10.5, .meter), 3, Measure<Length>(1.5, .meter)),
@@ -131,29 +124,5 @@ internal struct MeasureDivisibleTests {
         var runningRemainder: Measure<Length> = dividend
         runningRemainder %= divisor
         #expect(runningRemainder == remainder)
-    }
-
-    @Test(
-        "Halved succeeds",
-        arguments: Self.halvingArguments
-    )
-    internal func halvedSucceeds(
-        dividend: Measure<Length>,
-        quotient: Measure<Length>
-    ) {
-        #expect(dividend.halved() == quotient)
-    }
-
-    @Test(
-        "Halve succeeds",
-        arguments: Self.halvingArguments
-    )
-    internal func halveSucceeds(
-        dividend: Measure<Length>,
-        quotient: Measure<Length>
-    ) {
-        var runningQuotient: Measure<Length> = dividend
-        runningQuotient.halve()
-        #expect(runningQuotient == quotient)
     }
 }

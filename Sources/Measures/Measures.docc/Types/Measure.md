@@ -44,22 +44,12 @@
 - ``multiplying(by:)``
 - ``multiply(by:)``
 
-### Doubling Values
-
-- ``doubled()``
-- ``double()``
-
 ### Dividing Values
 
 - ``Measure//(_:_:)``
 - ``/=(_:_:)``
 - ``dividing(by:)``
 - ``divide(by:)``
-
-### Halving Values
-
-- ``halved()``
-- ``halve()``
 
 ### Calculating Remainders
 
