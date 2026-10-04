@@ -28,9 +28,9 @@ import NumericsExtended
 /// // Prints "(m)/(s)"
 /// ```
 public struct ComposedUnit {
-    public let constant: Double
-
     public let coefficient: Double
+
+    public let constant: Double
 
     public let symbol: String
 
@@ -54,8 +54,8 @@ public struct ComposedUnit {
         precondition(coefficient.isFinite && coefficient > 0)
         precondition(constant.isFinite)
 
-        self.constant = constant
         self.coefficient = coefficient
+        self.constant = constant
         self.symbol = symbol
         self.dimension = dimension
     }
@@ -102,13 +102,43 @@ public struct ComposedUnit {
     }
 }
 
-// MARK: - Codable
-
-extension ComposedUnit: Codable {}
-
 // MARK: - ComposableUnit
 
 extension ComposedUnit: ComposableUnit {}
+
+// MARK: - Decodable
+
+extension ComposedUnit: Decodable {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: UnitCodingKeys.self)
+        let coefficient = try container.decode(Double.self, forKey: .coefficient)
+        let constant = try container.decodeIfPresent(Double.self, forKey: .constant) ?? 0
+        let symbol = try container.decode(String.self, forKey: .symbol)
+        let dimension = try container.decode(Dimension.self, forKey: .dimension)
+
+        guard coefficient.isFinite && coefficient > 0 else {
+            throw DecodingError.dataCorruptedError(
+                forKey: .coefficient,
+                in: container,
+                debugDescription: "The coefficient must be finite and positive."
+            )
+        }
+        guard constant.isFinite else {
+            throw DecodingError.dataCorruptedError(
+                forKey: .constant,
+                in: container,
+                debugDescription: "The constant must be finite."
+            )
+        }
+
+        self.init(
+            coefficient: coefficient,
+            constant: constant,
+            symbol: symbol,
+            dimension: dimension
+        )
+    }
+}
 
 // MARK: - Divisible
 
@@ -165,6 +195,19 @@ extension ComposedUnit {
     /// - Parameter divisor: The denominator unit.
     public mutating func divide(by divisor: Self) {
         self /= divisor
+    }
+}
+
+// MARK: - Encodable
+
+extension ComposedUnit: Encodable {
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: UnitCodingKeys.self)
+
+        try container.encode(self.coefficient, forKey: .coefficient)
+        try container.encode(self.constant, forKey: .constant)
+        try container.encode(self.symbol, forKey: .symbol)
+        try container.encode(self.dimension, forKey: .dimension)
     }
 }
 

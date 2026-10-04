@@ -16,4 +16,7 @@ package enum UnitCodingKeys: String, CodingKey {
 
     /// The display symbol for the unit.
     case symbol
+
+    /// The physical dimension expressed as SI base-quantity exponents.
+    case dimension
 }
