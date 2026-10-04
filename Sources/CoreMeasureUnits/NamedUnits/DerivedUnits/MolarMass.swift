@@ -59,7 +59,7 @@ extension MolarMass: Hashable {}
 // MARK: - NamedUnit
 
 extension MolarMass: NamedUnit {
-    public static let base: Self = .gramsPerMole
+    public static let base: Self = .kilogramsPerMole
 }
 
 // MARK: - Sendable

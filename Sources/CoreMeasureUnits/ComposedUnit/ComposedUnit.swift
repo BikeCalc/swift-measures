@@ -78,13 +78,13 @@ public struct ComposedUnit {
     /// The unit with the same dimension, coefficient one, and constant zero in coherent SI units.
     internal var coherentUnit: Self {
         let factors: Array<(String, Int)> = [
-            (Length.base.symbol, self.dimension.length),
-            (Mass.base.symbol, self.dimension.mass),
-            (Time.base.symbol, self.dimension.time),
-            (ElectricCurrent.base.symbol, self.dimension.electricCurrent),
-            (ThermodynamicTemperature.base.symbol, self.dimension.thermodynamicTemperature),
-            (SubstanceAmount.base.symbol, self.dimension.substanceAmount),
-            (LuminousIntensity.base.symbol, self.dimension.luminousIntensity)
+            (Length.meter.symbol, self.dimension.length),
+            (Mass.kilogram.symbol, self.dimension.mass),
+            (Time.second.symbol, self.dimension.time),
+            (ElectricCurrent.ampere.symbol, self.dimension.electricCurrent),
+            (ThermodynamicTemperature.kelvin.symbol, self.dimension.thermodynamicTemperature),
+            (SubstanceAmount.mole.symbol, self.dimension.substanceAmount),
+            (LuminousIntensity.candela.symbol, self.dimension.luminousIntensity)
         ]
         let symbols: Array<String> = factors.compactMap { symbol, exponent in
             guard exponent != 0 else {

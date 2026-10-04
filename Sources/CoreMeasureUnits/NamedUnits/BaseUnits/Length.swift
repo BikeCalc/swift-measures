@@ -120,7 +120,7 @@ public struct Length {
 
     /// The link unit of length.
     public static let link: Self = .init(
-        coefficient: 2.01168,
+        coefficient: 2.01168e-1,
         symbol: "li"
     )
 

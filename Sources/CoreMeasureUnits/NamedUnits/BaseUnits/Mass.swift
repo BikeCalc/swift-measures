@@ -32,21 +32,21 @@ public struct Mass {
 
     // MARK: Astronomical Units
 
-    /// The solar unit of mass.
+    /// The approximate solar mass in kilograms.
     public static let solar: Self = .init(
         coefficient: 1.98892e+30,
         symbol: "Mo"
     )
 
-    /// The jupiter unit of mass.
+    /// The approximate Jupiter mass in kilograms.
     public static let jupiter: Self = .init(
         coefficient: 1.898e+27,
         symbol: "Mj"
     )
 
-    /// The jupiter unit of mass.
+    /// The approximate Earth mass in kilograms.
     public static let earth: Self = .init(
-        coefficient: Self.pound.coefficient * 5.9742e+24,
+        coefficient: 5.9722e+24,
         symbol: "Me"
     )
 
@@ -152,7 +152,7 @@ public struct Mass {
 
     /// The blob unit of mass.
     public static let blob: Self = .init(
-        coefficient: Self.slug.coefficient / 12,
+        coefficient: Self.slug.coefficient * 12,
         symbol: "blb"
     )
 }
