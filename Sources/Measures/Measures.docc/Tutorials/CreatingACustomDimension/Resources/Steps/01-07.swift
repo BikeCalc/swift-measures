@@ -20,5 +20,5 @@ struct DataTransferRate: Unit {
         symbol: "b/s"
     )
 
-    static let validRange: ClosedRange<Double> = .zero ... .infinity
+    let validRange: ClosedRange<Double> = .zero ... .infinity
 }

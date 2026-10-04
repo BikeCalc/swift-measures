@@ -18,7 +18,7 @@ public protocol Unit {
     var symbol: String { get }
 
     /// The valid value range on the reference scale.
-    static var validRange: ClosedRange<Double> { get }
+    var validRange: ClosedRange<Double> { get }
 
     /// Returns whether values can be converted between these units.
     ///
@@ -28,7 +28,7 @@ public protocol Unit {
 }
 
 extension Unit {
-    public static var validRange: ClosedRange<Double> {
+    public var validRange: ClosedRange<Double> {
         return -.infinity ... .infinity
     }
 

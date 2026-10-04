@@ -17,7 +17,7 @@ struct DataTransferRate: Equatable, Unit {
 
     static let base: Self = .bitsPerSecond
 
-    static let validRange: ClosedRange<Double> = .zero ... .infinity
+    let validRange: ClosedRange<Double> = .zero ... .infinity
 
     static let gigabitsPerSecond: Self = Memory.gigabit.dividing(by: .second)
     static let megabytesPerSecond: Self = Memory.megabyte.dividing(by: .second)

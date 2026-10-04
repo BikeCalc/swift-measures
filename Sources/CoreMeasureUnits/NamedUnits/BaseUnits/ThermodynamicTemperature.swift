@@ -30,6 +30,8 @@ public struct ThermodynamicTemperature {
 
     public let dimension: Dimension = .init(thermodynamicTemperature: 1)
 
+    public let validRange: ClosedRange<Double> = .zero ... .infinity
+
     // MARK: Customary and Imperial Units
 
     /// The Fahrenheit unit of thermodynamic temperature.
@@ -69,8 +71,6 @@ extension ThermodynamicTemperature: Hashable {}
 
 extension ThermodynamicTemperature: NamedUnit {
     public static let base: Self = .kelvin
-
-    public static let validRange: ClosedRange<Double> = .zero ... .infinity
 }
 
 // MARK: - Sendable
