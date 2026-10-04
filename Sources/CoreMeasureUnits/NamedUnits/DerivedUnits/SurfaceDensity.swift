@@ -88,7 +88,7 @@ extension SurfaceDensity: Hashable {}
 // MARK: - NamedUnit
 
 extension SurfaceDensity: NamedUnit {
-    public static let base: Self = .gramsPerSquareMeter
+    public static let base: Self = .kilogramsPerSquareMeter
 }
 
 // MARK: - Sendable

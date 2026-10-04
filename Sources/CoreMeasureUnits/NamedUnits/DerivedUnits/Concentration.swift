@@ -88,7 +88,7 @@ extension Concentration: Hashable {}
 // MARK: - NamedUnit
 
 extension Concentration: NamedUnit {
-    public static let base: Self = .gramsPerLiter
+    public static let base: Self = .kilogramsPerCubicMeter
 }
 
 // MARK: - Sendable
