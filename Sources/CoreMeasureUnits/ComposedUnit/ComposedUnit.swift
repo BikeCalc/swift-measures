@@ -104,7 +104,16 @@ public struct ComposedUnit {
 
 // MARK: - ComposableUnit
 
-extension ComposedUnit: ComposableUnit {}
+extension ComposedUnit: ComposableUnit {
+    /// The valid reference-scale range, restricted to nonnegative values for pure thermodynamic temperature.
+    public var validRange: ClosedRange<Double> {
+        if self.dimension == Dimension(thermodynamicTemperature: 1) {
+            return .zero ... .infinity
+        }
+
+        return -.infinity ... .infinity
+    }
+}
 
 // MARK: - Decodable
 

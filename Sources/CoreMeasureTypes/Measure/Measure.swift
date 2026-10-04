@@ -64,7 +64,7 @@ where UnitType: Unit {
     internal var isWithinValidRange: Bool {
         let baseValue: Double = self.value * self.unit.coefficient + self.unit.constant
 
-        return UnitType.validRange.contains(baseValue)
+        return self.unit.validRange.contains(baseValue)
     }
 
     /// A Boolean value indicating whether this measure defines a finite, invertible conversion.
