@@ -13,8 +13,9 @@ import NumericsExtended
 ///
 /// Conversion to the coherent SI reference uses `value * coefficient + constant`.
 /// Multiplication and division combine dimensions and coefficients; integer powers scale the dimension's exponents.
-/// Unit-level arithmetic requires zero constants. Convert measures with nonzero constants to coherent units before
-/// combining them. Arithmetic traps if its result has a nonfinite or nonpositive coefficient, or an exponent overflows.
+/// Unit-level arithmetic requires zero constants, except for powers zero and one. Convert measures with nonzero
+/// constants to coherent units before combining them. Arithmetic traps if its result has a nonfinite or nonpositive
+/// coefficient, or an exponent overflows.
 /// Symbols describe the operations performed and are not simplified.
 ///
 /// For example:
@@ -100,6 +101,80 @@ public struct ComposedUnit {
             dimension: self.dimension
         )
     }
+
+    /// Returns a unit by multiplying coefficients and adding corresponding dimension exponents.
+    ///
+    /// Both units must have zero constants.
+    ///
+    /// - Parameters:
+    ///   - lhs: The first factor unit.
+    ///   - rhs: The second factor unit.
+    /// - Returns: The composed product unit.
+    public static func * (
+        _ lhs: Self,
+        _ rhs: Self
+    ) -> Self {
+        precondition(lhs.constant == 0 && rhs.constant == 0)
+
+        return .init(
+            coefficient: lhs.coefficient * rhs.coefficient,
+            symbol: "(\(lhs.symbol))·(\(rhs.symbol))",
+            dimension: lhs.dimension * rhs.dimension
+        )
+    }
+
+    /// Returns a unit by dividing coefficients and subtracting corresponding dimension exponents.
+    ///
+    /// Both units must have zero constants.
+    ///
+    /// - Parameters:
+    ///   - lhs: The numerator unit.
+    ///   - rhs: The denominator unit.
+    /// - Returns: The composed quotient unit.
+    public static func / (
+        _ lhs: Self,
+        _ rhs: Self
+    ) -> Self {
+        precondition(lhs.constant == 0 && rhs.constant == 0)
+
+        return .init(
+            coefficient: lhs.coefficient / rhs.coefficient,
+            symbol: "(\(lhs.symbol))/(\(rhs.symbol))",
+            dimension: lhs.dimension / rhs.dimension
+        )
+    }
+
+    /// Returns a unit by raising its coefficient and multiplying its dimension exponents by an integer.
+    ///
+    /// Exponent zero returns the dimensionless identity; exponent one preserves the original unit.
+    /// Other exponents require a zero constant, and negative exponents produce reciprocal powers.
+    ///
+    /// - Parameters:
+    ///   - lhs: The unit to raise to a power.
+    ///   - rhs: The integer exponent; zero produces a dimensionless unit with coefficient one.
+    /// - Returns: The composed power unit.
+    public static func ** (
+        _ lhs: Self,
+        _ rhs: Int
+    ) -> Self {
+        switch rhs {
+        case 0:
+            return .init(
+                coefficient: 1,
+                symbol: "1",
+                dimension: .init()
+            )
+        case 1:
+            return lhs
+        default:
+            precondition(lhs.constant == 0)
+            return .init(
+                coefficient: integerPower(lhs.coefficient, exponent: rhs),
+                symbol: "(\(lhs.symbol))^\(rhs)",
+                dimension: lhs.dimension ** rhs
+            )
+        }
+    }
 }
 
 // MARK: - ComposableUnit
@@ -149,64 +224,6 @@ extension ComposedUnit: Decodable {
     }
 }
 
-// MARK: - Divisible
-
-extension ComposedUnit {
-    /// Returns a unit by dividing coefficients and subtracting corresponding dimension exponents.
-    ///
-    /// Both units must have zero constants.
-    ///
-    /// - Parameters:
-    ///   - lhs: The numerator unit.
-    ///   - rhs: The denominator unit.
-    /// - Returns: The composed quotient unit.
-    public static func / (
-        _ lhs: Self,
-        _ rhs: Self
-    ) -> Self {
-        precondition(lhs.constant == 0 && rhs.constant == 0)
-
-        return .init(
-            coefficient: lhs.coefficient / rhs.coefficient,
-            symbol: "(\(lhs.symbol))/(\(rhs.symbol))",
-            dimension: lhs.dimension / rhs.dimension
-        )
-    }
-
-    /// Stores the quotient in the left-hand unit.
-    ///
-    /// Both units must have zero constants.
-    ///
-    /// - Parameters:
-    ///   - lhs: The unit to replace with the result.
-    ///   - rhs: The denominator unit.
-    public static func /= (
-        _ lhs: inout Self,
-        _ rhs: Self
-    ) {
-        lhs = lhs / rhs
-    }
-
-    /// Returns the quotient of this unit and the specified divisor.
-    ///
-    /// Both units must have zero constants.
-    ///
-    /// - Parameter divisor: The denominator unit.
-    /// - Returns: The composed quotient unit.
-    public func dividing(by divisor: Self) -> Self {
-        return self / divisor
-    }
-
-    /// Replaces this unit with the quotient using the specified divisor.
-    ///
-    /// Both units must have zero constants.
-    ///
-    /// - Parameter divisor: The denominator unit.
-    public mutating func divide(by divisor: Self) {
-        self /= divisor
-    }
-}
-
 // MARK: - Encodable
 
 extension ComposedUnit: Encodable {
@@ -227,122 +244,6 @@ extension ComposedUnit: Equatable {}
 // MARK: - Hashable
 
 extension ComposedUnit: Hashable {}
-
-// MARK: - Multipliable
-
-extension ComposedUnit {
-    /// Returns a unit by multiplying coefficients and adding corresponding dimension exponents.
-    ///
-    /// Both units must have zero constants.
-    ///
-    /// - Parameters:
-    ///   - lhs: The first factor unit.
-    ///   - rhs: The second factor unit.
-    /// - Returns: The composed product unit.
-    public static func * (
-        _ lhs: Self,
-        _ rhs: Self
-    ) -> Self {
-        precondition(lhs.constant == 0 && rhs.constant == 0)
-
-        return .init(
-            coefficient: lhs.coefficient * rhs.coefficient,
-            symbol: "(\(lhs.symbol))·(\(rhs.symbol))",
-            dimension: lhs.dimension * rhs.dimension
-        )
-    }
-
-    /// Stores the product in the left-hand unit.
-    ///
-    /// Both units must have zero constants.
-    ///
-    /// - Parameters:
-    ///   - lhs: The unit to replace with the result.
-    ///   - rhs: The second factor unit.
-    public static func *= (
-        _ lhs: inout Self,
-        _ rhs: Self
-    ) {
-        lhs = lhs * rhs
-    }
-
-    /// Returns the product of this unit and the specified multiplier.
-    ///
-    /// Both units must have zero constants.
-    ///
-    /// - Parameter multiplier: The second factor unit.
-    /// - Returns: The composed product unit.
-    public func multiplying(by multiplier: Self) -> Self {
-        return self * multiplier
-    }
-
-    /// Replaces this unit with the product using the specified multiplier.
-    ///
-    /// Both units must have zero constants.
-    ///
-    /// - Parameter multiplier: The second factor unit.
-    public mutating func multiply(by multiplier: Self) {
-        self *= multiplier
-    }
-}
-
-// MARK: - Raisable
-
-extension ComposedUnit {
-    /// Returns a unit by raising its coefficient and multiplying its dimension exponents by an integer.
-    ///
-    /// The unit must have a zero constant.
-    ///
-    /// - Parameters:
-    ///   - lhs: The unit to raise to a power.
-    ///   - rhs: The integer exponent; zero produces a dimensionless unit with coefficient one.
-    /// - Returns: The composed power unit.
-    public static func ** (
-        _ lhs: Self,
-        _ rhs: Int
-    ) -> Self {
-        precondition(lhs.constant == 0)
-
-        return .init(
-            coefficient: integerPower(lhs.coefficient, exponent: rhs),
-            symbol: rhs == 0 ? "1" : "(\(lhs.symbol))^\(rhs)",
-            dimension: lhs.dimension ** rhs
-        )
-    }
-
-    /// Stores the power in the left-hand unit.
-    ///
-    /// The unit must have a zero constant.
-    ///
-    /// - Parameters:
-    ///   - lhs: The unit to replace with the result.
-    ///   - rhs: The integer exponent; zero produces a dimensionless unit with coefficient one.
-    public static func **= (
-        _ lhs: inout Self,
-        _ rhs: Int
-    ) {
-        lhs = lhs ** rhs
-    }
-
-    /// Returns this unit raised to the specified integer exponent.
-    ///
-    /// The unit must have a zero constant.
-    ///
-    /// - Parameter exponent: The integer exponent; zero produces a dimensionless unit with coefficient one.
-    /// - Returns: The composed power unit.
-    public func raising(to exponent: Int) -> Self {
-        return self ** exponent
-    }
-
-    /// Raises this unit to the specified integer exponent.
-    ///
-    /// The unit must have a zero constant.
-    ///
-    /// - Parameter exponent: The integer exponent; zero produces a dimensionless unit with coefficient one.
-    public mutating func raise(to exponent: Int) {
-        self **= exponent
-    }
-}
 
 // MARK: - Sendable
 
