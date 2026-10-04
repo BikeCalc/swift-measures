@@ -45,6 +45,14 @@ extension Memory: Codable {
             symbol: try container.decode(String.self, forKey: .symbol)
         )
     }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: Self.CodingKeys.self)
+
+        try container.encode(self.coefficient, forKey: .coefficient)
+        try container.encode(self.constant, forKey: .constant)
+        try container.encode(self.symbol, forKey: .symbol)
+    }
 }
 
 // MARK: - Comparable
