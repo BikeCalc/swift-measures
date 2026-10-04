@@ -9,8 +9,8 @@
 import Testing
 @testable import Measures
 
-@Suite("Measure Comparable Tests")
-internal struct MeasureComparableTests {
+@Suite("Length Measure Comparable Tests")
+internal struct LengthMeasureComparableTests {
     private static let comparisonArguments: [(Measure<Length>, Measure<Length>, Bool, Bool, Bool, Bool)] = [
         (Measure<Length>(1, .meter), Measure<Length>(1, .meter), false, true, false, true),
         (Measure<Length>(1, .meter), Measure<Length>(100, .centimeter), false, true, false, true),
@@ -33,7 +33,10 @@ internal struct MeasureComparableTests {
         (Measure<Length>(7, .foot), Measure<Length>(1, .yard), Measure<Length>(2, .yard))
     ]
 
-    @Test("Is less than", arguments: Self.comparisonArguments)
+    @Test(
+        "Is less than",
+        arguments: Self.comparisonArguments
+    )
     internal func isLessThan(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
@@ -46,7 +49,10 @@ internal struct MeasureComparableTests {
         #expect(lhs.isLess(than: rhs) == isLess)
     }
 
-    @Test("Is less than or equal", arguments: Self.comparisonArguments)
+    @Test(
+        "Is less than or equal",
+        arguments: Self.comparisonArguments
+    )
     internal func isLessThanOrEqualTo(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
@@ -59,7 +65,10 @@ internal struct MeasureComparableTests {
         #expect(lhs.isLessThanOrEqual(to: rhs) == isLessThanOrEqual)
     }
 
-    @Test("Is greater than", arguments: Self.comparisonArguments)
+    @Test(
+        "Is greater than",
+        arguments: Self.comparisonArguments
+    )
     internal func isGreaterThan(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
@@ -72,7 +81,10 @@ internal struct MeasureComparableTests {
         #expect(lhs.isGreater(than: rhs) == isGreater)
     }
 
-    @Test("Is greater than or equal", arguments: Self.comparisonArguments)
+    @Test(
+        "Is greater than or equal",
+        arguments: Self.comparisonArguments
+    )
     internal func isGreaterThanOrEqualTo(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
@@ -85,7 +97,10 @@ internal struct MeasureComparableTests {
         #expect(lhs.isGreaterThanOrEqual(to: rhs) == isGreaterThanOrEqual)
     }
 
-    @Test("Is within closed range", arguments: Self.rangeArguments)
+    @Test(
+        "Is within closed range",
+        arguments: Self.rangeArguments
+    )
     internal func isWithinClosedRange(
         value: Measure<Length>,
         lowerBound: Measure<Length>,
@@ -96,7 +111,10 @@ internal struct MeasureComparableTests {
         #expect(value.isWithin(range) == range.contains(value))
     }
 
-    @Test("Is within bounds", arguments: Self.rangeArguments)
+    @Test(
+        "Is within bounds",
+        arguments: Self.rangeArguments
+    )
     internal func isWithinBounds(
         value: Measure<Length>,
         lowerBound: Measure<Length>,
@@ -107,7 +125,10 @@ internal struct MeasureComparableTests {
         #expect(valueIsWithinBounds == (value >= lowerBound && value <= upperBound))
     }
 
-    @Test("Is between bounds", arguments: Self.rangeArguments)
+    @Test(
+        "Is between bounds",
+        arguments: Self.rangeArguments
+    )
     internal func isBetweenBounds(
         value: Measure<Length>,
         lowerBound: Measure<Length>,

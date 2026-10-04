@@ -9,8 +9,8 @@
 import Testing
 @testable import Measures
 
-@Suite("Measure CustomDebugStringConvertible Tests")
-internal struct MeasureCustomDebugStringConvertibleTests {
+@Suite("Length Measure CustomDebugStringConvertible Tests")
+internal struct LengthMeasureCustomDebugStringConvertibleTests {
     @Test(
         "Debug description succeeds",
         arguments: [

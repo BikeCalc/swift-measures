@@ -11,8 +11,8 @@ import Foundation
 import Testing
 @testable import Measures
 
-@Suite("Measure Encodable Tests")
-internal struct MeasureEncodableTests {
+@Suite("Length Measure Encodable Tests")
+internal struct LengthMeasureEncodableTests {
     @Test(
         "Encode to JSON succeeds",
         arguments: [

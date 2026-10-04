@@ -9,8 +9,8 @@
 import Testing
 @testable import Measures
 
-@Suite("Measure Multipliable Tests")
-internal struct MeasureMultipliableTests {
+@Suite("Length Measure Multipliable Tests")
+internal struct LengthMeasureMultipliableTests {
     private static let multipleArguments: [(Measure<Length>, Double, Bool)] = [
         (Measure<Length>(10, .meter), 2, true),
         (Measure<Length>(10, .meter), 3, false),
@@ -125,7 +125,7 @@ internal struct MeasureMultipliableTests {
     }
 }
 
-extension MeasureMultipliableTests {
+extension LengthMeasureMultipliableTests {
     @Test(
         "Multiplication is commutative",
         arguments: Self.multiplicationArguments

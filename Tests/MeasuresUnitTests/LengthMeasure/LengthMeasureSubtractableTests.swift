@@ -9,8 +9,8 @@
 import Testing
 @testable import Measures
 
-@Suite("Measure Subtractable Tests")
-internal struct MeasureSubtractableTests {
+@Suite("Length Measure Subtractable Tests")
+internal struct LengthMeasureSubtractableTests {
     private static let subtractionArguments: [(Measure<Length>, Measure<Length>, Measure<Length>)] = [
         (Measure<Length>(3, .meter), Measure<Length>(1, .meter), Measure<Length>(2, .meter)),
         (Measure<Length>(2, .meter), Measure<Length>(50, .centimeter), Measure<Length>(1.5, .meter)),
@@ -72,7 +72,7 @@ internal struct MeasureSubtractableTests {
     }
 }
 
-extension MeasureSubtractableTests {
+extension LengthMeasureSubtractableTests {
     @Test(
         "Subtraction is not canonically commutative",
         arguments: Self.subtractionArguments

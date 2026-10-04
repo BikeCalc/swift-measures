@@ -11,8 +11,8 @@ import Foundation
 import Testing
 @testable import Measures
 
-@Suite("Measure Decodable Tests")
-internal struct MeasureDecodableTests {
+@Suite("Length Measure Decodable Tests")
+internal struct LengthMeasureDecodableTests {
     @Test(
         "Decode from JSON succeeds",
         arguments: [

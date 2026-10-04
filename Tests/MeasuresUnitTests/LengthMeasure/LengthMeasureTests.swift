@@ -9,8 +9,8 @@
 import Testing
 @testable import Measures
 
-@Suite("Measure Tests")
-internal struct MeasureTests {
+@Suite("Length Measure Tests")
+internal struct LengthMeasureTests {
     @Test(
         "Binary integer initialization succeeds",
         arguments: [
@@ -45,24 +45,6 @@ internal struct MeasureTests {
 
         #expect(measure.value == expectedValue)
         #expect(measure.unit == .centimeter)
-    }
-
-    @Test(
-        "Bounded valid range succeeds",
-        arguments: [
-            (Measure<ThermodynamicTemperature>(0, .kelvin), true),
-            (Measure<ThermodynamicTemperature>(-273.15, .celsius), true),
-            (Measure<ThermodynamicTemperature>(-459, .fahrenheit), true),
-            (Measure<ThermodynamicTemperature>(-1, .kelvin), false),
-            (Measure<ThermodynamicTemperature>(-273.16, .celsius), false),
-            (Measure<ThermodynamicTemperature>(-460, .fahrenheit), false)
-        ]
-    )
-    internal func boundedValidRangeSucceeds(
-        measure: Measure<ThermodynamicTemperature>,
-        result: Bool
-    ) {
-        #expect(measure.isValid == result)
     }
 
     @Test(

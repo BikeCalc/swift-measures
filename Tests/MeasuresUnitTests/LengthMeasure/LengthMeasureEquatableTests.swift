@@ -9,8 +9,8 @@
 import Testing
 @testable import Measures
 
-@Suite("Measure Equatable Tests")
-internal struct MeasureEquatableTests {
+@Suite("Length Measure Equatable Tests")
+internal struct LengthMeasureEquatableTests {
     private static let equalityArguments: [(Measure<Length>, Measure<Length>, Bool)] = [
         (Measure<Length>(1, .meter), Measure<Length>(1, .meter), true),
         (Measure<Length>(1, .meter), Measure<Length>(2, .meter), false),
@@ -20,7 +20,10 @@ internal struct MeasureEquatableTests {
         (Measure<Length>(1, .foot), Measure<Length>(12, .inch), false)
     ]
 
-    @Test("Equality succeeds", arguments: Self.equalityArguments)
+    @Test(
+        "Equality succeeds",
+        arguments: Self.equalityArguments
+    )
     internal func equalitySucceeds(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
@@ -29,7 +32,10 @@ internal struct MeasureEquatableTests {
         #expect((lhs == rhs) == result)
     }
 
-    @Test("Inequality succeeds", arguments: Self.equalityArguments)
+    @Test(
+        "Inequality succeeds",
+        arguments: Self.equalityArguments
+    )
     internal func inequalitySucceeds(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
@@ -38,7 +44,10 @@ internal struct MeasureEquatableTests {
         #expect((lhs != rhs) == !result)
     }
 
-    @Test("Is equal succeeds", arguments: Self.equalityArguments)
+    @Test(
+        "Is equal succeeds",
+        arguments: Self.equalityArguments
+    )
     internal func isEqualSucceeds(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
@@ -47,7 +56,10 @@ internal struct MeasureEquatableTests {
         #expect(lhs.isEqual(to: rhs) == result)
     }
 
-    @Test("Is unequal succeeds", arguments: Self.equalityArguments)
+    @Test(
+        "Is unequal succeeds",
+        arguments: Self.equalityArguments
+    )
     internal func isUnequalSucceeds(
         lhs: Measure<Length>,
         rhs: Measure<Length>,

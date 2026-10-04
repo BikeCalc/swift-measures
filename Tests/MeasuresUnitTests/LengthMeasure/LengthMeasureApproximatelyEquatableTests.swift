@@ -9,13 +9,12 @@
 import Measures
 import Testing
 
-@Suite("Measure ApproximatelyEquatable Tests")
-internal struct MeasureApproximatelyEquatableTests {
+@Suite("Length Measure ApproximatelyEquatable Tests")
+internal struct LengthMeasureApproximatelyEquatableTests {
     private typealias LengthMeasure = Measure<Length>
-    private typealias TemperatureMeasure = Measure<ThermodynamicTemperature>
 
     @Test(
-        "Approximate equality with lengths succeeds",
+        "Approximate equality succeeds",
         arguments: [
             (LengthMeasure(1, .meter), LengthMeasure(100, .centimeter), LengthMeasure(0, .meter), 0, true),
             (LengthMeasure(100.02, .centimeter), LengthMeasure(1, .meter), LengthMeasure(0.5, .millimeter), 0, true),
@@ -27,43 +26,13 @@ internal struct MeasureApproximatelyEquatableTests {
             (LengthMeasure(0.1 + 0.2, .meter), LengthMeasure(0.3, .meter), LengthMeasure(0, .meter), 0, false)
         ]
     )
-    internal func approximateEqualityWithLengthsSucceeds(
+    internal func approximateEqualitySucceeds(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
         absoluteTolerance: Measure<Length>,
         relativeTolerance: Double,
         result: Bool
     ) {
-        #expect(
-            lhs.isApproximatelyEqual(
-                to: rhs,
-                absoluteTolerance: absoluteTolerance,
-                relativeTolerance: relativeTolerance
-            ) == result
-        )
-    }
-
-    @Test(
-        "Approximate equality with temperatures succeeds",
-        arguments: [
-            (TemperatureMeasure(0, .celsius), TemperatureMeasure(1, .celsius), 0, true),
-            (TemperatureMeasure(0, .celsius), TemperatureMeasure(0.5, .celsius), 0, false),
-            (TemperatureMeasure(0, .celsius), TemperatureMeasure(1.8, .fahrenheit), 0, true),
-            (TemperatureMeasure(0, .celsius), TemperatureMeasure(0.9, .fahrenheit), 0, false),
-            (TemperatureMeasure(0, .celsius), TemperatureMeasure(0, .celsius), 0.01, true),
-            (TemperatureMeasure(273.15, .kelvin), TemperatureMeasure(0, .celsius), 0.01, true),
-            (TemperatureMeasure(0, .celsius), TemperatureMeasure(0, .celsius), 0.001, false),
-            (TemperatureMeasure(273.15, .kelvin), TemperatureMeasure(0, .celsius), 0.001, false)
-        ]
-    )
-    internal func approximateEqualityWithTemperaturesSucceeds(
-        lhs: Measure<ThermodynamicTemperature>,
-        absoluteTolerance: Measure<ThermodynamicTemperature>,
-        relativeTolerance: Double,
-        result: Bool
-    ) {
-        let rhs: Measure<ThermodynamicTemperature> = .init(274.15, .kelvin)
-
         #expect(
             lhs.isApproximatelyEqual(
                 to: rhs,

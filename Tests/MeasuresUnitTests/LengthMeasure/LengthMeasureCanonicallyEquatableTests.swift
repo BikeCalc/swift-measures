@@ -9,10 +9,8 @@
 import Testing
 @testable import Measures
 
-@Suite("Measure CanonicallyEquatable Tests")
-internal struct MeasureCanonicallyEquatableTests {
-    private typealias TemperatureMeasure = Measure<ThermodynamicTemperature>
-
+@Suite("Length Measure CanonicallyEquatable Tests")
+internal struct LengthMeasureCanonicallyEquatableTests {
     @Test(
         "Canonical equality succeeds",
         arguments: [

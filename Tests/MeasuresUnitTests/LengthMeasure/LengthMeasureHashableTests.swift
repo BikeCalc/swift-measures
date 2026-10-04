@@ -9,8 +9,8 @@
 import Testing
 @testable import Measures
 
-@Suite("Measure Hashable Tests")
-internal struct MeasureHashableTests {
+@Suite("Length Measure Hashable Tests")
+internal struct LengthMeasureHashableTests {
     @Test(
         "Equal stored values produce equal hashes",
         arguments: [

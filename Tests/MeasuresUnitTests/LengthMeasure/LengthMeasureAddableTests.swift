@@ -9,8 +9,8 @@
 import Testing
 @testable import Measures
 
-@Suite("Measure Addable Tests")
-internal struct MeasureAddableTests {
+@Suite("Length Measure Addable Tests")
+internal struct LengthMeasureAddableTests {
     private static let additionArguments: [(Measure<Length>, Measure<Length>, Measure<Length>)] = [
         (Measure<Length>(1, .meter), Measure<Length>(2, .meter), Measure<Length>(3, .meter)),
         (Measure<Length>(1, .meter), Measure<Length>(100, .centimeter), Measure<Length>(2, .meter)),
@@ -72,7 +72,7 @@ internal struct MeasureAddableTests {
     }
 }
 
-extension MeasureAddableTests {
+extension LengthMeasureAddableTests {
     @Test(
         "Addition is canonically commutative",
         arguments: Self.additionArguments
