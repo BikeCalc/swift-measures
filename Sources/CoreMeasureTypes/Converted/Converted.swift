@@ -6,15 +6,15 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-/// A property wrapper that keeps a measure expressed in a specified unit.
+/// A property wrapper that converts a measure whenever it is assigned.
 @propertyWrapper
 public struct Converted<UnitType>
 where UnitType: Unit {
     /// The converted stored measure.
     private var value: Measure<UnitType>
 
-    /// The unit in which the wrapped measure is stored.
-    private let unit: UnitType
+    /// Resolves the destination unit for each assigned measure.
+    private let destination: (UnitType) -> UnitType
 
     /// Creates a wrapper containing the specified measure converted to the specified unit.
     ///
@@ -25,8 +25,23 @@ where UnitType: Unit {
         wrappedValue: Measure<UnitType>,
         to unit: UnitType
     ) {
-        self.unit = unit
-        self.value = wrappedValue.converted(to: unit)
+        self.init(
+            wrappedValue: wrappedValue,
+            resolvingUnit: { _ in unit }
+        )
+    }
+
+    /// Creates a wrapper that resolves its destination from each assigned unit.
+    ///
+    /// - Parameters:
+    ///   - wrappedValue: The measure to convert and store.
+    ///   - destination: A resolver returning a unit compatible with the assigned unit.
+    package init(
+        wrappedValue: Measure<UnitType>,
+        resolvingUnit destination: @escaping (UnitType) -> UnitType
+    ) {
+        self.destination = destination
+        self.value = wrappedValue.converted(to: destination(wrappedValue.unit))
     }
 
     /// The wrapped measure, converted whenever it is assigned.
@@ -35,7 +50,7 @@ where UnitType: Unit {
             return self.value
         }
         set(newValue) {
-            self.value = newValue.converted(to: self.unit)
+            self.value = newValue.converted(to: self.destination(newValue.unit))
         }
     }
 }
@@ -103,6 +118,9 @@ extension Converted: Decodable
 where UnitType: Decodable {
     /// Creates a wrapper by decoding a converted measure.
     ///
+    /// The decoded unit becomes a fixed destination for subsequent assignments. Dynamic conversion policies are
+    /// not serialized.
+    ///
     /// - Parameter decoder: The decoder to read data from.
     /// - Throws: Any error thrown while decoding the wrapped measure.
     public init(from decoder: any Decoder) throws {
@@ -120,6 +138,8 @@ where UnitType: Decodable {
 extension Converted: Encodable
 where UnitType: Encodable {
     /// Encodes the converted wrapped measure.
+    ///
+    /// Only the measure is encoded; the conversion policy is not preserved.
     ///
     /// - Parameter encoder: The encoder to write data to.
     /// - Throws: Any error thrown while encoding the wrapped measure.
