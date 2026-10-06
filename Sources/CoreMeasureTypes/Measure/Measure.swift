@@ -232,7 +232,10 @@ extension Measure: Convertible {
     /// - Parameter unit: The unit to convert to.
     /// - Returns: The converted measure.
     public func converted(to unit: UnitType) -> Self {
-        precondition(self.unit.isCompatible(with: unit))
+        precondition(
+            self.unit.isCompatible(with: unit),
+            "Cannot convert between units with incompatible dimensions."
+        )
 
         // Identical valid scales and offsets cancel; preserve the value without conversion rounding.
         if self.hasValidConversionUnit,
@@ -243,6 +246,7 @@ extension Measure: Convertible {
 
         let lhsValue: Double = self.value * self.unit.coefficient + self.unit.constant
         let newValue: Double = (lhsValue - unit.constant) / unit.coefficient
+
         return .init(newValue, unit)
     }
 
