@@ -76,29 +76,14 @@ public struct ComposedUnit {
     }
 
     // TODO: Simplify composed symbols while preserving their original units and scale.
-    // TODO: Format coherent unit symbols with superscripts and a grouped denominator.
     /// The unit with the same dimension, coefficient one, and constant zero in coherent SI units.
-    internal var coherentUnit: Self {
-        let factors: Array<(String, Int)> = [
-            (Length.meter.symbol, self.dimension.length),
-            (Mass.kilogram.symbol, self.dimension.mass),
-            (Time.second.symbol, self.dimension.time),
-            (ElectricCurrent.ampere.symbol, self.dimension.electricCurrent),
-            (ThermodynamicTemperature.kelvin.symbol, self.dimension.thermodynamicTemperature),
-            (SubstanceAmount.mole.symbol, self.dimension.substanceAmount),
-            (LuminousIntensity.candela.symbol, self.dimension.luminousIntensity)
-        ]
-        let symbols: Array<String> = factors.compactMap { symbol, exponent in
-            guard exponent != 0 else {
-                return nil
-            }
-
-            return exponent == 1 ? symbol : "\(symbol)^\(exponent)"
-        }
+    internal var coherent: Self {
+        let symbolFormatter: UnitSymbolFormatter = .init(dimension: self.dimension)
+        let formattedSymbol: String = symbolFormatter.format()
 
         return .init(
             coefficient: 1,
-            symbol: symbols.isEmpty ? "1" : symbols.joined(separator: "·"),
+            symbol: formattedSymbol,
             dimension: self.dimension
         )
     }
