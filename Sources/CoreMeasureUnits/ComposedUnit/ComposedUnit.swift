@@ -16,7 +16,8 @@ import NumericsExtended
 /// Unit-level arithmetic requires zero constants, except for powers zero and one. Convert measures with nonzero
 /// constants to coherent units before combining them. Arithmetic traps if its result has a nonfinite or nonpositive
 /// coefficient, or an exponent overflows.
-/// Symbols describe the operations performed and are not simplified.
+/// Symbols describe the operations performed and are not simplified. Equality and hashing use the dimension,
+/// coefficient, and constant, excluding the symbol.
 ///
 /// For example:
 ///
@@ -239,11 +240,26 @@ extension ComposedUnit: Encodable {
 
 // MARK: - Equatable
 
-extension ComposedUnit: Equatable {}
+extension ComposedUnit: Equatable {
+    public static func == (
+        _ lhs: Self,
+        _ rhs: Self
+    ) -> Bool {
+        return lhs.coefficient == rhs.coefficient
+            && lhs.constant == rhs.constant
+            && lhs.dimension == rhs.dimension
+    }
+}
 
 // MARK: - Hashable
 
-extension ComposedUnit: Hashable {}
+extension ComposedUnit: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.coefficient)
+        hasher.combine(self.constant)
+        hasher.combine(self.dimension)
+    }
+}
 
 // MARK: - Sendable
 
