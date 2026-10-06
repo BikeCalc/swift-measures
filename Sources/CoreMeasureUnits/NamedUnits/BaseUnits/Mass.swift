@@ -228,7 +228,7 @@ extension Mass {
     /// - Returns: A unit of force.
     public func multiplying(by acceleration: Acceleration) -> Force {
         let coefficient: Double = self.coefficient * acceleration.coefficient
-        let symbol: String = self.symbol + "⋅" + acceleration.symbol
+        let symbol: String = self.symbol + "·" + acceleration.symbol
 
         return .init(
             coefficient: coefficient,

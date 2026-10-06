@@ -192,7 +192,7 @@ extension Length {
     /// - Returns: A unit of area.
     public func multiplying(by length: Length) -> Area {
         let coefficient: Double = self.coefficient * length.coefficient
-        let symbol: String = self.symbol + "⋅" + length.symbol
+        let symbol: String = self.symbol + "·" + length.symbol
 
         return .init(
             coefficient: coefficient,

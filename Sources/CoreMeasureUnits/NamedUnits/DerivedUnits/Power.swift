@@ -73,7 +73,7 @@ extension Power {
     /// - Returns: A unit of energy.
     public func multiplying(by time: Time) -> Energy {
         let coefficient: Double = self.coefficient * time.coefficient
-        let symbol: String = self.symbol + "⋅" + time.symbol
+        let symbol: String = self.symbol + "·" + time.symbol
 
         return .init(
             coefficient: coefficient,

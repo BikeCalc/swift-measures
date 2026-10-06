@@ -79,7 +79,7 @@ extension ElectricCurrent {
     /// - Returns: A unit of electric charge.
     public func multiplying(by time: Time) -> ElectricCharge {
         let coefficient: Double = self.coefficient * time.coefficient
-        let symbol: String = self.symbol + "⋅" + time.symbol
+        let symbol: String = self.symbol + "·" + time.symbol
 
         return .init(
             coefficient: coefficient,
@@ -93,7 +93,7 @@ extension ElectricCurrent {
     /// - Returns: A unit of power.
     public func multiplying(by electricPotential: ElectricPotential) -> Power {
         let coefficient: Double = self.coefficient * electricPotential.coefficient
-        let symbol: String = self.symbol + "⋅" + electricPotential.symbol
+        let symbol: String = self.symbol + "·" + electricPotential.symbol
 
         return .init(
             coefficient: coefficient,

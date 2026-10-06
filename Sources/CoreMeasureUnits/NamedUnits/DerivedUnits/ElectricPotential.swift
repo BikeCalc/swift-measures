@@ -79,7 +79,7 @@ extension ElectricPotential {
     /// - Returns: A unit of energy.
     public func multiplying(by electricCharge: ElectricCharge) -> Energy {
         let coefficient: Double = self.coefficient * electricCharge.coefficient
-        let symbol: String = self.symbol + "⋅" + electricCharge.symbol
+        let symbol: String = self.symbol + "·" + electricCharge.symbol
 
         return .init(
             coefficient: coefficient,
@@ -93,7 +93,7 @@ extension ElectricPotential {
     /// - Returns: A unit of magnetic flux.
     public func multiplying(by time: Time) -> MagneticFlux {
         let coefficient: Double = self.coefficient * time.coefficient
-        let symbol: String = self.symbol + "⋅" + time.symbol
+        let symbol: String = self.symbol + "·" + time.symbol
 
         return .init(
             coefficient: coefficient,

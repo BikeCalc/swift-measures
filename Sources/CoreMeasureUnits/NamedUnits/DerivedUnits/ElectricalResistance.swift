@@ -61,7 +61,7 @@ extension ElectricalResistance {
     /// - Returns: A unit of electrical inductance.
     public func multiplying(by time: Time) -> ElectricalInductance {
         let coefficient: Double = self.coefficient * time.coefficient
-        let symbol: String = self.symbol + "⋅" + time.symbol
+        let symbol: String = self.symbol + "·" + time.symbol
 
         return .init(
             coefficient: coefficient,
