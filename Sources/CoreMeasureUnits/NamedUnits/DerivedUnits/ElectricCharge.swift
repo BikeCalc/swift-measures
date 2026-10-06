@@ -46,7 +46,7 @@ public struct ElectricCharge {
     ) {
         self.init(
             coefficient: electricCurrent.coefficient * time.coefficient,
-            symbol: electricCurrent.symbol + "⋅" + time.symbol
+            symbol: electricCurrent.symbol + "·" + time.symbol
         )
     }
 

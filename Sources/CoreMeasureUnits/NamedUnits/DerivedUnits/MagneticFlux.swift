@@ -48,7 +48,7 @@ public struct MagneticFlux {
     ) {
         self.init(
             coefficient: electricPotential.coefficient * time.coefficient,
-            symbol: electricPotential.symbol + "⋅" + time.symbol
+            symbol: electricPotential.symbol + "·" + time.symbol
         )
     }
 

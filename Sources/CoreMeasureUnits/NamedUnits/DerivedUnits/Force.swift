@@ -47,7 +47,7 @@ public struct Force {
     ) {
         self.init(
             coefficient: mass.coefficient * acceleration.coefficient,
-            symbol: mass.symbol + "⋅" + acceleration.symbol
+            symbol: mass.symbol + "·" + acceleration.symbol
         )
     }
 

@@ -17,9 +17,9 @@ internal struct ElectricPotentialTests {
     @Test(
         "Multiplying by Time returns MagneticFlux",
         arguments: [
-            (.millivolt, .millisecond, .init(coefficient: 1e-6, symbol: "mV⋅ms")),
-            (.volt, .second, .init(coefficient: 1, symbol: "V⋅s")),
-            (.kilovolt, .kilosecond, .init(coefficient: 1e+6, symbol: "kV⋅ks"))
+            (.millivolt, .millisecond, .init(coefficient: 1e-6, symbol: "mV·ms")),
+            (.volt, .second, .init(coefficient: 1, symbol: "V·s")),
+            (.kilovolt, .kilosecond, .init(coefficient: 1e+6, symbol: "kV·ks"))
         ] as Array<(ElectricPotential, Time, MagneticFlux)>
     )
     internal func multiplyingByTimeReturnsMagneticFlux(

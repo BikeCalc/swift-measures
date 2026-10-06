@@ -47,7 +47,7 @@ public struct Energy {
     ) {
         self.init(
             coefficient: force.coefficient * length.coefficient,
-            symbol: force.symbol + "⋅" + length.symbol
+            symbol: force.symbol + "·" + length.symbol
         )
     }
 
@@ -64,7 +64,7 @@ public struct Energy {
     ) {
         self.init(
             coefficient: power.coefficient * time.coefficient,
-            symbol: power.symbol + "⋅" + time.symbol
+            symbol: power.symbol + "·" + time.symbol
         )
     }
 
