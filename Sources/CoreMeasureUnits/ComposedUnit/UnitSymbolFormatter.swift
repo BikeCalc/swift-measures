@@ -6,47 +6,45 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-import CoreMeasureTypes
-
-/// Simplifies and formats ordered unit-symbol factors without parsing expressions.
+/// Formats ordered unit-symbol factors without simplifying or parsing expressions.
 ///
 /// Signed superscript exponents preserve factor order, with multiplication dots separating factors.
-/// The dimension initializer supplies coherent SI base-unit symbols; the factor initializer preserves supplied labels.
+/// Supplied unit labels are preserved.
 ///
 /// For example:
 ///
 /// ```swift
-/// let dimension = Dimension(length: 1, time: -2)
-/// let builder = UnitSymbolFormatter(dimension: dimension)
+/// let formatter = UnitSymbolFormatter(factors: [
+///     .init(unit: .init(Length.meter)),
+///     .init(unit: .init(Time.second), exponent: -2)
+/// ])
 ///
-/// print(builder.format())
+/// print(formatter.format())
 /// // Prints "m·s⁻²"
 /// ```
 internal struct UnitSymbolFormatter {
-    /// Options controlling how factors are prepared for formatting.
-    internal struct Configuration {
-        /// Whether matching factors are combined and cancelling factors are removed before rendering.
-        internal var simplifies: Bool
-
-        /// Creates a formatting configuration.
-        ///
-        /// - Parameter simplifies: Whether to simplify factors. Defaults to `true`.
-        internal init(simplifies: Bool = true) {
-            self.simplifies = simplifies
-        }
-    }
-
     /// Operators used in unit-symbol expressions.
     private enum OperatorToken: String, RawRepresentable {
         /// The multiplication operator, written as a centered dot.
         case multiplication = "·"
 
+        /// The division operator appearing in defined unit labels.
+        case division = "/"
+
+        /// The ordinary power operator appearing in custom unit labels.
+        case power = "^"
+
+        /// The negation operator, written in superscript form.
+        case superscriptNegation = "⁻"
     }
 
-    /// Signs used in superscript exponents.
-    private enum SuperscriptSignToken: String, RawRepresentable {
-        /// The negative sign, written in superscript form.
-        case negative = "⁻"
+    /// Delimiters grouping a compound unit label.
+    private enum PunctuationToken: String, RawRepresentable {
+        /// The beginning of a grouped label.
+        case openingParenthesis = "("
+
+        /// The end of a grouped label.
+        case closingParenthesis = ")"
     }
 
     /// Decimal digits written in superscript form.
@@ -115,78 +113,90 @@ internal struct UnitSymbolFormatter {
 
         fileprivate var description: String {
             var remainingValue: UInt = self.value.magnitude
-            var digits: Array<SuperscriptToken> = []
+            var superscripts: Array<SuperscriptToken> = []
 
             repeat {
-                digits.append(SuperscriptToken(digit: remainingValue % 10))
+                let superscript: SuperscriptToken = .init(digit: remainingValue % 10)
+                superscripts.append(superscript)
                 remainingValue /= 10
             } while remainingValue != 0
 
-            let sign: String = self.value < 0 ? SuperscriptSignToken.negative.rawValue : ""
+            let sign: String = self.value < 0 ? OperatorToken.superscriptNegation.rawValue : ""
 
-            return sign + digits
+            let digits: Array<SuperscriptToken.RawValue> = superscripts
                 .reversed()
                 .map { $0.rawValue }
-                .joined()
+
+            return sign + digits.joined()
         }
     }
 
-    /// The supplied labels and signed exponents in their original order.
-    private let factors: Array<UnitSymbolFactor>
-
-    /// The options used when formatting the stored factors.
-    private let configuration: Configuration
+    /// The captured units and signed exponents in their original order.
+    private let factors: Array<ComposedUnit.Factor>
 
     /// Creates a formatter for ordered factors.
     ///
-    /// - Parameters:
-    ///   - factors: Labels and signed exponents, retained until formatting.
-    ///   - configuration: Options controlling simplification before rendering.
-    internal init(
-        factors: Array<UnitSymbolFactor>,
-        configuration: Configuration = .init()
-    ) {
+    /// - Parameter factors: Captured units and signed exponents, retained until formatting.
+    internal init(factors: Array<ComposedUnit.Factor>) {
         self.factors = factors
-        self.configuration = configuration
-    }
-
-    /// Creates a formatter for a coherent SI symbol.
-    ///
-    /// - Parameters:
-    ///   - dimension: The physical dimension, independent of any unit's coefficient or constant.
-    ///   - configuration: Options controlling simplification before rendering.
-    internal init(
-        dimension: Dimension,
-        configuration: Configuration = .init()
-    ) {
-        self.configuration = configuration
-        self.factors = [
-            (Length.meter.symbol, dimension.length),
-            (Mass.kilogram.symbol, dimension.mass),
-            (Time.second.symbol, dimension.time),
-            (ElectricCurrent.ampere.symbol, dimension.electricCurrent),
-            (ThermodynamicTemperature.kelvin.symbol, dimension.thermodynamicTemperature),
-            (SubstanceAmount.mole.symbol, dimension.substanceAmount),
-            (LuminousIntensity.candela.symbol, dimension.luminousIntensity)
-        ]
     }
 
     /// Formats the stored factors using signed superscript powers and multiplication dots.
     ///
-    /// Matching factors are simplified when configured; otherwise duplicates and opposing exponents remain.
-    /// Zero exponents are always omitted and positive one is implicit. Labels are expected to be normalized atomic
-    /// symbols; this formatter does not validate, normalize, or add parentheses around individual labels.
+    /// Factor order, duplicates, and opposing exponents are preserved.
+    /// Zero exponents are always omitted and positive one is implicit. Compound labels are grouped when needed; no
+    /// symbol is parsed.
     ///
-    /// - Returns: The formatted unit expression, or `1` when no nonzero factors remain.
+    /// - Returns: The formatted unit expression, or an empty string when no nonzero factors remain.
+    /// - Precondition: Every factor's symbol must pass `UnitSymbolValidator` validation.
     internal func format() -> String {
-        /// Returns a unit label, omitting zero exponents and leaving positive one implicit.
+        /// Checks whether appending an exponent requires parentheses around the complete label.
+        ///
+        /// Atomic labels need none. One balanced pair already enclosing the complete label is reused. Operators
+        /// and existing powers require grouping so the appended exponent applies to the whole defined unit.
+        ///
+        /// - Parameter symbol: A display label with balanced parentheses; this check does not validate or simplify it.
+        /// - Returns: Whether an additional pair of parentheses is needed before appending an exponent.
+        func needsGrouping(symbol: String) -> Bool {
+            var depth: Int = 0
+            var enclosesWholeLabel: Bool = symbol.first
+                .map { PunctuationToken(rawValue: String($0)) } == .openingParenthesis
+
+            var containsSyntax: Bool = false
+
+            for (index, element) in zip(symbol.indices, symbol) {
+                let rawValue: String = .init(element)
+                let punctuation: PunctuationToken? = .init(rawValue: rawValue)
+
+                switch punctuation {
+                case .openingParenthesis:
+                    depth += 1
+                case .closingParenthesis:
+                    depth -= 1
+                    if depth == 0 && index != symbol.lastIndex {
+                        enclosesWholeLabel = false
+                    }
+                case nil:
+                    break
+                }
+
+                containsSyntax = containsSyntax
+                    || punctuation != nil
+                    || OperatorToken(rawValue: rawValue) != nil
+                    || SuperscriptToken(rawValue: rawValue) != nil
+            }
+
+            return containsSyntax && enclosesWholeLabel == false
+        }
+
+        /// Formats a factor, grouping its symbol when needed and appending its signed exponent.
         ///
         /// - Parameters:
         ///   - symbol: The factor label.
         ///   - exponent: The signed exponent, including `Int.min`.
-        /// - Returns: `nil` for zero, the symbol for one, or the symbol followed by a signed superscript.
-        func label(
-            _ symbol: String,
+        /// - Returns: `nil` for zero, the symbol for one, or the grouped symbol followed by a signed superscript.
+        func formatFactor(
+            symbol: String,
             exponent: Int
         ) -> String? {
             guard exponent != 0 else {
@@ -197,17 +207,35 @@ internal struct UnitSymbolFormatter {
                 return symbol
             }
 
-            return symbol + Superscript(exponent).description
+            let groupedSymbol: String =
+                if needsGrouping(symbol: symbol) {
+                    PunctuationToken.openingParenthesis.rawValue
+                        + symbol
+                        + PunctuationToken.closingParenthesis.rawValue
+                } else {
+                    symbol
+                }
+
+            let superscript: Superscript = .init(exponent)
+
+            return groupedSymbol + superscript.description
         }
 
-        let factors: Array<UnitSymbolFactor> = self.configuration.simplifies ? self.factors.simplified() : self.factors
-        let labels: Array<String> = factors.compactMap { factor in
-            return label(
-                factor.symbol,
+        for factor in self.factors {
+            let validator: UnitSymbolValidator = .init(symbol: factor.unit.symbol)
+            precondition(
+                validator.validate(),
+                "Each factor must have a valid unit symbol."
+            )
+        }
+
+        let formattedFactors: Array<String> = self.factors.compactMap { factor in
+            return formatFactor(
+                symbol: factor.unit.symbol,
                 exponent: factor.exponent
             )
         }
 
-        return labels.isEmpty ? "1" : labels.joined(separator: OperatorToken.multiplication.rawValue)
+        return formattedFactors.joined(separator: OperatorToken.multiplication.rawValue)
     }
 }
