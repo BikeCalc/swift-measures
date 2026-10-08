@@ -175,6 +175,16 @@ extension Energy: Codable {}
 
 extension Energy: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension Energy: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension Energy: DefinedUnit {
+    public static let base: Self = .joule
+}
+
 // MARK: - Equatable
 
 extension Energy: Equatable {}
@@ -182,12 +192,6 @@ extension Energy: Equatable {}
 // MARK: - Hashable
 
 extension Energy: Hashable {}
-
-// MARK: - NamedUnit
-
-extension Energy: NamedUnit {
-    public static let base: Self = .joule
-}
 
 // MARK: - Sendable
 

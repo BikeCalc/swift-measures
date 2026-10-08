@@ -62,11 +62,11 @@ public struct ComposedUnit {
         self.dimension = dimension
     }
 
-    /// Creates a composed unit preserving a named unit's conversion, symbol, and dimension.
+    /// Creates a composed unit preserving a defined unit's conversion, symbol, and dimension.
     ///
-    /// - Parameter unit: The named unit to represent as a composed unit.
+    /// - Parameter unit: The defined unit to represent as a composed unit.
     public init<UnitType>(_ unit: UnitType)
-    where UnitType: NamedUnit {
+    where UnitType: DefinedUnit & ComposableUnit {
         self.init(
             coefficient: unit.coefficient,
             constant: unit.constant,

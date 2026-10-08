@@ -71,6 +71,16 @@ extension MolarMass: Codable {}
 
 extension MolarMass: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension MolarMass: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension MolarMass: DefinedUnit {
+    public static let base: Self = .kilogramsPerMole
+}
+
 // MARK: - Equatable
 
 extension MolarMass: Equatable {}
@@ -78,12 +88,6 @@ extension MolarMass: Equatable {}
 // MARK: - Hashable
 
 extension MolarMass: Hashable {}
-
-// MARK: - NamedUnit
-
-extension MolarMass: NamedUnit {
-    public static let base: Self = .kilogramsPerMole
-}
 
 // MARK: - Sendable
 

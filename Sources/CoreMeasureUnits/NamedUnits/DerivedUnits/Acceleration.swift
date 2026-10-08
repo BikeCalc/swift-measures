@@ -102,6 +102,16 @@ extension Acceleration: Codable {}
 
 extension Acceleration: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension Acceleration: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension Acceleration: DefinedUnit {
+    public static let base: Self = .meterPerSquareSecond
+}
+
 // MARK: - Equatable
 
 extension Acceleration: Equatable {}
@@ -109,12 +119,6 @@ extension Acceleration: Equatable {}
 // MARK: - Hashable
 
 extension Acceleration: Hashable {}
-
-// MARK: - NamedUnit
-
-extension Acceleration: NamedUnit {
-    public static let base: Self = .meterPerSquareSecond
-}
 
 // MARK: - Sendable
 

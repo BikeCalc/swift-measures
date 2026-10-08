@@ -6,8 +6,11 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-/// A named unit with a fixed SI dimension.
-public protocol NamedUnit: ComposableUnit {
+/// A unit with an explicit conversion definition and a shared base unit.
+///
+/// Conformance does not require an SI dimension. Units that support dimensional composition also conform to
+/// `ComposableUnit`.
+public protocol DefinedUnit: Unit {
     /// Creates a new instance with the specified coefficient, constant and symbol.
     ///
     /// - Parameters:
@@ -20,11 +23,11 @@ public protocol NamedUnit: ComposableUnit {
         symbol: String
     )
 
-    /// The base unit through which values of this dimension are converted.
+    /// The shared reference unit through which values of this unit type are converted.
     static var base: Self { get }
 }
 
-extension NamedUnit
+extension DefinedUnit
 where Self: Decodable {
     public init(from decoder: Decoder) throws {
         let container: KeyedDecodingContainer<UnitCodingKeys> = try decoder.container(
@@ -43,7 +46,7 @@ where Self: Decodable {
     }
 }
 
-extension NamedUnit
+extension DefinedUnit
 where Self: Encodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: UnitCodingKeys.self)
@@ -54,7 +57,7 @@ where Self: Encodable {
     }
 }
 
-extension NamedUnit
+extension DefinedUnit
 where Self: Equatable {
     /// A boolean value indicating whether this instance is the base.
     @available(*, deprecated)
@@ -72,7 +75,7 @@ where Self: Equatable {
     }
 }
 
-extension NamedUnit
+extension DefinedUnit
 where Self: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(self.coefficient.hashValue)

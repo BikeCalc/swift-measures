@@ -114,6 +114,16 @@ extension Pressure: Codable {}
 
 extension Pressure: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension Pressure: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension Pressure: DefinedUnit {
+    public static let base: Self = .pascal
+}
+
 // MARK: - Equatable
 
 extension Pressure: Equatable {}
@@ -121,12 +131,6 @@ extension Pressure: Equatable {}
 // MARK: - Hashable
 
 extension Pressure: Hashable {}
-
-// MARK: - NamedUnit
-
-extension Pressure: NamedUnit {
-    public static let base: Self = .pascal
-}
 
 // MARK: - Sendable
 

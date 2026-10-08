@@ -93,6 +93,16 @@ extension ElectricPotential: Codable {}
 
 extension ElectricPotential: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension ElectricPotential: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension ElectricPotential: DefinedUnit {
+    public static let base: Self = .volt
+}
+
 // MARK: - Equatable
 
 extension ElectricPotential: Equatable {}
@@ -100,12 +110,6 @@ extension ElectricPotential: Equatable {}
 // MARK: - Hashable
 
 extension ElectricPotential: Hashable {}
-
-// MARK: - NamedUnit
-
-extension ElectricPotential: NamedUnit {
-    public static let base: Self = .volt
-}
 
 // MARK: - Sendable
 

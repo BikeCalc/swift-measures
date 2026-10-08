@@ -67,6 +67,16 @@ extension CatalyticActivity: Codable {}
 
 extension CatalyticActivity: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension CatalyticActivity: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension CatalyticActivity: DefinedUnit {
+    public static let base: Self = .katal
+}
+
 // MARK: - Equatable
 
 extension CatalyticActivity: Equatable {}
@@ -74,12 +84,6 @@ extension CatalyticActivity: Equatable {}
 // MARK: - Hashable
 
 extension CatalyticActivity: Hashable {}
-
-// MARK: - NamedUnit
-
-extension CatalyticActivity: NamedUnit {
-    public static let base: Self = .katal
-}
 
 // MARK: - Sendable
 

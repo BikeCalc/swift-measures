@@ -229,6 +229,16 @@ extension Mass: Codable {}
 
 extension Mass: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension Mass: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension Mass: DefinedUnit {
+    public static let base: Self = .kilogram
+}
+
 // MARK: - Equatable
 
 extension Mass: Equatable {}
@@ -236,12 +246,6 @@ extension Mass: Equatable {}
 // MARK: - Hashable
 
 extension Mass: Hashable {}
-
-// MARK: - NamedUnit
-
-extension Mass: NamedUnit {
-    public static let base: Self = .kilogram
-}
 
 // MARK: - Sendable
 

@@ -42,6 +42,16 @@ extension EquivalentDose: Codable {}
 
 extension EquivalentDose: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension EquivalentDose: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension EquivalentDose: DefinedUnit {
+    public static let base: Self = .sievert
+}
+
 // MARK: - Equatable
 
 extension EquivalentDose: Equatable {}
@@ -49,12 +59,6 @@ extension EquivalentDose: Equatable {}
 // MARK: - Hashable
 
 extension EquivalentDose: Hashable {}
-
-// MARK: - NamedUnit
-
-extension EquivalentDose: NamedUnit {
-    public static let base: Self = .sievert
-}
 
 // MARK: - Sendable
 

@@ -61,6 +61,16 @@ extension ElectricalCapacitance: Codable {}
 
 extension ElectricalCapacitance: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension ElectricalCapacitance: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension ElectricalCapacitance: DefinedUnit {
+    public static let base: Self = .farad
+}
+
 // MARK: - Equatable
 
 extension ElectricalCapacitance: Equatable {}
@@ -68,12 +78,6 @@ extension ElectricalCapacitance: Equatable {}
 // MARK: - Hashable
 
 extension ElectricalCapacitance: Hashable {}
-
-// MARK: - NamedUnit
-
-extension ElectricalCapacitance: NamedUnit {
-    public static let base: Self = .farad
-}
 
 // MARK: - Sendable
 

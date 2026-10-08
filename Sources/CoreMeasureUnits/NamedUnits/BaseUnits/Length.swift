@@ -189,6 +189,16 @@ extension Length: Codable {}
 
 extension Length: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension Length: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension Length: DefinedUnit {
+    public static let base: Self = .meter
+}
+
 // MARK: - Equatable
 
 extension Length: Equatable {}
@@ -196,12 +206,6 @@ extension Length: Equatable {}
 // MARK: - Hashable
 
 extension Length: Hashable {}
-
-// MARK: - NamedUnit
-
-extension Length: NamedUnit {
-    public static let base: Self = .meter
-}
 
 // MARK: - Sendable
 

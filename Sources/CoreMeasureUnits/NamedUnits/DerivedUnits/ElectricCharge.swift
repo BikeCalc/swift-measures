@@ -111,6 +111,16 @@ extension ElectricCharge: Codable {}
 
 extension ElectricCharge: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension ElectricCharge: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension ElectricCharge: DefinedUnit {
+    public static let base: Self = .coulomb
+}
+
 // MARK: - Equatable
 
 extension ElectricCharge: Equatable {}
@@ -118,12 +128,6 @@ extension ElectricCharge: Equatable {}
 // MARK: - Hashable
 
 extension ElectricCharge: Hashable {}
-
-// MARK: - NamedUnit
-
-extension ElectricCharge: NamedUnit {
-    public static let base: Self = .coulomb
-}
 
 // MARK: - Sendable
 
