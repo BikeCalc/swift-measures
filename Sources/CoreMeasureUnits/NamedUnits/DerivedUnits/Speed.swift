@@ -64,6 +64,16 @@ extension Speed: Codable {}
 
 extension Speed: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension Speed: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension Speed: DefinedUnit {
+    public static let base: Self = .metersPerSecond
+}
+
 // MARK: - Divisible
 
 extension Speed {
@@ -89,12 +99,6 @@ extension Speed: Equatable {}
 // MARK: - Hashable
 
 extension Speed: Hashable {}
-
-// MARK: - NamedUnit
-
-extension Speed: NamedUnit {
-    public static let base: Self = .metersPerSecond
-}
 
 // MARK: - Sendable
 

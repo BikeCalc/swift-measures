@@ -256,6 +256,16 @@ extension Volume: Codable {}
 
 extension Volume: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension Volume: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension Volume: DefinedUnit {
+    public static let base: Self = .cubicMeter
+}
+
 // MARK: - Equatable
 
 extension Volume: Equatable {}
@@ -263,12 +273,6 @@ extension Volume: Equatable {}
 // MARK: - Hashable
 
 extension Volume: Hashable {}
-
-// MARK: - NamedUnit
-
-extension Volume: NamedUnit {
-    public static let base: Self = .cubicMeter
-}
 
 // MARK: - Sendable
 

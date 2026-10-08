@@ -59,6 +59,16 @@ extension ThermodynamicTemperature: Codable {}
 
 extension ThermodynamicTemperature: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension ThermodynamicTemperature: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension ThermodynamicTemperature: DefinedUnit {
+    public static let base: Self = .kelvin
+}
+
 // MARK: - Equatable
 
 extension ThermodynamicTemperature: Equatable {}
@@ -66,12 +76,6 @@ extension ThermodynamicTemperature: Equatable {}
 // MARK: - Hashable
 
 extension ThermodynamicTemperature: Hashable {}
-
-// MARK: - NamedUnit
-
-extension ThermodynamicTemperature: NamedUnit {
-    public static let base: Self = .kelvin
-}
 
 // MARK: - Sendable
 

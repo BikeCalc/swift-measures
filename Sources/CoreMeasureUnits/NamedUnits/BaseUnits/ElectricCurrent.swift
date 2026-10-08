@@ -44,6 +44,16 @@ extension ElectricCurrent: Codable {}
 
 extension ElectricCurrent: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension ElectricCurrent: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension ElectricCurrent: DefinedUnit {
+    public static let base: Self = .ampere
+}
+
 // MARK: - Divisible
 
 extension ElectricCurrent {
@@ -100,12 +110,6 @@ extension ElectricCurrent {
             symbol: symbol
         )
     }
-}
-
-// MARK: - NamedUnit
-
-extension ElectricCurrent: NamedUnit {
-    public static let base: Self = .ampere
 }
 
 // MARK: - Sendable

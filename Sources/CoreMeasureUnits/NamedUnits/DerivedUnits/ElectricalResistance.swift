@@ -44,6 +44,16 @@ extension ElectricalResistance: Codable {}
 
 extension ElectricalResistance: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension ElectricalResistance: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension ElectricalResistance: DefinedUnit {
+    public static let base: Self = .ohm
+}
+
 // MARK: - Equatable
 
 extension ElectricalResistance: Equatable {}
@@ -68,12 +78,6 @@ extension ElectricalResistance {
             symbol: symbol
         )
     }
-}
-
-// MARK: - NamedUnit
-
-extension ElectricalResistance: NamedUnit {
-    public static let base: Self = .ohm
 }
 
 // MARK: - Sendable

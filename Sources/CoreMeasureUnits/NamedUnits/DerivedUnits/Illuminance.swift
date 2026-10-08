@@ -47,6 +47,16 @@ extension Illuminance: Codable {}
 
 extension Illuminance: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension Illuminance: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension Illuminance: DefinedUnit {
+    public static let base: Self = .lux
+}
+
 // MARK: - Equatable
 
 extension Illuminance: Equatable {}
@@ -54,12 +64,6 @@ extension Illuminance: Equatable {}
 // MARK: - Hashable
 
 extension Illuminance: Hashable {}
-
-// MARK: - NamedUnit
-
-extension Illuminance: NamedUnit {
-    public static let base: Self = .lux
-}
 
 // MARK: - Sendable
 

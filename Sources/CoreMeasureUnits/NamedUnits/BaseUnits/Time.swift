@@ -101,6 +101,16 @@ extension Time: Codable {}
 
 extension Time: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension Time: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension Time: DefinedUnit {
+    public static let base: Self = .second
+}
+
 // MARK: - Equatable
 
 extension Time: Equatable {}
@@ -108,12 +118,6 @@ extension Time: Equatable {}
 // MARK: - Hashable
 
 extension Time: Hashable {}
-
-// MARK: - NamedUnit
-
-extension Time: NamedUnit {
-    public static let base: Self = .second
-}
 
 // MARK: - Sendable
 

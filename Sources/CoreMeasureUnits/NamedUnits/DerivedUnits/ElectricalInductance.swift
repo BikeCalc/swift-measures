@@ -49,6 +49,16 @@ extension ElectricalInductance: Codable {}
 
 extension ElectricalInductance: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension ElectricalInductance: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension ElectricalInductance: DefinedUnit {
+    public static let base: Self = .henry
+}
+
 // MARK: - Equatable
 
 extension ElectricalInductance: Equatable {}
@@ -56,12 +66,6 @@ extension ElectricalInductance: Equatable {}
 // MARK: - Hashable
 
 extension ElectricalInductance: Hashable {}
-
-// MARK: - NamedUnit
-
-extension ElectricalInductance: NamedUnit {
-    public static let base: Self = .henry
-}
 
 // MARK: - Sendable
 

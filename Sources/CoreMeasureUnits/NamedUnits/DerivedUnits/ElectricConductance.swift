@@ -44,6 +44,16 @@ extension ElectricConductance: Codable {}
 
 extension ElectricConductance: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension ElectricConductance: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension ElectricConductance: DefinedUnit {
+    public static let base: Self = .siemens
+}
+
 // MARK: - Equatable
 
 extension ElectricConductance: Equatable {}
@@ -51,12 +61,6 @@ extension ElectricConductance: Equatable {}
 // MARK: - Hashable
 
 extension ElectricConductance: Hashable {}
-
-// MARK: - NamedUnit
-
-extension ElectricConductance: NamedUnit {
-    public static let base: Self = .siemens
-}
 
 // MARK: - Sendable
 

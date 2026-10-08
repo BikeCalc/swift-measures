@@ -56,6 +56,16 @@ extension Power: Codable {}
 
 extension Power: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension Power: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension Power: DefinedUnit {
+    public static let base: Self = .watt
+}
+
 // MARK: - Equatable
 
 extension Power: Equatable {}
@@ -80,12 +90,6 @@ extension Power {
             symbol: symbol
         )
     }
-}
-
-// MARK: - NamedUnit
-
-extension Power: NamedUnit {
-    public static let base: Self = .watt
 }
 
 // MARK: - Sendable

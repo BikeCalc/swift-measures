@@ -39,6 +39,16 @@ extension LuminousIntensity: Codable {}
 
 extension LuminousIntensity: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension LuminousIntensity: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension LuminousIntensity: DefinedUnit {
+    public static let base: Self = .candela
+}
+
 // MARK: - Equatable
 
 extension LuminousIntensity: Equatable {}
@@ -46,12 +56,6 @@ extension LuminousIntensity: Equatable {}
 // MARK: - Hashable
 
 extension LuminousIntensity: Hashable {}
-
-// MARK: - NamedUnit
-
-extension LuminousIntensity: NamedUnit {
-    public static let base: Self = .candela
-}
 
 // MARK: - Sendable
 

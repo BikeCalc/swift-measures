@@ -47,6 +47,16 @@ extension AbsorbedDose: Codable {}
 
 extension AbsorbedDose: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension AbsorbedDose: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension AbsorbedDose: DefinedUnit {
+    public static let base: Self = .gray
+}
+
 // MARK: - Equatable
 
 extension AbsorbedDose: Equatable {}
@@ -54,12 +64,6 @@ extension AbsorbedDose: Equatable {}
 // MARK: - Hashable
 
 extension AbsorbedDose: Hashable {}
-
-// MARK: - NamedUnit
-
-extension AbsorbedDose: NamedUnit {
-    public static let base: Self = .gray
-}
 
 // MARK: - Sendable
 

@@ -48,6 +48,16 @@ extension MagneticFluxDensity: Codable {}
 
 extension MagneticFluxDensity: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension MagneticFluxDensity: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension MagneticFluxDensity: DefinedUnit {
+    public static let base: Self = .tesla
+}
+
 // MARK: - Equatable
 
 extension MagneticFluxDensity: Equatable {}
@@ -55,12 +65,6 @@ extension MagneticFluxDensity: Equatable {}
 // MARK: - Hashable
 
 extension MagneticFluxDensity: Hashable {}
-
-// MARK: - NamedUnit
-
-extension MagneticFluxDensity: NamedUnit {
-    public static let base: Self = .tesla
-}
 
 // MARK: - Sendable
 

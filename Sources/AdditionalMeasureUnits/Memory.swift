@@ -34,30 +34,17 @@ public struct Memory {
 
 // MARK: - Codable
 
-extension Memory: Codable {
-    private typealias CodingKeys = UnitCodingKeys
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: Self.CodingKeys.self)
-        self.init(
-            coefficient: try container.decode(Double.self, forKey: .coefficient),
-            constant: try container.decodeIfPresent(Double.self, forKey: .constant) ?? 0,
-            symbol: try container.decode(String.self, forKey: .symbol)
-        )
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: Self.CodingKeys.self)
-
-        try container.encode(self.coefficient, forKey: .coefficient)
-        try container.encode(self.constant, forKey: .constant)
-        try container.encode(self.symbol, forKey: .symbol)
-    }
-}
+extension Memory: Codable {}
 
 // MARK: - Comparable
 
 extension Memory: Comparable {}
+
+// MARK: - DefinedUnit
+
+extension Memory: DefinedUnit {
+    public static let base: Self = .bit
+}
 
 // MARK: - Equatable
 
@@ -66,12 +53,6 @@ extension Memory: Equatable {}
 // MARK: - Hashable
 
 extension Memory: Hashable {}
-
-// MARK: - Unit
-
-extension Memory: Unit {
-    public static let base: Self = .bit
-}
 
 // MARK: - Sendable
 

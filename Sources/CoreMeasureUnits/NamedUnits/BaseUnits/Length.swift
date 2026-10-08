@@ -157,6 +157,16 @@ extension Length: Codable {}
 
 extension Length: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension Length: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension Length: DefinedUnit {
+    public static let base: Self = .meter
+}
+
 // MARK: - Divisible
 
 extension Length {
@@ -199,12 +209,6 @@ extension Length {
             symbol: symbol
         )
     }
-}
-
-// MARK: - NamedUnit
-
-extension Length: NamedUnit {
-    public static let base: Self = .meter
 }
 
 // MARK: - Raisable

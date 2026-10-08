@@ -39,6 +39,16 @@ extension Radioactivity: Codable {}
 
 extension Radioactivity: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension Radioactivity: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension Radioactivity: DefinedUnit {
+    public static let base: Self = .becquerel
+}
+
 // MARK: - Equatable
 
 extension Radioactivity: Equatable {}
@@ -46,12 +56,6 @@ extension Radioactivity: Equatable {}
 // MARK: - Hashable
 
 extension Radioactivity: Hashable {}
-
-// MARK: - NamedUnit
-
-extension Radioactivity: NamedUnit {
-    public static let base: Self = .becquerel
-}
 
 // MARK: - Sendable
 

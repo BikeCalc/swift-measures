@@ -66,6 +66,16 @@ extension Force: Codable {}
 
 extension Force: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension Force: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension Force: DefinedUnit {
+    public static let base: Self = .newton
+}
+
 // MARK: - Divisible
 
 extension Force {
@@ -108,12 +118,6 @@ extension Force {
             symbol: symbol
         )
     }
-}
-
-// MARK: - NamedUnit
-
-extension Force: NamedUnit {
-    public static let base: Self = .newton
 }
 
 // MARK: - Sendable

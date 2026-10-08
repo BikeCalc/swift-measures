@@ -41,30 +41,17 @@ public struct Cadence {
 
 // MARK: - Codable
 
-extension Cadence: Codable {
-    private typealias CodingKeys = UnitCodingKeys
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: Self.CodingKeys.self)
-        self.init(
-            coefficient: try container.decode(Double.self, forKey: .coefficient),
-            constant: try container.decodeIfPresent(Double.self, forKey: .constant) ?? 0,
-            symbol: try container.decode(String.self, forKey: .symbol)
-        )
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: Self.CodingKeys.self)
-
-        try container.encode(self.coefficient, forKey: .coefficient)
-        try container.encode(self.constant, forKey: .constant)
-        try container.encode(self.symbol, forKey: .symbol)
-    }
-}
+extension Cadence: Codable {}
 
 // MARK: - Comparable
 
 extension Cadence: Comparable {}
+
+// MARK: - DefinedUnit
+
+extension Cadence: DefinedUnit {
+    public static let base: Self = .revolutionsPerSecond
+}
 
 // MARK: - Divisible
 
@@ -91,12 +78,6 @@ extension Cadence: Equatable {}
 // MARK: - Hashable
 
 extension Cadence: Hashable {}
-
-// MARK: - Unit
-
-extension Cadence: Unit {
-    public static let base: Self = .revolutionsPerSecond
-}
 
 // MARK: - Sendable
 

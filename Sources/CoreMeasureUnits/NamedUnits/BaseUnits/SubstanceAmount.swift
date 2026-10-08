@@ -39,6 +39,16 @@ extension SubstanceAmount: Codable {}
 
 extension SubstanceAmount: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension SubstanceAmount: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension SubstanceAmount: DefinedUnit {
+    public static let base: Self = .mole
+}
+
 // MARK: - Divisible
 
 extension SubstanceAmount {
@@ -64,12 +74,6 @@ extension SubstanceAmount: Equatable {}
 // MARK: - Hashable
 
 extension SubstanceAmount: Hashable {}
-
-// MARK: - NamedUnit
-
-extension SubstanceAmount: NamedUnit {
-    public static let base: Self = .mole
-}
 
 // MARK: - Sendable
 

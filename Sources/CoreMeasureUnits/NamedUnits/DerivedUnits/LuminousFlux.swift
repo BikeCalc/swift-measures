@@ -39,6 +39,16 @@ extension LuminousFlux: Codable {}
 
 extension LuminousFlux: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension LuminousFlux: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension LuminousFlux: DefinedUnit {
+    public static let base: Self = .lumen
+}
+
 // MARK: - Divisible
 
 extension LuminousFlux {
@@ -64,12 +74,6 @@ extension LuminousFlux: Equatable {}
 // MARK: - Hashable
 
 extension LuminousFlux: Hashable {}
-
-// MARK: - NamedUnit
-
-extension LuminousFlux: NamedUnit {
-    public static let base: Self = .lumen
-}
 
 // MARK: - Sendable
 

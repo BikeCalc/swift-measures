@@ -114,6 +114,16 @@ extension Area: Codable {}
 
 extension Area: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension Area: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension Area: DefinedUnit {
+    public static let base: Self = .squareMeter
+}
+
 // MARK: - Equatable
 
 extension Area: Equatable {}
@@ -138,12 +148,6 @@ extension Area {
             symbol: symbol
         )
     }
-}
-
-// MARK: - NamedUnit
-
-extension Area: NamedUnit {
-    public static let base: Self = .squareMeter
 }
 
 // MARK: - Sendable

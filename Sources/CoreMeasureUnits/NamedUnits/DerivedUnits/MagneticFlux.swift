@@ -49,6 +49,16 @@ extension MagneticFlux: Codable {}
 
 extension MagneticFlux: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension MagneticFlux: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension MagneticFlux: DefinedUnit {
+    public static let base: Self = .weber
+}
+
 // MARK: - Divisible
 
 extension MagneticFlux {
@@ -88,12 +98,6 @@ extension MagneticFlux: Equatable {}
 // MARK: - Hashable
 
 extension MagneticFlux: Hashable {}
-
-// MARK: - NamedUnit
-
-extension MagneticFlux: NamedUnit {
-    public static let base: Self = .weber
-}
 
 // MARK: - Sendable
 

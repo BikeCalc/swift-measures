@@ -39,6 +39,16 @@ extension Frequency: Codable {}
 
 extension Frequency: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension Frequency: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension Frequency: DefinedUnit {
+    public static let base: Self = .hertz
+}
+
 // MARK: - Equatable
 
 extension Frequency: Equatable {}
@@ -46,16 +56,6 @@ extension Frequency: Equatable {}
 // MARK: - Hashable
 
 extension Frequency: Hashable {}
-
-// MARK: - NamedUnit
-
-extension Frequency: NamedUnit {
-    public static let base: Self = .hertz
-}
-
-// MARK: - Sendable
-
-extension Frequency: Sendable {}
 
 // MARK: - Measure
 
@@ -81,3 +81,7 @@ where UnitType == Frequency {
         )
     }
 }
+
+// MARK: - Sendable
+
+extension Frequency: Sendable {}

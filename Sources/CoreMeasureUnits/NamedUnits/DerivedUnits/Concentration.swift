@@ -51,6 +51,16 @@ extension Concentration: Codable {}
 
 extension Concentration: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension Concentration: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension Concentration: DefinedUnit {
+    public static let base: Self = .kilogramsPerCubicMeter
+}
+
 // MARK: - Equatable
 
 extension Concentration: Equatable {}
@@ -58,12 +68,6 @@ extension Concentration: Equatable {}
 // MARK: - Hashable
 
 extension Concentration: Hashable {}
-
-// MARK: - NamedUnit
-
-extension Concentration: NamedUnit {
-    public static let base: Self = .kilogramsPerCubicMeter
-}
 
 // MARK: - Sendable
 

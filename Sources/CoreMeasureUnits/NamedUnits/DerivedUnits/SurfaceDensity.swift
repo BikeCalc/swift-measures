@@ -51,6 +51,16 @@ extension SurfaceDensity: Codable {}
 
 extension SurfaceDensity: Comparable {}
 
+// MARK: - ComposableUnit
+
+extension SurfaceDensity: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension SurfaceDensity: DefinedUnit {
+    public static let base: Self = .kilogramsPerSquareMeter
+}
+
 // MARK: - Equatable
 
 extension SurfaceDensity: Equatable {}
@@ -58,12 +68,6 @@ extension SurfaceDensity: Equatable {}
 // MARK: - Hashable
 
 extension SurfaceDensity: Hashable {}
-
-// MARK: - NamedUnit
-
-extension SurfaceDensity: NamedUnit {
-    public static let base: Self = .kilogramsPerSquareMeter
-}
 
 // MARK: - Sendable
 
