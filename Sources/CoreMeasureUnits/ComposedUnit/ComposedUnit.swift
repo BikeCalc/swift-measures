@@ -53,7 +53,7 @@ public struct ComposedUnit {
             self.symbol = unit.symbol
         }
 
-        /// Whether the conversion values are finite and the coefficient is positive.
+        /// A boolean value indicating whether the conversion values are finite and the coefficient is positive.
         internal var hasValidConversion: Bool {
             return self.coefficient.isFinite
                 && self.coefficient > 0
@@ -62,7 +62,7 @@ public struct ComposedUnit {
     }
 
     /// A unit representation and its signed integer exponent.
-    internal struct Factor: Codable, Hashable, Sendable {
+    internal struct Factor: Codable, Comparable, Hashable, Sendable {
         /// The complete captured unit used to identify matching factors.
         internal let unit: AnyDefinedUnit
 
@@ -93,6 +93,40 @@ public struct ComposedUnit {
                 unit: self.unit,
                 exponent: -self.exponent
             )
+        }
+
+        /// Returns a boolean value indicating whether the value of the first argument is less than that of the second
+        /// argument.
+        ///
+        /// Factors are ordered by SI dimension, coefficient, constant, symbol, and exponent, with dimensionless units
+        /// last. This is the normalization order rather than a comparison of physical magnitudes.
+        ///
+        /// - Parameters:
+        ///   - lhs: A value to compare.
+        ///   - rhs: Another value to compare.
+        /// - Returns: `true` when the first value precedes the second, and `false` otherwise.
+        internal static func < (
+            _ lhs: Self,
+            _ rhs: Self
+        ) -> Bool {
+            let left: Array<Int> = lhs.unit.dimension.exponents
+            let right: Array<Int> = rhs.unit.dimension.exponents
+            let leftRank: Int = left.firstIndex(where: { $0 != 0 }) ?? left.count
+            let rightRank: Int = right.firstIndex(where: { $0 != 0 }) ?? right.count
+
+            if leftRank != rightRank {
+                return leftRank < rightRank
+            } else if left != right {
+                return left.lexicographicallyPrecedes(right)
+            } else if lhs.unit.coefficient != rhs.unit.coefficient {
+                return lhs.unit.coefficient < rhs.unit.coefficient
+            } else if lhs.unit.constant != rhs.unit.constant {
+                return lhs.unit.constant < rhs.unit.constant
+            } else if lhs.unit.symbol != rhs.unit.symbol {
+                return lhs.unit.symbol < rhs.unit.symbol
+            } else {
+                return lhs.exponent < rhs.exponent
+            }
         }
     }
 
@@ -235,7 +269,38 @@ public struct ComposedUnit {
 
             return .init(factors: factors)
         }
-        }
+    }
+}
+
+// MARK: - Canonicalizable
+
+extension ComposedUnit: Canonicalizable {
+    /// A boolean value indicating whether this unit can be converted to its canonicalized representation.
+    ///
+    /// Already canonical units are included. Normalization only reorders factors, so canonicalization is possible
+    /// whenever the factors can be simplified.
+    public var isCanonicalizable: Bool {
+        return self.isSimplifiable
+    }
+
+    /// A boolean value indicating whether factors are nonzero, unique by unit representation, and already in normalized
+    /// order.
+    ///
+    /// This checks stored structure rather than physical equality, which ignores factor order and duplication.
+    public var isCanonicalized: Bool {
+        return self.isSimplified && self.isNormalized
+    }
+
+    /// Simplifies matching factors and then orders their representations consistently.
+    ///
+    /// - Returns: The simplified and normalized unit, without conversion to coherent SI units.
+    /// - Precondition: `isCanonicalizable` is `true`.
+    public func canonicalized() -> Self {
+        precondition(
+            self.isCanonicalizable,
+            "The composed unit must be canonicalizable."
+        )
+        return self.simplified().normalized()
     }
 }
 
@@ -295,14 +360,11 @@ extension ComposedUnit: Decodable {
 
         guard validator.validate() else {
             throw DecodingError.dataCorruptedError(
-                forKey: .constant,
                 in: container,
-                debugDescription: "The constant must be finite."
                 debugDescription: "Factors require valid scales, offsets, and representable combined values."
             )
         }
 
-        self.init(
         self.factors = factors
     }
 }
@@ -310,15 +372,9 @@ extension ComposedUnit: Decodable {
 // MARK: - Encodable
 
 extension ComposedUnit: Encodable {
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: UnitCodingKeys.self)
-
-        try container.encode(self.coefficient, forKey: .coefficient)
-        try container.encode(self.constant, forKey: .constant)
-        try container.encode(self.symbol, forKey: .symbol)
-        try container.encode(self.dimension, forKey: .dimension)
     public func encode(to encoder: any Encoder) throws {
         var container = encoder.singleValueContainer()
+        try container.encode(self.factors)
     }
 }
 
@@ -329,11 +385,9 @@ extension ComposedUnit: Equatable {
         _ lhs: Self,
         _ rhs: Self
     ) -> Bool {
-        return lhs.coefficient == rhs.coefficient
         return lhs.dimension == rhs.dimension
             && lhs.coefficient == rhs.coefficient
             && lhs.constant == rhs.constant
-            && lhs.dimension == rhs.dimension
     }
 }
 
@@ -341,15 +395,129 @@ extension ComposedUnit: Equatable {
 
 extension ComposedUnit: Hashable {
     public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.dimension)
         hasher.combine(self.coefficient)
         hasher.combine(self.constant)
-        hasher.combine(self.dimension)
     }
 }
 
+// MARK: - Normalizable
+
+extension ComposedUnit: Normalizable {
+    /// A boolean value indicating whether the factors can be placed in normalized order.
+    ///
+    /// Always returns `true` because reordering preserves the validity of the factor definitions and constants.
+    internal var isNormalizable: Bool {
+        return true
+    }
+
+    /// A boolean value indicating whether the stored factors are already in normalized order, independently of
+    /// simplification.
+    internal var isNormalized: Bool {
+        for (previous, current) in zip(self.factors, self.factors.dropFirst())
+        where current < previous {
+            return false
+        }
+
+        return true
+    }
+
+    /// Returns the factors ordered by SI dimension, then by ascending coefficient within the same dimension.
+    ///
+    /// The first nonzero base dimension determines the group: length, mass, time, electric current, thermodynamic
+    /// temperature, substance amount, then luminous intensity. Dimensionless units come last. Different derived
+    /// dimensions within a group are ordered lexicographically by their exponent vectors. Equal dimensions and
+    /// coefficients are ordered by constant, symbol, then factor exponent. Duplicates and zero exponents are retained.
+    /// Reordering floating-point products may introduce rounding differences.
+    ///
+    /// - Returns: A consistently ordered unit without combining or cancelling factors.
+    /// - Precondition: `isNormalizable` is `true`.
+    public func normalized() -> Self {
+        precondition(
+            self.isNormalizable,
+            "The composed unit must be normalizable."
+        )
+
+        return Self(factors: self.factors.sorted())
     }
 }
 
 // MARK: - Sendable
 
 extension ComposedUnit: Sendable {}
+
+// MARK: - Simplifiable
+
+extension ComposedUnit: Simplifiable {
+    /// A boolean value indicating whether matching factor exponents can be summed without overflow.
+    ///
+    /// Attempts to build the simplified factors, returning `false` if an intermediate exponent sum overflows.
+    internal var isSimplifiable: Bool {
+        return self._simplified() != nil
+    }
+
+    /// A boolean value indicating whether every factor is nonzero and each unit representation occurs only once.
+    internal var isSimplified: Bool {
+        var units: Set<AnyDefinedUnit> = []
+
+        for factor in self.factors
+        where factor.exponent == 0 || units.insert(factor.unit).inserted == false {
+            return false
+        }
+
+        return true
+    }
+
+    /// Combines identical unit representations, removing zero totals while retaining first active appearance order.
+    ///
+    /// Matching includes dimension, coefficient, constant, and symbol. Distinct custom units sharing a symbol
+    /// remain separate. Exponent addition traps on overflow; floating-point scale calculations may round differently.
+    ///
+    /// - Returns: A composed unit with each surviving representation stored once.
+    /// - Precondition: `isSimplifiable` is `true`.
+    public func simplified() -> Self {
+        guard let factors: Array<Self.Factor> = self._simplified() else {
+            preconditionFailure("The composed unit must be simplifiable.")
+        }
+
+        return .init(factors: factors)
+    }
+
+    /// Combines matching factors while preserving first active appearance order.
+    ///
+    /// Zero-exponent factors and zero totals are omitted. Exponent sums follow stored order.
+    ///
+    /// - Returns: The simplified factors, or `nil` if an intermediate exponent sum overflows.
+    private func _simplified() -> Array<Self.Factor>? {
+        var exponents: Dictionary<ComposedUnit.AnyDefinedUnit, Int> = [:]
+
+        for factor in self.factors
+        where factor.exponent != 0 {
+            let sum = exponents[factor.unit, default: 0].addingReportingOverflow(factor.exponent)
+
+            guard sum.overflow == false else {
+                return nil
+            }
+
+            exponents[factor.unit] = sum.partialValue
+        }
+
+        var simplifiedFactors: Array<Factor> = []
+
+        for factor in self.factors
+        where factor.exponent != 0 {
+            guard let exponent = exponents.removeValue(forKey: factor.unit), exponent != 0 else {
+                continue
+            }
+
+            let simplifiedFactor: Self.Factor = .init(
+                unit: factor.unit,
+                exponent: exponent
+            )
+
+            simplifiedFactors.append(simplifiedFactor)
+        }
+
+        return simplifiedFactors
+    }
+}

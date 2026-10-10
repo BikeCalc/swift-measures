@@ -104,7 +104,23 @@ public struct Dimension {
         self.luminousIntensity = luminousIntensity
     }
 
-    /// Whether every SI base-quantity exponent is zero.
+    /// The exponents in SI base-quantity order.
+    ///
+    /// Ordered by length, mass, time, electric current, thermodynamic temperature, substance amount, and luminous
+    /// intensity.
+    package var exponents: Array<Int> {
+        return [
+            self.length,
+            self.mass,
+            self.time,
+            self.electricCurrent,
+            self.thermodynamicTemperature,
+            self.substanceAmount,
+            self.luminousIntensity
+        ]
+    }
+
+    /// A boolean value indicating whether every SI base-quantity exponent is zero.
     public var isDimensionless: Bool {
         return self.length == 0
             && self.mass == 0
