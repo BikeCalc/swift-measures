@@ -14,7 +14,7 @@
 /// For example:
 ///
 /// ```swift
-/// let formatter = UnitSymbolFormatter(factors: [
+/// let formatter = ComposedUnitSymbolFormatter(factors: [
 ///     .init(unit: .init(Length.meter)),
 ///     .init(unit: .init(Time.second), exponent: -2)
 /// ])
@@ -22,7 +22,7 @@
 /// print(formatter.format())
 /// // Prints "m·s⁻²"
 /// ```
-internal struct UnitSymbolFormatter {
+internal struct ComposedUnitSymbolFormatter {
     /// Operators used in unit-symbol expressions.
     private enum OperatorToken: String, RawRepresentable {
         /// The multiplication operator, written as a centered dot.
@@ -123,7 +123,8 @@ internal struct UnitSymbolFormatter {
 
             let sign: String = self.value < 0 ? OperatorToken.superscriptNegation.rawValue : ""
 
-            let digits: Array<SuperscriptToken.RawValue> = superscripts
+            let digits: Array<SuperscriptToken.RawValue> =
+                superscripts
                 .reversed()
                 .map { $0.rawValue }
 
@@ -148,7 +149,7 @@ internal struct UnitSymbolFormatter {
     /// symbol is parsed.
     ///
     /// - Returns: The formatted unit expression, or an empty string when no nonzero factors remain.
-    /// - Precondition: Every factor's symbol must pass `UnitSymbolValidator` validation.
+    /// - Precondition: Every factor's symbol must pass `ComposedUnitSymbolValidator` validation.
     internal func format() -> String {
         /// Checks whether appending an exponent requires parentheses around the complete label.
         ///
@@ -159,7 +160,8 @@ internal struct UnitSymbolFormatter {
         /// - Returns: Whether an additional pair of parentheses is needed before appending an exponent.
         func needsGrouping(symbol: String) -> Bool {
             var depth: Int = 0
-            var enclosesWholeLabel: Bool = symbol.first
+            var enclosesWholeLabel: Bool =
+                symbol.first
                 .map { PunctuationToken(rawValue: String($0)) } == .openingParenthesis
 
             var containsSyntax: Bool = false
@@ -180,7 +182,8 @@ internal struct UnitSymbolFormatter {
                     break
                 }
 
-                containsSyntax = containsSyntax
+                containsSyntax =
+                    containsSyntax
                     || punctuation != nil
                     || OperatorToken(rawValue: rawValue) != nil
                     || SuperscriptToken(rawValue: rawValue) != nil
@@ -222,7 +225,7 @@ internal struct UnitSymbolFormatter {
         }
 
         for factor in self.factors {
-            let validator: UnitSymbolValidator = .init(symbol: factor.unit.symbol)
+            let validator: ComposedUnitSymbolValidator = .init(symbol: factor.unit.symbol)
             precondition(
                 validator.validate(),
                 "Each factor must have a valid unit symbol."
