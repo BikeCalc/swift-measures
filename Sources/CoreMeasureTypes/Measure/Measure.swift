@@ -86,11 +86,12 @@ where UnitType: Unit {
 extension Measure: Addable
 where UnitType: Equatable {
     public typealias Addend = Self
+    public typealias Sum = Self
 
     public static func + (
         _ lhs: Self,
         _ rhs: Self.Addend
-    ) -> Self {
+    ) -> Self.Sum {
         let lhsValue: Double = lhs.value
         let rhsValue: Double = rhs.converted(to: lhs.unit).value
         let newValue: Double = lhsValue + rhsValue
@@ -308,7 +309,9 @@ where UnitType: Decodable {
 extension Measure: Divisible
 where UnitType: Equatable {
     public typealias Divisor = Double
+    public typealias Quotient = Self
     public typealias RemainderDivisor = Double
+    public typealias Remainder = Self
 
     @available(*, deprecated)
     public var reciprocal: Self? {
@@ -355,7 +358,7 @@ where UnitType: Equatable {
     public static func / (
         _ lhs: Self,
         _ rhs: Self.Divisor
-    ) -> Self {
+    ) -> Self.Quotient {
         let lhsValue: Double = lhs.value
         let newValue: Double = lhsValue / rhs
 
@@ -365,7 +368,7 @@ where UnitType: Equatable {
     public static func % (
         _ lhs: Self,
         _ rhs: Self.RemainderDivisor
-    ) -> Self {
+    ) -> Self.Remainder {
         let lhsValue: Double = lhs.value
         let newValue: Double = lhsValue.truncatingRemainder(dividingBy: rhs)
 
@@ -413,6 +416,7 @@ where UnitType: Hashable {
 extension Measure: Multipliable
 where UnitType: Equatable {
     public typealias Multiplier = Double
+    public typealias Product = Self
 
     public func isMultiple(of other: Self) -> Bool {
         guard self.unit.isCompatible(with: other.unit),
@@ -442,7 +446,7 @@ where UnitType: Equatable {
     public static func * (
         _ lhs: Self,
         _ rhs: Self.Multiplier
-    ) -> Self {
+    ) -> Self.Product {
         let lhsValue: Double = lhs.value
         let newValue: Double = lhsValue * rhs
 
@@ -460,11 +464,12 @@ where UnitType: Sendable {}
 extension Measure: Subtractable
 where UnitType: Equatable {
     public typealias Subtrahend = Self
+    public typealias Difference = Self
 
     public static func - (
         _ lhs: Self,
         _ rhs: Self.Subtrahend
-    ) -> Self {
+    ) -> Self.Difference {
         let lhsValue: Double = lhs.value
         let rhsValue: Double = rhs.converted(to: lhs.unit).value
         let newValue: Double = lhsValue - rhsValue
