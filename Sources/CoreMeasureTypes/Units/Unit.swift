@@ -29,7 +29,7 @@ public protocol Unit {
 
 extension Unit {
     public var validRange: ClosedRange<Double> {
-        return -.infinity ... .infinity
+        return .negativeInfinity ... .infinity
     }
 
     public func isCompatible(with other: Self) -> Bool {
