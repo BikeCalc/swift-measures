@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for force.
 @MetricUnits(name: "newton", symbol: "N")
@@ -107,6 +108,10 @@ public struct Force {
         symbol: "G"
     )
 }
+
+// MARK: - CanonicallyEquatable
+
+extension Force: CanonicallyEquatable {}
 
 // MARK: - Codable
 

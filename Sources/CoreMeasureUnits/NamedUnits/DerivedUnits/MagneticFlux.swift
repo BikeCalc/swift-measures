@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for magnetic flux.
 @MetricUnits(name: "weber", symbol: "Wb")
@@ -92,6 +93,10 @@ public struct MagneticFlux {
         time: .second
     )
 }
+
+// MARK: - CanonicallyEquatable
+
+extension MagneticFlux: CanonicallyEquatable {}
 
 // MARK: - Codable
 

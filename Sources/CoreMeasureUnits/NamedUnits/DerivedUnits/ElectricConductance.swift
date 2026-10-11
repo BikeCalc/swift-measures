@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for electric conductance.
 @MetricUnits(name: "siemens", symbol: "S")
@@ -52,6 +53,10 @@ public struct ElectricConductance {
         )
     }
 }
+
+// MARK: - CanonicallyEquatable
+
+extension ElectricConductance: CanonicallyEquatable {}
 
 // MARK: - Codable
 

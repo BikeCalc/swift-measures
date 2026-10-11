@@ -7,6 +7,7 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import CoreMeasureTypes
+import NumericsExtended
 
 /// A unit of measure for speed.
 public struct Speed {
@@ -106,6 +107,10 @@ public struct Speed {
         time: .hour
     )
 }
+
+// MARK: - CanonicallyEquatable
+
+extension Speed: CanonicallyEquatable {}
 
 // MARK: - Codable
 

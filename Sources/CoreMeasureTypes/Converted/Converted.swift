@@ -55,6 +55,14 @@ where UnitType: Unit {
     }
 }
 
+// MARK: - CanonicallyEquatable
+
+extension Converted: CanonicallyEquatable {
+    public func isCanonicallyEqual(to other: Self) -> Bool {
+        return self.wrappedValue.isCanonicallyEqual(to: other.wrappedValue)
+    }
+}
+
 // MARK: - Comparable
 
 extension Converted: Comparable

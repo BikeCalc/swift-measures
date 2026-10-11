@@ -7,6 +7,7 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import CoreMeasureTypes
+import NumericsExtended
 
 /// A unit of measure for surface density.
 public struct SurfaceDensity {
@@ -68,6 +69,10 @@ public struct SurfaceDensity {
         area: .squareMeter
     )
 }
+
+// MARK: - CanonicallyEquatable
+
+extension SurfaceDensity: CanonicallyEquatable {}
 
 // MARK: - Codable
 

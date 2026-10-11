@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for pressure.
 @MetricUnits(name: "pascal", symbol: "Pa")
@@ -105,6 +106,10 @@ public struct Pressure {
         symbol: "mTorr"
     )
 }
+
+// MARK: - CanonicallyEquatable
+
+extension Pressure: CanonicallyEquatable {}
 
 // MARK: - Codable
 

@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for length.
 @MetricUnits(name: "meter", symbol: "m")
@@ -180,6 +181,10 @@ public struct Length {
         symbol: "th"
     )
 }
+
+// MARK: - CanonicallyEquatable
+
+extension Length: CanonicallyEquatable {}
 
 // MARK: - Codable
 

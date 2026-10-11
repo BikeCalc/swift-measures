@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for illuminance.
 @MetricUnits(name: "lux", symbol: "lx")
@@ -58,6 +59,10 @@ public struct Illuminance {
         area: .squareMeter
     )
 }
+
+// MARK: - CanonicallyEquatable
+
+extension Illuminance: CanonicallyEquatable {}
 
 // MARK: - Codable
 

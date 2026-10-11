@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for absorbed dose.
 @MetricUnits(name: "gray", symbol: "Gy")
@@ -58,6 +59,10 @@ public struct AbsorbedDose {
         mass: .kilogram
     )
 }
+
+// MARK: - CanonicallyEquatable
+
+extension AbsorbedDose: CanonicallyEquatable {}
 
 // MARK: - Codable
 

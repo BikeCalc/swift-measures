@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for magnetic flux density.
 @MetricUnits(name: "tesla", symbol: "T")
@@ -59,6 +60,10 @@ public struct MagneticFluxDensity {
         area: .squareMeter
     )
 }
+
+// MARK: - CanonicallyEquatable
+
+extension MagneticFluxDensity: CanonicallyEquatable {}
 
 // MARK: - Codable
 

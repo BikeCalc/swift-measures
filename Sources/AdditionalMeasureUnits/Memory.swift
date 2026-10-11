@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit for measuring digital information.
 @MetricUnits(name: "byte", symbol: "B", coefficient: 8)
@@ -31,6 +32,10 @@ public struct Memory {
         self.symbol = symbol
     }
 }
+
+// MARK: - CanonicallyEquatable
+
+extension Memory: CanonicallyEquatable {}
 
 // MARK: - Codable
 

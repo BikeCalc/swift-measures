@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for electrical resistance.
 @MetricUnits(name: "ohm", symbol: "Ω")
@@ -52,6 +53,10 @@ public struct ElectricalResistance {
         )
     }
 }
+
+// MARK: - CanonicallyEquatable
+
+extension ElectricalResistance: CanonicallyEquatable {}
 
 // MARK: - Codable
 

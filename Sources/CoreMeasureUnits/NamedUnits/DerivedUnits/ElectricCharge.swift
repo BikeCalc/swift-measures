@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for electric charge.
 @MetricUnits(name: "coulomb", symbol: "C")
@@ -102,6 +103,10 @@ public struct ElectricCharge {
         time: .second
     )
 }
+
+// MARK: - CanonicallyEquatable
+
+extension ElectricCharge: CanonicallyEquatable {}
 
 // MARK: - Codable
 

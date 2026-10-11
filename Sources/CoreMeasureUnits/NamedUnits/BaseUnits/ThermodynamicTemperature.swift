@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for thermodynamic temperature.
 @MetricUnits(name: "kelvin", symbol: "K")
@@ -50,6 +51,10 @@ public struct ThermodynamicTemperature {
         symbol: "°C"
     )
 }
+
+// MARK: - CanonicallyEquatable
+
+extension ThermodynamicTemperature: CanonicallyEquatable {}
 
 // MARK: - Codable
 

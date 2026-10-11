@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for luminous flux.
 @MetricUnits(name: "lumen", symbol: "lm")
@@ -46,6 +47,10 @@ public struct LuminousFlux {
         )
     }
 }
+
+// MARK: - CanonicallyEquatable
+
+extension LuminousFlux: CanonicallyEquatable {}
 
 // MARK: - Codable
 

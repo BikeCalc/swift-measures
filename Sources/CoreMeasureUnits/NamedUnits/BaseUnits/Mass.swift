@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for mass.
 @MetricUnits(name: "gram", symbol: "g", coefficient: 1e-3)
@@ -220,6 +221,10 @@ public struct Mass {
         symbol: "blb"
     )
 }
+
+// MARK: - CanonicallyEquatable
+
+extension Mass: CanonicallyEquatable {}
 
 // MARK: - Codable
 

@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for power.
 @MetricUnits(name: "watt", symbol: "W")
@@ -99,6 +100,10 @@ public struct Power {
         symbol: "hp"
     )
 }
+
+// MARK: - CanonicallyEquatable
+
+extension Power: CanonicallyEquatable {}
 
 // MARK: - Codable
 

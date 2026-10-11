@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for electric potential.
 @MetricUnits(name: "volt", symbol: "V")
@@ -84,6 +85,10 @@ public struct ElectricPotential {
         )
     }
 }
+
+// MARK: - CanonicallyEquatable
+
+extension ElectricPotential: CanonicallyEquatable {}
 
 // MARK: - Codable
 

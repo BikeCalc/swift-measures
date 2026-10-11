@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for electrical capacitance.
 @MetricUnits(name: "farad", symbol: "F")
@@ -52,6 +53,10 @@ public struct ElectricalCapacitance {
         )
     }
 }
+
+// MARK: - CanonicallyEquatable
+
+extension ElectricalCapacitance: CanonicallyEquatable {}
 
 // MARK: - Codable
 

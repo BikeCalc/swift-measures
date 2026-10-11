@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for electrical inductance.
 @MetricUnits(name: "henry", symbol: "H")
@@ -60,6 +61,10 @@ public struct ElectricalInductance {
         electricCurrent: .ampere
     )
 }
+
+// MARK: - CanonicallyEquatable
+
+extension ElectricalInductance: CanonicallyEquatable {}
 
 // MARK: - Codable
 

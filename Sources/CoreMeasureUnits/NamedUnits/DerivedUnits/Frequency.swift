@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for frequency.
 @MetricUnits(name: "hertz", symbol: "Hz")
@@ -40,6 +41,10 @@ public struct Frequency {
         )
     }
 }
+
+// MARK: - CanonicallyEquatable
+
+extension Frequency: CanonicallyEquatable {}
 
 // MARK: - Codable
 

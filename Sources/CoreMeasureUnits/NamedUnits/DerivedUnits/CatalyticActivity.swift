@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for catalytic activity.
 @MetricUnits(name: "katal", symbol: "kat")
@@ -58,6 +59,10 @@ public struct CatalyticActivity {
         time: .second
     )
 }
+
+// MARK: - CanonicallyEquatable
+
+extension CatalyticActivity: CanonicallyEquatable {}
 
 // MARK: - Codable
 

@@ -38,6 +38,15 @@ extension Unit {
 }
 
 extension Unit
+where Self: CanonicallyEquatable {
+    public func isCanonicallyEqual(to other: Self) -> Bool {
+        return self.isCompatible(with: other)
+            && self.coefficient == other.coefficient
+            && self.constant == other.constant
+    }
+}
+
+extension Unit
 where Self: Comparable {
     public static func < (
         _ lhs: Self,

@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for energy.
 @MetricUnits(name: "joule", symbol: "J")
@@ -166,6 +167,10 @@ public struct Energy {
         symbol: "cal"
     )
 }
+
+// MARK: - CanonicallyEquatable
+
+extension Energy: CanonicallyEquatable {}
 
 // MARK: - Codable
 

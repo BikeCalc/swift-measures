@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for luminous intensity.
 @MetricUnits(name: "candela", symbol: "cd")
@@ -30,6 +31,10 @@ public struct LuminousIntensity {
 
     public let dimension: Dimension = .init(luminousIntensity: 1)
 }
+
+// MARK: - CanonicallyEquatable
+
+extension LuminousIntensity: CanonicallyEquatable {}
 
 // MARK: - Codable
 

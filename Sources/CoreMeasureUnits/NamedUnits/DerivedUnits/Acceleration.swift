@@ -7,6 +7,7 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import CoreMeasureTypes
+import NumericsExtended
 
 /// A unit of measure for acceleration.
 public struct Acceleration {
@@ -93,6 +94,10 @@ public struct Acceleration {
         perSquare: .second
     )
 }
+
+// MARK: - CanonicallyEquatable
+
+extension Acceleration: CanonicallyEquatable {}
 
 // MARK: - Codable
 

@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for substance amount.
 @MetricUnits(name: "mole", symbol: "mol")
@@ -46,6 +47,10 @@ public struct SubstanceAmount {
         )
     }
 }
+
+// MARK: - CanonicallyEquatable
+
+extension SubstanceAmount: CanonicallyEquatable {}
 
 // MARK: - Codable
 

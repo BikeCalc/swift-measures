@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for radioactivity.
 @MetricUnits(name: "becquerel", symbol: "Bq")
@@ -40,6 +41,10 @@ public struct Radioactivity {
         )
     }
 }
+
+// MARK: - CanonicallyEquatable
+
+extension Radioactivity: CanonicallyEquatable {}
 
 // MARK: - Codable
 

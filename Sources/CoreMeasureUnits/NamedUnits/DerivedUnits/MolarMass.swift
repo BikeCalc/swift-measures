@@ -7,6 +7,7 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import CoreMeasureTypes
+import NumericsExtended
 
 /// A unit of measure for molar mass.
 public struct MolarMass {
@@ -62,6 +63,10 @@ public struct MolarMass {
         substanceAmount: .mole
     )
 }
+
+// MARK: - CanonicallyEquatable
+
+extension MolarMass: CanonicallyEquatable {}
 
 // MARK: - Codable
 

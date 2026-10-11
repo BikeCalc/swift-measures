@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for electric current.
 @MetricUnits(name: "ampere", symbol: "A")
@@ -87,6 +88,10 @@ public struct ElectricCurrent {
         time: .second
     )
 }
+
+// MARK: - CanonicallyEquatable
+
+extension ElectricCurrent: CanonicallyEquatable {}
 
 // MARK: - Codable
 

@@ -56,30 +56,3 @@ where Self: Encodable {
         try container.encode(self.symbol, forKey: .symbol)
     }
 }
-
-extension DefinedUnit
-where Self: Equatable {
-    /// A boolean value indicating whether this instance is the base.
-    @available(*, deprecated)
-    public var isBase: Bool {
-        return self == Self.base
-    }
-
-    public static func == (
-        _ lhs: Self,
-        _ rhs: Self
-    ) -> Bool {
-        return lhs.coefficient == rhs.coefficient
-            && lhs.constant == rhs.constant
-            && lhs.symbol == rhs.symbol
-    }
-}
-
-extension DefinedUnit
-where Self: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(self.coefficient.hashValue)
-        hasher.combine(self.constant.hashValue)
-        hasher.combine(self.symbol.hashValue)
-    }
-}

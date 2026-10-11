@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for equivalent dose.
 @MetricUnits(name: "sievert", symbol: "Sv")
@@ -33,6 +34,10 @@ public struct EquivalentDose {
         time: -2
     )
 }
+
+// MARK: - CanonicallyEquatable
+
+extension EquivalentDose: CanonicallyEquatable {}
 
 // MARK: - Codable
 

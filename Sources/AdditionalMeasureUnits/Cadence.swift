@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import CoreMeasureUnits
+import NumericsExtended
 
 /// A unit for measuring cadence.
 public struct Cadence {
@@ -48,6 +49,10 @@ public struct Cadence {
     /// The revolutions per hour unit of cadence.
     public static let revolutionsPerHour: Self = .init(per: .hour)
 }
+
+// MARK: - CanonicallyEquatable
+
+extension Cadence: CanonicallyEquatable {}
 
 // MARK: - Codable
 

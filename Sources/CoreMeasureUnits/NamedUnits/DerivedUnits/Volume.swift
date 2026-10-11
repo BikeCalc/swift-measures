@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for volume.
 @MetricUnits(name: "liter", symbol: "L", coefficient: 1e-3)
@@ -260,6 +261,10 @@ public struct Volume {
         symbol: "US nutrition tsp"
     )
 }
+
+// MARK: - CanonicallyEquatable
+
+extension Volume: CanonicallyEquatable {}
 
 // MARK: - Codable
 

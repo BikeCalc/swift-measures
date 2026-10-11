@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import MeasuresMacro
+import NumericsExtended
 
 /// A unit of measure for time.
 @MetricUnits(name: "second", symbol: "s")
@@ -140,6 +141,10 @@ public struct Time {
         symbol: "min"
     )
 }
+
+// MARK: - CanonicallyEquatable
+
+extension Time: CanonicallyEquatable {}
 
 // MARK: - Codable
 

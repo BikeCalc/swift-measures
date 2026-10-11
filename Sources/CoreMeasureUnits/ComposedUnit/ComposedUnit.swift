@@ -304,6 +304,10 @@ extension ComposedUnit: Canonicalizable {
     }
 }
 
+// MARK: - CanonicallyEquatable
+
+extension ComposedUnit: CanonicallyEquatable {}
+
 // MARK: - ComposableUnit
 
 extension ComposedUnit: ComposableUnit {
@@ -385,9 +389,7 @@ extension ComposedUnit: Equatable {
         _ lhs: Self,
         _ rhs: Self
     ) -> Bool {
-        return lhs.dimension == rhs.dimension
-            && lhs.coefficient == rhs.coefficient
-            && lhs.constant == rhs.constant
+        return lhs.factors == rhs.factors
     }
 }
 
@@ -395,9 +397,7 @@ extension ComposedUnit: Equatable {
 
 extension ComposedUnit: Hashable {
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(self.dimension)
-        hasher.combine(self.coefficient)
-        hasher.combine(self.constant)
+        hasher.combine(self.factors)
     }
 }
 
