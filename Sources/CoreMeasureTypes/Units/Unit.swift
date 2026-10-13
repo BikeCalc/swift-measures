@@ -6,7 +6,15 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
+import NumericsExtended
+
 /// A unit with an affine conversion to its reference scale.
+///
+/// Reference values are calculated as `value * coefficient + constant`. Conversion to another compatible unit
+/// subtracts that unit's constant and divides by its coefficient. The valid range is expressed on the reference scale.
+///
+/// The default compatibility implementation accepts every instance of the same unit type. Types with dimensions
+/// that vary between instances must provide a compatibility check; `ComposableUnit` compares their dimensions.
 public protocol Unit {
     /// The multiplicative scale relative to the reference unit.
     var coefficient: Double { get }
@@ -20,10 +28,10 @@ public protocol Unit {
     /// The valid value range on the reference scale.
     var validRange: ClosedRange<Double> { get }
 
-    /// Returns whether values can be converted between these units.
+    /// Returns a boolean value indicating whether values can be converted between these units.
     ///
     /// - Parameter other: The unit to check for conversion compatibility with this unit.
-    /// - Returns: Whether values can be converted between this unit and the other unit.
+    /// - Returns: A boolean value indicating whether values can be converted between this unit and the other unit.
     func isCompatible(with other: Self) -> Bool
 }
 

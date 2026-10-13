@@ -10,6 +10,10 @@
 ///
 /// Conformance does not require an SI dimension. Units that support dimensional composition also conform to
 /// `ComposableUnit`.
+///
+/// The default Codable implementations use coefficient, constant, and symbol as their serialized representation. The
+/// decoder treats an omitted constant as zero and recreates the unit through its initializer. Dimension information
+/// is supplied by the concrete type rather than encoded by this protocol's implementation.
 public protocol DefinedUnit: Unit {
     /// Creates a new instance with the specified coefficient, constant and symbol.
     ///

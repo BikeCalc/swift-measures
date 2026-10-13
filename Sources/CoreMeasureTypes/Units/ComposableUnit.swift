@@ -7,6 +7,10 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 /// A unit whose physical dimension is expressed using the seven SI base quantities.
+///
+/// Coefficients and constants describe conversion to the coherent SI reference for that dimension. Units with matching
+/// dimensions are compatible for conversion. Capturing a defined unit in a composed unit requires both `ComposableUnit`
+/// and `DefinedUnit`; an instance's dimension alone does not provide a shared base unit or an initializer.
 public protocol ComposableUnit: Unit {
     /// The physical dimension expressed as exponents of the seven SI base quantities.
     var dimension: Dimension { get }
