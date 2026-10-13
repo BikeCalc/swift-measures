@@ -6,10 +6,9 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-import CoreMeasureTypes
 import NumericsExtended
 
-/// Checks factor scales, offsets, and the representability of their combined values.
+/// Checks factor conversion definitions and constant combinations.
 ///
 /// Validation preserves factor order and does not simplify, normalize, or inspect display symbols.
 internal struct ComposedUnitFactorValidator {
@@ -23,16 +22,17 @@ internal struct ComposedUnitFactorValidator {
         self.factors = factors
     }
 
-    /// Checks unit conversions, offset combinations, and derived scales and dimension exponents.
+    /// Checks unit conversions and offset combinations without evaluating derived values.
     ///
     /// Nonzero offsets require a single active factor with exponent one. Zero exponents are inactive,
     /// but their unit definitions must still have finite positive coefficients and finite constants.
     ///
-    /// - Returns: Whether the factors can form a valid unit without dimension arithmetic overflowing.
+    /// - Returns: A boolean value indicating whether every conversion definition and constant combination is valid.
     internal func validate() -> Bool {
         /// Checks that every factor's unit has a valid conversion, including inactive factors.
         ///
-        /// - Returns: Whether every unit's coefficient is finite and positive and its constant is finite.
+        /// - Returns: A boolean value indicating whether every unit's coefficient is finite and positive and its
+        ///   constant is finite.
         func hasValidConversions() -> Bool {
             for factor in self.factors
             where factor.unit.hasValidConversion == false {
@@ -44,7 +44,8 @@ internal struct ComposedUnitFactorValidator {
 
         /// Checks that nonzero constants are used only by a standalone active factor.
         ///
-        /// - Returns: Whether all active constants are zero or the sole active factor has exponent one.
+        /// - Returns: A boolean value indicating whether all active constants are zero or the sole active factor has
+        ///   exponent one.
         func hasValidConstants() -> Bool {
             let activeFactors: Array<ComposedUnit.Factor> = self.factors
                 .filter { $0.exponent != 0 }

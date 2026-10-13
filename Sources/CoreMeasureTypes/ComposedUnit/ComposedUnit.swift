@@ -6,14 +6,38 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-import CoreMeasureTypes
 import CoreNumericOperators
 import NumericsExtended
 
-/// A composed unit whose only stored state is its structured factors.
+/// A unit formed from captured unit definitions and signed integer exponents.
 ///
-/// Unit representations preserve custom scales and dimensions without resolving symbols through a registry.
-/// Symbols are display labels, never parsed. Simplification and normalization are explicit operations.
+/// Captured definitions preserve coefficients, constants, symbols, and SI dimensions independently of their original
+/// Swift types. The composed coefficient, constant, symbol, and dimension are calculated from these factors.
+/// Multiplication, division, and exponentiation preserve factor structure. Call `simplified()` to combine matching
+/// definitions, `normalized()` to order factors, or `canonicalized()` to perform both operations.
+///
+/// Symbols are display labels and are never parsed. Separate kilometer and hour factors can cancel against matching
+/// factors; a defined speed unit labeled `km/h` remains one factor. Different definitions sharing a symbol remain
+/// distinct during simplification. Equality and hashing compare the stored factors, including their order and symbols.
+/// Use `isCanonicallyEqual(to:)` to compare the calculated dimension, coefficient, and constant instead.
+///
+/// A nonzero constant is supported only for a single active factor with exponent one. Unit multiplication and division
+/// require zero constants; raising an offset unit permits only powers zero and one. Measure composition first converts
+/// values to coherent SI units, applying constants to absolute values before performing arithmetic.
+///
+/// Encoding stores the factors. Decoding checks their conversion definitions and constant combinations, but does not
+/// evaluate the resulting dimension or coefficient. Dimension arithmetic traps on integer overflow; derived
+/// coefficients follow ordinary floating-point behavior.
+///
+/// For example:
+///
+/// ```swift
+/// let speed = ComposedUnit(Length.kilometer) / ComposedUnit(Time.hour)
+/// let distance = (speed * ComposedUnit(Time.hour)).simplified()
+///
+/// print(distance.symbol)
+/// // Prints "km"
+/// ```
 public struct ComposedUnit {
     /// A snapshot of a defined unit, independent of its concrete Swift type.
     internal struct AnyDefinedUnit: Codable, Hashable, Sendable {
@@ -135,7 +159,11 @@ public struct ComposedUnit {
 
     /// Creates a composed unit from one defined unit, retaining its offset.
     ///
+    /// The unit must have a finite positive coefficient and a finite constant. Its symbol and dimension are captured
+    /// without conversion to a coherent SI unit.
+    ///
     /// - Parameter unit: The defined unit to capture.
+    /// - Precondition: The unit has a finite positive coefficient and a finite constant.
     public init<UnitType>(_ unit: UnitType)
     where UnitType: ComposableUnit & DefinedUnit {
         let factor: Factor = .init(unit: AnyDefinedUnit(unit))
@@ -146,19 +174,21 @@ public struct ComposedUnit {
     ///
     /// Offsets are permitted only for a single active factor with exponent one. Simplification and normalization are
     /// explicit operations; construction preserves duplicates and zero exponents.
-    /// Combined coefficients and dimension exponents must remain representable.
+    /// Derived coefficients and dimension exponents are evaluated only when needed.
     ///
     /// - Parameter factors: The factors to compose. An empty collection represents the dimensionless identity.
     internal init(factors: Array<Self.Factor>) {
         let validator: ComposedUnitFactorValidator = .init(factors: factors)
+
         precondition(
             validator.validate(),
             "Factors require valid scales, offsets, and representable combined values."
         )
+
         self.factors = factors
     }
 
-    /// Builds the coherent reference using actual SI unit representations in dimension order.
+    /// Builds the coherent reference using SI base-unit definitions in dimension order.
     internal var coherent: Self {
         return Self(dimension: self.dimension)
     }
@@ -169,31 +199,66 @@ public struct ComposedUnit {
     internal init(dimension: Dimension) {
         let factors: Array<Factor> = [
             .init(
-                unit: AnyDefinedUnit(Length.base),
+                unit: Self.AnyDefinedUnit(
+                    coefficient: 1,
+                    constant: 0,
+                    symbol: "m",
+                    dimension: Dimension(length: 1)
+                ),
                 exponent: dimension.length
             ),
             .init(
-                unit: AnyDefinedUnit(Mass.base),
+                unit: Self.AnyDefinedUnit(
+                    coefficient: 1,
+                    constant: 0,
+                    symbol: "kg",
+                    dimension: Dimension(mass: 1)
+                ),
                 exponent: dimension.mass
             ),
             .init(
-                unit: AnyDefinedUnit(Time.base),
+                unit: Self.AnyDefinedUnit(
+                    coefficient: 1,
+                    constant: 0,
+                    symbol: "s",
+                    dimension: Dimension(time: 1)
+                ),
                 exponent: dimension.time
             ),
             .init(
-                unit: AnyDefinedUnit(ElectricCurrent.base),
+                unit: Self.AnyDefinedUnit(
+                    coefficient: 1,
+                    constant: 0,
+                    symbol: "A",
+                    dimension: Dimension(electricCurrent: 1)
+                ),
                 exponent: dimension.electricCurrent
             ),
             .init(
-                unit: AnyDefinedUnit(ThermodynamicTemperature.base),
+                unit: Self.AnyDefinedUnit(
+                    coefficient: 1,
+                    constant: 0,
+                    symbol: "K",
+                    dimension: Dimension(thermodynamicTemperature: 1)
+                ),
                 exponent: dimension.thermodynamicTemperature
             ),
             .init(
-                unit: AnyDefinedUnit(SubstanceAmount.base),
+                unit: Self.AnyDefinedUnit(
+                    coefficient: 1,
+                    constant: 0,
+                    symbol: "mol",
+                    dimension: Dimension(substanceAmount: 1)
+                ),
                 exponent: dimension.substanceAmount
             ),
             .init(
-                unit: AnyDefinedUnit(LuminousIntensity.base),
+                unit: Self.AnyDefinedUnit(
+                    coefficient: 1,
+                    constant: 0,
+                    symbol: "cd",
+                    dimension: Dimension(luminousIntensity: 1)
+                ),
                 exponent: dimension.luminousIntensity
             )
         ]
@@ -286,7 +351,7 @@ extension ComposedUnit: Canonicalizable {
     /// A boolean value indicating whether factors are nonzero, unique by unit representation, and already in normalized
     /// order.
     ///
-    /// This checks stored structure rather than physical equality, which ignores factor order and duplication.
+    /// This checks whether the stored factors already have the structure produced by `canonicalized()`.
     public var isCanonicalized: Bool {
         return self.isSimplified && self.isNormalized
     }
@@ -311,6 +376,9 @@ extension ComposedUnit: CanonicallyEquatable {}
 // MARK: - ComposableUnit
 
 extension ComposedUnit: ComposableUnit {
+    /// The product of the captured coefficients raised to their factor exponents.
+    ///
+    /// Evaluation follows stored factor order and may overflow or underflow.
     public var coefficient: Double {
         return self.factors.reduce(1) { result, factor in
             // Coherent unit factors have scale one, regardless of their exponent.
@@ -321,6 +389,7 @@ extension ComposedUnit: ComposableUnit {
         }
     }
 
+    /// The offset of the single active factor, or zero for an offset-free composition.
     public var constant: Double {
         guard let factor = self.factors.first(where: { $0.exponent != 0 }), factor.exponent == 1 else {
             return 0
@@ -328,17 +397,31 @@ extension ComposedUnit: ComposableUnit {
         return factor.unit.constant
     }
 
+    /// The stored factors formatted with multiplication dots and signed superscript exponents.
+    ///
+    /// Formatting preserves factor order and does not simplify. Zero exponents are omitted; no active factors
+    /// produce an empty string. Active factor labels must be nonempty, have no surrounding whitespace, contain
+    /// balanced nonempty parentheses, and supply operands around multiplication, division, and power operators.
+    /// Invalid labels fail a precondition when this property is read. Internal spaces, such as in `imp ton`, are
+    /// allowed.
     public var symbol: String {
         let formatter: ComposedUnitSymbolFormatter = .init(factors: self.factors)
         return formatter.format()
     }
 
+    /// The product of the captured dimensions raised to their factor exponents.
+    ///
+    /// Integer overflow while combining dimension exponents traps.
     public var dimension: Dimension {
         return self.factors.reduce(Dimension()) { result, factor in
             return result * (factor.unit.dimension ** factor.exponent)
         }
     }
 
+    /// The permitted values on the coherent SI reference scale.
+    ///
+    /// Pure thermodynamic temperature requires a nonnegative value in kelvins. All other dimensions use
+    /// the unrestricted range, including compositions containing temperature with other dimensions.
     public var validRange: ClosedRange<Double> {
         if self.dimension == Dimension(thermodynamicTemperature: 1) {
             return 0 ... .infinity
@@ -351,12 +434,14 @@ extension ComposedUnit: ComposableUnit {
 // MARK: - Decodable
 
 extension ComposedUnit: Decodable {
-    /// Decodes factors without trusting serialized scales, offsets, or exponent combinations.
+    /// Decodes factors and validates their conversion definitions and constant combinations.
     ///
     /// The wire format is simply an array of factors; no redundant aggregate properties are encoded.
+    /// Factors retain their order, duplicates, and zero exponents. Derived coefficients and dimensions are not
+    /// evaluated.
     ///
     /// - Parameter decoder: The decoder supplying the factor array.
-    /// - Throws: A decoding error for invalid scales, offsets, or unrepresentable derived values.
+    /// - Throws: A decoding error if a factor cannot be decoded or its conversion or constant combination is invalid.
     public init(from decoder: any Decoder) throws {
         let container: any SingleValueDecodingContainer = try decoder.singleValueContainer()
         let factors: Array<Factor> = try container.decode(Array<Factor>.self)
@@ -376,6 +461,10 @@ extension ComposedUnit: Decodable {
 // MARK: - Encodable
 
 extension ComposedUnit: Encodable {
+    /// Encodes the captured unit definitions and their exponents as an array of factors.
+    ///
+    /// - Parameter encoder: The encoder receiving the factors in their stored order.
+    /// - Throws: Any error encountered while encoding the factors.
     public func encode(to encoder: any Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(self.factors)
@@ -385,6 +474,16 @@ extension ComposedUnit: Encodable {
 // MARK: - Equatable
 
 extension ComposedUnit: Equatable {
+    /// Returns a boolean value indicating whether the stored factors match in the same order.
+    ///
+    /// Each factor's unit definition and exponent must match, including its symbol. No simplification,
+    /// normalization, or derived arithmetic is performed. Use `isCanonicallyEqual(to:)` to compare the resulting
+    /// dimensions and conversion definitions instead.
+    ///
+    /// - Parameters:
+    ///   - lhs: The first unit to compare.
+    ///   - rhs: The second unit to compare.
+    /// - Returns: `true` if the stored factor arrays are equal; otherwise, `false`.
     public static func == (
         _ lhs: Self,
         _ rhs: Self
@@ -396,6 +495,9 @@ extension ComposedUnit: Equatable {
 // MARK: - Hashable
 
 extension ComposedUnit: Hashable {
+    /// Hashes the stored factors in their existing order, consistently with structural equality.
+    ///
+    /// - Parameter hasher: The hasher receiving this unit's factors.
     public func hash(into hasher: inout Hasher) {
         hasher.combine(self.factors)
     }

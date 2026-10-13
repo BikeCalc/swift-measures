@@ -44,11 +44,11 @@ internal struct ComposedUnitSymbolValidator {
 
     /// Checks the label's whitespace, parentheses, groups, and binary operands.
     ///
-    /// - Returns: Whether the nonempty label satisfies every structural rule.
+    /// - Returns: A boolean value indicating whether the nonempty label satisfies every structural rule.
     internal func validate() -> Bool {
         /// Checks that the label is nonempty and has no surrounding whitespace.
         ///
-        /// - Returns: Whether both boundary characters are present and are not whitespace.
+        /// - Returns: A boolean value indicating whether both boundary characters are present and are not whitespace.
         func hasValidBoundaries() -> Bool {
             guard let first = self.symbol.first, let last = self.symbol.last else {
                 return false
@@ -59,7 +59,8 @@ internal struct ComposedUnitSymbolValidator {
 
         /// Checks that parentheses are balanced and correctly nested.
         ///
-        /// - Returns: Whether every closing parenthesis matches an earlier opening parenthesis.
+        /// - Returns: A boolean value indicating whether every closing parenthesis matches an earlier opening
+        ///   parenthesis.
         func hasBalancedParentheses() -> Bool {
             var depth: Int = 0
 
@@ -84,7 +85,7 @@ internal struct ComposedUnitSymbolValidator {
         ///
         /// Parentheses must already be balanced. Whitespace alone does not count as an operand.
         ///
-        /// - Returns: Whether no group is empty and no binary operand is missing.
+        /// - Returns: A boolean value indicating whether no group is empty and no binary operand is missing.
         func hasRequiredOperands() -> Bool {
             var expectsOperand: Bool = true
 

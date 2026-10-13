@@ -6,7 +6,27 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
+import NumericsExtended
+
 /// A property wrapper that converts a measure whenever it is assigned.
+///
+/// Pass a destination unit to keep the wrapped measure expressed in that unit. Defined units support `.base` as a
+/// destination. An explicit composed destination is also fixed: subsequent assignments must have a compatible dimension.
+/// For composed measures whose dimension may change, the coherent conversion policy resolves a destination for each
+/// assignment instead.
+///
+/// Encoding stores only the wrapped measure. Decoding uses its stored unit as a fixed destination and does not restore
+/// a dynamic conversion policy.
+///
+/// For example:
+///
+/// ```swift
+/// @Converted(to: .base)
+/// var distance: Measure<Length> = .init(100, .centimeter)
+///
+/// print(distance)
+/// // Prints "1.0 m"
+/// ```
 @propertyWrapper
 public struct Converted<UnitType>
 where UnitType: Unit {
@@ -21,6 +41,7 @@ where UnitType: Unit {
     /// - Parameters:
     ///   - wrappedValue: The measure to convert and store.
     ///   - unit: The unit in which to store the measure.
+    /// - Precondition: The source and destination units are compatible on initialization and every assignment.
     public init(
         wrappedValue: Measure<UnitType>,
         to unit: UnitType
@@ -55,9 +76,55 @@ where UnitType: Unit {
     }
 }
 
+extension Converted
+where UnitType == ComposedUnit {
+    /// A conversion policy that derives its destination from the assigned composed unit.
+    public enum ConversionPolicy {
+        /// Converts each assigned value to the coherent SI unit for its current dimension.
+        case coherent
+    }
+
+    /// Creates a wrapper that converts each assigned measure to its coherent SI unit.
+    ///
+    /// The destination is recalculated on every assignment, allowing the stored dimension to change. Conversion
+    /// applies the assigned unit's coefficient and constant. Encoding stores only the measure; decoding restores
+    /// a fixed destination rather than this policy.
+    ///
+    /// For example:
+    ///
+    /// ```swift
+    /// @Converted(to: .coherent)
+    /// var distance = Measure(2, ComposedUnit(Length.centimeter))
+    ///
+    /// print(distance)
+    /// // Prints "0.02 m"
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - wrappedValue: The measure to convert and store.
+    ///   - conversionPolicy: The policy used to determine the destination on every assignment.
+    public init(
+        wrappedValue: Measure<ComposedUnit>,
+        to conversionPolicy: ConversionPolicy
+    ) {
+        switch conversionPolicy {
+        case .coherent:
+            self.init(wrappedValue: wrappedValue) { unit in
+                return unit.coherent
+            }
+        }
+    }
+}
+
 // MARK: - CanonicallyEquatable
 
 extension Converted: CanonicallyEquatable {
+    /// Returns a boolean value indicating whether the wrapped measures represent the same quantity.
+    ///
+    /// Compares the wrapped measures using their units' conversion values. The conversion policies are not compared.
+    ///
+    /// - Parameter other: The converted measure to compare with this instance.
+    /// - Returns: `true` when the wrapped measures are canonically equal, and `false` otherwise.
     public func isCanonicallyEqual(to other: Self) -> Bool {
         return self.wrappedValue.isCanonicallyEqual(to: other.wrappedValue)
     }

@@ -157,7 +157,8 @@ internal struct ComposedUnitSymbolFormatter {
         /// and existing powers require grouping so the appended exponent applies to the whole defined unit.
         ///
         /// - Parameter symbol: A display label with balanced parentheses; this check does not validate or simplify it.
-        /// - Returns: Whether an additional pair of parentheses is needed before appending an exponent.
+        /// - Returns: A boolean value indicating whether an additional pair of parentheses is needed before appending
+        ///   an exponent.
         func needsGrouping(symbol: String) -> Bool {
             var depth: Int = 0
             var enclosesWholeLabel: Bool =
