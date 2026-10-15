@@ -11,6 +11,7 @@
 - ``coefficient``
 - ``constant``
 - ``symbol``
+- ``dimension``
 
 ### Base Unit
 
@@ -48,10 +49,10 @@
 - ``rontoampere``
 - ``quectoampere``
 
-### Dividing Units
-
-- ``/(_:_:)->ElectricConductance``
-
 ### Multiplying Units
 
 - ``*(_:_:)->ElectricCharge``
+
+### Dividing Units
+
+- ``/(_:_:)->ElectricConductance``

@@ -11,6 +11,7 @@
 - ``coefficient``
 - ``constant``
 - ``symbol``
+- ``dimension``
 
 ### Base Unit
 
@@ -81,12 +82,12 @@
 - ``slug``
 - ``blob``
 
+### Multiplying Units
+
+- ``*(_:_:)->Force``
+
 ### Dividing Units
 
 - ``/(_:_:)->SurfaceDensity``
 - ``/(_:_:)->MolarMass``
 - ``/(_:_:)->Concentration``
-
-### Multiplying Units
-
-- ``*(_:_:)->Force``

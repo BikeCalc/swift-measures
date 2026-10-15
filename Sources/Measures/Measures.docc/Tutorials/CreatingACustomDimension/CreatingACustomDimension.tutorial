@@ -89,8 +89,8 @@
             }
 
             @Step {
-                Add `Equatable` to the `DataTransferRate` declaration so its units can be compared and used with the
-                `Converted` property wrapper.
+                Add `Equatable` to the `DataTransferRate` declaration so its units support equality comparisons and
+                arithmetic between measures.
 
                 @Code(name: "DataTransferRate.swift", file: "01-13.swift")
             }

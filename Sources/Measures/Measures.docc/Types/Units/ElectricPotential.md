@@ -11,6 +11,7 @@
 - ``coefficient``
 - ``constant``
 - ``symbol``
+- ``dimension``
 
 ### Base Unit
 
@@ -44,10 +45,10 @@
 - ``rontovolt``
 - ``quectovolt``
 
-### Dividing Units
-
-- ``/(_:_:)->ElectricalResistance``
-
 ### Multiplying Units
 
 - ``*(_:_:)->MagneticFlux``
+
+### Dividing Units
+
+- ``/(_:_:)->ElectricalResistance``

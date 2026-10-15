@@ -41,11 +41,14 @@ canonicalized.
 
 - ``/CoreMeasureTypes/Unit``
 - ``/CoreMeasureTypes/ComposableUnit``
-- ``/CoreMeasureTypes/NamedUnit``
+- ``/CoreMeasureTypes/DefinedUnit``
 
 ### Composing Units
 
 - ``/CoreMeasureTypes/Dimension``
+- ``/CoreMeasureUnits/ComposedUnit``
+- ``/CoreMeasureUnits/CoreMeasureTypes/Measure``
+- ``/CoreMeasureUnits/CoreMeasureTypes/Converted``
 
 ### Base Units
 

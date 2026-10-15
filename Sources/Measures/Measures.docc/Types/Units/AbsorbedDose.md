@@ -11,6 +11,7 @@
 - ``coefficient``
 - ``constant``
 - ``symbol``
+- ``dimension``
 
 ### Base Unit
 

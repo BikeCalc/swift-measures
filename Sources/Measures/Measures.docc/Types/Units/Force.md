@@ -11,6 +11,7 @@
 - ``coefficient``
 - ``constant``
 - ``symbol``
+- ``dimension``
 
 ### Base Unit
 
@@ -56,10 +57,10 @@
 
 - ``gravity``
 
-### Dividing Units
-
-- ``/(_:_:)->Pressure``
-
 ### Multiplying Units
 
 - ``*(_:_:)->Energy``
+
+### Dividing Units
+
+- ``/(_:_:)->Pressure``

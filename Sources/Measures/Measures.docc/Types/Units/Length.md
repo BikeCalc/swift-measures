@@ -11,6 +11,7 @@
 - ``coefficient``
 - ``constant``
 - ``symbol``
+- ``dimension``
 
 ### Base Unit
 
@@ -28,6 +29,7 @@
 - ``league``
 - ``nauticalMile``
 - ``mile``
+- ``furlong``
 - ``cable``
 - ``chain``
 - ``rod``
@@ -68,10 +70,10 @@
 - ``rontometer``
 - ``quectometer``
 
-### Dividing Units
-
-- ``/(_:_:)->Speed``
-
 ### Multiplying Units
 
 - ``*(_:_:)->Energy``
+
+### Dividing Units
+
+- ``/(_:_:)->Speed``

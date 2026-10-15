@@ -9,9 +9,8 @@
 
 ### Measure Properties
 
-- ``Unit``
 - ``value``
-- ``unit-swift.property``
+- ``unit``
 
 ### Validating Measures
 
@@ -19,11 +18,13 @@
 
 ### Converting Measures
 
-- ``converted(to:)``
+- ``converted(to:)->Measure<UnitType>``
 - ``convert(to:)``
 
 ### Adding Values
 
+- ``Addend``
+- ``Sum``
 - ``+(_:_:)``
 - ``+=(_:_:)``
 - ``adding(_:)``
@@ -31,6 +32,8 @@
 
 ### Subtracting Values
 
+- ``Subtrahend``
+- ``Difference``
 - ``-(_:_:)``
 - ``-=(_:_:)``
 - ``subtracting(_:)``
@@ -38,28 +41,36 @@
 
 ### Multiplying Values
 
-- ``Measure/*(_:_:)-(Double,_)``
-- ``Measure/*(_:_:)-(_,Double)``
+- ``Multiplier``
+- ``Product``
+- ``*(_:_:)->Measure<UnitType>.Product``
 - ``*=(_:_:)``
 - ``multiplying(by:)``
 - ``multiply(by:)``
 
 ### Dividing Values
 
-- ``Measure//(_:_:)``
+- ``Divisor``
+- ``Quotient``
+- ``Measure//(_:_:)->Measure<UnitType>.Quotient``
 - ``/=(_:_:)``
 - ``dividing(by:)``
 - ``divide(by:)``
 
 ### Calculating Remainders
 
+- ``RemainderDivisor``
+- ``Remainder``
 - ``%(_:_:)``
 - ``%=(_:_:)``
 
 ### Inspecting Values
 
+- ``isInvertible``
+- ``reciprocal``
 - ``isDivisible(by:)``
 - ``isMultiple(of:)``
+- ``isFactor(of:)``
 
 ### Comparing Values
 
@@ -69,6 +80,9 @@
 - ``isCanonicallyEqual(to:)``
 - ``==(_:_:)``
 - ``<(_:_:)``
+- ``<=(_:_:)``
+- ``>(_:_:)``
+- ``>=(_:_:)``
 
 ### Describing Values
 

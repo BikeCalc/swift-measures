@@ -2,6 +2,10 @@
 
 ## Topics
 
+### Unit Type
+
+- ``UnitType``
+
 ### Converting Values
 
 - ``converted(to:)``
