@@ -171,6 +171,17 @@ extension Length {
             symbol: symbol
         )
     }
+
+    /// Returns the unit of acceleration obtained by dividing this length unit by the square of the specified time unit.
+    ///
+    /// - Parameter time: The unit of time to square before dividing.
+    /// - Returns: A unit of acceleration.
+    internal func dividing(bySquareOf time: Time) -> Acceleration {
+        return .init(
+            coefficient: self.coefficient / (time.coefficient * time.coefficient),
+            symbol: self.symbol + "/" + time.symbol + "²"
+        )
+    }
 }
 
 // MARK: - Equatable

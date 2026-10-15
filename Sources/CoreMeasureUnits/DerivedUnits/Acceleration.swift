@@ -28,26 +28,11 @@ public struct Acceleration {
 
     // MARK: Composed Units
 
-    /// Creates a new instance with the specified length and squared time units.
-    ///
-    /// - Parameters:
-    ///   - length: A unit of length.
-    ///   - time: A unit of time.
-    fileprivate init(
-        _ length: Length,
-        perSquare time: Time
-    ) {
-        self.init(
-            coefficient: length.coefficient / (time.coefficient * time.coefficient),
-            symbol: length.symbol + "/" + time.symbol + "²"
-        )
-    }
-
     /// The meter per square second unit of acceleration.
-    public static let meterPerSquareSecond: Self = .init(.meter, perSquare: .second)
+    public static let meterPerSquareSecond: Self = Length.meter.dividing(bySquareOf: .second)
 
     /// The foot per square second unit of acceleration.
-    public static let footPerSquareSecond: Self = .init(.foot, perSquare: .second)
+    public static let footPerSquareSecond: Self = Length.foot.dividing(bySquareOf: .second)
 }
 
 // MARK: - Codable
