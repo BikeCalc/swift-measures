@@ -6,6 +6,7 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
+import CoreMeasureTypes
 import NumericsExtended
 
 /// Checks factor conversion definitions and constant combinations.

@@ -8,8 +8,13 @@ Measures provides strongly typed values and units for physical dimensions. It in
 metric and binary prefixes, commonly used customary and imperial units, and dimensional composition for related
 units such as area, volume, speed, force, energy, and electrical quantities.
 
-Applications can define domain-specific dimensions by creating a unit type that conforms to `Unit`. Values can then be
-represented with `Measure`, converted between compatible units, or converted automatically with `Converted`.
+Applications can define domain-specific dimensions by creating a unit type that conforms to `Unit`. Values can
+then be represented with `Measure`, converted between compatible units, or converted automatically with `Converted`.
+
+`ComposedUnit` supports units whose physical dimensions are determined at runtime from the seven SI base quantities.
+Multiply, divide, or raise measures to integer powers to calculate across dimensions, then convert the result back to a
+compatible defined unit. Composed units preserve their factors and can be explicitly simplified, normalized, or
+canonicalized.
 
 ## Topics
 

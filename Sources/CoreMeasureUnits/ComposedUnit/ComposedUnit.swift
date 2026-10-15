@@ -6,6 +6,7 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
+import CoreMeasureTypes
 import CoreNumericOperators
 import NumericsExtended
 
@@ -199,66 +200,31 @@ public struct ComposedUnit {
     internal init(dimension: Dimension) {
         let factors: Array<Factor> = [
             .init(
-                unit: Self.AnyDefinedUnit(
-                    coefficient: 1,
-                    constant: 0,
-                    symbol: "m",
-                    dimension: Dimension(length: 1)
-                ),
+                unit: Self.AnyDefinedUnit(Length.base),
                 exponent: dimension.length
             ),
             .init(
-                unit: Self.AnyDefinedUnit(
-                    coefficient: 1,
-                    constant: 0,
-                    symbol: "kg",
-                    dimension: Dimension(mass: 1)
-                ),
+                unit: Self.AnyDefinedUnit(Mass.base),
                 exponent: dimension.mass
             ),
             .init(
-                unit: Self.AnyDefinedUnit(
-                    coefficient: 1,
-                    constant: 0,
-                    symbol: "s",
-                    dimension: Dimension(time: 1)
-                ),
+                unit: Self.AnyDefinedUnit(Time.base),
                 exponent: dimension.time
             ),
             .init(
-                unit: Self.AnyDefinedUnit(
-                    coefficient: 1,
-                    constant: 0,
-                    symbol: "A",
-                    dimension: Dimension(electricCurrent: 1)
-                ),
+                unit: Self.AnyDefinedUnit(ElectricCurrent.base),
                 exponent: dimension.electricCurrent
             ),
             .init(
-                unit: Self.AnyDefinedUnit(
-                    coefficient: 1,
-                    constant: 0,
-                    symbol: "K",
-                    dimension: Dimension(thermodynamicTemperature: 1)
-                ),
+                unit: Self.AnyDefinedUnit(ThermodynamicTemperature.base),
                 exponent: dimension.thermodynamicTemperature
             ),
             .init(
-                unit: Self.AnyDefinedUnit(
-                    coefficient: 1,
-                    constant: 0,
-                    symbol: "mol",
-                    dimension: Dimension(substanceAmount: 1)
-                ),
+                unit: Self.AnyDefinedUnit(SubstanceAmount.base),
                 exponent: dimension.substanceAmount
             ),
             .init(
-                unit: Self.AnyDefinedUnit(
-                    coefficient: 1,
-                    constant: 0,
-                    symbol: "cd",
-                    dimension: Dimension(luminousIntensity: 1)
-                ),
+                unit: Self.AnyDefinedUnit(LuminousIntensity.base),
                 exponent: dimension.luminousIntensity
             )
         ]
