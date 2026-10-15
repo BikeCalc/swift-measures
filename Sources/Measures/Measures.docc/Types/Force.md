@@ -58,8 +58,8 @@
 
 ### Dividing Units
 
-- ``dividing(by:)``
+- ``/(_:_:)->Pressure``
 
 ### Multiplying Units
 
-- ``multiplying(by:)``
+- ``*(_:_:)->Energy``

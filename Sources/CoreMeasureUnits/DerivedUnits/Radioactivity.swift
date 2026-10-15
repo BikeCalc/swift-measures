@@ -27,6 +27,16 @@ public struct Radioactivity {
         self.constant = constant
         self.symbol = symbol
     }
+
+    /// Creates a unit of radioactivity expressed in decays per the specified time unit.
+    ///
+    /// - Parameter time: The time unit used as the denominator.
+    internal init(per time: Time) {
+        self.init(
+            coefficient: 1 / time.coefficient,
+            symbol: "1/" + time.symbol
+        )
+    }
 }
 
 // MARK: - Codable

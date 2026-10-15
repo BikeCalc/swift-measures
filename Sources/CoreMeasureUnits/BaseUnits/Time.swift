@@ -28,6 +28,54 @@ public struct Time {
         self.symbol = symbol
     }
 
+    /// Returns a unit of electric charge by multiplying the specified units.
+    ///
+    /// - Parameters:
+    ///   - lhs: The time unit.
+    ///   - rhs: The electric current unit.
+    /// - Returns: A unit of electric charge.
+    public static func * (
+        lhs: Self,
+        rhs: ElectricCurrent
+    ) -> ElectricCharge {
+        return .init(
+            electricCurrent: rhs,
+            time: lhs
+        )
+    }
+
+    /// Returns a unit of magnetic flux by multiplying the specified units.
+    ///
+    /// - Parameters:
+    ///   - lhs: The time unit.
+    ///   - rhs: The electric potential unit.
+    /// - Returns: A unit of magnetic flux.
+    public static func * (
+        lhs: Self,
+        rhs: ElectricPotential
+    ) -> MagneticFlux {
+        return .init(
+            electricPotential: rhs,
+            time: lhs
+        )
+    }
+
+    /// Returns a unit of energy by multiplying the specified units.
+    ///
+    /// - Parameters:
+    ///   - lhs: The time unit.
+    ///   - rhs: The power unit.
+    /// - Returns: A unit of energy.
+    public static func * (
+        lhs: Self,
+        rhs: Power
+    ) -> Energy {
+        return .init(
+            power: rhs,
+            time: lhs
+        )
+    }
+
     // MARK: Other Units
 
     /// The millennium unit of time.

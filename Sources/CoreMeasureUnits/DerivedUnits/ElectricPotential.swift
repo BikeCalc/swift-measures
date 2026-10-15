@@ -27,6 +27,55 @@ public struct ElectricPotential {
         self.constant = constant
         self.symbol = symbol
     }
+
+    /// Creates a unit of electric potential from the specified units.
+    ///
+    /// The coefficient and symbol are formed by dividing the power unit by the electric current unit.
+    ///
+    /// - Parameters:
+    ///   - power: The power unit.
+    ///   - electricCurrent: The electric current unit.
+    internal init(
+        power: Power,
+        electricCurrent: ElectricCurrent
+    ) {
+        self.init(
+            coefficient: power.coefficient * (1 / electricCurrent.coefficient),
+            symbol: power.symbol + "/" + electricCurrent.symbol
+        )
+    }
+
+    /// Returns a unit of magnetic flux by multiplying the specified units.
+    ///
+    /// - Parameters:
+    ///   - lhs: The electric potential unit.
+    ///   - rhs: The time unit.
+    /// - Returns: A unit of magnetic flux.
+    public static func * (
+        lhs: Self,
+        rhs: Time
+    ) -> MagneticFlux {
+        return .init(
+            electricPotential: lhs,
+            time: rhs
+        )
+    }
+
+    /// Returns a unit of electrical resistance by dividing the specified units.
+    ///
+    /// - Parameters:
+    ///   - lhs: The electric potential unit.
+    ///   - rhs: The electric current unit.
+    /// - Returns: A unit of electrical resistance.
+    public static func / (
+        lhs: Self,
+        rhs: ElectricCurrent
+    ) -> ElectricalResistance {
+        return .init(
+            electricPotential: lhs,
+            electricCurrent: rhs
+        )
+    }
 }
 
 // MARK: - Codable
@@ -49,56 +98,6 @@ extension ElectricPotential: Hashable {}
 
 extension ElectricPotential: Measurable {
     public static let base: Self = .volt
-}
-
-// MARK: - Divisible
-
-extension ElectricPotential {
-    /// Returns the quotient of dividing this value by the specified value.
-    ///
-    /// - Parameter electricCurrent: A unit of electric current.
-    /// - Returns: A unit of electrical resistance.
-    public func dividing(by electricCurrent: ElectricCurrent) -> ElectricalResistance {
-        let coefficient: Double = self.coefficient * (1 / electricCurrent.coefficient)
-        let symbol: String = self.symbol + "/" + electricCurrent.symbol
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
-}
-
-// MARK: - Multipliable
-
-extension ElectricPotential {
-    /// Returns the product of multiplying this value by the specified value.
-    ///
-    /// - Parameter electricCharge: A unit of electric charge.
-    /// - Returns: A unit of energy.
-    public func multiplying(by electricCharge: ElectricCharge) -> Energy {
-        let coefficient: Double = self.coefficient * electricCharge.coefficient
-        let symbol: String = self.symbol + "⋅" + electricCharge.symbol
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
-
-    /// Returns the product of multiplying this value by the specified value.
-    ///
-    /// - Parameter time: A unit of time.
-    /// - Returns: A unit of magnetic flux.
-    public func multiplying(by time: Time) -> MagneticFlux {
-        let coefficient: Double = self.coefficient * time.coefficient
-        let symbol: String = self.symbol + "⋅" + time.symbol
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
 }
 
 // MARK: - Sendable

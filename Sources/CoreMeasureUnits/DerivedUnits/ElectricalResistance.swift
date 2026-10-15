@@ -27,6 +27,23 @@ public struct ElectricalResistance {
         self.constant = constant
         self.symbol = symbol
     }
+
+    /// Creates a unit of electrical resistance from the specified units.
+    ///
+    /// The coefficient and symbol are formed by dividing the electric potential unit by the electric current unit.
+    ///
+    /// - Parameters:
+    ///   - electricPotential: The electric potential unit.
+    ///   - electricCurrent: The electric current unit.
+    internal init(
+        electricPotential: ElectricPotential,
+        electricCurrent: ElectricCurrent
+    ) {
+        self.init(
+            coefficient: electricPotential.coefficient * (1 / electricCurrent.coefficient),
+            symbol: electricPotential.symbol + "/" + electricCurrent.symbol
+        )
+    }
 }
 
 // MARK: - Codable
@@ -49,24 +66,6 @@ extension ElectricalResistance: Hashable {}
 
 extension ElectricalResistance: Measurable {
     public static let base: Self = .ohm
-}
-
-// MARK: - Multipliable
-
-extension ElectricalResistance {
-    /// Returns the product of multiplying this value by the specified value.
-    ///
-    /// - Parameter time: A unit of time.
-    /// - Returns: A unit of electrical inductance.
-    public func multiplying(by time: Time) -> ElectricalInductance {
-        let coefficient: Double = self.coefficient * time.coefficient
-        let symbol: String = self.symbol + "⋅" + time.symbol
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
 }
 
 // MARK: - Sendable

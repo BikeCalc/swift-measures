@@ -27,6 +27,23 @@ public struct ElectricalCapacitance {
         self.constant = constant
         self.symbol = symbol
     }
+
+    /// Creates a unit of electrical capacitance from the specified units.
+    ///
+    /// The coefficient and symbol are formed by dividing the electric charge unit by the electric potential unit.
+    ///
+    /// - Parameters:
+    ///   - electricCharge: The electric charge unit.
+    ///   - electricPotential: The electric potential unit.
+    internal init(
+        electricCharge: ElectricCharge,
+        electricPotential: ElectricPotential
+    ) {
+        self.init(
+            coefficient: electricCharge.coefficient * (1 / electricPotential.coefficient),
+            symbol: electricCharge.symbol + "/" + electricPotential.symbol
+        )
+    }
 }
 
 // MARK: - Codable

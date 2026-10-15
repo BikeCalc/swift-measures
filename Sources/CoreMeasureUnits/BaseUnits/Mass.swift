@@ -28,6 +28,70 @@ public struct Mass {
         self.symbol = symbol
     }
 
+    /// Returns a unit of force by multiplying the specified units.
+    ///
+    /// - Parameters:
+    ///   - lhs: The mass unit.
+    ///   - rhs: The acceleration unit.
+    /// - Returns: A unit of force.
+    public static func * (
+        lhs: Self,
+        rhs: Acceleration
+    ) -> Force {
+        return .init(
+            mass: lhs,
+            acceleration: rhs
+        )
+    }
+
+    /// Returns a unit of surface density by dividing the specified units.
+    ///
+    /// - Parameters:
+    ///   - lhs: The mass unit.
+    ///   - rhs: The area unit.
+    /// - Returns: A unit of surface density.
+    public static func / (
+        lhs: Self,
+        rhs: Area
+    ) -> SurfaceDensity {
+        return .init(
+            mass: lhs,
+            area: rhs
+        )
+    }
+
+    /// Returns a unit of molar mass by dividing the specified units.
+    ///
+    /// - Parameters:
+    ///   - lhs: The mass unit.
+    ///   - rhs: The substance amount unit.
+    /// - Returns: A unit of molar mass.
+    public static func / (
+        lhs: Self,
+        rhs: SubstanceAmount
+    ) -> MolarMass {
+        return .init(
+            mass: lhs,
+            substanceAmount: rhs
+        )
+    }
+
+    /// Returns a unit of concentration by dividing the specified units.
+    ///
+    /// - Parameters:
+    ///   - lhs: The mass unit.
+    ///   - rhs: The volume unit.
+    /// - Returns: A unit of concentration.
+    public static func / (
+        lhs: Self,
+        rhs: Volume
+    ) -> Concentration {
+        return .init(
+            mass: lhs,
+            volume: rhs
+        )
+    }
+
     // MARK: Astronomical Units
 
     /// The solar unit of mass.
@@ -163,52 +227,6 @@ extension Mass: Codable {}
 
 extension Mass: Comparable {}
 
-// MARK: - Divisible
-
-extension Mass {
-    /// Returns the quotient of dividing this value by the specified value.
-    ///
-    /// - Parameter area: A unit of area.
-    /// - Returns: A unit of surface density.
-    public func dividing(by area: Area) -> SurfaceDensity {
-        let coefficient: Double = self.coefficient * (1 / area.coefficient)
-        let symbol: String = self.symbol + "/" + area.symbol
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
-
-    /// Returns the quotient of dividing this value by the specified value.
-    ///
-    /// - Parameter substanceAmount: A unit of substance amount.
-    /// - Returns: A unit of molar mass.
-    public func dividing(by substanceAmount: SubstanceAmount) -> MolarMass {
-        let coefficient: Double = self.coefficient * (1 / substanceAmount.coefficient)
-        let symbol: String = self.symbol + "/" + substanceAmount.symbol
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
-
-    /// Returns the quotient of dividing this value by the specified value.
-    ///
-    /// - Parameter volume: A unit of volume.
-    /// - Returns: A unit of concentration.
-    public func dividing(by volume: Volume) -> Concentration {
-        let coefficient: Double = self.coefficient * (1 / volume.coefficient)
-        let symbol: String = self.symbol + "/" + volume.symbol
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
-}
-
 // MARK: - Equatable
 
 extension Mass: Equatable {}
@@ -221,24 +239,6 @@ extension Mass: Hashable {}
 
 extension Mass: Measurable {
     public static let base: Self = .kilogram
-}
-
-// MARK: - Multipliable
-
-extension Mass {
-    /// Returns the product of multiplying this value by the specified value.
-    ///
-    /// - Parameter acceleration: A unit of acceleration.
-    /// - Returns: A unit of force.
-    public func multiplying(by acceleration: Acceleration) -> Force {
-        let coefficient: Double = self.coefficient * acceleration.coefficient
-        let symbol: String = self.symbol + "⋅" + acceleration.symbol
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
 }
 
 // MARK: - Sendable

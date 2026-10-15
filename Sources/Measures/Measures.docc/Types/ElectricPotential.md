@@ -46,9 +46,8 @@
 
 ### Dividing Units
 
-- ``dividing(by:)``
+- ``/(_:_:)->ElectricalResistance``
 
 ### Multiplying Units
 
-- ``multiplying(by:)->Energy``
-- ``multiplying(by:)->MagneticFlux``
+- ``*(_:_:)->MagneticFlux``

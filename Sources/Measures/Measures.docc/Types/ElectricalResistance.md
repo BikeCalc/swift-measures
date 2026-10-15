@@ -43,7 +43,3 @@
 - ``yoctoohm``
 - ``rontoohm``
 - ``quectoohm``
-
-### Multiplying Units
-
-- ``multiplying(by:)``

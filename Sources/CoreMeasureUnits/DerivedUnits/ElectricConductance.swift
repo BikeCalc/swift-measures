@@ -27,6 +27,23 @@ public struct ElectricConductance {
         self.constant = constant
         self.symbol = symbol
     }
+
+    /// Creates a unit of electric conductance from the specified units.
+    ///
+    /// The coefficient and symbol are formed by dividing the electric current unit by the electric potential unit.
+    ///
+    /// - Parameters:
+    ///   - electricCurrent: The electric current unit.
+    ///   - electricPotential: The electric potential unit.
+    internal init(
+        electricCurrent: ElectricCurrent,
+        electricPotential: ElectricPotential
+    ) {
+        self.init(
+            coefficient: electricCurrent.coefficient * (1 / electricPotential.coefficient),
+            symbol: electricCurrent.symbol + "/" + electricPotential.symbol
+        )
+    }
 }
 
 // MARK: - Codable

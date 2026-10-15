@@ -26,16 +26,42 @@ public struct Concentration {
         self.symbol = symbol
     }
 
+    /// Creates a unit of concentration from the specified units.
+    ///
+    /// The coefficient and symbol are formed by dividing the mass unit by the volume unit.
+    ///
+    /// - Parameters:
+    ///   - mass: The mass unit.
+    ///   - volume: The volume unit.
+    internal init(
+        mass: Mass,
+        volume: Volume
+    ) {
+        self.init(
+            coefficient: mass.coefficient * (1 / volume.coefficient),
+            symbol: mass.symbol + "/" + volume.symbol
+        )
+    }
+
     // MARK: Composed Units
 
     /// The kilograms per cubic meter unit of concentration.
-    public static let kilogramsPerCubicMeter: Self = Mass.kilogram.dividing(by: .cubicMeter)
+    public static let kilogramsPerCubicMeter: Self = .init(
+        mass: .kilogram,
+        volume: .cubicMeter
+    )
 
     /// The grams per liter unit of concentration.
-    public static let gramsPerLiter: Self = Mass.gram.dividing(by: .liter)
+    public static let gramsPerLiter: Self = .init(
+        mass: .gram,
+        volume: .liter
+    )
 
     /// The milligrams per liter unit of concentration.
-    public static let milligramsPerLiter: Self = Mass.milligram.dividing(by: .liter)
+    public static let milligramsPerLiter: Self = .init(
+        mass: .milligram,
+        volume: .liter
+    )
 }
 
 // MARK: - Codable

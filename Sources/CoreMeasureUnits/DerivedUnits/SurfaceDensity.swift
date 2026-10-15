@@ -26,16 +26,42 @@ public struct SurfaceDensity {
         self.symbol = symbol
     }
 
+    /// Creates a unit of surface density from the specified units.
+    ///
+    /// The coefficient and symbol are formed by dividing the mass unit by the area unit.
+    ///
+    /// - Parameters:
+    ///   - mass: The mass unit.
+    ///   - area: The area unit.
+    internal init(
+        mass: Mass,
+        area: Area
+    ) {
+        self.init(
+            coefficient: mass.coefficient * (1 / area.coefficient),
+            symbol: mass.symbol + "/" + area.symbol
+        )
+    }
+
     // MARK: Composed Units
 
     /// The pounds per square foot unit of surface density.
-    public static let poundsPerSquareFoot: Self = Mass.pound.dividing(by: .squareFoot)
+    public static let poundsPerSquareFoot: Self = .init(
+        mass: .pound,
+        area: .squareFoot
+    )
 
     /// The kilograms per square meter unit of surface density.
-    public static let kilogramsPerSquareMeter: Self = Mass.kilogram.dividing(by: .squareMeter)
+    public static let kilogramsPerSquareMeter: Self = .init(
+        mass: .kilogram,
+        area: .squareMeter
+    )
 
     /// The grams per square meter unit of surface density.
-    public static let gramsPerSquareMeter: Self = Mass.gram.dividing(by: .squareMeter)
+    public static let gramsPerSquareMeter: Self = .init(
+        mass: .gram,
+        area: .squareMeter
+    )
 }
 
 // MARK: - Codable

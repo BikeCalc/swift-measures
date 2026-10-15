@@ -28,11 +28,61 @@ public struct Force {
         self.symbol = symbol
     }
 
+    /// Creates a unit of force from the specified units.
+    ///
+    /// The coefficient and symbol are formed by multiplying the mass unit by the acceleration unit.
+    ///
+    /// - Parameters:
+    ///   - mass: The mass unit.
+    ///   - acceleration: The acceleration unit.
+    internal init(
+        mass: Mass,
+        acceleration: Acceleration
+    ) {
+        self.init(
+            coefficient: mass.coefficient * acceleration.coefficient,
+            symbol: mass.symbol + "⋅" + acceleration.symbol
+        )
+    }
+
+    /// Returns a unit of energy by multiplying the specified units.
+    ///
+    /// - Parameters:
+    ///   - lhs: The force unit.
+    ///   - rhs: The length unit.
+    /// - Returns: A unit of energy.
+    public static func * (
+        lhs: Self,
+        rhs: Length
+    ) -> Energy {
+        return .init(
+            force: lhs,
+            length: rhs
+        )
+    }
+
+    /// Returns a unit of pressure by dividing the specified units.
+    ///
+    /// - Parameters:
+    ///   - lhs: The force unit.
+    ///   - rhs: The area unit.
+    /// - Returns: A unit of pressure.
+    public static func / (
+        lhs: Self,
+        rhs: Area
+    ) -> Pressure {
+        return .init(
+            force: lhs,
+            area: rhs
+        )
+    }
+
     // MARK: Composed Units
 
     /// The kilogram-meter per square second unit of force.
-    public static let kilogramMeterPerSquareSecond: Self = Mass.kilogram.multiplying(
-        by: Acceleration.meterPerSquareSecond
+    public static let kilogramMeterPerSquareSecond: Self = .init(
+        mass: .kilogram,
+        acceleration: .meterPerSquareSecond
     )
 
     // MARK: U.S. Customary and Imperial Units
@@ -62,24 +112,6 @@ extension Force: Codable {}
 
 extension Force: Comparable {}
 
-// MARK: - Divisible
-
-extension Force {
-    /// Returns the quotient of dividing this value by the specified value.
-    ///
-    /// - Parameter area: A unit of area.
-    /// - Returns: A unit of pressure.
-    public func dividing(by area: Area) -> Pressure {
-        let coefficient: Double = self.coefficient * (1 / area.coefficient)
-        let symbol: String = self.symbol + "/" + area.symbol
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
-}
-
 // MARK: - Equatable
 
 extension Force: Equatable {}
@@ -92,24 +124,6 @@ extension Force: Hashable {}
 
 extension Force: Measurable {
     public static let base: Self = .newton
-}
-
-// MARK: - Multipliable
-
-extension Force {
-    /// Returns the product of multiplying this value by the specified value.
-    ///
-    /// - Parameter length: A unit of length.
-    /// - Returns: A unit of energy.
-    public func multiplying(by length: Length) -> Energy {
-        let coefficient: Double = self.coefficient * length.coefficient
-        let symbol: String = self.symbol + "⋅" + length.symbol
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
 }
 
 // MARK: - Sendable

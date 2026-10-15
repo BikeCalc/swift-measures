@@ -26,13 +26,36 @@ public struct MolarMass {
         self.symbol = symbol
     }
 
+    /// Creates a unit of molar mass from the specified units.
+    ///
+    /// The coefficient and symbol are formed by dividing the mass unit by the substance amount unit.
+    ///
+    /// - Parameters:
+    ///   - mass: The mass unit.
+    ///   - substanceAmount: The substance amount unit.
+    internal init(
+        mass: Mass,
+        substanceAmount: SubstanceAmount
+    ) {
+        self.init(
+            coefficient: mass.coefficient * (1 / substanceAmount.coefficient),
+            symbol: mass.symbol + "/" + substanceAmount.symbol
+        )
+    }
+
     // MARK: Composed Units
 
     /// The kilograms per mole unit of molar mass.
-    public static let kilogramsPerMole: Self = Mass.kilogram.dividing(by: SubstanceAmount.mole)
+    public static let kilogramsPerMole: Self = .init(
+        mass: .kilogram,
+        substanceAmount: .mole
+    )
 
     /// The grams per mole unit of molar mass.
-    public static let gramsPerMole: Self = Mass.gram.dividing(by: SubstanceAmount.mole)
+    public static let gramsPerMole: Self = .init(
+        mass: .gram,
+        substanceAmount: .mole
+    )
 }
 
 // MARK: - Codable

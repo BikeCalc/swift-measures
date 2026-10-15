@@ -27,6 +27,22 @@ public struct LuminousFlux {
         self.constant = constant
         self.symbol = symbol
     }
+
+    /// Returns a unit of illuminance by dividing the specified units.
+    ///
+    /// - Parameters:
+    ///   - lhs: The luminous flux unit.
+    ///   - rhs: The area unit.
+    /// - Returns: A unit of illuminance.
+    public static func / (
+        lhs: Self,
+        rhs: Area
+    ) -> Illuminance {
+        return .init(
+            luminousFlux: lhs,
+            area: rhs
+        )
+    }
 }
 
 // MARK: - Codable
@@ -36,24 +52,6 @@ extension LuminousFlux: Codable {}
 // MARK: - Comparable
 
 extension LuminousFlux: Comparable {}
-
-// MARK: - Divisible
-
-extension LuminousFlux {
-    /// Returns the quotient of dividing this value by the specified value.
-    ///
-    /// - Parameter area: A unit of area.
-    /// - Returns: A unit of illuminance.
-    public func dividing(by area: Area) -> Illuminance {
-        let coefficient: Double = self.coefficient * (1 / area.coefficient)
-        let symbol: String = self.symbol + "/" + area.symbol
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
-}
 
 // MARK: - Equatable
 

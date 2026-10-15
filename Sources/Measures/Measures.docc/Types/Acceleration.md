@@ -20,3 +20,7 @@
 
 - ``meterPerSquareSecond``
 - ``footPerSquareSecond``
+
+### Multiplying Units
+
+- ``*(_:_:)->Force``

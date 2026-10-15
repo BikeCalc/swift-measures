@@ -83,10 +83,10 @@
 
 ### Dividing Units
 
-- ``dividing(by:)->Concentration``
-- ``dividing(by:)->MolarMass``
-- ``dividing(by:)->SurfaceDensity``
+- ``/(_:_:)->SurfaceDensity``
+- ``/(_:_:)->MolarMass``
+- ``/(_:_:)->Concentration``
 
 ### Multiplying Units
 
-- ``multiplying(by:)``
+- ``*(_:_:)->Force``

@@ -26,29 +26,80 @@ public struct Speed {
         self.symbol = symbol
     }
 
+    /// Creates a unit of speed from the specified units.
+    ///
+    /// The coefficient and symbol are formed by dividing the length unit by the time unit.
+    ///
+    /// - Parameters:
+    ///   - length: The length unit.
+    ///   - time: The time unit.
+    internal init(
+        length: Length,
+        time: Time
+    ) {
+        self.init(
+            coefficient: length.coefficient * (1 / time.coefficient),
+            symbol: length.symbol + "/" + time.symbol
+        )
+    }
+
+    /// Returns a unit of acceleration by dividing the specified units.
+    ///
+    /// - Parameters:
+    ///   - lhs: The speed unit.
+    ///   - rhs: The time unit.
+    /// - Returns: A unit of acceleration.
+    public static func / (
+        lhs: Self,
+        rhs: Time
+    ) -> Acceleration {
+        return .init(
+            speed: lhs,
+            time: rhs
+        )
+    }
+
     // MARK: Customary and Imperial Units
 
     /// The miles per hour unit of speed.
-    public static let milesPerHour: Self = Length.mile.dividing(by: .hour)
+    public static let milesPerHour: Self = .init(
+        length: .mile,
+        time: .hour
+    )
 
     /// The feet per second unit of speed.
-    public static let feetPerSecond: Self = Length.foot.dividing(by: .second)
+    public static let feetPerSecond: Self = .init(
+        length: .foot,
+        time: .second
+    )
 
     // MARK: Metric Units
 
     /// The kilometers per hour unit of speed.
-    public static let kilometersPerHour: Self = Length.kilometer.dividing(by: .hour)
+    public static let kilometersPerHour: Self = .init(
+        length: .kilometer,
+        time: .hour
+    )
 
     /// The meter per second unit of speed.
-    public static let metersPerSecond: Self = Length.meter.dividing(by: .second)
+    public static let metersPerSecond: Self = .init(
+        length: .meter,
+        time: .second
+    )
 
     /// The centimeters per second unit of speed.
-    public static let centimetersPerSecond: Self = Length.centimeter.dividing(by: .second)
+    public static let centimetersPerSecond: Self = .init(
+        length: .centimeter,
+        time: .second
+    )
 
     // MARK: Other Units
 
     /// The knot unit of speed.
-    public static let knot: Self = Length.nauticalMile.dividing(by: .hour)
+    public static let knot: Self = .init(
+        length: .nauticalMile,
+        time: .hour
+    )
 }
 
 // MARK: - Codable
@@ -58,24 +109,6 @@ extension Speed: Codable {}
 // MARK: - Comparable
 
 extension Speed: Comparable {}
-
-// MARK: - Divisible
-
-extension Speed {
-    /// Returns the quotient of dividing this value by the specified value.
-    ///
-    /// - Parameter time: A unit of time.
-    /// - Returns: A unit of acceleration.
-    public func dividing(by time: Time) -> Acceleration {
-        let coefficient: Double = self.coefficient * (1 / time.coefficient)
-        let symbol: String = self.symbol + "/" + time.symbol
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
-}
 
 // MARK: - Equatable
 

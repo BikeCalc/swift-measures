@@ -52,5 +52,5 @@
 
 ### Dividing Units
 
-- ``dividing(by:)->ElectricalCapacitance``
-- ``dividing(by:)->ElectricCurrent``
+- ``/(_:_:)->ElectricalCapacitance``
+- ``/(_:_:)->ElectricCurrent``

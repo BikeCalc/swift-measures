@@ -46,4 +46,4 @@
 
 ### Dividing Units
 
-- ``dividing(by:)``
+- ``/(_:_:)->Illuminance``

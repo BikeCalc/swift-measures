@@ -56,3 +56,9 @@
 - ``day``
 - ``hour``
 - ``minute``
+
+### Multiplying Units
+
+- ``*(_:_:)->ElectricCharge``
+- ``*(_:_:)->MagneticFlux``
+- ``*(_:_:)->Energy``

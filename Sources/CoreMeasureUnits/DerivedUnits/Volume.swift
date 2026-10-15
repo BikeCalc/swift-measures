@@ -28,31 +28,41 @@ public struct Volume {
         self.symbol = symbol
     }
 
+    /// Creates a unit of volume by cubing the specified length unit.
+    ///
+    /// - Parameter length: The length unit to cube.
+    internal init(cubing length: Length) {
+        self.init(
+            coefficient: length.coefficient * length.coefficient * length.coefficient,
+            symbol: length.symbol + "³"
+        )
+    }
+
     // MARK: Composed Units
 
     /// The cubic mile unit of volume.
-    public static let cubicMile: Self = Length.mile.cubed()
+    public static let cubicMile: Self = .init(cubing: .mile)
 
     /// The cubic kilometer unit of volume.
-    public static let cubicKilometer: Self = Length.kilometer.cubed()
+    public static let cubicKilometer: Self = .init(cubing: .kilometer)
 
     /// The cubic meter unit of volume.
-    public static let cubicMeter: Self = Length.meter.cubed()
+    public static let cubicMeter: Self = .init(cubing: .meter)
 
     /// The cubic yard unit of volume.
-    public static let cubicYard: Self = Length.yard.cubed()
+    public static let cubicYard: Self = .init(cubing: .yard)
 
     /// The cubic foot unit of volume.
-    public static let cubicFoot: Self = Length.foot.cubed()
+    public static let cubicFoot: Self = .init(cubing: .foot)
 
     /// The cubic inch unit of volume.
-    public static let cubicInch: Self = Length.inch.cubed()
+    public static let cubicInch: Self = .init(cubing: .inch)
 
     /// The cubic centimeter unit of volume.
-    public static let cubicCentimeter: Self = Length.centimeter.cubed()
+    public static let cubicCentimeter: Self = .init(cubing: .centimeter)
 
     /// The cubic millimeter unit of volume.
-    public static let cubicMillimeter: Self = Length.millimeter.cubed()
+    public static let cubicMillimeter: Self = .init(cubing: .millimeter)
 
     // MARK: Imperial Units
 
@@ -217,7 +227,10 @@ public struct Volume {
     )
 
     /// The acre-foot unit of volume.
-    public static let acreFoot: Self = Area.acre.multiplying(by: .foot)
+    public static let acreFoot: Self = .init(
+        coefficient: Area.acre.coefficient * Length.foot.coefficient,
+        symbol: Area.acre.symbol + "·" + Length.foot.symbol
+    )
 
     // MARK: U.S. Nutrition Labeling Units
 
