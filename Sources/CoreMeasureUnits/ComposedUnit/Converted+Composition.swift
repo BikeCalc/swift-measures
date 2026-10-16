@@ -18,9 +18,9 @@ where UnitType == ComposedUnit {
 
     /// Creates a wrapper that converts each assigned measure to its coherent SI unit.
     ///
-    /// The destination is recalculated on every assignment, allowing the stored dimension to change. Conversion
-    /// applies the assigned unit's coefficient and constant. Encoding stores only the measure; decoding restores
-    /// a fixed destination rather than this policy.
+    /// The destination is recalculated on every assignment, allowing the stored dimension to change. Conversion applies
+    /// the assigned unit's coefficient and constant. Encoding stores only the measure; decoding restores a fixed
+    /// destination rather than this policy.
     ///
     /// For example:
     ///

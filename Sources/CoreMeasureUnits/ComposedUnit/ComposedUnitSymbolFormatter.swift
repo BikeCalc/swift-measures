@@ -8,8 +8,8 @@
 
 /// Formats ordered unit-symbol factors without simplifying or parsing expressions.
 ///
-/// Signed superscript exponents preserve factor order, with multiplication dots separating factors.
-/// Supplied unit labels are preserved.
+/// Signed superscript exponents preserve factor order, with multiplication dots separating factors. Supplied unit
+/// labels are preserved.
 ///
 /// For example:
 ///
@@ -144,17 +144,16 @@ internal struct ComposedUnitSymbolFormatter {
 
     /// Formats the stored factors using signed superscript powers and multiplication dots.
     ///
-    /// Factor order, duplicates, and opposing exponents are preserved.
-    /// Zero exponents are always omitted and positive one is implicit. Compound labels are grouped when needed; no
-    /// symbol is parsed.
+    /// Factor order, duplicates, and opposing exponents are preserved. Zero exponents are always omitted and positive
+    /// one is implicit. Compound labels are grouped when needed; no symbol is parsed.
     ///
     /// - Returns: The formatted unit expression, or an empty string when no nonzero factors remain.
     /// - Precondition: Every factor's symbol must pass `ComposedUnitSymbolValidator` validation.
     internal func format() -> String {
         /// Checks whether appending an exponent requires parentheses around the complete label.
         ///
-        /// Atomic labels need none. One balanced pair already enclosing the complete label is reused. Operators
-        /// and existing powers require grouping so the appended exponent applies to the whole defined unit.
+        /// Atomic labels need none. One balanced pair already enclosing the complete label is reused. Operators and
+        /// existing powers require grouping so the appended exponent applies to the whole defined unit.
         ///
         /// - Parameter symbol: A display label with balanced parentheses; this check does not validate or simplify it.
         /// - Returns: A boolean value indicating whether an additional pair of parentheses is needed before appending

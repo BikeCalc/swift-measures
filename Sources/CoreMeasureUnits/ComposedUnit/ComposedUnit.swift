@@ -174,8 +174,8 @@ public struct ComposedUnit {
     /// Creates a composed unit preserving the supplied factors and their order.
     ///
     /// Offsets are permitted only for a single active factor with exponent one. Simplification and normalization are
-    /// explicit operations; construction preserves duplicates and zero exponents.
-    /// Derived coefficients and dimension exponents are evaluated only when needed.
+    /// explicit operations; construction preserves duplicates and zero exponents. Derived coefficients and dimension
+    /// exponents are evaluated only when needed.
     ///
     /// - Parameter factors: The factors to compose. An empty collection represents the dimensionless identity.
     internal init(factors: Array<Self.Factor>) {
@@ -366,11 +366,10 @@ extension ComposedUnit: ComposableUnit {
 
     /// The stored factors formatted with multiplication dots and signed superscript exponents.
     ///
-    /// Formatting preserves factor order and does not simplify. Zero exponents are omitted; no active factors
-    /// produce an empty string. Active factor labels must be nonempty, have no surrounding whitespace, contain
-    /// balanced nonempty parentheses, and supply operands around multiplication, division, and power operators.
-    /// Invalid labels fail a precondition when this property is read. Internal spaces, such as in `imp ton`, are
-    /// allowed.
+    /// Formatting preserves factor order and does not simplify. Zero exponents are omitted; no active factors produce
+    /// an empty string. Active factor labels must be nonempty, have no surrounding whitespace, contain balanced
+    /// nonempty parentheses, and supply operands around multiplication, division, and power operators. Invalid labels
+    /// fail a precondition when this property is read. Internal spaces, such as in `imp ton`, are allowed.
     public var symbol: String {
         let formatter: ComposedUnitSymbolFormatter = .init(factors: self.factors)
         return formatter.format()
@@ -387,8 +386,8 @@ extension ComposedUnit: ComposableUnit {
 
     /// The permitted values on the coherent SI reference scale.
     ///
-    /// Pure thermodynamic temperature requires a nonnegative value in kelvins. All other dimensions use
-    /// the unrestricted range, including compositions containing temperature with other dimensions.
+    /// Pure thermodynamic temperature requires a nonnegative value in kelvins. All other dimensions use the
+    /// unrestricted range, including compositions containing temperature with other dimensions.
     public var validRange: ClosedRange<Double> {
         if self.dimension == Dimension(thermodynamicTemperature: 1) {
             return 0 ... .infinity
@@ -403,9 +402,8 @@ extension ComposedUnit: ComposableUnit {
 extension ComposedUnit: Decodable {
     /// Decodes factors and validates their conversion definitions and constant combinations.
     ///
-    /// The wire format is simply an array of factors; no redundant aggregate properties are encoded.
-    /// Factors retain their order, duplicates, and zero exponents. Derived coefficients and dimensions are not
-    /// evaluated.
+    /// The wire format is simply an array of factors; no redundant aggregate properties are encoded. Factors retain
+    /// their order, duplicates, and zero exponents. Derived coefficients and dimensions are not evaluated.
     ///
     /// - Parameter decoder: The decoder supplying the factor array.
     /// - Throws: A decoding error if a factor cannot be decoded or its conversion or constant combination is invalid.
@@ -443,9 +441,9 @@ extension ComposedUnit: Encodable {
 extension ComposedUnit: Equatable {
     /// Returns a boolean value indicating whether the stored factors match in the same order.
     ///
-    /// Each factor's unit definition and exponent must match, including its symbol. No simplification,
-    /// normalization, or derived arithmetic is performed. Use `isCanonicallyEqual(to:)` to compare the resulting
-    /// dimensions and conversion definitions instead.
+    /// Each factor's unit definition and exponent must match, including its symbol. No simplification, normalization,
+    /// or derived arithmetic is performed. Use `isCanonicallyEqual(to:)` to compare the resulting dimensions and
+    /// conversion definitions instead.
     ///
     /// - Parameters:
     ///   - lhs: The first unit to compare.
@@ -539,8 +537,8 @@ extension ComposedUnit: Simplifiable {
 
     /// Combines identical unit representations, removing zero totals while retaining first active appearance order.
     ///
-    /// Matching includes dimension, coefficient, constant, and symbol. Distinct custom units sharing a symbol
-    /// remain separate. Exponent addition traps on overflow; floating-point scale calculations may round differently.
+    /// Matching includes dimension, coefficient, constant, and symbol. Distinct custom units sharing a symbol remain
+    /// separate. Exponent addition traps on overflow; floating-point scale calculations may round differently.
     ///
     /// - Returns: A composed unit with each surviving representation stored once.
     /// - Precondition: `isSimplifiable` is `true`.

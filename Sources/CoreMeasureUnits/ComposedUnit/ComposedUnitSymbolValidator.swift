@@ -8,8 +8,8 @@
 
 /// Checks the structure and surrounding whitespace of a unit symbol.
 ///
-/// Internal spaces in labels such as `imp ton` are accepted. Empty labels and groups are rejected.
-/// This validator does not resolve units or validate exponent values.
+/// Internal spaces in labels such as `imp ton` are accepted. Empty labels and groups are rejected. This validator does
+/// not resolve units or validate exponent values.
 internal struct ComposedUnitSymbolValidator {
     /// Binary operators requiring operands on both sides.
     private enum OperatorToken: Character, RawRepresentable {

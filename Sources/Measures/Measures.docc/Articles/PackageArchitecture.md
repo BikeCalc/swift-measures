@@ -4,10 +4,10 @@ Understand how the targets in Measures are organized and how they depend on one 
 
 ## Overview
 
-Measures separates its core measure types from its core and additional units. Core measure types provide measures,
-unit protocols, physical dimensions, and conversion to a fixed unit. Core measure units provide predefined
-SI-compatible base and derived units, composed units, and dimensional arithmetic. Additional measure units extend the
-package with units outside that collection. The macro targets generate units with consistent prefixes.
+Measures separates its core measure types from its core and additional units. Core measure types provide measures, unit
+protocols, physical dimensions, and conversion to a fixed unit. Core measure units provide predefined SI-compatible base
+and derived units, composed units, and dimensional arithmetic. Additional measure units extend the package with units
+outside that collection. The macro targets generate units with consistent prefixes.
 
 The package also contains a command plugin and two test targets. These targets support development and validation
 without becoming part of the public library product.

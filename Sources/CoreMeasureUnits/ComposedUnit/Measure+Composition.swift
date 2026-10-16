@@ -31,8 +31,8 @@ where UnitType: ComposableUnit {
     ///
     /// - Parameter unit: The unit to convert to.
     /// - Returns: A measure expressed in the destination unit.
-    /// - Precondition: The source and destination units are compatible, both coefficients are finite and positive,
-    ///   and both constants are finite.
+    /// - Precondition: The source and destination units are compatible, both coefficients are finite and positive, and
+    ///   both constants are finite.
     public func converted<Destination>(to unit: Destination) -> Measure<Destination>
     where Destination: ComposableUnit {
         precondition(
@@ -97,7 +97,8 @@ where UnitType: ComposableUnit {
     /// Returns the quotient of two measures in a composed coherent SI unit.
     ///
     /// Each value is converted to its coherent SI unit before division, applying its coefficient and constant.
-    /// Values follow ordinary `Double` division, including infinity and NaN for division by zero.
+    /// Constants apply to absolute values, rather than differences. Valid ranges are not enforced. Values follow
+    /// ordinary `Double` division, including infinity and NaN for division by zero.
     ///
     /// - Parameters:
     ///   - lhs: The numerator measure.
@@ -163,6 +164,7 @@ where UnitType: ComposableUnit {
     ///
     /// Each value is converted to its coherent SI unit before multiplication. Constants therefore apply to absolute
     /// values, rather than differences. Values follow ordinary `Double` multiplication, including infinity and NaN.
+    /// Valid ranges are not enforced.
     ///
     /// For example:
     ///
@@ -238,14 +240,15 @@ where UnitType: ComposableUnit & Equatable {
     /// The result of exponentiation, whose dimension may differ from the original measure.
     public typealias Power = Measure<ComposedUnit>
 
-    /// Returns a boolean value indicating whether this measure is an integer power of a possibly different measure type.
+    /// Returns a boolean value indicating whether this measure is an integer power of a possibly different measure
+    /// type.
     ///
     /// Dimensions determine the integer exponent whenever the base has a physical dimension. Both values are converted
     /// to coherent SI values, including offsets, and compared exactly. When both dimensions are dimensionless, the
     /// numeric `isPower(of:)` implementation determines the result.
     ///
-    /// Invalid conversions, nonfinite coherent values, and zero bases with negative exponents return `false`.
-    /// Physical valid ranges are not enforced. Evaluating a composed dimension uses ordinary integer arithmetic.
+    /// Invalid conversions, nonfinite coherent values, and zero bases with negative exponents return `false`. Physical
+    /// valid ranges are not enforced. Evaluating a composed dimension uses ordinary integer arithmetic.
     ///
     /// For example:
     ///
@@ -319,9 +322,10 @@ where UnitType: ComposableUnit & Equatable {
 
     /// Returns this measure raised to an integer power in a composed coherent SI unit.
     ///
-    /// The value is converted to its coherent SI unit before exponentiation, applying its coefficient and constant.
-    /// The numeric result follows Numerics Extended's `Double` exponentiation, including infinity and NaN.
-    /// An exponent of zero returns a dimensionless measure with value one.
+    /// The value is converted to its coherent SI unit before exponentiation, applying its coefficient and constant. The
+    /// constant applies to an absolute value, rather than a difference. Valid ranges are not enforced. The numeric
+    /// result follows Numerics Extended's `Double` exponentiation, including infinity and NaN. An exponent of zero
+    /// returns a dimensionless measure with value one.
     ///
     /// - Parameters:
     ///   - lhs: The measure to raise to a power.

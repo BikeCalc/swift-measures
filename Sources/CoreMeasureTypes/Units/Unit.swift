@@ -10,11 +10,11 @@ import NumericsExtended
 
 /// A unit with an affine conversion to its reference scale.
 ///
-/// Reference values are calculated as `value * coefficient + constant`. Conversion to another compatible unit
-/// subtracts that unit's constant and divides by its coefficient. The valid range is expressed on the reference scale.
+/// Reference values are calculated as `value * coefficient + constant`. Conversion to another compatible unit subtracts
+/// that unit's constant and divides by its coefficient. The valid range is expressed on the reference scale.
 ///
-/// The default compatibility implementation accepts every instance of the same unit type. Types with dimensions
-/// that vary between instances must provide a compatibility check; `ComposableUnit` compares their dimensions.
+/// The default compatibility implementation accepts every instance of the same unit type. Types with dimensions that
+/// vary between instances must provide a compatibility check; `ComposableUnit` compares their dimensions.
 public protocol Unit {
     /// The finite, strictly positive multiplicative scale relative to the reference unit.
     var coefficient: Double { get }

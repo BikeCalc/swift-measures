@@ -11,9 +11,9 @@ import NumericsExtended
 /// A property wrapper that converts a measure whenever it is assigned.
 ///
 /// Pass a destination unit to keep the wrapped measure expressed in that unit. Defined units support `.base` as a
-/// destination. An explicit composed destination is also fixed: subsequent assignments must have a compatible dimension.
-/// For composed measures whose dimension may change, the coherent conversion policy resolves a destination for each
-/// assignment instead.
+/// destination. An explicit composed destination is also fixed: subsequent assignments must have a compatible
+/// dimension. For composed measures whose dimension may change, the coherent conversion policy resolves a destination
+/// for each assignment instead.
 ///
 /// Encoding stores only the wrapped measure. Decoding uses its stored unit as a fixed destination and does not restore
 /// a dynamic conversion policy.
@@ -153,8 +153,8 @@ extension Converted: Decodable
 where UnitType: Decodable {
     /// Creates a wrapper by decoding a converted measure.
     ///
-    /// The decoded unit becomes a fixed destination for subsequent assignments. Dynamic conversion policies are
-    /// not serialized.
+    /// The decoded unit becomes a fixed destination for subsequent assignments. Dynamic conversion policies are not
+    /// serialized.
     ///
     /// - Parameter decoder: The decoder to read data from.
     /// - Throws: Any error thrown while decoding the wrapped measure.

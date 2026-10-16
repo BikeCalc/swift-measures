@@ -6,8 +6,8 @@
 
     @Section(title: "Define the dimension") {
         @ContentAndMedia {
-            Build a custom dimension, define its valid range, and compose reusable units from existing memory and
-            time units.
+            Build a custom dimension, define its valid range, and compose reusable units from existing memory and time
+            units.
         }
 
         @Steps {
@@ -24,8 +24,7 @@
             }
 
             @Step {
-                Conform `DataTransferRate` to `Unit` to describe a dimension whose units can be measured and
-                converted.
+                Conform `DataTransferRate` to `Unit` to describe a dimension whose units can be measured and converted.
 
                 @Code(name: "DataTransferRate.swift", file: "01-03.swift")
             }
@@ -44,8 +43,8 @@
             }
 
             @Step {
-                Define the base unit as one bit per second. Its coefficient is `1` because every other unit is
-                expressed relative to it, and its symbol is `b/s`.
+                Define the base unit as one bit per second. Its coefficient is `1` because every other unit is expressed
+                relative to it, and its symbol is `b/s`.
 
                 @Code(name: "DataTransferRate.swift", file: "01-06.swift")
             }
@@ -148,8 +147,8 @@
             }
 
             @Step {
-                Return to the original declaration, keeping its print statement but removing `convertedDownloadRate`
-                and the converted-rate print.
+                Return to the original declaration, keeping its print statement but removing `convertedDownloadRate` and
+                the converted-rate print.
 
                 @Code(name: "main.swift", file: "02-08.swift")
             }
@@ -242,8 +241,8 @@
             }
 
             @Step {
-                Print `isValid` to check the result against the range defined by `DataTransferRate`. Because the rate
-                is negative, the property returns `false`.
+                Print `isValid` to check the result against the range defined by `DataTransferRate`. Because the rate is
+                negative, the property returns `false`.
 
                 @Code(name: "main.swift", file: "02-23.swift")
             }

@@ -14,8 +14,16 @@ import NumericsExtended
 /// additionally carries its physical dimension at runtime. Conversion preserves the represented quantity by applying
 /// the source and destination coefficients and constants.
 ///
-/// Initialization stores the supplied value and unit without validating their range. Use `isValid` to check the value
-/// and conversion definition against the unit's reference-scale range.
+/// Initialization, conversion, and arithmetic do not enforce the unit's valid range or clamp values to its bounds. Use
+/// `isValid` to check the value and conversion definition against the unit's reference-scale range.
+///
+/// Addition and subtraction operate on readings expressed in the left operand's unit. Scalar multiplication and
+/// division scale the stored reading without applying the unit's coefficient or constant. For offset units, this
+/// differs from scaling an absolute value on the reference scale.
+///
+/// Absolute quantities and differences are not represented by distinct types. In particular, subtracting temperatures
+/// retains the left operand's temperature unit; the result does not acquire temperature-difference conversion
+/// semantics.
 public struct Measure<UnitType>
 where UnitType: Unit {
     /// The keys used to encode and decode a measure.
@@ -103,6 +111,17 @@ where UnitType: Equatable {
     public typealias Addend = Self
     public typealias Sum = Self
 
+    /// Returns the sum of readings expressed in the first measure's unit.
+    ///
+    /// The second measure is converted before the readings are combined. The result retains the first unit, including
+    /// its constant, and is not clamped to its valid range.
+    ///
+    /// - Parameters:
+    ///   - lhs: The first measure.
+    ///   - rhs: The measure to add.
+    /// - Returns: The sum in the first measure's unit.
+    /// - Precondition: The units are compatible, both coefficients are finite and positive, and both constants are
+    ///   finite.
     public static func + (
         _ lhs: Self,
         _ rhs: Self.Addend
@@ -116,13 +135,16 @@ where UnitType: Equatable {
 
     /// Returns the sum after converting the other measure to this measure's unit.
     ///
-    /// Values follow ordinary `Double` arithmetic. The inherited mutating method leaves this measure unchanged
-    /// if the units are incompatible and this method throws.
+    /// Adds the readings in this unit, retaining its constant and without clamping the result to its valid range.
+    ///
+    /// Values follow ordinary `Double` arithmetic. The inherited mutating method leaves this measure unchanged if the
+    /// units are incompatible and this method throws.
     ///
     /// - Parameter addend: The measure to add.
     /// - Returns: The sum in this measure's unit.
     /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
-    /// - Precondition: Both unit coefficients are finite and positive and both constants are finite, as required for conversion.
+    /// - Precondition: Both unit coefficients are finite and positive and both constants are finite, as required for
+    ///   conversion.
     public func adding(_ addend: Self.Addend) throws -> Self.Sum {
         guard self.unit.isCompatible(with: addend.unit) else {
             throw Self.UnitError.incompatibleUnits
@@ -306,8 +328,8 @@ where UnitType: Equatable {
 
     /// Returns a boolean value indicating whether the first measure is less than the second.
     ///
-    /// Incompatible units are unordered and return `false`. Compatible units are compared after converting the
-    /// second measure to the first measure's unit, following ordinary `Double` comparison behavior.
+    /// Incompatible units are unordered and return `false`. Compatible units are compared after converting the second
+    /// measure to the first measure's unit, following ordinary `Double` comparison behavior.
     ///
     /// - Parameters:
     ///   - lhs: The first measure to compare.
@@ -330,8 +352,8 @@ where UnitType: Equatable {
 
     /// Returns a boolean value indicating whether the first measure is less than or equal to the second.
     ///
-    /// Incompatible units are unordered and return `false`. Compatible units are compared after converting the
-    /// second measure to the first measure's unit, following ordinary `Double` comparison behavior.
+    /// Incompatible units are unordered and return `false`. Compatible units are compared after converting the second
+    /// measure to the first measure's unit, following ordinary `Double` comparison behavior.
     ///
     /// - Parameters:
     ///   - lhs: The first measure to compare.
@@ -354,8 +376,8 @@ where UnitType: Equatable {
 
     /// Returns a boolean value indicating whether the first measure is greater than the second.
     ///
-    /// Incompatible units are unordered and return `false`. Compatible units are compared after converting the
-    /// second measure to the first measure's unit, following ordinary `Double` comparison behavior.
+    /// Incompatible units are unordered and return `false`. Compatible units are compared after converting the second
+    /// measure to the first measure's unit, following ordinary `Double` comparison behavior.
     ///
     /// - Parameters:
     ///   - lhs: The first measure to compare.
@@ -378,8 +400,8 @@ where UnitType: Equatable {
 
     /// Returns a boolean value indicating whether the first measure is greater than or equal to the second.
     ///
-    /// Incompatible units are unordered and return `false`. Compatible units are compared after converting the
-    /// second measure to the first measure's unit, following ordinary `Double` comparison behavior.
+    /// Incompatible units are unordered and return `false`. Compatible units are compared after converting the second
+    /// measure to the first measure's unit, following ordinary `Double` comparison behavior.
     ///
     /// - Parameters:
     ///   - lhs: The first measure to compare.
@@ -423,8 +445,8 @@ extension Measure: Convertible {
     ///
     /// - Parameter unit: The unit to convert to.
     /// - Returns: A measure expressed in the destination unit.
-    /// - Precondition: The source and destination units are compatible, both coefficients are finite and positive,
-    ///   and both constants are finite.
+    /// - Precondition: The source and destination units are compatible, both coefficients are finite and positive, and
+    ///   both constants are finite.
     public func converted(to unit: UnitType) -> Self {
         precondition(
             self.unit.isCompatible(with: unit),
@@ -555,6 +577,15 @@ where UnitType: Equatable {
         return lhsValue.isDivisible(by: rhsValue)
     }
 
+    /// Returns the quotient by dividing the stored reading by a scalar.
+    ///
+    /// The unit is preserved without applying its coefficient or constant. For offset units, this scales the reading,
+    /// not the absolute reference value. The result follows ordinary `Double` arithmetic and is not clamped.
+    ///
+    /// - Parameters:
+    ///   - lhs: The measure whose reading is scaled.
+    ///   - rhs: The scalar used to scale the reading.
+    /// - Returns: The quotient in the original unit.
     public static func / (
         _ lhs: Self,
         _ rhs: Self.Divisor
@@ -641,6 +672,15 @@ where UnitType: Equatable {
         return lhsValue.isMultiple(of: rhsValue)
     }
 
+    /// Returns the product by multiplying the stored reading by a scalar.
+    ///
+    /// The unit is preserved without applying its coefficient or constant. For offset units, this scales the reading,
+    /// not the absolute reference value. The result follows ordinary `Double` arithmetic and is not clamped.
+    ///
+    /// - Parameters:
+    ///   - lhs: The measure whose reading is scaled.
+    ///   - rhs: The scalar used to scale the reading.
+    /// - Returns: The product in the original unit.
     public static func * (
         _ lhs: Self,
         _ rhs: Self.Multiplier
@@ -664,6 +704,18 @@ where UnitType: Equatable {
     public typealias Subtrahend = Self
     public typealias Difference = Self
 
+    /// Returns the difference of readings expressed in the first measure's unit.
+    ///
+    /// The second measure is converted before the readings are combined. The result retains the first unit, including
+    /// its constant, and is not clamped to its valid range. Subtracting temperatures does not create a distinct
+    /// temperature-difference quantity.
+    ///
+    /// - Parameters:
+    ///   - lhs: The first measure.
+    ///   - rhs: The measure to subtract.
+    /// - Returns: The difference in the first measure's unit.
+    /// - Precondition: The units are compatible, both coefficients are finite and positive, and both constants are
+    ///   finite.
     public static func - (
         _ lhs: Self,
         _ rhs: Self.Subtrahend
@@ -677,13 +729,17 @@ where UnitType: Equatable {
 
     /// Returns the difference after converting the other measure to this measure's unit.
     ///
-    /// Values follow ordinary `Double` arithmetic. The inherited mutating method leaves this measure unchanged
-    /// if the units are incompatible and this method throws.
+    /// Subtracts the readings in this unit, retaining its constant and without clamping the result to its valid range.
+    /// Subtracting temperatures does not create a distinct temperature-difference quantity.
+    ///
+    /// Values follow ordinary `Double` arithmetic. The inherited mutating method leaves this measure unchanged if the
+    /// units are incompatible and this method throws.
     ///
     /// - Parameter subtrahend: The measure to subtract.
     /// - Returns: The difference in this measure's unit.
     /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
-    /// - Precondition: Both unit coefficients are finite and positive and both constants are finite, as required for conversion.
+    /// - Precondition: Both unit coefficients are finite and positive and both constants are finite, as required for
+    ///   conversion.
     public func subtracting(_ subtrahend: Self.Subtrahend) throws -> Self.Difference {
         guard self.unit.isCompatible(with: subtrahend.unit) else {
             throw Self.UnitError.incompatibleUnits

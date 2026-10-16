@@ -5,8 +5,8 @@
 
     @Chapter(name: "Custom Dimensions") {
         @Image(
-            source: "CustomDimensions.png",
-            alt: "The Swift Measures logo beside illustrations of measuring instruments."
+            source: "CustomDimensions.png", alt: "The Swift Measures logo beside illustrations of measuring
+            instruments."
         )
 
         @TutorialReference(tutorial: "doc:CreatingACustomDimension")

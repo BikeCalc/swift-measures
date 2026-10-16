@@ -22,14 +22,14 @@ Revolution. The SI is its modern international form.
 Not every metric unit belongs to the SI. Historical systems such as Centimetre-Gram-Second used different coherent
 units, and units such as the liter and hectare are accepted for use with the SI without being SI units themselves.
 
-For professional and international communication, the SI should be the default. Its decimal scaling, coherent units,
-and shared definitions make measurements easier to calculate, exchange, and verify across countries and disciplines.
-Older systems remain necessary in some legal, cultural, and specialist contexts, but their use should be explicit.
+For professional and international communication, the SI should be the default. Its decimal scaling, coherent units, and
+shared definitions make measurements easier to calculate, exchange, and verify across countries and disciplines. Older
+systems remain necessary in some legal, cultural, and specialist contexts, but their use should be explicit.
 
 ### Decimal Prefixes
 
-SI prefixes scale units by powers of ten. The examples below use the meter to show how every prefix changes the scale
-of the same unit. The unprefixed meter has a factor of one.
+SI prefixes scale units by powers of ten. The examples below use the meter to show how every prefix changes the scale of
+the same unit. The unprefixed meter has a factor of one.
 
 | Prefix | Symbol | Factor | Example |
 | --- | --- | --- | --- |
@@ -59,8 +59,8 @@ of the same unit. The unprefixed meter has a factor of one.
 | ronto | `r` | `10⁻²⁷` | `1 rm = 10⁻²⁷ m` |
 | quecto | `q` | `10⁻³⁰` | `1 qm = 10⁻³⁰ m` |
 
-Prefixes remove the need to learn unrelated scaling rules for each unit. Converting between prefixed units means
-moving by a power of ten rather than remembering factors such as 12, 16, 20, 1760, or 5280.
+Prefixes remove the need to learn unrelated scaling rules for each unit. Converting between prefixed units means moving
+by a power of ten rather than remembering factors such as 12, 16, 20, 1760, or 5280.
 
 ### Base Units
 
@@ -79,9 +79,9 @@ moving by a power of ten rather than remembering factors such as 12, 16, 20, 176
 A derived unit does not need a special name. Force uses the specially named unit newton (`N`), while speed uses the
 compound unit meter per second (`m/s`). Both are SI derived units.
 
-A coherent SI unit is related to the SI base units without an additional numerical conversion factor. A coherent
-derived unit is not itself an SI base unit. For example, the pascal is the coherent derived unit of pressure and is
-equal to one newton per square meter.
+A coherent SI unit is related to the SI base units without an additional numerical conversion factor. A coherent derived
+unit is not itself an SI base unit. For example, the pascal is the coherent derived unit of pressure and is equal to one
+newton per square meter.
 
 | Dimension | Composition | Base Unit | Symbol |
 | --- | --- | --- | --- |
@@ -112,21 +112,21 @@ equal to one newton per square meter.
 | Surface density | mass ÷ area | kilogram per square meter | `kg/m²` |
 | Volume | area × length | cubic meter | `m³` |
 
-Different quantities can share the same dimension and coherent unit expression. For example, frequency and
-radioactivity both have the dimension of reciprocal time, while absorbed dose and equivalent dose both use joules per
-kilogram. Their distinct unit names preserve the meanings of the quantities they represent.
+Different quantities can share the same dimension and coherent unit expression. For example, frequency and radioactivity
+both have the dimension of reciprocal time, while absorbed dose and equivalent dose both use joules per kilogram. Their
+distinct unit names preserve the meanings of the quantities they represent.
 
 ## The Imperial System
 
-The Imperial system was standardized in Britain and used throughout much of the former British Empire. It includes
-units such as inches, feet, yards, miles, ounces, pounds, stones, pints, and gallons.
+The Imperial system was standardized in Britain and used throughout much of the former British Empire. It includes units
+such as inches, feet, yards, miles, ounces, pounds, stones, pints, and gallons.
 
-The United Kingdom now requires metric units for most trade, with limited exceptions such as pints for draught beer
-and cider and troy ounces for precious metals. Imperial units nevertheless remain common in road distances, personal
-height, and other everyday contexts.
+The United Kingdom now requires metric units for most trade, with limited exceptions such as pints for draught beer and
+cider and troy ounces for precious metals. Imperial units nevertheless remain common in road distances, personal height,
+and other everyday contexts.
 
-Imperial scaling is not uniform. A foot contains 12 inches, a yard contains 3 feet, and a mile contains 1760 yards.
-This makes conversions less systematic than SI prefix conversions.
+Imperial scaling is not uniform. A foot contains 12 inches, a yard contains 3 feet, and a mile contains 1760 yards. This
+makes conversions less systematic than SI prefix conversions.
 
 ## The U.S. Customary System
 

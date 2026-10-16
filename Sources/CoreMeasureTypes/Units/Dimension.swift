@@ -10,13 +10,13 @@ import NumericsExtended
 
 /// A physical dimension expressed as integer exponents of the seven SI base quantities.
 ///
-/// Positive exponents represent factors in a numerator, negative exponents represent factors in a denominator,
-/// and zero exponents omit a base quantity. A dimension with every exponent equal to zero is dimensionless.
-/// Dimensions describe physical composition independently of a unit's scale, offset, or symbol. Different named
-/// quantities can share the same dimension.
+/// Positive exponents represent factors in a numerator, negative exponents represent factors in a denominator, and zero
+/// exponents omit a base quantity. A dimension with every exponent equal to zero is dimensionless. Dimensions describe
+/// physical composition independently of a unit's scale, offset, or symbol. Different named quantities can share the
+/// same dimension.
 ///
-/// Multiplication adds corresponding exponents, division subtracts them, and exponentiation multiplies them by
-/// an integer power. These operations use ordinary integer arithmetic and trap on overflow.
+/// Multiplication adds corresponding exponents, division subtracts them, and exponentiation multiplies them by an
+/// integer power. These operations use ordinary integer arithmetic and trap on overflow.
 ///
 /// For example:
 ///
@@ -175,8 +175,8 @@ public struct Dimension {
 
     /// Returns a dimension raised to an integer power by multiplying each exponent by that power.
     ///
-    /// A power of zero produces a dimensionless value. A negative power reverses the signs of the exponents
-    /// as well as scaling their magnitudes.
+    /// A power of zero produces a dimensionless value. A negative power reverses the signs of the exponents as well as
+    /// scaling their magnitudes.
     ///
     /// - Parameters:
     ///   - lhs: The dimension to raise to a power.

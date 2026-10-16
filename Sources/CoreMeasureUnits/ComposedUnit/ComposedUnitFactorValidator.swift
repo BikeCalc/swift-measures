@@ -25,8 +25,8 @@ internal struct ComposedUnitFactorValidator {
 
     /// Checks unit conversions and offset combinations without evaluating derived values.
     ///
-    /// Nonzero offsets require a single active factor with exponent one. Zero exponents are inactive,
-    /// but their unit definitions must still have finite positive coefficients and finite constants.
+    /// Nonzero offsets require a single active factor with exponent one. Zero exponents are inactive, but their unit
+    /// definitions must still have finite positive coefficients and finite constants.
     ///
     /// - Returns: A boolean value indicating whether every conversion definition and constant combination is valid.
     internal func validate() -> Bool {
