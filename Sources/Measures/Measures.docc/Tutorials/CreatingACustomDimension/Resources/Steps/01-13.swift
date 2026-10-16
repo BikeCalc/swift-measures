@@ -15,24 +15,37 @@ struct DataTransferRate: Equatable, Unit {
         self.symbol = symbol
     }
 
-    static let base: Self = .bitsPerSecond
+    init(
+        memory: Memory,
+        time: Time
+    ) {
+        let coefficient: Double = memory.coefficient * (1 / time.coefficient)
+        let symbol: String = memory.symbol + "/" + time.symbol
 
-    let validRange: ClosedRange<Double> = .zero ... .infinity
-
-    static let gigabitsPerSecond: Self = Memory.gigabit.dividing(by: .second)
-    static let megabytesPerSecond: Self = Memory.megabyte.dividing(by: .second)
-    static let megabitsPerSecond: Self = Memory.megabit.dividing(by: .second)
-    static let bitsPerSecond: Self = Memory.bit.dividing(by: .second)
-}
-
-extension Memory {
-    func dividing(by time: Time) -> DataTransferRate {
-        let coefficient: Double = self.coefficient * (1 / time.coefficient)
-        let symbol: String = self.symbol + "/" + time.symbol
-
-        return .init(
+        self.init(
             coefficient: coefficient,
             symbol: symbol
         )
     }
+
+    static let base: Self = .bitsPerSecond
+
+    let validRange: ClosedRange<Double> = .zero ... .infinity
+
+    static let gigabitsPerSecond: Self = .init(
+        memory: .gigabit,
+        time: .second
+    )
+    static let megabytesPerSecond: Self = .init(
+        memory: .megabyte,
+        time: .second
+    )
+    static let megabitsPerSecond: Self = .init(
+        memory: .megabit,
+        time: .second
+    )
+    static let bitsPerSecond: Self = .init(
+        memory: .bit,
+        time: .second
+    )
 }

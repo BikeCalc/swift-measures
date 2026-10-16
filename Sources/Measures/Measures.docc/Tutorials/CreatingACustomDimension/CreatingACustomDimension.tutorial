@@ -56,8 +56,7 @@
             }
 
             @Step {
-                Extend `Memory` with a `dividing(by:)` function that accepts a unit of time and returns a
-                `DataTransferRate` unit.
+                Add an initializer to `DataTransferRate` that accepts memory and time units.
 
                 @Code(name: "DataTransferRate.swift", file: "01-08.swift")
             }
@@ -76,13 +75,13 @@
             }
 
             @Step {
-                Return a data-transfer-rate unit using the calculated coefficient and symbol.
+                Delegate to the existing initializer using the calculated coefficient and symbol.
 
                 @Code(name: "DataTransferRate.swift", file: "01-11.swift")
             }
 
             @Step {
-                Use the composition function to create four reusable units, then use bits per second as the base unit.
+                Use the new initializer to create four reusable units, then use bits per second as the base unit.
 
                 @Code(name: "DataTransferRate.swift", file: "01-12.swift")
             }

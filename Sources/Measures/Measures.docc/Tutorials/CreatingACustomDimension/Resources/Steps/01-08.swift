@@ -15,14 +15,15 @@ struct DataTransferRate: Unit {
         self.symbol = symbol
     }
 
+    init(
+        memory: Memory,
+        time: Time
+    )
+
     static let base: Self = .init(
         coefficient: 1,
         symbol: "b/s"
     )
 
     let validRange: ClosedRange<Double> = .zero ... .infinity
-}
-
-extension Memory {
-    func dividing(by time: Time) -> DataTransferRate
 }
