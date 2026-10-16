@@ -12,29 +12,31 @@ import NumericsExtended
 
 extension Measure
 where UnitType: ComposableUnit {
-    /// Returns this measure expressed in a compatible named or composed unit.
+    /// Returns this measure converted to the specified unit.
     ///
-    /// The units must have matching dimensions. Conversion applies both units' coefficients and constants,
-    /// without simplifying or normalizing the destination unit. It does not enforce the destination's valid range.
-    /// Measurement values follow ordinary `Double` arithmetic: infinity and NaN propagate, and overflow may produce
-    /// infinity, just as in same-type conversion.
+    /// Conversion applies both units' coefficients and constants without simplifying or normalizing the destination
+    /// unit. Values outside the unit's valid range are not rejected. Measurement values follow ordinary `Double`
+    /// arithmetic: infinity and NaN propagate, and overflow may produce infinity.
+    ///
+    /// The source and destination units must be compatible. For composable units, their physical dimensions must match.
     ///
     /// For example:
     ///
     /// ```swift
-    /// let distance = Measure(2, ComposedUnit(Length.kilometer))
+    /// let distance: Measure<ComposedUnit> = .init(1, ComposedUnit(Length.meter))
     ///
-    /// print(distance.converted(to: Length.meter))
-    /// // Prints "2000.0 m"
+    /// print(distance.converted(to: Length.centimeter))
+    /// // Prints "100.0 cm"
     /// ```
     ///
-    /// - Parameter unit: The destination unit, which may have a different concrete type.
+    /// - Parameter unit: The unit to convert to.
     /// - Returns: A measure expressed in the destination unit.
-    /// - Precondition: Dimensions match, both coefficients are finite and positive, and the destination constant is finite.
+    /// - Precondition: The source and destination units are compatible, both coefficients are finite and positive,
+    ///   and both constants are finite.
     public func converted<Destination>(to unit: Destination) -> Measure<Destination>
     where Destination: ComposableUnit {
         precondition(
-            self.unit.dimension == unit.dimension,
+            self.unit.isCompatible(with: unit),
             "Cannot convert between units with incompatible dimensions."
         )
 
@@ -49,6 +51,11 @@ where UnitType: ComposableUnit {
         )
 
         precondition(
+            self.unit.constant.isFinite,
+            "Conversion requires a finite source constant."
+        )
+
+        precondition(
             unit.constant.isFinite,
             "Conversion requires a finite destination constant."
         )
@@ -58,8 +65,8 @@ where UnitType: ComposableUnit {
             return .init(self.value, unit)
         }
 
-        let coherentValue: Double = self.value * self.unit.coefficient + self.unit.constant
-        let value: Double = (coherentValue - unit.constant) / unit.coefficient
+        let referenceValue: Double = self.value * self.unit.coefficient + self.unit.constant
+        let value: Double = (referenceValue - unit.constant) / unit.coefficient
 
         return .init(value, unit)
     }
@@ -76,7 +83,7 @@ where UnitType: ComposableUnit {
             "Coherent conversion requires a finite source constant."
         )
 
-        let unit = ComposedUnit(dimension: self.unit.dimension)
+        let unit: ComposedUnit = .init(dimension: self.unit.dimension)
         let value: Double = self.value * self.unit.coefficient + self.unit.constant
 
         return .init(value, unit)

@@ -124,7 +124,7 @@ where UnitType: Equatable {
     /// - Parameter addend: The measure to add.
     /// - Returns: The sum in this measure's unit.
     /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
-    /// - Precondition: Both unit coefficients are finite and positive, as required for conversion.
+    /// - Precondition: Both unit coefficients are finite and positive and both constants are finite, as required for conversion.
     public func adding(_ addend: Self.Addend) throws -> Self.Sum {
         guard self.unit.isCompatible(with: addend.unit) else {
             throw Self.UnitError.incompatibleUnits
@@ -258,20 +258,25 @@ where UnitType: Equatable {
 extension Measure: Convertible {
     /// Returns this measure converted to the specified unit.
     ///
-    /// The units must be compatible. Composed units must have matching physical dimensions; conversion does not change
-    /// a length into an area. Values outside the unit's valid range are not rejected by this method.
+    /// Conversion applies both units' coefficients and constants without simplifying or normalizing the destination
+    /// unit. Values outside the unit's valid range are not rejected. Measurement values follow ordinary `Double`
+    /// arithmetic: infinity and NaN propagate, and overflow may produce infinity.
+    ///
+    /// The source and destination units must be compatible. For composable units, their physical dimensions must match.
     ///
     /// For example:
     ///
     /// ```swift
-    /// let measure: Measure<Length> = .init(1, .meter).converted(to: .centimeter)
-    /// print(measure)
+    /// let distance: Measure<Length> = .init(1, .meter)
+    ///
+    /// print(distance.converted(to: Length.centimeter))
     /// // Prints "100.0 cm"
     /// ```
     ///
     /// - Parameter unit: The unit to convert to.
-    /// - Returns: The converted measure.
-    /// - Precondition: The source and destination units are compatible and both coefficients are finite and positive.
+    /// - Returns: A measure expressed in the destination unit.
+    /// - Precondition: The source and destination units are compatible, both coefficients are finite and positive,
+    ///   and both constants are finite.
     public func converted(to unit: UnitType) -> Self {
         precondition(
             self.unit.isCompatible(with: unit),
@@ -282,40 +287,31 @@ extension Measure: Convertible {
             self.unit.coefficient.isFinite && self.unit.coefficient > 0,
             "Conversion requires a finite positive source coefficient."
         )
+
         precondition(
             unit.coefficient.isFinite && unit.coefficient > 0,
             "Conversion requires a finite positive destination coefficient."
         )
 
-        // Identical valid scales and offsets cancel; preserve the value without conversion rounding.
-        if self.hasValidConversionUnit,
-            self.unit.coefficient == unit.coefficient,
-            self.unit.constant == unit.constant
-        {
+        precondition(
+            self.unit.constant.isFinite,
+            "Conversion requires a finite source constant."
+        )
+
+        precondition(
+            unit.constant.isFinite,
+            "Conversion requires a finite destination constant."
+        )
+
+        // Identical scales and offsets cancel; preserve the value without conversion rounding.
+        if self.unit.coefficient == unit.coefficient, self.unit.constant == unit.constant {
             return .init(self.value, unit)
         }
 
-        let lhsValue: Double = self.value * self.unit.coefficient + self.unit.constant
-        let newValue: Double = (lhsValue - unit.constant) / unit.coefficient
+        let referenceValue: Double = self.value * self.unit.coefficient + self.unit.constant
+        let value: Double = (referenceValue - unit.constant) / unit.coefficient
 
-        return .init(newValue, unit)
-    }
-
-    /// Converts this measure to the specified unit.
-    ///
-    /// For example:
-    ///
-    /// ```swift
-    /// var measure: Measure<Length> = .init(1, .meter)
-    /// measure.convert(to: .centimeter)
-    /// print(measure)
-    /// // Prints "100.0 cm"
-    /// ```
-    ///
-    /// - Parameter unit: The unit to convert to.
-    /// - Precondition: The source and destination units are compatible and both coefficients are finite and positive.
-    public mutating func convert(to unit: UnitType) {
-        self = self.converted(to: unit)
+        return .init(value, unit)
     }
 }
 
@@ -539,7 +535,7 @@ where UnitType: Equatable {
     /// - Parameter subtrahend: The measure to subtract.
     /// - Returns: The difference in this measure's unit.
     /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
-    /// - Precondition: Both unit coefficients are finite and positive, as required for conversion.
+    /// - Precondition: Both unit coefficients are finite and positive and both constants are finite, as required for conversion.
     public func subtracting(_ subtrahend: Self.Subtrahend) throws -> Self.Difference {
         guard self.unit.isCompatible(with: subtrahend.unit) else {
             throw Self.UnitError.incompatibleUnits

@@ -23,3 +23,9 @@ public protocol Convertible {
     /// - Parameter unit: The unit to convert to.
     mutating func convert(to unit: Self.UnitType)
 }
+
+extension Convertible {
+    public mutating func convert(to unit: Self.UnitType) {
+        self = self.converted(to: unit)
+    }
+}

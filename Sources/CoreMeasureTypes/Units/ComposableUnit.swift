@@ -20,4 +20,13 @@ extension ComposableUnit {
     public func isCompatible(with other: Self) -> Bool {
         return self.dimension == other.dimension
     }
+
+    /// Returns a boolean value indicating whether this unit and another composable unit have matching dimensions.
+    ///
+    /// - Parameter other: The unit to check, which may have a different concrete type.
+    /// - Returns: A boolean value indicating whether the units have the same physical dimension.
+    public func isCompatible<Other>(with other: Other) -> Bool
+    where Other: ComposableUnit {
+        return self.dimension == other.dimension
+    }
 }

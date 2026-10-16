@@ -19,7 +19,7 @@ public protocol Unit {
     /// The finite, strictly positive multiplicative scale relative to the reference unit.
     var coefficient: Double { get }
 
-    /// The additive offset applied after scaling.
+    /// The finite additive offset applied after scaling; it may be negative, zero, or positive.
     var constant: Double { get }
 
     /// The display symbol for this unit.
