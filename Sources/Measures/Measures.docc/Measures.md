@@ -13,8 +13,8 @@ represented with `Measure`, converted between compatible units, or converted aut
 
 `ComposedUnit` supports units whose physical dimensions are determined at runtime from the seven SI base quantities.
 Multiply, divide, or raise measures to integer powers to calculate across dimensions, then convert the result back to a
-compatible defined unit. Composed units preserve their factors and can be explicitly simplified, normalized, or
-canonicalized.
+compatible defined unit. Composed units preserve their factors. Use `canonicalized()` or `@Canonicalized` to combine
+matching factors and order their representations.
 
 ## Topics
 

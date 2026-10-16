@@ -14,8 +14,8 @@ import NumericsExtended
 ///
 /// Captured definitions preserve coefficients, constants, symbols, and SI dimensions independently of their original
 /// Swift types. The composed coefficient, constant, symbol, and dimension are calculated from these factors.
-/// Multiplication, division, and exponentiation preserve factor structure. Call `simplified()` to combine matching
-/// definitions, `normalized()` to order factors, or `canonicalized()` to perform both operations.
+/// Multiplication, division, and exponentiation preserve factor structure. Call `canonicalized()` to combine matching
+/// definitions and order the resulting factors, or use `@Canonicalized` to do so automatically on assignment.
 ///
 /// Symbols are display labels and are never parsed. Separate kilometer and hour factors can cancel against matching
 /// factors; a defined speed unit labeled `km/h` remains one factor. Different definitions sharing a symbol remain
@@ -34,7 +34,7 @@ import NumericsExtended
 ///
 /// ```swift
 /// let speed = ComposedUnit(Length.kilometer) / ComposedUnit(Time.hour)
-/// let distance = (speed * ComposedUnit(Time.hour)).simplified()
+/// let distance = (speed * ComposedUnit(Time.hour)).canonicalized()
 ///
 /// print(distance.symbol)
 /// // Prints "km"
@@ -499,7 +499,7 @@ extension ComposedUnit: Normalizable {
     ///
     /// - Returns: A consistently ordered unit without combining or cancelling factors.
     /// - Precondition: `isNormalizable` is `true`.
-    public func normalized() -> Self {
+    internal func normalized() -> Self {
         precondition(
             self.isNormalizable,
             "The composed unit must be normalizable."
@@ -542,7 +542,7 @@ extension ComposedUnit: Simplifiable {
     ///
     /// - Returns: A composed unit with each surviving representation stored once.
     /// - Precondition: `isSimplifiable` is `true`.
-    public func simplified() -> Self {
+    internal func simplified() -> Self {
         guard let factors: Array<Self.Factor> = self._simplified() else {
             preconditionFailure("The composed unit must be simplifiable.")
         }

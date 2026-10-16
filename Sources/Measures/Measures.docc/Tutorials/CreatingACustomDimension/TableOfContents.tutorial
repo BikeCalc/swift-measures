@@ -1,14 +1,24 @@
 @Tutorials(name: "Swift Measures") {
     @Intro(title: "Build with Measures") {
-        Create custom dimensions and units, convert values, and keep measures expressed in a preferred unit.
+        Define custom units, calculate with composed units across dimensions, and use property wrappers to convert and
+        canonicalize results.
     }
 
-    @Chapter(name: "Custom Dimensions") {
+    @Chapter(name: "Custom Units") {
         @Image(
-            source: "CustomDimensions.png", alt: "The Swift Measures logo beside illustrations of measuring
-            instruments."
+            source: "CustomUnits.png",
+            alt: "The Swift Measures logo beside illustrations of measuring instruments."
         )
 
         @TutorialReference(tutorial: "doc:CreatingACustomDimension")
+    }
+
+    @Chapter(name: "Composed Units") {
+        @Image(
+            source: "ComposedUnits.png",
+            alt: "The Swift Measures logo beside illustrations of measuring instruments."
+        )
+
+        @TutorialReference(tutorial: "doc:CalculatingAcrossDimensions")
     }
 }

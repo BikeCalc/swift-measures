@@ -1,13 +1,13 @@
-@Tutorial(time: 20) {
-    @Intro(title: "Creating a Custom Dimension") {
-        Define a data-transfer-rate dimension, add custom units, convert between them, and use a property wrapper to
+@Tutorial(time: 10) {
+    @Intro(title: "Creating Custom Units") {
+        Define a custom unit type for data-transfer rates, convert between its units, and use a property wrapper to
         keep assigned values expressed in a preferred unit.
     }
 
-    @Section(title: "Define the dimension") {
+    @Section(title: "Define a unit type") {
         @ContentAndMedia {
-            Build a custom dimension, define its valid range, and compose reusable units from existing memory and time
-            units.
+            Build a custom unit type, define its valid range, and construct reusable units from existing memory and
+            time units.
         }
 
         @Steps {
@@ -18,13 +18,13 @@
             }
 
             @Step {
-                Declare a type to represent the data-transfer-rate dimension.
+                Declare a type to represent data-transfer-rate units.
 
                 @Code(name: "DataTransferRate.swift", file: "01-01-02.swift")
             }
 
             @Step {
-                Conform `DataTransferRate` to `Unit` to describe a dimension whose units can be measured and converted.
+                Conform `DataTransferRate` to `Unit` so its instances can be used in measures and unit conversions.
 
                 @Code(name: "DataTransferRate.swift", file: "01-01-03.swift")
             }
@@ -109,8 +109,8 @@
             }
 
             @Step {
-                Declare `downloadRate` as a `Measure<DataTransferRate>`. The generic argument identifies the dimension
-                measured by the value.
+                Declare `downloadRate` as a `Measure<DataTransferRate>`. The generic argument identifies the unit type
+                used by the measure.
 
                 @Code(name: "main.swift", file: "01-02-02.swift")
             }
