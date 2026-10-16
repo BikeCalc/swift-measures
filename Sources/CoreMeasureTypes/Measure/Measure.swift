@@ -74,16 +74,16 @@ where UnitType: Unit {
         return self.unit.validRange.contains(baseValue)
     }
 
-    /// A Boolean value indicating whether this measure defines a finite, invertible conversion.
+    /// A Boolean value indicating whether this measure has a finite value and a valid conversion definition.
     package var isValidForConversion: Bool {
         return self.value.isFinite
             && self.hasValidConversionUnit
     }
 
-    /// A Boolean value indicating whether the unit defines a finite, invertible conversion.
+    /// A Boolean value indicating whether the unit has a finite positive coefficient and a finite constant.
     private var hasValidConversionUnit: Bool {
         return self.unit.coefficient.isFinite
-            && self.unit.coefficient.isZero == false
+            && self.unit.coefficient > 0
             && self.unit.constant.isFinite
     }
 }
@@ -244,11 +244,20 @@ extension Measure: Convertible {
     ///
     /// - Parameter unit: The unit to convert to.
     /// - Returns: The converted measure.
-    /// - Precondition: The source and destination units are compatible.
+    /// - Precondition: The source and destination units are compatible and both coefficients are finite and positive.
     public func converted(to unit: UnitType) -> Self {
         precondition(
             self.unit.isCompatible(with: unit),
             "Cannot convert between units with incompatible dimensions."
+        )
+
+        precondition(
+            self.unit.coefficient.isFinite && self.unit.coefficient > 0,
+            "Conversion requires a finite positive source coefficient."
+        )
+        precondition(
+            unit.coefficient.isFinite && unit.coefficient > 0,
+            "Conversion requires a finite positive destination coefficient."
         )
 
         // Identical valid scales and offsets cancel; preserve the value without conversion rounding.
@@ -277,7 +286,7 @@ extension Measure: Convertible {
     /// ```
     ///
     /// - Parameter unit: The unit to convert to.
-    /// - Precondition: The source and destination units are compatible.
+    /// - Precondition: The source and destination units are compatible and both coefficients are finite and positive.
     public mutating func convert(to unit: UnitType) {
         self = self.converted(to: unit)
     }
@@ -439,7 +448,10 @@ where UnitType: Equatable {
     public typealias Product = Self
 
     public func isMultiple(of other: Self) -> Bool {
-        guard self.unit.isCompatible(with: other.unit), self.isValidForConversion, other.isValidForConversion else {
+        guard self.unit.isCompatible(with: other.unit),
+            self.isValidForConversion,
+            other.isValidForConversion
+        else {
             return false
         }
 

@@ -331,6 +331,7 @@ extension ComposedUnit: Canonicalizable {
             self.isCanonicalizable,
             "The composed unit must be canonicalizable."
         )
+        
         return self.simplified().normalized()
     }
 }

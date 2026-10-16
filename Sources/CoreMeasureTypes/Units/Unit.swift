@@ -16,7 +16,7 @@ import NumericsExtended
 /// The default compatibility implementation accepts every instance of the same unit type. Types with dimensions
 /// that vary between instances must provide a compatibility check; `ComposableUnit` compares their dimensions.
 public protocol Unit {
-    /// The multiplicative scale relative to the reference unit.
+    /// The finite, strictly positive multiplicative scale relative to the reference unit.
     var coefficient: Double { get }
 
     /// The additive offset applied after scaling.

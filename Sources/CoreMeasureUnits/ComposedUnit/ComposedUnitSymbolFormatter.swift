@@ -227,6 +227,7 @@ internal struct ComposedUnitSymbolFormatter {
 
         for factor in self.factors {
             let validator: ComposedUnitSymbolValidator = .init(symbol: factor.unit.symbol)
+
             precondition(
                 validator.validate(),
                 "Each factor must have a valid unit symbol."

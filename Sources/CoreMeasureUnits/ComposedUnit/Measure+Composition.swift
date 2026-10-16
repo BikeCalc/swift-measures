@@ -28,13 +28,18 @@ where UnitType: ComposableUnit {
     ///
     /// - Parameter unit: The destination unit, which may have a different concrete type.
     /// - Returns: A measure expressed in the destination unit.
-    /// - Precondition: Dimensions match, the destination coefficient is finite and positive, and its constant is finite.
+    /// - Precondition: Dimensions match, both coefficients are finite and positive, and the destination constant is finite.
     ///   The input, any intermediate coherent value, and the converted value must be finite.
     public func converted<Destination>(to unit: Destination) -> Measure<Destination>
     where Destination: ComposableUnit {
         precondition(
             self.unit.dimension == unit.dimension,
             "Cannot convert between units with incompatible dimensions."
+        )
+
+        precondition(
+            self.unit.coefficient.isFinite && self.unit.coefficient > 0,
+            "Conversion requires a finite positive source coefficient."
         )
 
         precondition(
@@ -69,6 +74,11 @@ where UnitType: ComposableUnit {
 
     /// Returns this measure expressed in its coherent SI unit, applying its scale and offset.
     private func convertedToCoherentUnit() -> Measure<ComposedUnit> {
+        precondition(
+            self.unit.coefficient.isFinite && self.unit.coefficient > 0,
+            "Coherent conversion requires a finite positive source coefficient."
+        )
+
         precondition(
             self.value.isFinite,
             "Coherent conversion requires a finite source value."
