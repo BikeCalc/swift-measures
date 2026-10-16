@@ -27,11 +27,9 @@ where UnitType: Unit {
         case unit = "unit"
     }
 
-    /// An error caused by incompatible units in a named arithmetic operation.
-    ///
-    /// Numeric values continue to follow ordinary `Double` arithmetic.
+    /// An error related to a measure's units.
     public enum UnitError: Equatable, Error, Sendable {
-        /// The operand units are incompatible for addition or subtraction.
+        /// The units are incompatible.
         ///
         /// For composed units, this means their physical dimensions differ.
         case incompatibleUnits
@@ -242,14 +240,164 @@ extension Measure: CanonicallyEquatable {
 
 extension Measure: Comparable
 where UnitType: Equatable {
+    /// Returns a boolean value indicating whether this measure is less than the specified measure.
+    ///
+    /// Compatible units follow ordinary `Double` comparison behavior, including unordered NaN values.
+    ///
+    /// - Parameter other: The measure to compare with this measure.
+    /// - Returns: The comparison result after converting the other measure to this measure's unit.
+    /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
+    /// - Precondition: Compatible units have finite positive coefficients and finite constants.
+    public func isLess(than other: Self) throws -> Bool {
+        guard self.unit.isCompatible(with: other.unit) else {
+            throw Self.UnitError.incompatibleUnits
+        }
+
+        return self < other
+    }
+
+    /// Returns a boolean value indicating whether this measure is less than or equal to the specified measure.
+    ///
+    /// Compatible units follow ordinary `Double` comparison behavior, including unordered NaN values.
+    ///
+    /// - Parameter other: The measure to compare with this measure.
+    /// - Returns: The comparison result after converting the other measure to this measure's unit.
+    /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
+    /// - Precondition: Compatible units have finite positive coefficients and finite constants.
+    public func isLessThanOrEqual(to other: Self) throws -> Bool {
+        guard self.unit.isCompatible(with: other.unit) else {
+            throw Self.UnitError.incompatibleUnits
+        }
+
+        return self <= other
+    }
+
+    /// Returns a boolean value indicating whether this measure is greater than the specified measure.
+    ///
+    /// Compatible units follow ordinary `Double` comparison behavior, including unordered NaN values.
+    ///
+    /// - Parameter other: The measure to compare with this measure.
+    /// - Returns: The comparison result after converting the other measure to this measure's unit.
+    /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
+    /// - Precondition: Compatible units have finite positive coefficients and finite constants.
+    public func isGreater(than other: Self) throws -> Bool {
+        guard self.unit.isCompatible(with: other.unit) else {
+            throw Self.UnitError.incompatibleUnits
+        }
+
+        return self > other
+    }
+
+    /// Returns a boolean value indicating whether this measure is greater than or equal to the specified measure.
+    ///
+    /// Compatible units follow ordinary `Double` comparison behavior, including unordered NaN values.
+    ///
+    /// - Parameter other: The measure to compare with this measure.
+    /// - Returns: The comparison result after converting the other measure to this measure's unit.
+    /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
+    /// - Precondition: Compatible units have finite positive coefficients and finite constants.
+    public func isGreaterThanOrEqual(to other: Self) throws -> Bool {
+        guard self.unit.isCompatible(with: other.unit) else {
+            throw Self.UnitError.incompatibleUnits
+        }
+
+        return self >= other
+    }
+
+    /// Returns a boolean value indicating whether the first measure is less than the second.
+    ///
+    /// Incompatible units are unordered and return `false`. Compatible units are compared after converting the
+    /// second measure to the first measure's unit, following ordinary `Double` comparison behavior.
+    ///
+    /// - Parameters:
+    ///   - lhs: The first measure to compare.
+    ///   - rhs: The second measure to compare.
+    /// - Returns: The comparison result, or `false` if the units are incompatible.
+    /// - Precondition: Compatible units have finite positive coefficients and finite constants.
     public static func < (
         _ lhs: Self,
         _ rhs: Self
     ) -> Bool {
+        guard lhs.unit.isCompatible(with: rhs.unit) else {
+            return false
+        }
+
         let lhsValue: Double = lhs.value
         let rhsValue: Double = rhs.converted(to: lhs.unit).value
 
         return lhsValue < rhsValue
+    }
+
+    /// Returns a boolean value indicating whether the first measure is less than or equal to the second.
+    ///
+    /// Incompatible units are unordered and return `false`. Compatible units are compared after converting the
+    /// second measure to the first measure's unit, following ordinary `Double` comparison behavior.
+    ///
+    /// - Parameters:
+    ///   - lhs: The first measure to compare.
+    ///   - rhs: The second measure to compare.
+    /// - Returns: The comparison result, or `false` if the units are incompatible.
+    /// - Precondition: Compatible units have finite positive coefficients and finite constants.
+    public static func <= (
+        _ lhs: Self,
+        _ rhs: Self
+    ) -> Bool {
+        guard lhs.unit.isCompatible(with: rhs.unit) else {
+            return false
+        }
+
+        let lhsValue: Double = lhs.value
+        let rhsValue: Double = rhs.converted(to: lhs.unit).value
+
+        return lhsValue <= rhsValue
+    }
+
+    /// Returns a boolean value indicating whether the first measure is greater than the second.
+    ///
+    /// Incompatible units are unordered and return `false`. Compatible units are compared after converting the
+    /// second measure to the first measure's unit, following ordinary `Double` comparison behavior.
+    ///
+    /// - Parameters:
+    ///   - lhs: The first measure to compare.
+    ///   - rhs: The second measure to compare.
+    /// - Returns: The comparison result, or `false` if the units are incompatible.
+    /// - Precondition: Compatible units have finite positive coefficients and finite constants.
+    public static func > (
+        _ lhs: Self,
+        _ rhs: Self
+    ) -> Bool {
+        guard lhs.unit.isCompatible(with: rhs.unit) else {
+            return false
+        }
+
+        let lhsValue: Double = lhs.value
+        let rhsValue: Double = rhs.converted(to: lhs.unit).value
+
+        return lhsValue > rhsValue
+    }
+
+    /// Returns a boolean value indicating whether the first measure is greater than or equal to the second.
+    ///
+    /// Incompatible units are unordered and return `false`. Compatible units are compared after converting the
+    /// second measure to the first measure's unit, following ordinary `Double` comparison behavior.
+    ///
+    /// - Parameters:
+    ///   - lhs: The first measure to compare.
+    ///   - rhs: The second measure to compare.
+    /// - Returns: The comparison result, or `false` if the units are incompatible.
+    /// - Precondition: Compatible units have finite positive coefficients and finite constants.
+    public static func >= (
+        _ lhs: Self,
+        _ rhs: Self
+    ) -> Bool {
+        guard lhs.unit.isCompatible(with: rhs.unit) else {
+            return false
+        }
+
+        let lhsValue: Double = lhs.value
+        let rhsValue: Double = rhs.converted(to: lhs.unit).value
+
+        return lhsValue >= rhsValue
     }
 }
 
