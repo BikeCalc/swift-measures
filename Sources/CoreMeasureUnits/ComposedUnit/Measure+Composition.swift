@@ -72,17 +72,12 @@ where UnitType: ComposableUnit {
         )
 
         precondition(
-            self.value.isFinite,
-            "Coherent conversion requires a finite source value."
+            self.unit.constant.isFinite,
+            "Coherent conversion requires a finite source constant."
         )
 
         let unit = ComposedUnit(dimension: self.unit.dimension)
         let value: Double = self.value * self.unit.coefficient + self.unit.constant
-
-        precondition(
-            value.isFinite,
-            "Coherent conversion must produce a finite value after applying the source coefficient and constant."
-        )
 
         return .init(value, unit)
     }
@@ -95,7 +90,7 @@ where UnitType: ComposableUnit {
     /// Returns the quotient of two measures in a composed coherent SI unit.
     ///
     /// Each value is converted to its coherent SI unit before division, applying its coefficient and constant.
-    /// Both converted values and the result must be finite. The converted divisor must be nonzero.
+    /// Values follow ordinary `Double` division, including infinity and NaN for division by zero.
     ///
     /// - Parameters:
     ///   - lhs: The numerator measure.
@@ -109,26 +104,16 @@ where UnitType: ComposableUnit {
         let left: Measure<ComposedUnit> = lhs.convertedToCoherentUnit()
         let right: Measure<ComposedUnit> = rhs.convertedToCoherentUnit()
 
-        precondition(
-            right.value != 0,
-            "Division requires a nonzero divisor after conversion to coherent units."
-        )
-
         let value: Double = left.value / right.value
-
-        precondition(
-            value.isFinite,
-            "Division must produce a finite value; the quotient may overflow even with a nonzero divisor."
-        )
 
         return .init(value, (left.unit / right.unit))
     }
 
     /// Returns the quotient of this measure and another measure in coherent SI units.
     ///
-    /// - Parameter divisor: The measure to divide by; its converted coherent value must be nonzero.
+    /// - Parameter divisor: The measure to divide by, applying its scale and constant first.
     /// - Returns: The quotient with a composed unit.
-    /// - Throws: No errors in the current implementation; invalid inputs still fail preconditions.
+    /// - Throws: No errors in the current implementation; invalid unit definitions still fail preconditions.
     public func dividing<Other>(by divisor: Measure<Other>) throws -> Measure<ComposedUnit>
     where Other: ComposableUnit {
         return self / divisor
@@ -156,7 +141,7 @@ where UnitType == ComposedUnit {
     /// The stored dimension may change. Constants are applied to absolute values before division.
     ///
     /// - Parameter divisor: The measure used as the divisor.
-    /// - Throws: No errors in the current implementation; invalid inputs still fail preconditions.
+    /// - Throws: No errors in the current implementation; invalid unit definitions still fail preconditions.
     public mutating func divide<Other>(by divisor: Measure<Other>) throws
     where Other: ComposableUnit {
         self = try self.dividing(by: divisor)
@@ -170,7 +155,7 @@ where UnitType: ComposableUnit {
     /// Returns the product of two measures in a composed coherent SI unit.
     ///
     /// Each value is converted to its coherent SI unit before multiplication. Constants therefore apply to absolute
-    /// values, rather than differences. Both converted values and the result must be finite.
+    /// values, rather than differences. Values follow ordinary `Double` multiplication, including infinity and NaN.
     ///
     /// For example:
     ///
@@ -193,11 +178,6 @@ where UnitType: ComposableUnit {
         let left: Measure<ComposedUnit> = lhs.convertedToCoherentUnit()
         let right: Measure<ComposedUnit> = rhs.convertedToCoherentUnit()
         let value: Double = left.value * right.value
-
-        precondition(
-            value.isFinite,
-            "Multiplication must produce a finite value; the product must not overflow."
-        )
 
         return .init(value, (left.unit * right.unit))
     }
@@ -333,7 +313,7 @@ where UnitType: ComposableUnit & Equatable {
     /// Returns this measure raised to an integer power in a composed coherent SI unit.
     ///
     /// The value is converted to its coherent SI unit before exponentiation, applying its coefficient and constant.
-    /// The converted value and result must be finite. A zero converted value requires a nonnegative exponent.
+    /// The numeric result follows Numerics Extended's `Double` exponentiation, including infinity and NaN.
     /// An exponent of zero returns a dimensionless measure with value one.
     ///
     /// - Parameters:
@@ -346,17 +326,7 @@ where UnitType: ComposableUnit & Equatable {
     ) -> Self.Power {
         let coherent: Measure<ComposedUnit> = lhs.convertedToCoherentUnit()
 
-        precondition(
-            coherent.value != 0 || rhs >= 0,
-            "Exponentiation cannot raise a zero coherent value to a negative exponent."
-        )
-
         let value: Double = coherent.value ** rhs
-
-        precondition(
-            value.isFinite,
-            "Exponentiation must produce a finite value; the power must not overflow."
-        )
 
         return .init(value, (coherent.unit ** rhs))
     }
@@ -365,7 +335,7 @@ where UnitType: ComposableUnit & Equatable {
     ///
     /// - Parameter exponent: The integer exponent.
     /// - Returns: The power with a composed unit.
-    /// - Throws: No errors in the current implementation; invalid inputs still fail preconditions.
+    /// - Throws: No errors in the current implementation; invalid unit definitions still fail preconditions.
     public func raising(to exponent: Self.Exponent) throws -> Self.Power {
         return self ** exponent
     }
