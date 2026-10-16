@@ -10,6 +10,46 @@ import CoreMeasureTypes
 import CoreNumericOperators
 import NumericsExtended
 
+// MARK: - CanonicallyEquatable
+
+extension Measure
+where UnitType: ComposableUnit {
+    /// Returns a boolean value indicating whether this measure is canonically equal to the specified measure.
+    ///
+    /// The units must be compatible. For composable units, their physical dimensions must match. Both values are
+    /// converted to their reference scale using their coefficients and constants, then compared exactly. Unit symbols
+    /// are not compared.
+    ///
+    /// Conversion can introduce floating-point rounding. Equality is exact rather than approximate, and NaN values
+    /// compare unequal.
+    ///
+    /// For example:
+    ///
+    /// ```swift
+    /// let oneMeter: Measure<Length> = .init(1, .meter)
+    /// let oneHundredCentimeters: Measure<ComposedUnit> = .init(100, ComposedUnit(Length.centimeter))
+    ///
+    /// print(oneMeter.isCanonicallyEqual(to: oneHundredCentimeters))
+    /// // Prints "true"
+    /// ```
+    ///
+    /// - Parameter other: The measure to compare with this measure.
+    /// - Returns: `true` if the units are compatible and the converted values are exactly equal, and `false` otherwise.
+    public func isCanonicallyEqual<Other>(to other: Measure<Other>) -> Bool
+    where Other: ComposableUnit {
+        guard self.unit.isCompatible(with: other.unit) else {
+            return false
+        }
+
+        let lhsValue: Double = self.value * self.unit.coefficient + self.unit.constant
+        let rhsValue: Double = other.value * other.unit.coefficient + other.unit.constant
+
+        return lhsValue == rhsValue
+    }
+}
+
+// MARK: - Convertible
+
 extension Measure
 where UnitType: ComposableUnit {
     /// Returns this measure converted to the specified unit.

@@ -230,22 +230,27 @@ extension Measure: ApproximatelyEquatable {
 // MARK: - CanonicallyEquatable
 
 extension Measure: CanonicallyEquatable {
-    /// Returns a boolean value indicating whether this value is canonically equal to the specified value.
+    /// Returns a boolean value indicating whether this measure is canonically equal to the specified measure.
     ///
-    /// Conversion can introduce floating-point rounding. Use
-    /// `isApproximatelyEqual(to:absoluteTolerance:relativeTolerance:)` when a tolerance is appropriate.
+    /// The units must be compatible. For composable units, their physical dimensions must match. Both values are
+    /// converted to their reference scale using their coefficients and constants, then compared exactly. Unit symbols
+    /// are not compared.
+    ///
+    /// Conversion can introduce floating-point rounding. Equality is exact rather than approximate, and NaN values
+    /// compare unequal.
     ///
     /// For example:
     ///
     /// ```swift
     /// let oneMeter: Measure<Length> = .init(1, .meter)
     /// let oneHundredCentimeters: Measure<Length> = .init(100, .centimeter)
+    ///
     /// print(oneMeter.isCanonicallyEqual(to: oneHundredCentimeters))
     /// // Prints "true"
     /// ```
     ///
-    /// - Parameter other: An instance to compare.
-    /// - Returns: `true` if the converted base values are exactly equal, and `false` otherwise.
+    /// - Parameter other: The measure to compare with this measure.
+    /// - Returns: `true` if the units are compatible and the converted values are exactly equal, and `false` otherwise.
     public func isCanonicallyEqual(to other: Self) -> Bool {
         guard self.unit.isCompatible(with: other.unit) else {
             return false
