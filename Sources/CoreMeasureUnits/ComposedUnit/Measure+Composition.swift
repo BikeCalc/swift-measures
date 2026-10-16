@@ -16,6 +16,8 @@ where UnitType: ComposableUnit {
     ///
     /// The units must have matching dimensions. Conversion applies both units' coefficients and constants,
     /// without simplifying or normalizing the destination unit. It does not enforce the destination's valid range.
+    /// Measurement values follow ordinary `Double` arithmetic: infinity and NaN propagate, and overflow may produce
+    /// infinity, just as in same-type conversion.
     ///
     /// For example:
     ///
@@ -29,7 +31,6 @@ where UnitType: ComposableUnit {
     /// - Parameter unit: The destination unit, which may have a different concrete type.
     /// - Returns: A measure expressed in the destination unit.
     /// - Precondition: Dimensions match, both coefficients are finite and positive, and the destination constant is finite.
-    ///   The input, any intermediate coherent value, and the converted value must be finite.
     public func converted<Destination>(to unit: Destination) -> Measure<Destination>
     where Destination: ComposableUnit {
         precondition(
@@ -54,20 +55,11 @@ where UnitType: ComposableUnit {
 
         // Identical scales and offsets cancel; preserve the value without conversion rounding.
         if self.unit.coefficient == unit.coefficient, self.unit.constant == unit.constant {
-            precondition(
-                self.value.isFinite,
-                "Conversion requires a finite source value, even when the units have identical scales and offsets."
-            )
-
             return .init(self.value, unit)
         }
 
-        let value: Double = (self.convertedToCoherentUnit().value - unit.constant) / unit.coefficient
-
-        precondition(
-            value.isFinite,
-            "Conversion must produce a finite value; the destination scale or offset may cause overflow."
-        )
+        let coherentValue: Double = self.value * self.unit.coefficient + self.unit.constant
+        let value: Double = (coherentValue - unit.constant) / unit.coefficient
 
         return .init(value, unit)
     }
