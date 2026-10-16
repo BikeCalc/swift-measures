@@ -245,6 +245,39 @@
 
                 @Code(name: "main.swift", file: "01-02-23.swift")
             }
+
+            @Step {
+                Remove everything after the initial download-rate print and its output comment. Keep the property
+                wrapper and initial value as a clean starting point for multiplication and division.
+
+                @Code(name: "main.swift", file: "01-02-24.swift")
+            }
+
+            @Step {
+                Multiply the download rate by the scalar 2 using `*=`. Scalar multiplication changes the reading while
+                preserving its unit and dimension.
+
+                @Code(name: "main.swift", file: "01-02-25.swift")
+            }
+
+            @Step {
+                Print the doubled rate. It remains a `Measure<DataTransferRate>` expressed in megabytes per second.
+
+                @Code(name: "main.swift", file: "01-02-26.swift")
+            }
+
+            @Step {
+                Divide the download rate by the scalar 2 using `/=` to restore its original value. Scalar division also
+                preserves the unit and dimension.
+
+                @Code(name: "main.swift", file: "01-02-27.swift")
+            }
+
+            @Step {
+                Print the restored rate. Multiplication and division by a scalar have preserved its unit and dimension.
+
+                @Code(name: "main.swift", file: "01-02-28.swift")
+            }
         }
     }
 }
