@@ -331,7 +331,7 @@ extension ComposedUnit: Canonicalizable {
             self.isCanonicalizable,
             "The composed unit must be canonicalizable."
         )
-        
+
         return self.simplified().normalized()
     }
 }
@@ -415,7 +415,8 @@ extension ComposedUnit: Decodable {
         guard validator.validate() else {
             throw DecodingError.dataCorruptedError(
                 in: container,
-                debugDescription: "Factors require finite positive coefficients, finite constants, and valid constant combinations."
+                debugDescription:
+                    "Factors require finite positive coefficients, finite constants, and valid constant combinations."
             )
         }
 

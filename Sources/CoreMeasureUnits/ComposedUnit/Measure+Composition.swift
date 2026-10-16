@@ -317,10 +317,7 @@ where UnitType: ComposableUnit & Equatable {
 
         var exponent: Self.Exponent?
 
-        for (valueExponent, baseExponent) in zip(
-            self.unit.dimension.exponents,
-            other.unit.dimension.exponents
-        ) {
+        for (valueExponent, baseExponent) in zip(self.unit.dimension.exponents, other.unit.dimension.exponents) {
             if baseExponent == 0 {
                 guard valueExponent == 0 else {
                     return false

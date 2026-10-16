@@ -67,7 +67,7 @@ extension UnitMacro {
         }
 
         // An empty name cannot form a valid factory method or static property name.
-        guard !name.isEmpty else {
+        guard name.isEmpty == false else {
             context.diagnose(
                 Diagnostic(
                     node: Syntax(nameArgument.expression),
@@ -93,7 +93,7 @@ extension UnitMacro {
         }
 
         // Every generated unit must retain a visible symbol after its prefix is applied.
-        guard !symbol.isEmpty else {
+        guard symbol.isEmpty == false else {
             context.diagnose(
                 Diagnostic(
                     node: Syntax(symbolArgument.expression),
@@ -146,7 +146,7 @@ extension UnitMacro {
         for prefix in Prefix.allCases {
             let propertyName: String = prefix.rawValue + name
 
-            guard !declaredProperties.contains(propertyName),
+            guard declaredProperties.contains(propertyName) == false,
                 prefix != .none || generatesUnprefixedUnit
             else {
                 continue
