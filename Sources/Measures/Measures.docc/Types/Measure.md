@@ -97,3 +97,7 @@
 ### Hashing Values
 
 - ``hash(into:)``
+
+### Arithmetic Errors
+
+- ``UnitError``

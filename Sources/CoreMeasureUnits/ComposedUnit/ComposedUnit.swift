@@ -183,7 +183,7 @@ public struct ComposedUnit {
 
         precondition(
             validator.validate(),
-            "Factors require valid scales, offsets, and representable combined values."
+            "Factors require finite positive coefficients, finite constants, and valid constant combinations."
         )
 
         self.factors = factors
@@ -417,7 +417,7 @@ extension ComposedUnit: Decodable {
         guard validator.validate() else {
             throw DecodingError.dataCorruptedError(
                 in: container,
-                debugDescription: "Factors require valid scales, offsets, and representable combined values."
+                debugDescription: "Factors require finite positive coefficients, finite constants, and valid constant combinations."
             )
         }
 

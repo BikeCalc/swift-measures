@@ -27,6 +27,16 @@ where UnitType: Unit {
         case unit = "unit"
     }
 
+    /// An error caused by incompatible units in a named arithmetic operation.
+    ///
+    /// Numeric values continue to follow ordinary `Double` arithmetic.
+    public enum UnitError: Equatable, Error, Sendable {
+        /// The operand units are incompatible for addition or subtraction.
+        ///
+        /// For composed units, this means their physical dimensions differ.
+        case incompatibleUnits
+    }
+
     /// The value of this measure.
     public let value: Double
 
@@ -104,6 +114,23 @@ where UnitType: Equatable {
         let newValue: Double = lhsValue + rhsValue
 
         return .init(newValue, lhs.unit)
+    }
+
+    /// Returns the sum after converting the other measure to this measure's unit.
+    ///
+    /// Values follow ordinary `Double` arithmetic. The inherited mutating method leaves this measure unchanged
+    /// if the units are incompatible and this method throws.
+    ///
+    /// - Parameter addend: The measure to add.
+    /// - Returns: The sum in this measure's unit.
+    /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
+    /// - Precondition: Both unit coefficients are finite and positive, as required for conversion.
+    public func adding(_ addend: Self.Addend) throws -> Self.Sum {
+        guard self.unit.isCompatible(with: addend.unit) else {
+            throw Self.UnitError.incompatibleUnits
+        }
+
+        return self + addend
     }
 }
 
@@ -502,5 +529,22 @@ where UnitType: Equatable {
         let newValue: Double = lhsValue - rhsValue
 
         return .init(newValue, lhs.unit)
+    }
+
+    /// Returns the difference after converting the other measure to this measure's unit.
+    ///
+    /// Values follow ordinary `Double` arithmetic. The inherited mutating method leaves this measure unchanged
+    /// if the units are incompatible and this method throws.
+    ///
+    /// - Parameter subtrahend: The measure to subtract.
+    /// - Returns: The difference in this measure's unit.
+    /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
+    /// - Precondition: Both unit coefficients are finite and positive, as required for conversion.
+    public func subtracting(_ subtrahend: Self.Subtrahend) throws -> Self.Difference {
+        guard self.unit.isCompatible(with: subtrahend.unit) else {
+            throw Self.UnitError.incompatibleUnits
+        }
+
+        return self - subtrahend
     }
 }
