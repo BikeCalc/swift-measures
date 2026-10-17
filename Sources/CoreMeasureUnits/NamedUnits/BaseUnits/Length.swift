@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for length.
+@CaseIterableUnits
 @MetricUnits(name: "meter", symbol: "m")
 public struct Length {
     public let coefficient: Double

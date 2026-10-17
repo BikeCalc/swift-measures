@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for illuminance.
+@CaseIterableUnits
 @MetricUnits(name: "lux", symbol: "lx")
 public struct Illuminance {
     public let coefficient: Double

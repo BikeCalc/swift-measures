@@ -8,20 +8,11 @@
 
 import SwiftSyntax
 import SwiftSyntaxMacros
+
 @testable import MeasuresMacroPlugin
 
 internal struct ExtendedScaleUnitsMacro {
     internal init() {}
-}
-
-// MARK: - UnitMacro
-
-extension ExtendedScaleUnitsMacro: UnitMacro {
-    internal typealias Prefix = ExtendedScaleUnitPrefix
-
-    internal static var macroName: String {
-        return "ExtendedScaleUnits"
-    }
 }
 
 // MARK: - MemberMacro
@@ -38,5 +29,15 @@ extension ExtendedScaleUnitsMacro: MemberMacro {
             providingMembersOf: declaration,
             in: context
         )
+    }
+}
+
+// MARK: - UnitMacro
+
+extension ExtendedScaleUnitsMacro: UnitMacro {
+    internal typealias Prefix = ExtendedScaleUnitPrefix
+
+    internal static var macroName: String {
+        return "ExtendedScaleUnits"
     }
 }

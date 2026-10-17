@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for electrical resistance.
+@CaseIterableUnits
 @MetricUnits(name: "ohm", symbol: "Ω")
 public struct ElectricalResistance {
     public let coefficient: Double

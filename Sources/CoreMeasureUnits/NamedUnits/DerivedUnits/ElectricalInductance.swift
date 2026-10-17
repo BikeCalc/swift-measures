@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for electrical inductance.
+@CaseIterableUnits
 @MetricUnits(name: "henry", symbol: "H")
 public struct ElectricalInductance {
     public let coefficient: Double

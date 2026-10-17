@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for electric current.
+@CaseIterableUnits
 @MetricUnits(name: "ampere", symbol: "A")
 public struct ElectricCurrent {
     public let coefficient: Double

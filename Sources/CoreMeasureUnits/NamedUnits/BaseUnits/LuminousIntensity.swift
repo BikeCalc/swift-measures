@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for luminous intensity.
+@CaseIterableUnits
 @MetricUnits(name: "candela", symbol: "cd")
 public struct LuminousIntensity {
     public let coefficient: Double

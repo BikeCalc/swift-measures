@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for equivalent dose.
+@CaseIterableUnits
 @MetricUnits(name: "sievert", symbol: "Sv")
 public struct EquivalentDose {
     public let coefficient: Double

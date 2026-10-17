@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for luminous flux.
+@CaseIterableUnits
 @MetricUnits(name: "lumen", symbol: "lm")
 public struct LuminousFlux {
     public let coefficient: Double

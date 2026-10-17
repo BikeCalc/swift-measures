@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for electrical capacitance.
+@CaseIterableUnits
 @MetricUnits(name: "farad", symbol: "F")
 public struct ElectricalCapacitance {
     public let coefficient: Double

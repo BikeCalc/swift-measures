@@ -8,9 +8,11 @@
 
 import CoreMeasureTypes
 import CoreMeasureUnits
+import MeasuresMacro
 import NumericsExtended
 
 /// A unit for measuring cadence.
+@CaseIterableUnits
 public struct Cadence {
     public let coefficient: Double
 

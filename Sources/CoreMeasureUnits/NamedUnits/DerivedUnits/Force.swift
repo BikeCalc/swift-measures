@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for force.
+@CaseIterableUnits
 @MetricUnits(name: "newton", symbol: "N")
 public struct Force {
     public let coefficient: Double

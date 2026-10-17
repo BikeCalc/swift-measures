@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for volume.
+@CaseIterableUnits
 @MetricUnits(name: "liter", symbol: "L", coefficient: 1e-3)
 public struct Volume {
     public let coefficient: Double

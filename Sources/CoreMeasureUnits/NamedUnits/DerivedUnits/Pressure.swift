@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for pressure.
+@CaseIterableUnits
 @MetricUnits(name: "pascal", symbol: "Pa")
 public struct Pressure {
     public let coefficient: Double

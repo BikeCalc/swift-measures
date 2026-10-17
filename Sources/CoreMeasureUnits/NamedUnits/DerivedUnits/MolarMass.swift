@@ -7,9 +7,11 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import CoreMeasureTypes
+import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for molar mass.
+@CaseIterableUnits
 public struct MolarMass {
     public let coefficient: Double
 
