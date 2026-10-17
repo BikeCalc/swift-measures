@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for mass.
+@CaseIterableUnits
 @MetricUnits(name: "gram", symbol: "g", coefficient: 1e-3)
 public struct Mass {
     public let coefficient: Double

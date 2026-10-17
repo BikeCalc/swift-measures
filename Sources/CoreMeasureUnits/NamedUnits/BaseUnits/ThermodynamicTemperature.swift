@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for thermodynamic temperature.
+@CaseIterableUnits
 @MetricUnits(name: "kelvin", symbol: "K")
 public struct ThermodynamicTemperature {
     public let coefficient: Double

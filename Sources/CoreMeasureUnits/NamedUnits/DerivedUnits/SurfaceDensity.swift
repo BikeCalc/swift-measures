@@ -7,9 +7,11 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import CoreMeasureTypes
+import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for surface density.
+@CaseIterableUnits
 public struct SurfaceDensity {
     public let coefficient: Double
 

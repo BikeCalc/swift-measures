@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for absorbed dose.
+@CaseIterableUnits
 @MetricUnits(name: "gray", symbol: "Gy")
 public struct AbsorbedDose {
     public let coefficient: Double

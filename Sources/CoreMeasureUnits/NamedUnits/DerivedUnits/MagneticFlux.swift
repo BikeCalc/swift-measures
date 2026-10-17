@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for magnetic flux.
+@CaseIterableUnits
 @MetricUnits(name: "weber", symbol: "Wb")
 public struct MagneticFlux {
     public let coefficient: Double

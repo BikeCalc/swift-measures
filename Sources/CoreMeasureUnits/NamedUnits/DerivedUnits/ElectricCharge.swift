@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for electric charge.
+@CaseIterableUnits
 @MetricUnits(name: "coulomb", symbol: "C")
 public struct ElectricCharge {
     public let coefficient: Double

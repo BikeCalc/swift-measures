@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for radioactivity.
+@CaseIterableUnits
 @MetricUnits(name: "becquerel", symbol: "Bq")
 public struct Radioactivity {
     public let coefficient: Double

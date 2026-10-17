@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for electric potential.
+@CaseIterableUnits
 @MetricUnits(name: "volt", symbol: "V")
 public struct ElectricPotential {
     public let coefficient: Double

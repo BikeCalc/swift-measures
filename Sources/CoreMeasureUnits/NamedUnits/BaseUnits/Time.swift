@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for time.
+@CaseIterableUnits
 @MetricUnits(name: "second", symbol: "s")
 public struct Time {
     public let coefficient: Double

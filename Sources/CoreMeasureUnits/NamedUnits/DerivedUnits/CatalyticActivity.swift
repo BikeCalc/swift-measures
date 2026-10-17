@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for catalytic activity.
+@CaseIterableUnits
 @MetricUnits(name: "katal", symbol: "kat")
 public struct CatalyticActivity {
     public let coefficient: Double

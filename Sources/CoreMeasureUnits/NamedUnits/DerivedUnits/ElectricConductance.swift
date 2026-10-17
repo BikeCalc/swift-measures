@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for electric conductance.
+@CaseIterableUnits
 @MetricUnits(name: "siemens", symbol: "S")
 public struct ElectricConductance {
     public let coefficient: Double

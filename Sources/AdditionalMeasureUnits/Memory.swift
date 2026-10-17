@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit for measuring digital information.
+@CaseIterableUnits
 @MetricUnits(name: "byte", symbol: "B", coefficient: 8)
 @BinaryUnits(name: "byte", symbol: "B", coefficient: 8)
 @MetricUnits(name: "bit", symbol: "b")

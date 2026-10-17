@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for substance amount.
+@CaseIterableUnits
 @MetricUnits(name: "mole", symbol: "mol")
 public struct SubstanceAmount {
     public let coefficient: Double

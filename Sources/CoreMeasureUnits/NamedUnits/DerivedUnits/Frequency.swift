@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for frequency.
+@CaseIterableUnits
 @MetricUnits(name: "hertz", symbol: "Hz")
 public struct Frequency {
     public let coefficient: Double

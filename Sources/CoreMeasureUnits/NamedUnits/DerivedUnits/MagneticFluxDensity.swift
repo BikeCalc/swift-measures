@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for magnetic flux density.
+@CaseIterableUnits
 @MetricUnits(name: "tesla", symbol: "T")
 public struct MagneticFluxDensity {
     public let coefficient: Double

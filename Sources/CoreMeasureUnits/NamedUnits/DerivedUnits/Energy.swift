@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for energy.
+@CaseIterableUnits
 @MetricUnits(name: "joule", symbol: "J")
 public struct Energy {
     public let coefficient: Double

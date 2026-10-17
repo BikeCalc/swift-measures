@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for power.
+@CaseIterableUnits
 @MetricUnits(name: "watt", symbol: "W")
 public struct Power {
     public let coefficient: Double
