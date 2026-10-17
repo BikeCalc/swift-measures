@@ -64,6 +64,42 @@ public struct AbsorbedDose {
 
 extension AbsorbedDose: CanonicallyEquatable {}
 
+// MARK: - CaseIterable
+
+extension AbsorbedDose: CaseIterable {
+    /// The predefined units, excluding the duplicate base alias and custom units.
+    ///
+    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
+    public static let allCases: Array<Self> = [
+        .quettagray,
+        .ronnagray,
+        .yottagray,
+        .zettagray,
+        .exagray,
+        .petagray,
+        .teragray,
+        .gigagray,
+        .megagray,
+        .kilogray,
+        .hectogray,
+        .decagray,
+        .gray,
+        .decigray,
+        .centigray,
+        .milligray,
+        .microgray,
+        .nanogray,
+        .picogray,
+        .femtogray,
+        .attogray,
+        .zeptogray,
+        .yoctogray,
+        .rontogray,
+        .quectogray,
+        .joulePerKilogram
+    ]
+}
+
 // MARK: - Codable
 
 extension AbsorbedDose: Codable {}

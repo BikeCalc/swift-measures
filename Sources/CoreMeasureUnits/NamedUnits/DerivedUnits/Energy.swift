@@ -172,6 +172,51 @@ public struct Energy {
 
 extension Energy: CanonicallyEquatable {}
 
+// MARK: - CaseIterable
+
+extension Energy: CaseIterable {
+    /// The predefined units, excluding the duplicate base alias and custom units.
+    ///
+    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
+    public static let allCases: Array<Self> = [
+        .quettajoule,
+        .ronnajoule,
+        .yottajoule,
+        .zettajoule,
+        .exajoule,
+        .petajoule,
+        .terajoule,
+        .gigajoule,
+        .megajoule,
+        .kilojoule,
+        .hectojoule,
+        .decajoule,
+        .joule,
+        .decijoule,
+        .centijoule,
+        .millijoule,
+        .microjoule,
+        .nanojoule,
+        .picojoule,
+        .femtojoule,
+        .attojoule,
+        .zeptojoule,
+        .yoctojoule,
+        .rontojoule,
+        .quectojoule,
+        .kilowattYear,
+        .kilowattHour,
+        .wattHour,
+        .kilowattSecond,
+        .newtonMeter,
+        .wattSecond,
+        .footPoundForce,
+        .britishThermalUnitInternationalTable,
+        .kilocalorie,
+        .calorie
+    ]
+}
+
 // MARK: - Codable
 
 extension Energy: Codable {}

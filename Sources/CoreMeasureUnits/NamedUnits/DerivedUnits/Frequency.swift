@@ -46,6 +46,41 @@ public struct Frequency {
 
 extension Frequency: CanonicallyEquatable {}
 
+// MARK: - CaseIterable
+
+extension Frequency: CaseIterable {
+    /// The predefined units, excluding the duplicate base alias and custom units.
+    ///
+    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
+    public static let allCases: Array<Self> = [
+        .quettahertz,
+        .ronnahertz,
+        .yottahertz,
+        .zettahertz,
+        .exahertz,
+        .petahertz,
+        .terahertz,
+        .gigahertz,
+        .megahertz,
+        .kilohertz,
+        .hectohertz,
+        .decahertz,
+        .hertz,
+        .decihertz,
+        .centihertz,
+        .millihertz,
+        .microhertz,
+        .nanohertz,
+        .picohertz,
+        .femtohertz,
+        .attohertz,
+        .zeptohertz,
+        .yoctohertz,
+        .rontohertz,
+        .quectohertz
+    ]
+}
+
 // MARK: - Codable
 
 extension Frequency: Codable {}

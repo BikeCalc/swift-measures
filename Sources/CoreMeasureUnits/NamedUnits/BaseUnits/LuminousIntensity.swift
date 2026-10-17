@@ -36,6 +36,41 @@ public struct LuminousIntensity {
 
 extension LuminousIntensity: CanonicallyEquatable {}
 
+// MARK: - CaseIterable
+
+extension LuminousIntensity: CaseIterable {
+    /// The predefined units, excluding the duplicate base alias and custom units.
+    ///
+    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
+    public static let allCases: Array<Self> = [
+        .quettacandela,
+        .ronnacandela,
+        .yottacandela,
+        .zettacandela,
+        .exacandela,
+        .petacandela,
+        .teracandela,
+        .gigacandela,
+        .megacandela,
+        .kilocandela,
+        .hectocandela,
+        .decacandela,
+        .candela,
+        .decicandela,
+        .centicandela,
+        .millicandela,
+        .microcandela,
+        .nanocandela,
+        .picocandela,
+        .femtocandela,
+        .attocandela,
+        .zeptocandela,
+        .yoctocandela,
+        .rontocandela,
+        .quectocandela
+    ]
+}
+
 // MARK: - Codable
 
 extension LuminousIntensity: Codable {}

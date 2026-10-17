@@ -58,6 +58,41 @@ public struct ElectricalCapacitance {
 
 extension ElectricalCapacitance: CanonicallyEquatable {}
 
+// MARK: - CaseIterable
+
+extension ElectricalCapacitance: CaseIterable {
+    /// The predefined units, excluding the duplicate base alias and custom units.
+    ///
+    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
+    public static let allCases: Array<Self> = [
+        .quettafarad,
+        .ronnafarad,
+        .yottafarad,
+        .zettafarad,
+        .exafarad,
+        .petafarad,
+        .terafarad,
+        .gigafarad,
+        .megafarad,
+        .kilofarad,
+        .hectofarad,
+        .decafarad,
+        .farad,
+        .decifarad,
+        .centifarad,
+        .millifarad,
+        .microfarad,
+        .nanofarad,
+        .picofarad,
+        .femtofarad,
+        .attofarad,
+        .zeptofarad,
+        .yoctofarad,
+        .rontofarad,
+        .quectofarad
+    ]
+}
+
 // MARK: - Codable
 
 extension ElectricalCapacitance: Codable {}

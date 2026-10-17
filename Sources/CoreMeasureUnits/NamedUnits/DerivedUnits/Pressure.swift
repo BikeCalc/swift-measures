@@ -111,6 +111,49 @@ public struct Pressure {
 
 extension Pressure: CanonicallyEquatable {}
 
+// MARK: - CaseIterable
+
+extension Pressure: CaseIterable {
+    /// The predefined units, excluding the duplicate base alias and custom units.
+    ///
+    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
+    public static let allCases: Array<Self> = [
+        .quettapascal,
+        .ronnapascal,
+        .yottapascal,
+        .zettapascal,
+        .exapascal,
+        .petapascal,
+        .terapascal,
+        .gigapascal,
+        .megapascal,
+        .kilopascal,
+        .hectopascal,
+        .decapascal,
+        .pascal,
+        .decipascal,
+        .centipascal,
+        .millipascal,
+        .micropascal,
+        .nanopascal,
+        .picopascal,
+        .femtopascal,
+        .attopascal,
+        .zeptopascal,
+        .yoctopascal,
+        .rontopascal,
+        .quectopascal,
+        .poundsPerSquareInch,
+        .poundsPerSquareFoot,
+        .newtonsPerSquareMeter,
+        .bar,
+        .millibar,
+        .atmosphere,
+        .torr,
+        .millitorr
+    ]
+}
+
 // MARK: - Codable
 
 extension Pressure: Codable {}

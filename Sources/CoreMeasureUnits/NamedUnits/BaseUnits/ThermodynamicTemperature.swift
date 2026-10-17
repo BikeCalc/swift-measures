@@ -56,6 +56,43 @@ public struct ThermodynamicTemperature {
 
 extension ThermodynamicTemperature: CanonicallyEquatable {}
 
+// MARK: - CaseIterable
+
+extension ThermodynamicTemperature: CaseIterable {
+    /// The predefined units, excluding the duplicate base alias and custom units.
+    ///
+    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
+    public static let allCases: Array<Self> = [
+        .quettakelvin,
+        .ronnakelvin,
+        .yottakelvin,
+        .zettakelvin,
+        .exakelvin,
+        .petakelvin,
+        .terakelvin,
+        .gigakelvin,
+        .megakelvin,
+        .kilokelvin,
+        .hectokelvin,
+        .decakelvin,
+        .kelvin,
+        .decikelvin,
+        .centikelvin,
+        .millikelvin,
+        .microkelvin,
+        .nanokelvin,
+        .picokelvin,
+        .femtokelvin,
+        .attokelvin,
+        .zeptokelvin,
+        .yoctokelvin,
+        .rontokelvin,
+        .quectokelvin,
+        .fahrenheit,
+        .celsius
+    ]
+}
+
 // MARK: - Codable
 
 extension ThermodynamicTemperature: Codable {}

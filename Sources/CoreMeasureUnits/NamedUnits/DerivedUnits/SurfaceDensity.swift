@@ -74,6 +74,19 @@ public struct SurfaceDensity {
 
 extension SurfaceDensity: CanonicallyEquatable {}
 
+// MARK: - CaseIterable
+
+extension SurfaceDensity: CaseIterable {
+    /// The predefined units, excluding the duplicate base alias and custom units.
+    ///
+    /// Units appear in source declaration order.
+    public static let allCases: Array<Self> = [
+        .poundsPerSquareFoot,
+        .kilogramsPerSquareMeter,
+        .gramsPerSquareMeter
+    ]
+}
+
 // MARK: - Codable
 
 extension SurfaceDensity: Codable {}

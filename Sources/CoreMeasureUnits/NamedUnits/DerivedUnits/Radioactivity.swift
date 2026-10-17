@@ -46,6 +46,41 @@ public struct Radioactivity {
 
 extension Radioactivity: CanonicallyEquatable {}
 
+// MARK: - CaseIterable
+
+extension Radioactivity: CaseIterable {
+    /// The predefined units, excluding the duplicate base alias and custom units.
+    ///
+    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
+    public static let allCases: Array<Self> = [
+        .quettabecquerel,
+        .ronnabecquerel,
+        .yottabecquerel,
+        .zettabecquerel,
+        .exabecquerel,
+        .petabecquerel,
+        .terabecquerel,
+        .gigabecquerel,
+        .megabecquerel,
+        .kilobecquerel,
+        .hectobecquerel,
+        .decabecquerel,
+        .becquerel,
+        .decibecquerel,
+        .centibecquerel,
+        .millibecquerel,
+        .microbecquerel,
+        .nanobecquerel,
+        .picobecquerel,
+        .femtobecquerel,
+        .attobecquerel,
+        .zeptobecquerel,
+        .yoctobecquerel,
+        .rontobecquerel,
+        .quectobecquerel
+    ]
+}
+
 // MARK: - Codable
 
 extension Radioactivity: Codable {}

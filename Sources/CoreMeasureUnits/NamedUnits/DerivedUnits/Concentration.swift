@@ -74,6 +74,19 @@ public struct Concentration {
 
 extension Concentration: CanonicallyEquatable {}
 
+// MARK: - CaseIterable
+
+extension Concentration: CaseIterable {
+    /// The predefined units, excluding the duplicate base alias and custom units.
+    ///
+    /// Units appear in source declaration order.
+    public static let allCases: Array<Self> = [
+        .kilogramsPerCubicMeter,
+        .gramsPerLiter,
+        .milligramsPerLiter
+    ]
+}
+
 // MARK: - Codable
 
 extension Concentration: Codable {}

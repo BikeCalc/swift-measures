@@ -113,6 +113,44 @@ public struct Force {
 
 extension Force: CanonicallyEquatable {}
 
+// MARK: - CaseIterable
+
+extension Force: CaseIterable {
+    /// The predefined units, excluding the duplicate base alias and custom units.
+    ///
+    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
+    public static let allCases: Array<Self> = [
+        .quettanewton,
+        .ronnanewton,
+        .yottanewton,
+        .zettanewton,
+        .exanewton,
+        .petanewton,
+        .teranewton,
+        .giganewton,
+        .meganewton,
+        .kilonewton,
+        .hectonewton,
+        .decanewton,
+        .newton,
+        .decinewton,
+        .centinewton,
+        .millinewton,
+        .micronewton,
+        .nanonewton,
+        .piconewton,
+        .femtonewton,
+        .attonewton,
+        .zeptonewton,
+        .yoctonewton,
+        .rontonewton,
+        .quectonewton,
+        .kilogramMeterPerSquareSecond,
+        .poundForce,
+        .gravity
+    ]
+}
+
 // MARK: - Codable
 
 extension Force: Codable {}

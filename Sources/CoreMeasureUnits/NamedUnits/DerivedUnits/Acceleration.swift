@@ -99,6 +99,18 @@ public struct Acceleration {
 
 extension Acceleration: CanonicallyEquatable {}
 
+// MARK: - CaseIterable
+
+extension Acceleration: CaseIterable {
+    /// The predefined units, excluding the duplicate base alias and custom units.
+    ///
+    /// Units appear in source declaration order.
+    public static let allCases: Array<Self> = [
+        .meterPerSquareSecond,
+        .footPerSquareSecond
+    ]
+}
+
 // MARK: - Codable
 
 extension Acceleration: Codable {}

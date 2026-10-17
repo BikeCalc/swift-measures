@@ -65,6 +65,42 @@ public struct MagneticFluxDensity {
 
 extension MagneticFluxDensity: CanonicallyEquatable {}
 
+// MARK: - CaseIterable
+
+extension MagneticFluxDensity: CaseIterable {
+    /// The predefined units, excluding the duplicate base alias and custom units.
+    ///
+    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
+    public static let allCases: Array<Self> = [
+        .quettatesla,
+        .ronnatesla,
+        .yottatesla,
+        .zettatesla,
+        .exatesla,
+        .petatesla,
+        .teratesla,
+        .gigatesla,
+        .megatesla,
+        .kilotesla,
+        .hectotesla,
+        .decatesla,
+        .tesla,
+        .decitesla,
+        .centitesla,
+        .millitesla,
+        .microtesla,
+        .nanotesla,
+        .picotesla,
+        .femtotesla,
+        .attotesla,
+        .zeptotesla,
+        .yoctotesla,
+        .rontotesla,
+        .quectotesla,
+        .weberPerSquareMeter
+    ]
+}
+
 // MARK: - Codable
 
 extension MagneticFluxDensity: Codable {}

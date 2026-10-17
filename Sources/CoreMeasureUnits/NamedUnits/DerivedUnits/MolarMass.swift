@@ -68,6 +68,18 @@ public struct MolarMass {
 
 extension MolarMass: CanonicallyEquatable {}
 
+// MARK: - CaseIterable
+
+extension MolarMass: CaseIterable {
+    /// The predefined units, excluding the duplicate base alias and custom units.
+    ///
+    /// Units appear in source declaration order.
+    public static let allCases: Array<Self> = [
+        .kilogramsPerMole,
+        .gramsPerMole
+    ]
+}
+
 // MARK: - Codable
 
 extension MolarMass: Codable {}

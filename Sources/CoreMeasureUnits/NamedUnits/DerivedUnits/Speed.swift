@@ -112,6 +112,22 @@ public struct Speed {
 
 extension Speed: CanonicallyEquatable {}
 
+// MARK: - CaseIterable
+
+extension Speed: CaseIterable {
+    /// The predefined units, excluding the duplicate base alias and custom units.
+    ///
+    /// Units appear in source declaration order.
+    public static let allCases: Array<Self> = [
+        .milesPerHour,
+        .feetPerSecond,
+        .kilometersPerHour,
+        .metersPerSecond,
+        .centimetersPerSecond,
+        .knot
+    ]
+}
+
 // MARK: - Codable
 
 extension Speed: Codable {}

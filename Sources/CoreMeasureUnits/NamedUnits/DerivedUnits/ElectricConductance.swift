@@ -58,6 +58,41 @@ public struct ElectricConductance {
 
 extension ElectricConductance: CanonicallyEquatable {}
 
+// MARK: - CaseIterable
+
+extension ElectricConductance: CaseIterable {
+    /// The predefined units, excluding the duplicate base alias and custom units.
+    ///
+    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
+    public static let allCases: Array<Self> = [
+        .quettasiemens,
+        .ronnasiemens,
+        .yottasiemens,
+        .zettasiemens,
+        .exasiemens,
+        .petasiemens,
+        .terasiemens,
+        .gigasiemens,
+        .megasiemens,
+        .kilosiemens,
+        .hectosiemens,
+        .decasiemens,
+        .siemens,
+        .decisiemens,
+        .centisiemens,
+        .millisiemens,
+        .microsiemens,
+        .nanosiemens,
+        .picosiemens,
+        .femtosiemens,
+        .attosiemens,
+        .zeptosiemens,
+        .yoctosiemens,
+        .rontosiemens,
+        .quectosiemens
+    ]
+}
+
 // MARK: - Codable
 
 extension ElectricConductance: Codable {}

@@ -121,6 +121,32 @@ public struct Area {
 
 extension Area: CanonicallyEquatable {}
 
+// MARK: - CaseIterable
+
+extension Area: CaseIterable {
+    /// The predefined units, excluding the duplicate base alias and custom units.
+    ///
+    /// Units appear in source declaration order.
+    public static let allCases: Array<Self> = [
+        .squareMile,
+        .squareKilometer,
+        .squareMeter,
+        .squareYard,
+        .squareFoot,
+        .squareInch,
+        .squareCentimeter,
+        .squareMillimeter,
+        .acre,
+        .rood,
+        .perch,
+        .township,
+        .hectare,
+        .decare,
+        .are,
+        .centiare
+    ]
+}
+
 // MARK: - Codable
 
 extension Area: Codable {}

@@ -146,6 +146,51 @@ public struct Time {
 
 extension Time: CanonicallyEquatable {}
 
+// MARK: - CaseIterable
+
+extension Time: CaseIterable {
+    /// The predefined units, excluding the duplicate base alias and custom units.
+    ///
+    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
+    public static let allCases: Array<Self> = [
+        .quettasecond,
+        .ronnasecond,
+        .yottasecond,
+        .zettasecond,
+        .exasecond,
+        .petasecond,
+        .terasecond,
+        .gigasecond,
+        .megasecond,
+        .kilosecond,
+        .hectosecond,
+        .decasecond,
+        .second,
+        .decisecond,
+        .centisecond,
+        .millisecond,
+        .microsecond,
+        .nanosecond,
+        .picosecond,
+        .femtosecond,
+        .attosecond,
+        .zeptosecond,
+        .yoctosecond,
+        .rontosecond,
+        .quectosecond,
+        .millennium,
+        .century,
+        .decade,
+        .year,
+        .quarter,
+        .month,
+        .week,
+        .day,
+        .hour,
+        .minute
+    ]
+}
+
 // MARK: - Codable
 
 extension Time: Codable {}
