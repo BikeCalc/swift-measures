@@ -22,6 +22,32 @@ internal protocol UnitMacro {
 }
 
 extension UnitMacro {
+    /// Returns the property name for a prefixed unit.
+    ///
+    /// - Parameters:
+    ///   - prefix: The unit prefix.
+    ///   - name: The unprefixed unit name.
+    /// - Returns: The name shared by unit generation and enumeration.
+    internal static func propertyName(
+        for prefix: Prefix,
+        named name: String
+    ) -> String {
+        return prefix.rawValue + name
+    }
+
+    /// Returns every prefixed property name in prefix order, including the unprefixed unit.
+    ///
+    /// - Parameter name: The unprefixed unit name.
+    /// - Returns: The property names for the prefix family.
+    internal static func propertyNames(named name: String) -> Array<String> {
+        return Prefix.allCases.map { prefix in
+            return Self.propertyName(
+                for: prefix,
+                named: name
+            )
+        }
+    }
+
     /// Generates the prefixed unit members for a structure.
     ///
     /// - Parameters:
@@ -144,7 +170,10 @@ extension UnitMacro {
 
         // Generate each missing prefixed property while respecting declared units.
         for prefix in Prefix.allCases {
-            let propertyName: String = prefix.rawValue + name
+            let propertyName: String = Self.propertyName(
+                for: prefix,
+                named: name
+            )
 
             guard declaredProperties.contains(propertyName) == false,
                 prefix != .none || generatesUnprefixedUnit
