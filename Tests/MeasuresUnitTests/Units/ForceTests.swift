@@ -17,9 +17,9 @@ internal struct ForceTests {
     @Test(
         "Multiplying by Length returns Energy",
         arguments: [
-            (.millinewton, .millimeter, .init(coefficient: 1e-6, symbol: "mN⋅mm")),
-            (.newton, .meter, .init(coefficient: 1, symbol: "N⋅m")),
-            (.kilonewton, .kilometer, .init(coefficient: 1e+6, symbol: "kN⋅km"))
+            (.millinewton, .millimeter, .init(coefficient: 1e-6, symbol: "mN·mm")),
+            (.newton, .meter, .init(coefficient: 1, symbol: "N·m")),
+            (.kilonewton, .kilometer, .init(coefficient: 1e+6, symbol: "kN·km"))
         ] as Array<(Force, Length, Energy)>
     )
     internal func multiplyingByLengthReturnsEnergy(

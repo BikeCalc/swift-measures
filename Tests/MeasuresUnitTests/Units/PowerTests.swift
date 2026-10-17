@@ -17,9 +17,9 @@ internal struct PowerTests {
     @Test(
         "Multiplying by Time returns Energy",
         arguments: [
-            (.milliwatt, .millisecond, .init(coefficient: 1e-6, symbol: "mW⋅ms")),
-            (.watt, .second, .init(coefficient: 1, symbol: "W⋅s")),
-            (.kilowatt, .kilosecond, .init(coefficient: 1e+6, symbol: "kW⋅ks"))
+            (.milliwatt, .millisecond, .init(coefficient: 1e-6, symbol: "mW·ms")),
+            (.watt, .second, .init(coefficient: 1, symbol: "W·s")),
+            (.kilowatt, .kilosecond, .init(coefficient: 1e+6, symbol: "kW·ks"))
         ] as Array<(Power, Time, Energy)>
     )
     internal func multiplyingByTimeReturnsEnergy(

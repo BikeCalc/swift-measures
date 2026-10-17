@@ -17,9 +17,9 @@ internal struct MassTests {
     @Test(
         "Multiplying by Acceleration returns Force",
         arguments: [
-            (.gram, .init(coefficient: 1e-3, symbol: "mm/s²"), .init(coefficient: 1e-6, symbol: "g⋅mm/s²")),
-            (.kilogram, .meterPerSquareSecond, .init(coefficient: 1, symbol: "kg⋅m/s²")),
-            (.megagram, .init(coefficient: 1e+3, symbol: "km/s²"), .init(coefficient: 1e+6, symbol: "Mg⋅km/s²"))
+            (.gram, .init(coefficient: 1e-3, symbol: "mm/s²"), .init(coefficient: 1e-6, symbol: "g·mm/s²")),
+            (.kilogram, .meterPerSquareSecond, .init(coefficient: 1, symbol: "kg·m/s²")),
+            (.megagram, .init(coefficient: 1e+3, symbol: "km/s²"), .init(coefficient: 1e+6, symbol: "Mg·km/s²"))
         ] as Array<(Mass, Acceleration, Force)>
     )
     internal func multiplyingByAccelerationReturnsForce(

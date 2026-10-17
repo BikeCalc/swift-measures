@@ -17,9 +17,9 @@ internal struct ElectricCurrentTests {
     @Test(
         "Multiplying by Time returns ElectricCharge",
         arguments: [
-            (.milliampere, .millisecond, .init(coefficient: 1e-6, symbol: "mA⋅ms")),
-            (.ampere, .second, .init(coefficient: 1, symbol: "A⋅s")),
-            (.kiloampere, .kilosecond, .init(coefficient: 1e+6, symbol: "kA⋅ks"))
+            (.milliampere, .millisecond, .init(coefficient: 1e-6, symbol: "mA·ms")),
+            (.ampere, .second, .init(coefficient: 1, symbol: "A·s")),
+            (.kiloampere, .kilosecond, .init(coefficient: 1e+6, symbol: "kA·ks"))
         ] as Array<(ElectricCurrent, Time, ElectricCharge)>
     )
     internal func multiplyingByTimeReturnsElectricCharge(

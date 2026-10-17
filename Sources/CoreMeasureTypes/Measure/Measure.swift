@@ -8,31 +8,57 @@
 
 import NumericsExtended
 
-/// A representation of a measure.
-public struct Measure<Unit>
-where Unit: Equatable & Measurable & Sendable {
+/// A numeric value paired with a unit.
+///
+/// Values are stored as `Double`. The generic unit type identifies the available unit definitions; a composed unit
+/// additionally carries its physical dimension at runtime. Conversion preserves the represented quantity by applying
+/// the source and destination coefficients and constants.
+///
+/// Initialization, conversion, and arithmetic do not enforce the unit's valid range or clamp values to its bounds. Use
+/// `isValid` to check the value and conversion definition against the unit's reference-scale range.
+///
+/// Addition and subtraction operate on readings expressed in the left operand's unit. Scalar multiplication and
+/// division scale the stored reading without applying the unit's coefficient or constant. For offset units, this
+/// differs from scaling an absolute value on the reference scale.
+///
+/// Absolute quantities and differences are not represented by distinct types. In particular, subtracting temperatures
+/// retains the left operand's temperature unit; the result does not acquire temperature-difference conversion
+/// semantics.
+public struct Measure<UnitType>
+where UnitType: Unit {
     /// The keys used to encode and decode a measure.
     private enum CodingKeys: String, CodingKey {
+        /// The value of the measure.
         case value = "value"
+
+        /// The unit associated with the measure.
         case unit = "unit"
     }
 
-    /// The unit.
-    public typealias Unit = Unit
+    /// An error related to a measure's units.
+    public enum UnitError: Equatable, Error, Sendable {
+        /// The units are incompatible.
+        ///
+        /// For composed units, this means their physical dimensions differ.
+        case incompatibleUnits
+    }
 
     /// The value of this measure.
     public let value: Double
 
-    /// The unit of this measure.
-    public let unit: Unit
+    /// The unit associated with this measure.
+    public let unit: UnitType
 
     /// Creates a new instance with the specified value and unit.
     ///
     /// - Parameters:
     ///   - value: The value.
     ///   - unit: The unit.
-    public init<Value>(_ value: Value, _ unit: Unit)
-    where Value: BinaryFloatingPoint {
+    public init<Source>(
+        _ value: Source,
+        _ unit: UnitType
+    )
+    where Source: BinaryFloatingPoint {
         self.value = .init(value)
         self.unit = unit
     }
@@ -42,13 +68,16 @@ where Unit: Equatable & Measurable & Sendable {
     /// - Parameters:
     ///   - value: The value.
     ///   - unit: The unit.
-    public init<Value>(_ value: Value, _ unit: Unit)
-    where Value: BinaryInteger {
+    public init<Source>(
+        _ value: Source,
+        _ unit: UnitType
+    )
+    where Source: BinaryInteger {
         self.value = .init(value)
         self.unit = unit
     }
 
-    /// A Boolean value indicating whether this measure is valid.
+    /// A boolean value indicating whether this measure has a valid conversion and lies within its unit's valid range.
     public var isValid: Bool {
         return self.isValidForConversion
             && self.isWithinValidRange
@@ -58,31 +87,70 @@ where Unit: Equatable & Measurable & Sendable {
     internal var isWithinValidRange: Bool {
         let baseValue: Double = self.value * self.unit.coefficient + self.unit.constant
 
-        return Unit.validRange.contains(baseValue)
+        return self.unit.validRange.contains(baseValue)
     }
 
-    /// A Boolean value indicating whether this measure defines a finite, invertible conversion.
-    internal var isValidForConversion: Bool {
-        return self.value.isFinite && self.hasValidConversionUnit
+    /// A Boolean value indicating whether this measure has a finite value and a valid conversion definition.
+    package var isValidForConversion: Bool {
+        return self.value.isFinite
+            && self.hasValidConversionUnit
     }
 
-    /// A Boolean value indicating whether the unit defines a finite, invertible conversion.
+    /// A Boolean value indicating whether the unit has a finite positive coefficient and a finite constant.
     private var hasValidConversionUnit: Bool {
         return self.unit.coefficient.isFinite
-            && !self.unit.coefficient.isZero
+            && self.unit.coefficient > 0
             && self.unit.constant.isFinite
     }
 }
 
 // MARK: - Addable
 
-extension Measure: Addable {
-    public static func + (_ lhs: Self, _ rhs: Self) -> Self {
+extension Measure: Addable
+where UnitType: Equatable {
+    public typealias Addend = Self
+    public typealias Sum = Self
+
+    /// Returns the sum of readings expressed in the first measure's unit.
+    ///
+    /// The second measure is converted before the readings are combined. The result retains the first unit, including
+    /// its constant, and is not clamped to its valid range.
+    ///
+    /// - Parameters:
+    ///   - lhs: The first measure.
+    ///   - rhs: The measure to add.
+    /// - Returns: The sum in the first measure's unit.
+    /// - Precondition: The units are compatible, both coefficients are finite and positive, and both constants are
+    ///   finite.
+    public static func + (
+        _ lhs: Self,
+        _ rhs: Self.Addend
+    ) -> Self.Sum {
         let lhsValue: Double = lhs.value
         let rhsValue: Double = rhs.converted(to: lhs.unit).value
         let newValue: Double = lhsValue + rhsValue
 
         return .init(newValue, lhs.unit)
+    }
+
+    /// Returns the sum after converting the other measure to this measure's unit.
+    ///
+    /// Adds the readings in this unit, retaining its constant and without clamping the result to its valid range.
+    ///
+    /// Values follow ordinary `Double` arithmetic. The inherited mutating method leaves this measure unchanged if the
+    /// units are incompatible and this method throws.
+    ///
+    /// - Parameter addend: The measure to add.
+    /// - Returns: The sum in this measure's unit.
+    /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
+    /// - Precondition: Both unit coefficients are finite and positive and both constants are finite, as required for
+    ///   conversion.
+    public func adding(_ addend: Self.Addend) throws -> Self.Sum {
+        guard self.unit.isCompatible(with: addend.unit) else {
+            throw Self.UnitError.incompatibleUnits
+        }
+
+        return self + addend
     }
 }
 
@@ -120,7 +188,9 @@ extension Measure: ApproximatelyEquatable {
         absoluteTolerance: Self.AbsoluteTolerance,
         relativeTolerance: Self.RelativeTolerance = 0
     ) -> Bool {
-        guard self.hasValidConversionUnit,
+        guard self.unit.isCompatible(with: other.unit),
+            self.unit.isCompatible(with: absoluteTolerance.unit),
+            self.hasValidConversionUnit,
             other.hasValidConversionUnit,
             absoluteTolerance.isValidForConversion,
             absoluteTolerance.value >= 0,
@@ -131,8 +201,8 @@ extension Measure: ApproximatelyEquatable {
             return false
         }
 
-        let lhsValue: Double = self.converted(to: .base).value
-        let rhsValue: Double = other.converted(to: .base).value
+        let lhsValue: Double = (self.value * self.unit.coefficient + self.unit.constant)
+        let rhsValue: Double = (other.value * other.unit.coefficient + other.unit.constant)
         let toleranceValue: Double = absoluteTolerance.value * abs(absoluteTolerance.unit.coefficient)
 
         // Allow an infinite converted value only when its input was already infinite. A finite input that becomes
@@ -160,25 +230,34 @@ extension Measure: ApproximatelyEquatable {
 // MARK: - CanonicallyEquatable
 
 extension Measure: CanonicallyEquatable {
-    /// Returns a boolean value indicating whether this value is canonically equal to the specified value.
+    /// Returns a boolean value indicating whether this measure is canonically equal to the specified measure.
     ///
-    /// Conversion can introduce floating-point rounding. Use
-    /// `isApproximatelyEqual(to:absoluteTolerance:relativeTolerance:)` when a tolerance is appropriate.
+    /// The units must be compatible. For composable units, their physical dimensions must match. Both values are
+    /// converted to their reference scale using their coefficients and constants, then compared exactly. Unit symbols
+    /// are not compared.
+    ///
+    /// Conversion can introduce floating-point rounding. Equality is exact rather than approximate, and NaN values
+    /// compare unequal.
     ///
     /// For example:
     ///
     /// ```swift
     /// let oneMeter: Measure<Length> = .init(1, .meter)
     /// let oneHundredCentimeters: Measure<Length> = .init(100, .centimeter)
+    ///
     /// print(oneMeter.isCanonicallyEqual(to: oneHundredCentimeters))
     /// // Prints "true"
     /// ```
     ///
-    /// - Parameter rhs: An instance to compare.
-    /// - Returns: `true` if the converted base values are exactly equal, and `false` otherwise.
-    public func isCanonicallyEqual(to rhs: Self) -> Bool {
-        let lhsValue: Double = self.converted(to: .base).value
-        let rhsValue: Double = rhs.converted(to: .base).value
+    /// - Parameter other: The measure to compare with this measure.
+    /// - Returns: `true` if the units are compatible and the converted values are exactly equal, and `false` otherwise.
+    public func isCanonicallyEqual(to other: Self) -> Bool {
+        guard self.unit.isCompatible(with: other.unit) else {
+            return false
+        }
+
+        let lhsValue: Double = self.value * self.unit.coefficient + self.unit.constant
+        let rhsValue: Double = other.value * other.unit.coefficient + other.unit.constant
 
         return lhsValue == rhsValue
     }
@@ -186,51 +265,228 @@ extension Measure: CanonicallyEquatable {
 
 // MARK: - Comparable
 
-extension Measure: Comparable {
-    public static func < (_ lhs: Self, _ rhs: Self) -> Bool {
+extension Measure: Comparable
+where UnitType: Equatable {
+    /// Returns a boolean value indicating whether this measure is less than the specified measure.
+    ///
+    /// Compatible units follow ordinary `Double` comparison behavior, including unordered NaN values.
+    ///
+    /// - Parameter other: The measure to compare with this measure.
+    /// - Returns: The comparison result after converting the other measure to this measure's unit.
+    /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
+    /// - Precondition: Compatible units have finite positive coefficients and finite constants.
+    public func isLess(than other: Self) throws -> Bool {
+        guard self.unit.isCompatible(with: other.unit) else {
+            throw Self.UnitError.incompatibleUnits
+        }
+
+        return self < other
+    }
+
+    /// Returns a boolean value indicating whether this measure is less than or equal to the specified measure.
+    ///
+    /// Compatible units follow ordinary `Double` comparison behavior, including unordered NaN values.
+    ///
+    /// - Parameter other: The measure to compare with this measure.
+    /// - Returns: The comparison result after converting the other measure to this measure's unit.
+    /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
+    /// - Precondition: Compatible units have finite positive coefficients and finite constants.
+    public func isLessThanOrEqual(to other: Self) throws -> Bool {
+        guard self.unit.isCompatible(with: other.unit) else {
+            throw Self.UnitError.incompatibleUnits
+        }
+
+        return self <= other
+    }
+
+    /// Returns a boolean value indicating whether this measure is greater than the specified measure.
+    ///
+    /// Compatible units follow ordinary `Double` comparison behavior, including unordered NaN values.
+    ///
+    /// - Parameter other: The measure to compare with this measure.
+    /// - Returns: The comparison result after converting the other measure to this measure's unit.
+    /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
+    /// - Precondition: Compatible units have finite positive coefficients and finite constants.
+    public func isGreater(than other: Self) throws -> Bool {
+        guard self.unit.isCompatible(with: other.unit) else {
+            throw Self.UnitError.incompatibleUnits
+        }
+
+        return self > other
+    }
+
+    /// Returns a boolean value indicating whether this measure is greater than or equal to the specified measure.
+    ///
+    /// Compatible units follow ordinary `Double` comparison behavior, including unordered NaN values.
+    ///
+    /// - Parameter other: The measure to compare with this measure.
+    /// - Returns: The comparison result after converting the other measure to this measure's unit.
+    /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
+    /// - Precondition: Compatible units have finite positive coefficients and finite constants.
+    public func isGreaterThanOrEqual(to other: Self) throws -> Bool {
+        guard self.unit.isCompatible(with: other.unit) else {
+            throw Self.UnitError.incompatibleUnits
+        }
+
+        return self >= other
+    }
+
+    /// Returns a boolean value indicating whether the first measure is less than the second.
+    ///
+    /// Incompatible units are unordered and return `false`. Compatible units are compared after converting the second
+    /// measure to the first measure's unit, following ordinary `Double` comparison behavior.
+    ///
+    /// - Parameters:
+    ///   - lhs: The first measure to compare.
+    ///   - rhs: The second measure to compare.
+    /// - Returns: The comparison result, or `false` if the units are incompatible.
+    /// - Precondition: Compatible units have finite positive coefficients and finite constants.
+    public static func < (
+        _ lhs: Self,
+        _ rhs: Self
+    ) -> Bool {
+        guard lhs.unit.isCompatible(with: rhs.unit) else {
+            return false
+        }
+
         let lhsValue: Double = lhs.value
         let rhsValue: Double = rhs.converted(to: lhs.unit).value
 
         return lhsValue < rhsValue
+    }
+
+    /// Returns a boolean value indicating whether the first measure is less than or equal to the second.
+    ///
+    /// Incompatible units are unordered and return `false`. Compatible units are compared after converting the second
+    /// measure to the first measure's unit, following ordinary `Double` comparison behavior.
+    ///
+    /// - Parameters:
+    ///   - lhs: The first measure to compare.
+    ///   - rhs: The second measure to compare.
+    /// - Returns: The comparison result, or `false` if the units are incompatible.
+    /// - Precondition: Compatible units have finite positive coefficients and finite constants.
+    public static func <= (
+        _ lhs: Self,
+        _ rhs: Self
+    ) -> Bool {
+        guard lhs.unit.isCompatible(with: rhs.unit) else {
+            return false
+        }
+
+        let lhsValue: Double = lhs.value
+        let rhsValue: Double = rhs.converted(to: lhs.unit).value
+
+        return lhsValue <= rhsValue
+    }
+
+    /// Returns a boolean value indicating whether the first measure is greater than the second.
+    ///
+    /// Incompatible units are unordered and return `false`. Compatible units are compared after converting the second
+    /// measure to the first measure's unit, following ordinary `Double` comparison behavior.
+    ///
+    /// - Parameters:
+    ///   - lhs: The first measure to compare.
+    ///   - rhs: The second measure to compare.
+    /// - Returns: The comparison result, or `false` if the units are incompatible.
+    /// - Precondition: Compatible units have finite positive coefficients and finite constants.
+    public static func > (
+        _ lhs: Self,
+        _ rhs: Self
+    ) -> Bool {
+        guard lhs.unit.isCompatible(with: rhs.unit) else {
+            return false
+        }
+
+        let lhsValue: Double = lhs.value
+        let rhsValue: Double = rhs.converted(to: lhs.unit).value
+
+        return lhsValue > rhsValue
+    }
+
+    /// Returns a boolean value indicating whether the first measure is greater than or equal to the second.
+    ///
+    /// Incompatible units are unordered and return `false`. Compatible units are compared after converting the second
+    /// measure to the first measure's unit, following ordinary `Double` comparison behavior.
+    ///
+    /// - Parameters:
+    ///   - lhs: The first measure to compare.
+    ///   - rhs: The second measure to compare.
+    /// - Returns: The comparison result, or `false` if the units are incompatible.
+    /// - Precondition: Compatible units have finite positive coefficients and finite constants.
+    public static func >= (
+        _ lhs: Self,
+        _ rhs: Self
+    ) -> Bool {
+        guard lhs.unit.isCompatible(with: rhs.unit) else {
+            return false
+        }
+
+        let lhsValue: Double = lhs.value
+        let rhsValue: Double = rhs.converted(to: lhs.unit).value
+
+        return lhsValue >= rhsValue
     }
 }
 
 // MARK: - Convertible
 
 extension Measure: Convertible {
-    /// The value of this unit in terms of the base unit of its dimension.
-    private func convertedToBase() -> Self {
-        let newValue: Double = self.value * self.unit.coefficient + self.unit.constant
-        return .init(newValue, .base)
-    }
-
     /// Returns this measure converted to the specified unit.
     ///
+    /// Conversion applies both units' coefficients and constants without simplifying or normalizing the destination
+    /// unit. Values outside the unit's valid range are not rejected. Measurement values follow ordinary `Double`
+    /// arithmetic: infinity and NaN propagate, and overflow may produce infinity.
+    ///
+    /// The source and destination units must be compatible. For composable units, their physical dimensions must match.
+    ///
+    /// For example:
+    ///
     /// ```swift
-    /// let measure: Measure<Length> = .init(1, .meter).converted(to: .centimeter)
-    /// print(measure)
+    /// let distance: Measure<Length> = .init(1, .meter)
+    ///
+    /// print(distance.converted(to: Length.centimeter))
     /// // Prints "100.0 cm"
     /// ```
     ///
-    /// - Parameter rhs: The unit to convert to.
-    /// - Returns: The converted measure.
-    public func converted(to rhs: Unit) -> Self {
-        let newValue: Double = (self.convertedToBase().value - rhs.constant) / rhs.coefficient
-        return .init(newValue, rhs)
-    }
+    /// - Parameter unit: The unit to convert to.
+    /// - Returns: A measure expressed in the destination unit.
+    /// - Precondition: The source and destination units are compatible, both coefficients are finite and positive, and
+    ///   both constants are finite.
+    public func converted(to unit: UnitType) -> Self {
+        precondition(
+            self.unit.isCompatible(with: unit),
+            "Cannot convert between units with incompatible dimensions."
+        )
 
-    /// Converts this measure to the specified unit.
-    ///
-    /// ```swift
-    /// var measure: Measure<Length> = .init(1, .meter)
-    /// measure.convert(to: .centimeter)
-    /// print(measure)
-    /// // Prints "100.0 cm"
-    /// ```
-    ///
-    /// - Parameter rhs: The unit to convert to.
-    public mutating func convert(to rhs: Unit) {
-        self = self.converted(to: rhs)
+        precondition(
+            self.unit.coefficient.isFinite && self.unit.coefficient > 0,
+            "Conversion requires a finite positive source coefficient."
+        )
+
+        precondition(
+            unit.coefficient.isFinite && unit.coefficient > 0,
+            "Conversion requires a finite positive destination coefficient."
+        )
+
+        precondition(
+            self.unit.constant.isFinite,
+            "Conversion requires a finite source constant."
+        )
+
+        precondition(
+            unit.constant.isFinite,
+            "Conversion requires a finite destination constant."
+        )
+
+        // Identical scales and offsets cancel; preserve the value without conversion rounding.
+        if self.unit.coefficient == unit.coefficient, self.unit.constant == unit.constant {
+            return .init(self.value, unit)
+        }
+
+        let referenceValue: Double = self.value * self.unit.coefficient + self.unit.constant
+        let value: Double = (referenceValue - unit.constant) / unit.coefficient
+
+        return .init(value, unit)
     }
 }
 
@@ -239,10 +495,7 @@ extension Measure: Convertible {
 extension Measure: CustomDebugStringConvertible {
     /// A textual representation of this instance suitable for debugging.
     public var debugDescription: String {
-        let value: String = String(reflecting: self.value)
-        let unit: String = String(reflecting: self.unit)
-
-        return "Measure<\(Unit.self)>(\(value), \(unit))"
+        return "Measure<\(UnitType.self)>(\(self.value), \(self.unit))"
     }
 }
 
@@ -250,6 +503,8 @@ extension Measure: CustomDebugStringConvertible {
 
 extension Measure: CustomStringConvertible {
     /// A textual representation of this instance.
+    ///
+    /// For example:
     ///
     /// ```swift
     /// let measure: Measure<Length> = .init(1, .meter)
@@ -264,12 +519,12 @@ extension Measure: CustomStringConvertible {
 // MARK: - Decodable
 
 extension Measure: Decodable
-where Unit: Decodable {
+where UnitType: Decodable {
     public init(from decoder: Decoder) throws {
         let container: KeyedDecodingContainer<Self.CodingKeys> = try decoder.container(keyedBy: Self.CodingKeys.self)
 
         let value: Double = try container.decode(Double.self, forKey: .value)
-        let unit: Unit = try container.decode(Unit.self, forKey: .unit)
+        let unit: UnitType = try container.decode(UnitType.self, forKey: .unit)
 
         self.init(value, unit)
     }
@@ -277,92 +532,90 @@ where Unit: Decodable {
 
 // MARK: - Divisible
 
-extension Measure {
-    /// Returns a Boolean value indicating whether this measure's value is divisible by the specified value.
-    ///
-    /// - Parameter other: The value to test.
-    /// - Returns: `true` if this measure's value is divisible by the specified value, and `false` otherwise.
-    public func isDivisible(by other: Double) -> Bool {
-        return self.value.isDivisible(by: other)
+extension Measure: Divisible
+where UnitType: Equatable {
+    public typealias Divisor = Double
+    public typealias Quotient = Self
+    public typealias RemainderDivisor = Double
+    public typealias Remainder = Self
+
+    @available(*, deprecated)
+    public var reciprocal: Self? {
+        // TODO: Fix Measure reciprocal
+        // Add a Reciprocal associated type to Divisible so composable measures can return Measure<ComposedUnit>
+        // The reciprocal of 2 m is 0.5 m⁻¹, which cannot be represented by Self.
+        return nil
     }
 
-    /// Returns the quotient of dividing the first specified value by the second.
+    @available(*, deprecated)
+    public var isInvertible: Bool {
+        // TODO: Fix Measure isInvertible
+        // Implement alongside reciprocal after Divisible supports a different reciprocal type. Apply the unit's
+        // coefficient and constant first, then require a finite, nonzero base value and a finite, nonzero reciprocal.
+        // For example, 0 °C is invertible, but 0 K is not.
+        return false
+    }
+
+    public func isDivisible(by other: Self) -> Bool {
+        guard self.unit.isCompatible(with: other.unit),
+            self.isValidForConversion,
+            other.isValidForConversion
+        else {
+            return false
+        }
+
+        // Equal scales cancel when neither unit has an offset; avoid introducing conversion rounding.
+        if self.unit.coefficient == other.unit.coefficient,
+            self.unit.constant == 0,
+            other.unit.constant == 0
+        {
+            return self.value.isDivisible(by: other.value)
+        }
+
+        let lhsValue: Double = self.value * self.unit.coefficient + self.unit.constant
+        let rhsValue: Double = other.value * other.unit.coefficient + other.unit.constant
+
+        guard lhsValue.isFinite, rhsValue.isFinite else {
+            return false
+        }
+
+        return lhsValue.isDivisible(by: rhsValue)
+    }
+
+    /// Returns the quotient by dividing the stored reading by a scalar.
+    ///
+    /// The unit is preserved without applying its coefficient or constant. For offset units, this scales the reading,
+    /// not the absolute reference value. The result follows ordinary `Double` arithmetic and is not clamped.
     ///
     /// - Parameters:
-    ///   - lhs: The dividend.
-    ///   - rhs: The divisor.
-    /// - Returns: The quotient.
-    public static func / (_ lhs: Self, _ rhs: Double) -> Self {
+    ///   - lhs: The measure whose reading is scaled.
+    ///   - rhs: The scalar used to scale the reading.
+    /// - Returns: The quotient in the original unit.
+    public static func / (
+        _ lhs: Self,
+        _ rhs: Self.Divisor
+    ) -> Self.Quotient {
         let lhsValue: Double = lhs.value
         let newValue: Double = lhsValue / rhs
 
         return .init(newValue, lhs.unit)
     }
 
-    /// Divides the first specified value by the second and stores the quotient in the left-hand-side variable.
-    ///
-    /// - Parameters:
-    ///   - lhs: The dividend.
-    ///   - rhs: The divisor.
-    public static func /= (_ lhs: inout Self, _ rhs: Double) {
-        lhs = lhs / rhs
-    }
-
-    /// Returns the remainder of dividing the first specified value by the second.
-    ///
-    /// - Parameters:
-    ///   - lhs: The dividend.
-    ///   - rhs: The divisor.
-    /// - Returns: The remainder.
-    public static func % (_ lhs: Self, _ rhs: Double) -> Self {
+    public static func % (
+        _ lhs: Self,
+        _ rhs: Self.RemainderDivisor
+    ) -> Self.Remainder {
         let lhsValue: Double = lhs.value
         let newValue: Double = lhsValue.truncatingRemainder(dividingBy: rhs)
 
         return .init(newValue, lhs.unit)
-    }
-
-    /// Divides the first specified value by the second and stores the remainder in the left-hand-side variable.
-    ///
-    /// - Parameters:
-    ///   - lhs: The dividend.
-    ///   - rhs: The divisor.
-    public static func %= (_ lhs: inout Self, _ rhs: Double) {
-        lhs = lhs % rhs
-    }
-
-    /// Returns the quotient of dividing this value by the specified value.
-    ///
-    /// - Parameter divisor: The divisor.
-    /// - Returns: The quotient.
-    public func dividing(by divisor: Double) -> Self {
-        return self / divisor
-    }
-
-    /// Divides this value by the specified value and produces the quotient.
-    ///
-    /// - Parameter divisor: The divisor.
-    public mutating func divide(by divisor: Double) {
-        self /= divisor
-    }
-
-    /// Returns this value halved.
-    ///
-    /// - Returns: The value halved.
-    public func halved() -> Self {
-        return self / 2
-    }
-
-    /// Halves this value.
-    ///
-    public mutating func halve() {
-        self = self.halved()
     }
 }
 
 // MARK: - Encodable
 
 extension Measure: Encodable
-where Unit: Encodable {
+where UnitType: Encodable {
     public func encode(to encoder: Encoder) throws {
         var container: KeyedEncodingContainer<Self.CodingKeys> = encoder.container(keyedBy: Self.CodingKeys.self)
 
@@ -374,8 +627,11 @@ where Unit: Encodable {
 // MARK: - Equatable
 
 extension Measure: Equatable
-where Unit: Equatable {
-    public static func == (_ lhs: Self, _ rhs: Self) -> Bool {
+where UnitType: Equatable {
+    public static func == (
+        _ lhs: Self,
+        _ rhs: Self
+    ) -> Bool {
         return lhs.value == rhs.value
             && lhs.unit == rhs.unit
     }
@@ -384,7 +640,7 @@ where Unit: Equatable {
 // MARK: - Hashable
 
 extension Measure: Hashable
-where Unit: Hashable {
+where UnitType: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(self.value)
         hasher.combine(self.unit)
@@ -393,90 +649,107 @@ where Unit: Hashable {
 
 // MARK: - Multipliable
 
-extension Measure {
-    /// Returns a Boolean value indicating whether this measure's value is a multiple of the specified value.
-    ///
-    /// - Parameter other: The value to test.
-    /// - Returns: `true` if this measure's value is a multiple of the specified value, and `false` otherwise.
-    public func isMultiple(of other: Double) -> Bool {
-        return self.value.isMultiple(of: other)
+extension Measure: Multipliable
+where UnitType: Equatable {
+    public typealias Multiplier = Double
+    public typealias Product = Self
+
+    public func isMultiple(of other: Self) -> Bool {
+        guard self.unit.isCompatible(with: other.unit),
+            self.isValidForConversion,
+            other.isValidForConversion
+        else {
+            return false
+        }
+
+        // Equal scales cancel when neither unit has an offset; avoid introducing conversion rounding.
+        if self.unit.coefficient == other.unit.coefficient, self.unit.constant == 0, other.unit.constant == 0 {
+            return self.value.isMultiple(of: other.value)
+        }
+
+        let lhsValue: Double = self.value * self.unit.coefficient + self.unit.constant
+        let rhsValue: Double = other.value * other.unit.coefficient + other.unit.constant
+
+        guard lhsValue.isFinite, rhsValue.isFinite else {
+            return false
+        }
+
+        return lhsValue.isMultiple(of: rhsValue)
     }
 
-    /// Returns the product of multiplying the two specified values.
+    /// Returns the product by multiplying the stored reading by a scalar.
+    ///
+    /// The unit is preserved without applying its coefficient or constant. For offset units, this scales the reading,
+    /// not the absolute reference value. The result follows ordinary `Double` arithmetic and is not clamped.
     ///
     /// - Parameters:
-    ///   - lhs: The multiplicand.
-    ///   - rhs: The multiplier.
-    /// - Returns: The product.
-    public static func * (_ lhs: Self, _ rhs: Double) -> Self {
+    ///   - lhs: The measure whose reading is scaled.
+    ///   - rhs: The scalar used to scale the reading.
+    /// - Returns: The product in the original unit.
+    public static func * (
+        _ lhs: Self,
+        _ rhs: Self.Multiplier
+    ) -> Self.Product {
         let lhsValue: Double = lhs.value
         let newValue: Double = lhsValue * rhs
 
         return .init(newValue, lhs.unit)
     }
-
-    /// Returns the product of multiplying the two specified values.
-    ///
-    /// - Parameters:
-    ///   - lhs: The multiplicand.
-    ///   - rhs: The multiplier.
-    /// - Returns: The product.
-    public static func * (_ lhs: Double, _ rhs: Self) -> Self {
-        let rhsValue: Double = rhs.value
-        let newValue: Double = lhs * rhsValue
-
-        return .init(newValue, rhs.unit)
-    }
-
-    /// Multiplies the two specified values and stores the product in the left-hand-side variable.
-    ///
-    /// - Parameters:
-    ///   - lhs: The multiplicand.
-    ///   - rhs: The multiplier.
-    public static func *= (_ lhs: inout Self, _ rhs: Double) {
-        lhs = lhs * rhs
-    }
-
-    /// Returns the product of multiplying this value by the specified value.
-    ///
-    /// - Parameter multiplier: The multiplier.
-    /// - Returns: The product.
-    public func multiplying(by multiplier: Double) -> Self {
-        return self * multiplier
-    }
-
-    /// Multiplies this value by the specified value and produces the product.
-    ///
-    /// - Parameter multiplier: The multiplier.
-    public mutating func multiply(by multiplier: Double) {
-        self *= multiplier
-    }
-
-    /// Returns this value doubled.
-    ///
-    ///  - Returns: The value doubled.
-    public func doubled() -> Self {
-        return self * 2
-    }
-
-    /// Doubles this value.
-    public mutating func double() {
-        self = self.doubled()
-    }
 }
 
 // MARK: - Sendable
 
-extension Measure: Sendable {}
+extension Measure: Sendable
+where UnitType: Sendable {}
 
 // MARK: - Subtractable
 
-extension Measure: Subtractable {
-    public static func - (_ lhs: Self, _ rhs: Self) -> Self {
+extension Measure: Subtractable
+where UnitType: Equatable {
+    public typealias Subtrahend = Self
+    public typealias Difference = Self
+
+    /// Returns the difference of readings expressed in the first measure's unit.
+    ///
+    /// The second measure is converted before the readings are combined. The result retains the first unit, including
+    /// its constant, and is not clamped to its valid range. Subtracting temperatures does not create a distinct
+    /// temperature-difference quantity.
+    ///
+    /// - Parameters:
+    ///   - lhs: The first measure.
+    ///   - rhs: The measure to subtract.
+    /// - Returns: The difference in the first measure's unit.
+    /// - Precondition: The units are compatible, both coefficients are finite and positive, and both constants are
+    ///   finite.
+    public static func - (
+        _ lhs: Self,
+        _ rhs: Self.Subtrahend
+    ) -> Self.Difference {
         let lhsValue: Double = lhs.value
         let rhsValue: Double = rhs.converted(to: lhs.unit).value
         let newValue: Double = lhsValue - rhsValue
 
         return .init(newValue, lhs.unit)
+    }
+
+    /// Returns the difference after converting the other measure to this measure's unit.
+    ///
+    /// Subtracts the readings in this unit, retaining its constant and without clamping the result to its valid range.
+    /// Subtracting temperatures does not create a distinct temperature-difference quantity.
+    ///
+    /// Values follow ordinary `Double` arithmetic. The inherited mutating method leaves this measure unchanged if the
+    /// units are incompatible and this method throws.
+    ///
+    /// - Parameter subtrahend: The measure to subtract.
+    /// - Returns: The difference in this measure's unit.
+    /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
+    /// - Precondition: Both unit coefficients are finite and positive and both constants are finite, as required for
+    ///   conversion.
+    public func subtracting(_ subtrahend: Self.Subtrahend) throws -> Self.Difference {
+        guard self.unit.isCompatible(with: subtrahend.unit) else {
+            throw Self.UnitError.incompatibleUnits
+        }
+
+        return self - subtrahend
     }
 }

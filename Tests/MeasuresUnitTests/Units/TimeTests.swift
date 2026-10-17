@@ -17,9 +17,9 @@ internal struct TimeTests {
     @Test(
         "Multiplying by ElectricCurrent returns ElectricCharge",
         arguments: [
-            (.millisecond, .milliampere, .init(coefficient: 1e-6, symbol: "mA⋅ms")),
-            (.second, .ampere, .init(coefficient: 1, symbol: "A⋅s")),
-            (.kilosecond, .kiloampere, .init(coefficient: 1e+6, symbol: "kA⋅ks"))
+            (.millisecond, .milliampere, .init(coefficient: 1e-6, symbol: "mA·ms")),
+            (.second, .ampere, .init(coefficient: 1, symbol: "A·s")),
+            (.kilosecond, .kiloampere, .init(coefficient: 1e+6, symbol: "kA·ks"))
         ] as Array<(Time, ElectricCurrent, ElectricCharge)>
     )
     internal func multiplyingByElectricCurrentReturnsElectricCharge(
@@ -37,9 +37,9 @@ internal struct TimeTests {
     @Test(
         "Multiplying by ElectricPotential returns MagneticFlux",
         arguments: [
-            (.millisecond, .millivolt, .init(coefficient: 1e-6, symbol: "mV⋅ms")),
-            (.second, .volt, .init(coefficient: 1, symbol: "V⋅s")),
-            (.kilosecond, .kilovolt, .init(coefficient: 1e+6, symbol: "kV⋅ks"))
+            (.millisecond, .millivolt, .init(coefficient: 1e-6, symbol: "mV·ms")),
+            (.second, .volt, .init(coefficient: 1, symbol: "V·s")),
+            (.kilosecond, .kilovolt, .init(coefficient: 1e+6, symbol: "kV·ks"))
         ] as Array<(Time, ElectricPotential, MagneticFlux)>
     )
     internal func multiplyingByElectricPotentialReturnsMagneticFlux(
@@ -57,9 +57,9 @@ internal struct TimeTests {
     @Test(
         "Multiplying by Power returns Energy",
         arguments: [
-            (.millisecond, .milliwatt, .init(coefficient: 1e-6, symbol: "mW⋅ms")),
-            (.second, .watt, .init(coefficient: 1, symbol: "W⋅s")),
-            (.kilosecond, .kilowatt, .init(coefficient: 1e+6, symbol: "kW⋅ks"))
+            (.millisecond, .milliwatt, .init(coefficient: 1e-6, symbol: "mW·ms")),
+            (.second, .watt, .init(coefficient: 1, symbol: "W·s")),
+            (.kilosecond, .kilowatt, .init(coefficient: 1e+6, symbol: "kW·ks"))
         ] as Array<(Time, Power, Energy)>
     )
     internal func multiplyingByPowerReturnsEnergy(

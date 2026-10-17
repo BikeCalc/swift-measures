@@ -7,11 +7,12 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import Testing
+
 @testable import Measures
 
 @Suite("Length Measure Addable Tests")
 internal struct LengthMeasureAddableTests {
-    private static let additionArguments: [(Measure<Length>, Measure<Length>, Measure<Length>)] = [
+    private static let additionArguments: [(Measure<Length>, Measure<Length>.Addend, Measure<Length>)] = [
         (Measure<Length>(1, .meter), Measure<Length>(2, .meter), Measure<Length>(3, .meter)),
         (Measure<Length>(1, .meter), Measure<Length>(100, .centimeter), Measure<Length>(2, .meter)),
         (Measure<Length>(100, .centimeter), Measure<Length>(1, .meter), Measure<Length>(200, .centimeter)),
@@ -25,7 +26,7 @@ internal struct LengthMeasureAddableTests {
     )
     internal func additionSucceeds(
         augend: Measure<Length>,
-        addend: Measure<Length>,
+        addend: Measure<Length>.Addend,
         sum: Measure<Length>
     ) {
         #expect(augend + addend == sum)
@@ -37,7 +38,7 @@ internal struct LengthMeasureAddableTests {
     )
     internal func additionEqualSucceeds(
         augend: Measure<Length>,
-        addend: Measure<Length>,
+        addend: Measure<Length>.Addend,
         sum: Measure<Length>
     ) {
         var runningSum: Measure<Length> = augend
@@ -51,10 +52,10 @@ internal struct LengthMeasureAddableTests {
     )
     internal func addingSucceeds(
         augend: Measure<Length>,
-        addend: Measure<Length>,
+        addend: Measure<Length>.Addend,
         sum: Measure<Length>
-    ) {
-        #expect(augend.adding(addend) == sum)
+    ) throws {
+        #expect(try augend.adding(addend) == sum)
     }
 
     @Test(
@@ -63,11 +64,11 @@ internal struct LengthMeasureAddableTests {
     )
     internal func addSucceeds(
         augend: Measure<Length>,
-        addend: Measure<Length>,
+        addend: Measure<Length>.Addend,
         sum: Measure<Length>
-    ) {
+    ) throws {
         var runningSum: Measure<Length> = augend
-        runningSum.add(addend)
+        try runningSum.add(addend)
         #expect(runningSum == sum)
     }
 }
@@ -79,7 +80,7 @@ extension LengthMeasureAddableTests {
     )
     internal func additionIsCanonicallyCommutative(
         augend: Measure<Length>,
-        addend: Measure<Length>,
+        addend: Measure<Length>.Addend,
         sum _: Measure<Length>
     ) {
         #expect((augend + addend).isCanonicallyEqual(to: addend + augend))

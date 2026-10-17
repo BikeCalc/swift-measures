@@ -3,7 +3,7 @@
 import CompilerPluginSupport
 import PackageDescription
 
-let package = Package(
+let package: Package = .init(
     name: "swift-measures",
     defaultLocalization: "en",
     platforms: [
@@ -20,7 +20,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/bikecalc/swift-numerics-extended.git",
-            from: "2.3.1"
+            branch: "release/3.0.0"
         ),
         .package(
             url: "https://github.com/swiftlang/swift-docc-plugin.git",

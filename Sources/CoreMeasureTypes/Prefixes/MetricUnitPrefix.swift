@@ -206,7 +206,10 @@ extension MetricUnitPrefix: CaseIterable {}
 // MARK: - Comparable
 
 extension MetricUnitPrefix: Comparable {
-    package static func < (_ lhs: Self, _ rhs: Self) -> Bool {
+    package static func < (
+        _ lhs: Self,
+        _ rhs: Self
+    ) -> Bool {
         return lhs.coefficient < rhs.coefficient
     }
 }
@@ -214,7 +217,10 @@ extension MetricUnitPrefix: Comparable {
 // MARK: - Equatable
 
 extension MetricUnitPrefix: Equatable {
-    package static func == (_ lhs: Self, _ rhs: Self) -> Bool {
+    package static func == (
+        _ lhs: Self,
+        _ rhs: Self
+    ) -> Bool {
         return lhs.rawValue == rhs.rawValue
     }
 }

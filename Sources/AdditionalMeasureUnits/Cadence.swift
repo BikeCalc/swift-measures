@@ -8,6 +8,7 @@
 
 import CoreMeasureTypes
 import CoreMeasureUnits
+import NumericsExtended
 
 /// A unit for measuring cadence.
 public struct Cadence {
@@ -49,6 +50,10 @@ public struct Cadence {
     public static let revolutionsPerHour: Self = .init(per: .hour)
 }
 
+// MARK: - CanonicallyEquatable
+
+extension Cadence: CanonicallyEquatable {}
+
 // MARK: - Codable
 
 extension Cadence: Codable {}
@@ -57,6 +62,12 @@ extension Cadence: Codable {}
 
 extension Cadence: Comparable {}
 
+// MARK: - DefinedUnit
+
+extension Cadence: DefinedUnit {
+    public static let base: Self = .revolutionsPerSecond
+}
+
 // MARK: - Equatable
 
 extension Cadence: Equatable {}
@@ -64,12 +75,6 @@ extension Cadence: Equatable {}
 // MARK: - Hashable
 
 extension Cadence: Hashable {}
-
-// MARK: - Measurable
-
-extension Cadence: Measurable {
-    public static let base: Self = .revolutionsPerSecond
-}
 
 // MARK: - Sendable
 

@@ -1,0 +1,67 @@
+// This source file is part of the Measures open source project
+//
+// Copyright (c) 2021-2026 A. H. de Quatre Ltd. and the Measures project authors
+// Licensed under Apache License v2.0 with Runtime Library Exception
+//
+// See LICENSE.md for license information
+// See CONTRIBUTORS.txt for the list of Measures project authors
+
+import CoreMeasureTypes
+import MeasuresMacro
+import NumericsExtended
+
+/// A unit of measure for luminous intensity.
+@MetricUnits(name: "candela", symbol: "cd")
+public struct LuminousIntensity {
+    public let coefficient: Double
+
+    public let constant: Double
+
+    public let symbol: String
+
+    public init(
+        coefficient: Double,
+        constant: Double = 0,
+        symbol: String
+    ) {
+        self.coefficient = coefficient
+        self.constant = constant
+        self.symbol = symbol
+    }
+
+    public let dimension: Dimension = .init(luminousIntensity: 1)
+}
+
+// MARK: - CanonicallyEquatable
+
+extension LuminousIntensity: CanonicallyEquatable {}
+
+// MARK: - Codable
+
+extension LuminousIntensity: Codable {}
+
+// MARK: - Comparable
+
+extension LuminousIntensity: Comparable {}
+
+// MARK: - ComposableUnit
+
+extension LuminousIntensity: ComposableUnit {}
+
+// MARK: - DefinedUnit
+
+extension LuminousIntensity: DefinedUnit {
+    public static let base: Self = .candela
+}
+
+// MARK: - Equatable
+
+extension LuminousIntensity: Equatable {}
+
+// MARK: - Hashable
+
+extension LuminousIntensity: Hashable {}
+
+// MARK: - Sendable
+
+extension LuminousIntensity: Sendable {}
