@@ -167,7 +167,7 @@ public struct Length {
     /// The pica unit of length.
     public static let pica: Self = .init(
         coefficient: Self.inch.coefficient / 6,
-        symbol: "pc"
+        symbol: "p"
     )
 
     /// The point unit of length.
