@@ -12,10 +12,6 @@ import Testing
 /// Tests enumeration of predefined equivalent dose units.
 @Suite("Equivalent Dose CaseIterable Tests")
 internal struct EquivalentDoseCaseIterableTests {
-    /// Creates the case-iteration test suite.
-    internal init() {}
-
-    /// Checks the predefined unit count, uniqueness, and inclusion of the base unit.
     @Test("All cases contain the predefined units and base unit without duplicates")
     internal func allCases() {
         let units: Array<EquivalentDose> = EquivalentDose.allCases

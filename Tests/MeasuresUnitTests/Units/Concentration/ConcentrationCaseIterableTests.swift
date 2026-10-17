@@ -12,10 +12,6 @@ import Testing
 /// Tests enumeration of predefined concentration units.
 @Suite("Concentration CaseIterable Tests")
 internal struct ConcentrationCaseIterableTests {
-    /// Creates the case-iteration test suite.
-    internal init() {}
-
-    /// Checks the predefined unit count, uniqueness, and inclusion of the base unit.
     @Test("All cases contain the predefined units and base unit without duplicates")
     internal func allCases() {
         let units: Array<Concentration> = Concentration.allCases

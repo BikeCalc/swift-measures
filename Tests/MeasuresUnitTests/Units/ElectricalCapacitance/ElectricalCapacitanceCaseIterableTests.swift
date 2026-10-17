@@ -12,10 +12,6 @@ import Testing
 /// Tests enumeration of predefined electrical capacitance units.
 @Suite("Electrical Capacitance CaseIterable Tests")
 internal struct ElectricalCapacitanceCaseIterableTests {
-    /// Creates the case-iteration test suite.
-    internal init() {}
-
-    /// Checks the predefined unit count, uniqueness, and inclusion of the base unit.
     @Test("All cases contain the predefined units and base unit without duplicates")
     internal func allCases() {
         let units: Array<ElectricalCapacitance> = ElectricalCapacitance.allCases

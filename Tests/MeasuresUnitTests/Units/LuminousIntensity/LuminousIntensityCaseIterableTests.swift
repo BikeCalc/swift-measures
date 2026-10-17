@@ -12,10 +12,6 @@ import Testing
 /// Tests enumeration of predefined luminous intensity units.
 @Suite("Luminous Intensity CaseIterable Tests")
 internal struct LuminousIntensityCaseIterableTests {
-    /// Creates the case-iteration test suite.
-    internal init() {}
-
-    /// Checks the predefined unit count, uniqueness, and inclusion of the base unit.
     @Test("All cases contain the predefined units and base unit without duplicates")
     internal func allCases() {
         let units: Array<LuminousIntensity> = LuminousIntensity.allCases
