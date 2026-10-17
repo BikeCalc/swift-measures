@@ -209,7 +209,7 @@ where UnitType: ComposableUnit {
     /// For example:
     ///
     /// ```swift
-    /// let area = Measure<Length>(2, .meter) * Measure<Length>(3, .meter)
+    /// let area: Measure<ComposedUnit> = Measure<Length>(2, .meter) * Measure<Length>(3, .meter)
     ///
     /// print(area.converted(to: Area.squareMeter))
     /// // Prints "6.0 m²"
@@ -293,8 +293,8 @@ where UnitType: ComposableUnit & Equatable {
     /// For example:
     ///
     /// ```swift
-    /// let area = Measure(4, Area.squareMeter)
-    /// let length = Measure(2, Length.meter)
+    /// let area: Measure<Area> = .init(4, .squareMeter)
+    /// let length: Measure<Length> = .init(2, .meter)
     ///
     /// print(area.isPower(of: length))
     /// // Prints "true"

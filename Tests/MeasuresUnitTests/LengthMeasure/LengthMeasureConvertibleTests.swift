@@ -7,25 +7,26 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import Testing
+
 @testable import Measures
 
 @Suite("Length Measure Convertible Tests")
 internal struct LengthMeasureConvertibleTests {
     @Test("Identical conversions preserve the value and use the destination unit")
     internal func identicalConversionsPreserveValue() {
-        let sourceUnit = Length(
+        let sourceUnit: Length = .init(
             coefficient: 0.01,
             constant: 1e20,
             symbol: "source"
         )
-        let destinationUnit = Length(
+        let destinationUnit: Length = .init(
             coefficient: 0.01,
             constant: 1e20,
             symbol: "destination"
         )
         let source: Measure<Length> = .init(1, sourceUnit)
-        let converted = source.converted(to: destinationUnit)
-        var mutated = source
+        let converted: Measure<Length> = source.converted(to: destinationUnit)
+        var mutated: Measure<Length> = source
         mutated.convert(to: destinationUnit)
 
         #expect(converted.value == 1)

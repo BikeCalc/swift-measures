@@ -21,9 +21,9 @@ import NumericsExtended
 /// For example:
 ///
 /// ```swift
-/// let length = Dimension(length: 1)
-/// let time = Dimension(time: 1)
-/// let speed = length / time
+/// let length: Dimension = .init(length: 1)
+/// let time: Dimension = .init(time: 1)
+/// let speed: Dimension = length / time
 ///
 /// print(speed.time)
 /// // Prints "-1"

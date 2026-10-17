@@ -11,7 +11,7 @@ import SwiftSyntax
 extension ExprSyntax {
     /// The uninterpolated value represented by this expression when it is a string literal.
     internal var stringLiteralValue: String? {
-        guard let literal = self.as(StringLiteralExprSyntax.self),
+        guard let literal: StringLiteralExprSyntax = self.as(StringLiteralExprSyntax.self),
             literal.segments.count == 1,
             case .stringSegment(let segment)? = literal.segments.first
         else {

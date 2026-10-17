@@ -50,7 +50,7 @@ internal struct ComposedUnitSymbolValidator {
         ///
         /// - Returns: A boolean value indicating whether both boundary characters are present and are not whitespace.
         func hasValidBoundaries() -> Bool {
-            guard let first = self.symbol.first, let last = self.symbol.last else {
+            guard let first: Character = self.symbol.first, let last: Character = self.symbol.last else {
                 return false
             }
             return first.isWhitespace == false

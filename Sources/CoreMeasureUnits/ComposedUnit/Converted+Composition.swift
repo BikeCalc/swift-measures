@@ -26,7 +26,7 @@ where UnitType == ComposedUnit {
     ///
     /// ```swift
     /// @Converted(to: .coherent)
-    /// var distance = Measure(2, ComposedUnit(Length.centimeter))
+    /// var distance: Measure<ComposedUnit> = .init(2, ComposedUnit(Length.centimeter))
     ///
     /// print(distance)
     /// // Prints "0.02 m"

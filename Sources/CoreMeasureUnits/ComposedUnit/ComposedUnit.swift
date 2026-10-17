@@ -33,8 +33,8 @@ import NumericsExtended
 /// For example:
 ///
 /// ```swift
-/// let speed = ComposedUnit(Length.kilometer) / ComposedUnit(Time.hour)
-/// let distance = (speed * ComposedUnit(Time.hour)).canonicalized()
+/// let speed: ComposedUnit = .init(Length.kilometer) / ComposedUnit(Time.hour)
+/// let distance: ComposedUnit = (speed * ComposedUnit(Time.hour)).canonicalized()
 ///
 /// print(distance.symbol)
 /// // Prints "km"
@@ -358,7 +358,7 @@ extension ComposedUnit: ComposableUnit {
 
     /// The offset of the single active factor, or zero for an offset-free composition.
     public var constant: Double {
-        guard let factor = self.factors.first(where: { $0.exponent != 0 }), factor.exponent == 1 else {
+        guard let factor: Self.Factor = self.factors.first(where: { $0.exponent != 0 }), factor.exponent == 1 else {
             return 0
         }
         return factor.unit.constant
@@ -432,7 +432,7 @@ extension ComposedUnit: Encodable {
     /// - Parameter encoder: The encoder receiving the factors in their stored order.
     /// - Throws: Any error encountered while encoding the factors.
     public func encode(to encoder: any Encoder) throws {
-        var container = encoder.singleValueContainer()
+        var container: any SingleValueEncodingContainer = encoder.singleValueContainer()
         try container.encode(self.factors)
     }
 }
@@ -574,7 +574,7 @@ extension ComposedUnit: Simplifiable {
 
         for factor in self.factors
         where factor.exponent != 0 {
-            guard let exponent = exponents.removeValue(forKey: factor.unit), exponent != 0 else {
+            guard let exponent: Int = exponents.removeValue(forKey: factor.unit), exponent != 0 else {
                 continue
             }
 

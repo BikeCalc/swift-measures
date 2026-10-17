@@ -53,8 +53,8 @@ extension UnitMacro {
         }
 
         // A literal name is required because it becomes part of every generated Swift identifier.
-        guard let nameArgument = arguments.first,
-            let name = nameArgument.expression.stringLiteralValue
+        guard let nameArgument: LabeledExprSyntax = arguments.first,
+            let name: String = nameArgument.expression.stringLiteralValue
         else {
             context.diagnose(
                 Diagnostic(
@@ -79,8 +79,8 @@ extension UnitMacro {
         }
 
         // A literal symbol is required because the generated factory combines it with each prefix symbol.
-        guard let symbolArgument = arguments.first(where: { $0.label?.text == "symbol" }),
-            let symbol = symbolArgument.expression.stringLiteralValue
+        guard let symbolArgument: LabeledExprSyntax = arguments.first(where: { $0.label?.text == "symbol" }),
+            let symbol: String = symbolArgument.expression.stringLiteralValue
         else {
             context.diagnose(
                 Diagnostic(
@@ -123,7 +123,7 @@ extension UnitMacro {
 
         // The first attached unit macro with this name owns the shared unprefixed unit.
         let generatesUnprefixedUnit: Bool = declaration.unitMacroOwner(named: name) == macroName
-        let prefixTypeName: String = String(describing: Prefix.self)
+        let prefixTypeName: String = .init(describing: Prefix.self)
 
         // Generate one factory so every static property applies its prefix consistently.
         var members: Array<DeclSyntax> = [

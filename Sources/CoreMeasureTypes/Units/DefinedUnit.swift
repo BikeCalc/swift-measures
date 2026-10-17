@@ -53,7 +53,7 @@ where Self: Decodable {
 extension DefinedUnit
 where Self: Encodable {
     public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: UnitCodingKeys.self)
+        var container: KeyedEncodingContainer<UnitCodingKeys> = encoder.container(keyedBy: UnitCodingKeys.self)
 
         try container.encode(self.coefficient, forKey: .coefficient)
         try container.encode(self.constant, forKey: .constant)

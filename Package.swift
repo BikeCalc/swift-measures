@@ -3,7 +3,7 @@
 import CompilerPluginSupport
 import PackageDescription
 
-let package = Package(
+let package: Package = .init(
     name: "swift-measures",
     defaultLocalization: "en",
     platforms: [

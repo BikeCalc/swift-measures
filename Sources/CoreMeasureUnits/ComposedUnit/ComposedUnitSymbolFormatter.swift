@@ -14,7 +14,7 @@
 /// For example:
 ///
 /// ```swift
-/// let formatter = ComposedUnitSymbolFormatter(factors: [
+/// let formatter: ComposedUnitSymbolFormatter = .init(factors: [
 ///     .init(unit: .init(Length.meter)),
 ///     .init(unit: .init(Time.second), exponent: -2)
 /// ])
