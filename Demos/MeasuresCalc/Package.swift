@@ -32,15 +32,6 @@ let package: Package = .init(
         )
     ],
     targets: [
-        .target(
-            name: "MeasuresCalc",
-            dependencies: [
-                .product(
-                    name: "Measures",
-                    package: "swift-measures"
-                )
-            ]
-        ),
         .executableTarget(
             name: "MeasuresCalcCLI",
             dependencies: [
@@ -51,8 +42,23 @@ let package: Package = .init(
                 )
             ]
         ),
+        .target(
+            name: "MeasuresCalc",
+            dependencies: [
+                .product(
+                    name: "Measures",
+                    package: "swift-measures"
+                )
+            ]
+        ),
         .testTarget(
-            name: "MeasuresCalcTests",
+            name: "MeasuresCalcIntegrationTests",
+            dependencies: [
+                "MeasuresCalcCLI"
+            ]
+        ),
+        .testTarget(
+            name: "MeasuresCalcUnitTests",
             dependencies: [
                 "MeasuresCalc"
             ]
