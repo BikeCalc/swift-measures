@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined frequency units.
 @Suite("Frequency CaseIterable Tests")
 internal struct FrequencyCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

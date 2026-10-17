@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined concentration units.
 @Suite("Concentration CaseIterable Tests")
 internal struct ConcentrationCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

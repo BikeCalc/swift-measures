@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined equivalent dose units.
 @Suite("Equivalent Dose CaseIterable Tests")
 internal struct EquivalentDoseCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

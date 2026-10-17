@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined pressure units.
 @Suite("Pressure CaseIterable Tests")
 internal struct PressureCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

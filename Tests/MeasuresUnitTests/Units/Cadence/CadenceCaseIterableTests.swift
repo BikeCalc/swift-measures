@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined cadence units.
 @Suite("Cadence CaseIterable Tests")
 internal struct CadenceCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined memory units.
 @Suite("Memory CaseIterable Tests")
 internal struct MemoryCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

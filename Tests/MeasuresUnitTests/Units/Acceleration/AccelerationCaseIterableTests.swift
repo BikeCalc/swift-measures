@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined acceleration units.
 @Suite("Acceleration CaseIterable Tests")
 internal struct AccelerationCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined volume units.
 @Suite("Volume CaseIterable Tests")
 internal struct VolumeCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

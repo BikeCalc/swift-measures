@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined energy units.
 @Suite("Energy CaseIterable Tests")
 internal struct EnergyCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

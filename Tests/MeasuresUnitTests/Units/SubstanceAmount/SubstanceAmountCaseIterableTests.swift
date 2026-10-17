@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined substance amount units.
 @Suite("Substance Amount CaseIterable Tests")
 internal struct SubstanceAmountCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined luminous flux units.
 @Suite("Luminous Flux CaseIterable Tests")
 internal struct LuminousFluxCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined molar mass units.
 @Suite("Molar Mass CaseIterable Tests")
 internal struct MolarMassCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined radioactivity units.
 @Suite("Radioactivity CaseIterable Tests")
 internal struct RadioactivityCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

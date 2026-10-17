@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined mass units.
 @Suite("Mass CaseIterable Tests")
 internal struct MassCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

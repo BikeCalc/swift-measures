@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined power units.
 @Suite("Power CaseIterable Tests")
 internal struct PowerCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

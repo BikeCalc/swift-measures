@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined electric current units.
 @Suite("Electric Current CaseIterable Tests")
 internal struct ElectricCurrentCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

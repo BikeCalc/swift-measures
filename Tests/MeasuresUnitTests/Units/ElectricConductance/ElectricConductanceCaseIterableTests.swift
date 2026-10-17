@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined electric conductance units.
 @Suite("Electric Conductance CaseIterable Tests")
 internal struct ElectricConductanceCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

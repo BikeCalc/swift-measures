@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined surface density units.
 @Suite("Surface Density CaseIterable Tests")
 internal struct SurfaceDensityCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

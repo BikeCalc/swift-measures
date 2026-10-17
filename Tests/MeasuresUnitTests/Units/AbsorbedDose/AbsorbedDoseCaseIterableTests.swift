@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined absorbed dose units.
 @Suite("Absorbed Dose CaseIterable Tests")
 internal struct AbsorbedDoseCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined magnetic flux density units.
 @Suite("Magnetic Flux Density CaseIterable Tests")
 internal struct MagneticFluxDensityCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined catalytic activity units.
 @Suite("Catalytic Activity CaseIterable Tests")
 internal struct CatalyticActivityCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

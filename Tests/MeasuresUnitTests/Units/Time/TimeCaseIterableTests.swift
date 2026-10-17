@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined time units.
 @Suite("Time CaseIterable Tests")
 internal struct TimeCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

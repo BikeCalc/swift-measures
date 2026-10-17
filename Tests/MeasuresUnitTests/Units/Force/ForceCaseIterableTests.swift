@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined force units.
 @Suite("Force CaseIterable Tests")
 internal struct ForceCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

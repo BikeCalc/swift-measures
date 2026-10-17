@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined length units.
 @Suite("Length CaseIterable Tests")
 internal struct LengthCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

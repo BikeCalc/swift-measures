@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined speed units.
 @Suite("Speed CaseIterable Tests")
 internal struct SpeedCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

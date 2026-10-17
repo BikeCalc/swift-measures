@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined area units.
 @Suite("Area CaseIterable Tests")
 internal struct AreaCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

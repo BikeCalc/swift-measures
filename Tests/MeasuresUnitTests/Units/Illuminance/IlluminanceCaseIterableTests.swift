@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined illuminance units.
 @Suite("Illuminance CaseIterable Tests")
 internal struct IlluminanceCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")

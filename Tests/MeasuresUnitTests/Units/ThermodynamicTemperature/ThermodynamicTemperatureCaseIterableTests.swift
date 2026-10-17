@@ -9,7 +9,6 @@
 import Measures
 import Testing
 
-/// Tests enumeration of predefined thermodynamic temperature units.
 @Suite("Thermodynamic Temperature CaseIterable Tests")
 internal struct ThermodynamicTemperatureCaseIterableTests {
     @Test("All cases contain the predefined units and base unit without duplicates")
