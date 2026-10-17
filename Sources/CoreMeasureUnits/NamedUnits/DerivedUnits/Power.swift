@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for power.
+@CaseIterableUnits
 @MetricUnits(name: "watt", symbol: "W")
 public struct Power {
     public let coefficient: Double
@@ -104,43 +105,6 @@ public struct Power {
 // MARK: - CanonicallyEquatable
 
 extension Power: CanonicallyEquatable {}
-
-// MARK: - CaseIterable
-
-extension Power: CaseIterable {
-    /// The predefined units, excluding the duplicate base alias and custom units.
-    ///
-    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
-    public static let allCases: Array<Self> = [
-        .quettawatt,
-        .ronnawatt,
-        .yottawatt,
-        .zettawatt,
-        .exawatt,
-        .petawatt,
-        .terawatt,
-        .gigawatt,
-        .megawatt,
-        .kilowatt,
-        .hectowatt,
-        .decawatt,
-        .watt,
-        .deciwatt,
-        .centiwatt,
-        .milliwatt,
-        .microwatt,
-        .nanowatt,
-        .picowatt,
-        .femtowatt,
-        .attowatt,
-        .zeptowatt,
-        .yoctowatt,
-        .rontowatt,
-        .quectowatt,
-        .joulePerSecond,
-        .mechanicalHorsepower
-    ]
-}
 
 // MARK: - Codable
 

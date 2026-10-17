@@ -7,9 +7,11 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import CoreMeasureTypes
+import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for area.
+@CaseIterableUnits
 public struct Area {
     public let coefficient: Double
 
@@ -120,32 +122,6 @@ public struct Area {
 // MARK: - CanonicallyEquatable
 
 extension Area: CanonicallyEquatable {}
-
-// MARK: - CaseIterable
-
-extension Area: CaseIterable {
-    /// The predefined units, excluding the duplicate base alias and custom units.
-    ///
-    /// Units appear in source declaration order.
-    public static let allCases: Array<Self> = [
-        .squareMile,
-        .squareKilometer,
-        .squareMeter,
-        .squareYard,
-        .squareFoot,
-        .squareInch,
-        .squareCentimeter,
-        .squareMillimeter,
-        .acre,
-        .rood,
-        .perch,
-        .township,
-        .hectare,
-        .decare,
-        .are,
-        .centiare
-    ]
-}
 
 // MARK: - Codable
 

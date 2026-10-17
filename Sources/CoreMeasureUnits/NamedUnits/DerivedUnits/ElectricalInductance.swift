@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for electrical inductance.
+@CaseIterableUnits
 @MetricUnits(name: "henry", symbol: "H")
 public struct ElectricalInductance {
     public let coefficient: Double
@@ -65,42 +66,6 @@ public struct ElectricalInductance {
 // MARK: - CanonicallyEquatable
 
 extension ElectricalInductance: CanonicallyEquatable {}
-
-// MARK: - CaseIterable
-
-extension ElectricalInductance: CaseIterable {
-    /// The predefined units, excluding the duplicate base alias and custom units.
-    ///
-    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
-    public static let allCases: Array<Self> = [
-        .quettahenry,
-        .ronnahenry,
-        .yottahenry,
-        .zettahenry,
-        .exahenry,
-        .petahenry,
-        .terahenry,
-        .gigahenry,
-        .megahenry,
-        .kilohenry,
-        .hectohenry,
-        .decahenry,
-        .henry,
-        .decihenry,
-        .centihenry,
-        .millihenry,
-        .microhenry,
-        .nanohenry,
-        .picohenry,
-        .femtohenry,
-        .attohenry,
-        .zeptohenry,
-        .yoctohenry,
-        .rontohenry,
-        .quectohenry,
-        .weberPerAmpere
-    ]
-}
 
 // MARK: - Codable
 

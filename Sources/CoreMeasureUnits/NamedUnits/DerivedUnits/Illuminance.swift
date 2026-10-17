@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for illuminance.
+@CaseIterableUnits
 @MetricUnits(name: "lux", symbol: "lx")
 public struct Illuminance {
     public let coefficient: Double
@@ -63,42 +64,6 @@ public struct Illuminance {
 // MARK: - CanonicallyEquatable
 
 extension Illuminance: CanonicallyEquatable {}
-
-// MARK: - CaseIterable
-
-extension Illuminance: CaseIterable {
-    /// The predefined units, excluding the duplicate base alias and custom units.
-    ///
-    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
-    public static let allCases: Array<Self> = [
-        .quettalux,
-        .ronnalux,
-        .yottalux,
-        .zettalux,
-        .exalux,
-        .petalux,
-        .teralux,
-        .gigalux,
-        .megalux,
-        .kilolux,
-        .hectolux,
-        .decalux,
-        .lux,
-        .decilux,
-        .centilux,
-        .millilux,
-        .microlux,
-        .nanolux,
-        .picolux,
-        .femtolux,
-        .attolux,
-        .zeptolux,
-        .yoctolux,
-        .rontolux,
-        .quectolux,
-        .lumenPerSquareMeter
-    ]
-}
 
 // MARK: - Codable
 

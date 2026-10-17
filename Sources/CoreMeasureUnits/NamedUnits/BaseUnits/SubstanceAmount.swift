@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for substance amount.
+@CaseIterableUnits
 @MetricUnits(name: "mole", symbol: "mol")
 public struct SubstanceAmount {
     public let coefficient: Double
@@ -51,41 +52,6 @@ public struct SubstanceAmount {
 // MARK: - CanonicallyEquatable
 
 extension SubstanceAmount: CanonicallyEquatable {}
-
-// MARK: - CaseIterable
-
-extension SubstanceAmount: CaseIterable {
-    /// The predefined units, excluding the duplicate base alias and custom units.
-    ///
-    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
-    public static let allCases: Array<Self> = [
-        .quettamole,
-        .ronnamole,
-        .yottamole,
-        .zettamole,
-        .examole,
-        .petamole,
-        .teramole,
-        .gigamole,
-        .megamole,
-        .kilomole,
-        .hectomole,
-        .decamole,
-        .mole,
-        .decimole,
-        .centimole,
-        .millimole,
-        .micromole,
-        .nanomole,
-        .picomole,
-        .femtomole,
-        .attomole,
-        .zeptomole,
-        .yoctomole,
-        .rontomole,
-        .quectomole
-    ]
-}
 
 // MARK: - Codable
 

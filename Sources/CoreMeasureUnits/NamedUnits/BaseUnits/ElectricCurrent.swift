@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for electric current.
+@CaseIterableUnits
 @MetricUnits(name: "ampere", symbol: "A")
 public struct ElectricCurrent {
     public let coefficient: Double
@@ -92,42 +93,6 @@ public struct ElectricCurrent {
 // MARK: - CanonicallyEquatable
 
 extension ElectricCurrent: CanonicallyEquatable {}
-
-// MARK: - CaseIterable
-
-extension ElectricCurrent: CaseIterable {
-    /// The predefined units, excluding the duplicate base alias and custom units.
-    ///
-    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
-    public static let allCases: Array<Self> = [
-        .quettaampere,
-        .ronnaampere,
-        .yottaampere,
-        .zettaampere,
-        .exaampere,
-        .petaampere,
-        .teraampere,
-        .gigaampere,
-        .megaampere,
-        .kiloampere,
-        .hectoampere,
-        .decaampere,
-        .ampere,
-        .deciampere,
-        .centiampere,
-        .milliampere,
-        .microampere,
-        .nanoampere,
-        .picoampere,
-        .femtoampere,
-        .attoampere,
-        .zeptoampere,
-        .yoctoampere,
-        .rontoampere,
-        .quectoampere,
-        .coulombPerSecond
-    ]
-}
 
 // MARK: - Codable
 

@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for catalytic activity.
+@CaseIterableUnits
 @MetricUnits(name: "katal", symbol: "kat")
 public struct CatalyticActivity {
     public let coefficient: Double
@@ -63,42 +64,6 @@ public struct CatalyticActivity {
 // MARK: - CanonicallyEquatable
 
 extension CatalyticActivity: CanonicallyEquatable {}
-
-// MARK: - CaseIterable
-
-extension CatalyticActivity: CaseIterable {
-    /// The predefined units, excluding the duplicate base alias and custom units.
-    ///
-    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
-    public static let allCases: Array<Self> = [
-        .quettakatal,
-        .ronnakatal,
-        .yottakatal,
-        .zettakatal,
-        .exakatal,
-        .petakatal,
-        .terakatal,
-        .gigakatal,
-        .megakatal,
-        .kilokatal,
-        .hectokatal,
-        .decakatal,
-        .katal,
-        .decikatal,
-        .centikatal,
-        .millikatal,
-        .microkatal,
-        .nanokatal,
-        .picokatal,
-        .femtokatal,
-        .attokatal,
-        .zeptokatal,
-        .yoctokatal,
-        .rontokatal,
-        .quectokatal,
-        .molePerSecond
-    ]
-}
 
 // MARK: - Codable
 

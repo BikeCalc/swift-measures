@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for length.
+@CaseIterableUnits
 @MetricUnits(name: "meter", symbol: "m")
 public struct Length {
     public let coefficient: Double
@@ -185,60 +186,6 @@ public struct Length {
 // MARK: - CanonicallyEquatable
 
 extension Length: CanonicallyEquatable {}
-
-// MARK: - CaseIterable
-
-extension Length: CaseIterable {
-    /// The predefined units, excluding the duplicate base alias and custom units.
-    ///
-    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
-    public static let allCases: Array<Self> = [
-        .quettameter,
-        .ronnameter,
-        .yottameter,
-        .zettameter,
-        .exameter,
-        .petameter,
-        .terameter,
-        .gigameter,
-        .megameter,
-        .kilometer,
-        .hectometer,
-        .decameter,
-        .meter,
-        .decimeter,
-        .centimeter,
-        .millimeter,
-        .micrometer,
-        .nanometer,
-        .picometer,
-        .femtometer,
-        .attometer,
-        .zeptometer,
-        .yoctometer,
-        .rontometer,
-        .quectometer,
-        .parsec,
-        .lightYear,
-        .astronomicalUnit,
-        .nauticalLeague,
-        .league,
-        .nauticalMile,
-        .mile,
-        .cable,
-        .furlong,
-        .chain,
-        .rod,
-        .fathom,
-        .yard,
-        .foot,
-        .link,
-        .inch,
-        .pica,
-        .point,
-        .thou
-    ]
-}
 
 // MARK: - Codable
 

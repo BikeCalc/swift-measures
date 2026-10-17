@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for magnetic flux.
+@CaseIterableUnits
 @MetricUnits(name: "weber", symbol: "Wb")
 public struct MagneticFlux {
     public let coefficient: Double
@@ -97,42 +98,6 @@ public struct MagneticFlux {
 // MARK: - CanonicallyEquatable
 
 extension MagneticFlux: CanonicallyEquatable {}
-
-// MARK: - CaseIterable
-
-extension MagneticFlux: CaseIterable {
-    /// The predefined units, excluding the duplicate base alias and custom units.
-    ///
-    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
-    public static let allCases: Array<Self> = [
-        .quettaweber,
-        .ronnaweber,
-        .yottaweber,
-        .zettaweber,
-        .exaweber,
-        .petaweber,
-        .teraweber,
-        .gigaweber,
-        .megaweber,
-        .kiloweber,
-        .hectoweber,
-        .decaweber,
-        .weber,
-        .deciweber,
-        .centiweber,
-        .milliweber,
-        .microweber,
-        .nanoweber,
-        .picoweber,
-        .femtoweber,
-        .attoweber,
-        .zeptoweber,
-        .yoctoweber,
-        .rontoweber,
-        .quectoweber,
-        .voltSecond
-    ]
-}
 
 // MARK: - Codable
 

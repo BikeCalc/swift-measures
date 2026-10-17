@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for electric potential.
+@CaseIterableUnits
 @MetricUnits(name: "volt", symbol: "V")
 public struct ElectricPotential {
     public let coefficient: Double
@@ -89,41 +90,6 @@ public struct ElectricPotential {
 // MARK: - CanonicallyEquatable
 
 extension ElectricPotential: CanonicallyEquatable {}
-
-// MARK: - CaseIterable
-
-extension ElectricPotential: CaseIterable {
-    /// The predefined units, excluding the duplicate base alias and custom units.
-    ///
-    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
-    public static let allCases: Array<Self> = [
-        .quettavolt,
-        .ronnavolt,
-        .yottavolt,
-        .zettavolt,
-        .exavolt,
-        .petavolt,
-        .teravolt,
-        .gigavolt,
-        .megavolt,
-        .kilovolt,
-        .hectovolt,
-        .decavolt,
-        .volt,
-        .decivolt,
-        .centivolt,
-        .millivolt,
-        .microvolt,
-        .nanovolt,
-        .picovolt,
-        .femtovolt,
-        .attovolt,
-        .zeptovolt,
-        .yoctovolt,
-        .rontovolt,
-        .quectovolt
-    ]
-}
 
 // MARK: - Codable
 

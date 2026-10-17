@@ -7,9 +7,11 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import CoreMeasureTypes
+import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for acceleration.
+@CaseIterableUnits
 public struct Acceleration {
     public let coefficient: Double
 
@@ -98,18 +100,6 @@ public struct Acceleration {
 // MARK: - CanonicallyEquatable
 
 extension Acceleration: CanonicallyEquatable {}
-
-// MARK: - CaseIterable
-
-extension Acceleration: CaseIterable {
-    /// The predefined units, excluding the duplicate base alias and custom units.
-    ///
-    /// Units appear in source declaration order.
-    public static let allCases: Array<Self> = [
-        .meterPerSquareSecond,
-        .footPerSquareSecond
-    ]
-}
 
 // MARK: - Codable
 

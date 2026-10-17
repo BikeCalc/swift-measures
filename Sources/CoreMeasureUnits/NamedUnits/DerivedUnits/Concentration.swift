@@ -7,9 +7,11 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import CoreMeasureTypes
+import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for concentration.
+@CaseIterableUnits
 public struct Concentration {
     public let coefficient: Double
 
@@ -73,19 +75,6 @@ public struct Concentration {
 // MARK: - CanonicallyEquatable
 
 extension Concentration: CanonicallyEquatable {}
-
-// MARK: - CaseIterable
-
-extension Concentration: CaseIterable {
-    /// The predefined units, excluding the duplicate base alias and custom units.
-    ///
-    /// Units appear in source declaration order.
-    public static let allCases: Array<Self> = [
-        .kilogramsPerCubicMeter,
-        .gramsPerLiter,
-        .milligramsPerLiter
-    ]
-}
 
 // MARK: - Codable
 

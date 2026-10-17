@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for electric charge.
+@CaseIterableUnits
 @MetricUnits(name: "coulomb", symbol: "C")
 public struct ElectricCharge {
     public let coefficient: Double
@@ -107,44 +108,6 @@ public struct ElectricCharge {
 // MARK: - CanonicallyEquatable
 
 extension ElectricCharge: CanonicallyEquatable {}
-
-// MARK: - CaseIterable
-
-extension ElectricCharge: CaseIterable {
-    /// The predefined units, excluding the duplicate base alias and custom units.
-    ///
-    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
-    public static let allCases: Array<Self> = [
-        .quettacoulomb,
-        .ronnacoulomb,
-        .yottacoulomb,
-        .zettacoulomb,
-        .exacoulomb,
-        .petacoulomb,
-        .teracoulomb,
-        .gigacoulomb,
-        .megacoulomb,
-        .kilocoulomb,
-        .hectocoulomb,
-        .decacoulomb,
-        .coulomb,
-        .decicoulomb,
-        .centicoulomb,
-        .millicoulomb,
-        .microcoulomb,
-        .nanocoulomb,
-        .picocoulomb,
-        .femtocoulomb,
-        .attocoulomb,
-        .zeptocoulomb,
-        .yoctocoulomb,
-        .rontocoulomb,
-        .quectocoulomb,
-        .ampereHour,
-        .milliampereHour,
-        .ampereSecond
-    ]
-}
 
 // MARK: - Codable
 

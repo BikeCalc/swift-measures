@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for electrical resistance.
+@CaseIterableUnits
 @MetricUnits(name: "ohm", symbol: "Ω")
 public struct ElectricalResistance {
     public let coefficient: Double
@@ -57,41 +58,6 @@ public struct ElectricalResistance {
 // MARK: - CanonicallyEquatable
 
 extension ElectricalResistance: CanonicallyEquatable {}
-
-// MARK: - CaseIterable
-
-extension ElectricalResistance: CaseIterable {
-    /// The predefined units, excluding the duplicate base alias and custom units.
-    ///
-    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
-    public static let allCases: Array<Self> = [
-        .quettaohm,
-        .ronnaohm,
-        .yottaohm,
-        .zettaohm,
-        .exaohm,
-        .petaohm,
-        .teraohm,
-        .gigaohm,
-        .megaohm,
-        .kiloohm,
-        .hectoohm,
-        .decaohm,
-        .ohm,
-        .deciohm,
-        .centiohm,
-        .milliohm,
-        .microohm,
-        .nanoohm,
-        .picoohm,
-        .femtoohm,
-        .attoohm,
-        .zeptoohm,
-        .yoctoohm,
-        .rontoohm,
-        .quectoohm
-    ]
-}
 
 // MARK: - Codable
 

@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for volume.
+@CaseIterableUnits
 @MetricUnits(name: "liter", symbol: "L", coefficient: 1e-3)
 public struct Volume {
     public let coefficient: Double
@@ -265,80 +266,6 @@ public struct Volume {
 // MARK: - CanonicallyEquatable
 
 extension Volume: CanonicallyEquatable {}
-
-// MARK: - CaseIterable
-
-extension Volume: CaseIterable {
-    /// The predefined units, excluding the duplicate base alias and custom units.
-    ///
-    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
-    public static let allCases: Array<Self> = [
-        .quettaliter,
-        .ronnaliter,
-        .yottaliter,
-        .zettaliter,
-        .exaliter,
-        .petaliter,
-        .teraliter,
-        .gigaliter,
-        .megaliter,
-        .kiloliter,
-        .hectoliter,
-        .decaliter,
-        .liter,
-        .deciliter,
-        .centiliter,
-        .milliliter,
-        .microliter,
-        .nanoliter,
-        .picoliter,
-        .femtoliter,
-        .attoliter,
-        .zeptoliter,
-        .yoctoliter,
-        .rontoliter,
-        .quectoliter,
-        .cubicMile,
-        .cubicKilometer,
-        .cubicMeter,
-        .cubicYard,
-        .cubicFoot,
-        .cubicInch,
-        .cubicCentimeter,
-        .cubicMillimeter,
-        .imperialGallon,
-        .imperialBushel,
-        .imperialPeck,
-        .imperialQuart,
-        .imperialPint,
-        .imperialGill,
-        .imperialFluidOunce,
-        .imperialTablespoon,
-        .imperialTeaspoon,
-        .imperialFluidDram,
-        .imperialFluidScruple,
-        .imperialMinim,
-        .usDryBushel,
-        .usDryPeck,
-        .usDryQuart,
-        .usDryPint,
-        .usLiquidGallon,
-        .usLiquidQuart,
-        .usLiquidPint,
-        .usCup,
-        .usGill,
-        .usFluidOunce,
-        .usTablespoon,
-        .usTeaspoon,
-        .usFluidDram,
-        .usMinim,
-        .acreFoot,
-        .usNutritionCup,
-        .usNutritionFluidOunce,
-        .usNutritionTablespoon,
-        .usNutritionTeaspoon
-    ]
-}
 
 // MARK: - Codable
 

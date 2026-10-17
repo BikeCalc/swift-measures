@@ -7,9 +7,11 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import CoreMeasureTypes
+import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for surface density.
+@CaseIterableUnits
 public struct SurfaceDensity {
     public let coefficient: Double
 
@@ -73,19 +75,6 @@ public struct SurfaceDensity {
 // MARK: - CanonicallyEquatable
 
 extension SurfaceDensity: CanonicallyEquatable {}
-
-// MARK: - CaseIterable
-
-extension SurfaceDensity: CaseIterable {
-    /// The predefined units, excluding the duplicate base alias and custom units.
-    ///
-    /// Units appear in source declaration order.
-    public static let allCases: Array<Self> = [
-        .poundsPerSquareFoot,
-        .kilogramsPerSquareMeter,
-        .gramsPerSquareMeter
-    ]
-}
 
 // MARK: - Codable
 

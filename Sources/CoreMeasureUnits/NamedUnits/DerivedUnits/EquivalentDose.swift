@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for equivalent dose.
+@CaseIterableUnits
 @MetricUnits(name: "sievert", symbol: "Sv")
 public struct EquivalentDose {
     public let coefficient: Double
@@ -38,41 +39,6 @@ public struct EquivalentDose {
 // MARK: - CanonicallyEquatable
 
 extension EquivalentDose: CanonicallyEquatable {}
-
-// MARK: - CaseIterable
-
-extension EquivalentDose: CaseIterable {
-    /// The predefined units, excluding the duplicate base alias and custom units.
-    ///
-    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
-    public static let allCases: Array<Self> = [
-        .quettasievert,
-        .ronnasievert,
-        .yottasievert,
-        .zettasievert,
-        .exasievert,
-        .petasievert,
-        .terasievert,
-        .gigasievert,
-        .megasievert,
-        .kilosievert,
-        .hectosievert,
-        .decasievert,
-        .sievert,
-        .decisievert,
-        .centisievert,
-        .millisievert,
-        .microsievert,
-        .nanosievert,
-        .picosievert,
-        .femtosievert,
-        .attosievert,
-        .zeptosievert,
-        .yoctosievert,
-        .rontosievert,
-        .quectosievert
-    ]
-}
 
 // MARK: - Codable
 

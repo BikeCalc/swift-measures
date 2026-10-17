@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for luminous flux.
+@CaseIterableUnits
 @MetricUnits(name: "lumen", symbol: "lm")
 public struct LuminousFlux {
     public let coefficient: Double
@@ -51,41 +52,6 @@ public struct LuminousFlux {
 // MARK: - CanonicallyEquatable
 
 extension LuminousFlux: CanonicallyEquatable {}
-
-// MARK: - CaseIterable
-
-extension LuminousFlux: CaseIterable {
-    /// The predefined units, excluding the duplicate base alias and custom units.
-    ///
-    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
-    public static let allCases: Array<Self> = [
-        .quettalumen,
-        .ronnalumen,
-        .yottalumen,
-        .zettalumen,
-        .exalumen,
-        .petalumen,
-        .teralumen,
-        .gigalumen,
-        .megalumen,
-        .kilolumen,
-        .hectolumen,
-        .decalumen,
-        .lumen,
-        .decilumen,
-        .centilumen,
-        .millilumen,
-        .microlumen,
-        .nanolumen,
-        .picolumen,
-        .femtolumen,
-        .attolumen,
-        .zeptolumen,
-        .yoctolumen,
-        .rontolumen,
-        .quectolumen
-    ]
-}
 
 // MARK: - Codable
 

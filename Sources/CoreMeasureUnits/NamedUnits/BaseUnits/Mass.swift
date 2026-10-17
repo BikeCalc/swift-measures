@@ -11,6 +11,7 @@ import MeasuresMacro
 import NumericsExtended
 
 /// A unit of measure for mass.
+@CaseIterableUnits
 @MetricUnits(name: "gram", symbol: "g", coefficient: 1e-3)
 public struct Mass {
     public let coefficient: Double
@@ -225,60 +226,6 @@ public struct Mass {
 // MARK: - CanonicallyEquatable
 
 extension Mass: CanonicallyEquatable {}
-
-// MARK: - CaseIterable
-
-extension Mass: CaseIterable {
-    /// The predefined units, excluding the duplicate base alias and custom units.
-    ///
-    /// Metric units appear from largest to smallest prefix, followed by other units in source declaration order.
-    public static let allCases: Array<Self> = [
-        .quettagram,
-        .ronnagram,
-        .yottagram,
-        .zettagram,
-        .exagram,
-        .petagram,
-        .teragram,
-        .gigagram,
-        .megagram,
-        .kilogram,
-        .hectogram,
-        .decagram,
-        .gram,
-        .decigram,
-        .centigram,
-        .milligram,
-        .microgram,
-        .nanogram,
-        .picogram,
-        .femtogram,
-        .attogram,
-        .zeptogram,
-        .yoctogram,
-        .rontogram,
-        .quectogram,
-        .solar,
-        .jupiter,
-        .earth,
-        .imperialTon,
-        .imperialHundredweight,
-        .stone,
-        .metricTon,
-        .carat,
-        .troyPound,
-        .troyOunce,
-        .pound,
-        .ounce,
-        .dram,
-        .pennyweight,
-        .grain,
-        .usTon,
-        .usHundredweight,
-        .slug,
-        .blob
-    ]
-}
 
 // MARK: - Codable
 
