@@ -15,18 +15,6 @@
 /// decoder treats an omitted constant as zero and recreates the unit through its initializer. Dimension information is
 /// supplied by the concrete type rather than encoded by this protocol's implementation.
 public protocol DefinedUnit: Unit {
-    /// Creates a new instance with the specified coefficient, constant and symbol.
-    ///
-    /// - Parameters:
-    ///   - coefficient: The coefficient.
-    ///   - constant: The constant.
-    ///   - symbol: The symbol.
-    init(
-        coefficient: Double,
-        constant: Double,
-        symbol: String
-    )
-
     /// The shared reference unit through which values of this unit type are converted.
     static var base: Self { get }
 }

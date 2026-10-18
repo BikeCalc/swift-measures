@@ -343,6 +343,27 @@ extension ComposedUnit: CanonicallyEquatable {}
 // MARK: - ComposableUnit
 
 extension ComposedUnit: ComposableUnit {
+    /// Creates a single dimensionless factor with the specified conversion parameters and symbol.
+    ///
+    /// - Parameters:
+    ///   - coefficient: The multiplicative scale relative to the dimensionless reference.
+    ///   - constant: The additive offset, defaulting to zero.
+    ///   - symbol: The display label for the factor.
+    public init(
+        coefficient: Double,
+        constant: Double = 0,
+        symbol: String
+    ) {
+        let unit: Self.AnyDefinedUnit = .init(
+            coefficient: coefficient,
+            constant: constant,
+            symbol: symbol,
+            dimension: .init()
+        )
+        let factor: Self.Factor = .init(unit: unit)
+        self.factors = [factor]
+    }
+
     /// The product of the captured coefficients raised to their factor exponents.
     ///
     /// Evaluation follows stored factor order and may overflow or underflow.
@@ -365,11 +386,6 @@ extension ComposedUnit: ComposableUnit {
     }
 
     /// The stored factors formatted with multiplication dots and signed superscript exponents.
-    ///
-    /// Formatting preserves factor order and does not simplify. Zero exponents are omitted; no active factors produce
-    /// an empty string. Active factor labels must be nonempty, have no surrounding whitespace, contain balanced
-    /// nonempty parentheses, and supply operands around multiplication, division, and power operators. Invalid labels
-    /// fail a precondition when this property is read. Internal spaces, such as in `imp ton`, are allowed.
     public var symbol: String {
         let formatter: ComposedUnitSymbolFormatter = .init(factors: self.factors)
         return formatter.format()
@@ -403,20 +419,28 @@ extension ComposedUnit: Decodable {
     /// Decodes factors and validates their conversion definitions and constant combinations.
     ///
     /// The wire format is simply an array of factors; no redundant aggregate properties are encoded. Factors retain
-    /// their order, duplicates, and zero exponents. Derived coefficients and dimensions are not evaluated.
+    /// their order, duplicates, and zero exponents. The single dimensionless NaT factor is also accepted when the
+    /// decoder supports its NaN parameters. Derived coefficients and dimensions are not evaluated.
     ///
     /// - Parameter decoder: The decoder supplying the factor array.
-    /// - Throws: A decoding error if a factor cannot be decoded or its conversion or constant combination is invalid.
+    /// - Throws: A decoding error if a factor cannot be decoded, or if the factors describe neither a valid
+    ///   composition nor the NaT representation.
     public init(from decoder: any Decoder) throws {
         let container: any SingleValueDecodingContainer = try decoder.singleValueContainer()
         let factors: Array<Factor> = try container.decode(Array<Factor>.self)
         let validator: ComposedUnitFactorValidator = .init(factors: factors)
 
-        guard validator.validate() else {
+        let isNaTRepresentation: Bool = factors.count == 1
+            && factors[0].exponent == 1
+            && factors[0].unit.dimension.isDimensionless
+            && factors[0].unit.coefficient.isNaN
+            && factors[0].unit.constant.isNaN
+            && factors[0].unit.symbol == "NaT"
+
+        guard validator.validate() || isNaTRepresentation else {
             throw DecodingError.dataCorruptedError(
                 in: container,
-                debugDescription:
-                    "Factors require finite positive coefficients, finite constants, and valid constant combinations."
+                debugDescription: "Factors must describe a valid composition or the dimensionless NaT representation."
             )
         }
 
