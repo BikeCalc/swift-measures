@@ -20,8 +20,8 @@ where UnitType: ComposableUnit {
     /// converted to their reference scale using their coefficients and constants, then compared exactly. Unit symbols
     /// are not compared.
     ///
-    /// Conversion can introduce floating-point rounding. Equality is exact rather than approximate, and NaN values
-    /// compare unequal.
+    /// Conversion can introduce floating-point rounding. Equality is exact rather than approximate. NaT operands
+    /// and nonfinite reference-scale values compare unequal, including when comparing a measure with itself.
     ///
     /// For example:
     ///
@@ -37,14 +37,14 @@ where UnitType: ComposableUnit {
     /// - Returns: `true` if the units are compatible and the converted values are exactly equal, and `false` otherwise.
     public func isCanonicallyEqual<Other>(to other: Measure<Other>) -> Bool
     where Other: ComposableUnit {
-        guard self.unit.isCompatible(with: other.unit) else {
+        guard self.isNaT == false, other.isNaT == false, self.unit.isCompatible(with: other.unit) else {
             return false
         }
 
         let lhsValue: Double = self.value * self.unit.coefficient + self.unit.constant
         let rhsValue: Double = other.value * other.unit.coefficient + other.unit.constant
 
-        return lhsValue == rhsValue
+        return lhsValue.isFinite && rhsValue.isFinite && lhsValue == rhsValue
     }
 }
 
@@ -55,10 +55,11 @@ where UnitType: ComposableUnit {
     /// Returns this measure converted to the specified unit.
     ///
     /// Conversion applies both units' coefficients and constants without simplifying or normalizing the destination
-    /// unit. Values outside the unit's valid range are not rejected. Measurement values follow ordinary `Double`
-    /// arithmetic: infinity and NaN propagate, and overflow may produce infinity.
+    /// unit. Values outside the unit's valid range are not rejected. NaT inputs, invalid destination conversion
+    /// parameters, incompatible dimensions, and nonfinite conversion results return NaT of the destination unit type.
     ///
-    /// The source and destination units must be compatible. For composable units, their physical dimensions must match.
+    /// Compatible composable units have matching physical dimensions. A NaT result uses the unit type's NaT
+    /// representation rather than retaining the requested destination unit.
     ///
     /// For example:
     ///
@@ -70,35 +71,17 @@ where UnitType: ComposableUnit {
     /// ```
     ///
     /// - Parameter unit: The unit to convert to.
-    /// - Returns: A measure expressed in the destination unit.
-    /// - Precondition: The source and destination units are compatible, both coefficients are finite and positive, and
-    ///   both constants are finite.
+    /// - Returns: A measure expressed in the destination unit, or NaT when conversion cannot produce a finite result.
     public func converted<Destination>(to unit: Destination) -> Measure<Destination>
     where Destination: ComposableUnit {
-        precondition(
-            self.unit.isCompatible(with: unit),
-            "Cannot convert between units with incompatible dimensions."
-        )
-
-        precondition(
-            self.unit.coefficient.isFinite && self.unit.coefficient > 0,
-            "Conversion requires a finite positive source coefficient."
-        )
-
-        precondition(
-            unit.coefficient.isFinite && unit.coefficient > 0,
-            "Conversion requires a finite positive destination coefficient."
-        )
-
-        precondition(
-            self.unit.constant.isFinite,
-            "Conversion requires a finite source constant."
-        )
-
-        precondition(
+        guard self.isNaT == false,
+            unit.coefficient.isFinite,
+            unit.coefficient > 0,
             unit.constant.isFinite,
-            "Conversion requires a finite destination constant."
-        )
+            self.unit.isCompatible(with: unit)
+        else {
+            return .nat
+        }
 
         // Identical scales and offsets cancel; preserve the value without conversion rounding.
         if self.unit.coefficient == unit.coefficient, self.unit.constant == unit.constant {
@@ -108,23 +91,30 @@ where UnitType: ComposableUnit {
         let referenceValue: Double = self.value * self.unit.coefficient + self.unit.constant
         let value: Double = (referenceValue - unit.constant) / unit.coefficient
 
+        guard value.isFinite else {
+            return .nat
+        }
+
         return .init(value, unit)
     }
 
     /// Returns this measure expressed in its coherent SI unit, applying its scale and offset.
+    ///
+    /// NaT inputs and nonfinite reference values return NaT before constructing the coherent unit.
+    ///
+    /// - Returns: A measure in its coherent SI unit, or NaT if the source is NaT or the reference value is nonfinite.
     private func convertedToCoherentUnit() -> Measure<ComposedUnit> {
-        precondition(
-            self.unit.coefficient.isFinite && self.unit.coefficient > 0,
-            "Coherent conversion requires a finite positive source coefficient."
-        )
+        guard self.isNaT == false else {
+            return .nat
+        }
 
-        precondition(
-            self.unit.constant.isFinite,
-            "Coherent conversion requires a finite source constant."
-        )
+        let value: Double = self.value * self.unit.coefficient + self.unit.constant
+
+        guard value.isFinite else {
+            return .nat
+        }
 
         let unit: ComposedUnit = .init(dimension: self.unit.dimension)
-        let value: Double = self.value * self.unit.coefficient + self.unit.constant
 
         return .init(value, unit)
     }
@@ -137,13 +127,13 @@ where UnitType: ComposableUnit {
     /// Returns the quotient of two measures in a composed coherent SI unit.
     ///
     /// Each value is converted to its coherent SI unit before division, applying its coefficient and constant.
-    /// Constants apply to absolute values, rather than differences. Valid ranges are not enforced. Values follow
-    /// ordinary `Double` division, including infinity and NaN for division by zero.
+    /// Constants apply to absolute values, rather than differences. Valid ranges are not enforced. NaT operands,
+    /// nonfinite coherent conversions, and nonfinite quotients return NaT, including division by zero.
     ///
     /// - Parameters:
     ///   - lhs: The numerator measure.
     ///   - rhs: The denominator measure.
-    /// - Returns: The quotient with the numerator dimension divided by the denominator dimension.
+    /// - Returns: The quotient with the numerator dimension divided by the denominator dimension, or NaT.
     public static func / <Other>(
         _ lhs: Self,
         _ rhs: Measure<Other>
@@ -152,7 +142,15 @@ where UnitType: ComposableUnit {
         let left: Measure<ComposedUnit> = lhs.convertedToCoherentUnit()
         let right: Measure<ComposedUnit> = rhs.convertedToCoherentUnit()
 
+        guard left.isNaT == false, right.isNaT == false else {
+            return .nat
+        }
+
         let value: Double = left.value / right.value
+
+        guard value.isFinite else {
+            return .nat
+        }
 
         return .init(value, (left.unit / right.unit))
     }
@@ -161,7 +159,7 @@ where UnitType: ComposableUnit {
     ///
     /// - Parameter divisor: The measure to divide by, applying its scale and constant first.
     /// - Returns: The quotient with a composed unit.
-    /// - Throws: No errors in the current implementation; invalid unit definitions still fail preconditions.
+    /// - Throws: No errors in the current implementation; invalid conversions and nonfinite results produce NaT.
     public func dividing<Other>(by divisor: Measure<Other>) throws -> Measure<ComposedUnit>
     where Other: ComposableUnit {
         return self / divisor
@@ -172,7 +170,7 @@ extension Measure
 where UnitType == ComposedUnit {
     /// Stores the composed coherent SI quotient of the two measures in the left-hand-side variable.
     ///
-    /// Applies the same conversions and preconditions as measure division. The stored dimension may change.
+    /// Applies the same conversions and NaT propagation as measure division. The stored dimension may change.
     ///
     /// - Parameters:
     ///   - lhs: The composed measure to replace.
@@ -189,7 +187,7 @@ where UnitType == ComposedUnit {
     /// The stored dimension may change. Constants are applied to absolute values before division.
     ///
     /// - Parameter divisor: The measure used as the divisor.
-    /// - Throws: No errors in the current implementation; invalid unit definitions still fail preconditions.
+    /// - Throws: No errors in the current implementation; invalid conversions and nonfinite results produce NaT.
     public mutating func divide<Other>(by divisor: Measure<Other>) throws
     where Other: ComposableUnit {
         self = try self.dividing(by: divisor)
@@ -203,8 +201,8 @@ where UnitType: ComposableUnit {
     /// Returns the product of two measures in a composed coherent SI unit.
     ///
     /// Each value is converted to its coherent SI unit before multiplication. Constants therefore apply to absolute
-    /// values, rather than differences. Values follow ordinary `Double` multiplication, including infinity and NaN.
-    /// Valid ranges are not enforced.
+    /// values, rather than differences. NaT operands, nonfinite coherent conversions, and nonfinite products return
+    /// NaT. Valid ranges are not enforced.
     ///
     /// For example:
     ///
@@ -218,7 +216,7 @@ where UnitType: ComposableUnit {
     /// - Parameters:
     ///   - lhs: The first measure.
     ///   - rhs: The second measure.
-    /// - Returns: The product with the combined physical dimension.
+    /// - Returns: The product with the combined physical dimension, or NaT.
     public static func * <Other>(
         _ lhs: Self,
         _ rhs: Measure<Other>
@@ -226,7 +224,16 @@ where UnitType: ComposableUnit {
     where Other: ComposableUnit {
         let left: Measure<ComposedUnit> = lhs.convertedToCoherentUnit()
         let right: Measure<ComposedUnit> = rhs.convertedToCoherentUnit()
+
+        guard left.isNaT == false, right.isNaT == false else {
+            return .nat
+        }
+
         let value: Double = left.value * right.value
+
+        guard value.isFinite else {
+            return .nat
+        }
 
         return .init(value, (left.unit * right.unit))
     }
@@ -235,7 +242,7 @@ where UnitType: ComposableUnit {
     ///
     /// - Parameter multiplier: The measure to multiply by, applying its scale and constant first.
     /// - Returns: The product with a composed unit.
-    /// - Throws: No errors in the current implementation; invalid inputs still fail preconditions.
+    /// - Throws: No errors in the current implementation; invalid conversions and nonfinite results produce NaT.
     public func multiplying<Other>(by multiplier: Measure<Other>) throws -> Measure<ComposedUnit>
     where Other: ComposableUnit {
         return self * multiplier
@@ -246,7 +253,7 @@ extension Measure
 where UnitType == ComposedUnit {
     /// Stores the composed coherent SI product of the two measures in the left-hand-side variable.
     ///
-    /// Applies the same conversions and preconditions as measure multiplication. The stored dimension may change.
+    /// Applies the same conversions and NaT propagation as measure multiplication. The stored dimension may change.
     ///
     /// - Parameters:
     ///   - lhs: The composed measure to replace.
@@ -263,7 +270,7 @@ where UnitType == ComposedUnit {
     /// The stored dimension may change. Constants are applied to absolute values before multiplication.
     ///
     /// - Parameter multiplier: The measure used as the multiplier.
-    /// - Throws: No errors in the current implementation; invalid inputs still fail preconditions.
+    /// - Throws: No errors in the current implementation; invalid conversions and nonfinite results produce NaT.
     public mutating func multiply<Other>(by multiplier: Measure<Other>) throws
     where Other: ComposableUnit {
         self = try self.multiplying(by: multiplier)
@@ -360,21 +367,29 @@ where UnitType: ComposableUnit & Equatable {
     /// Returns this measure raised to an integer power in a composed coherent SI unit.
     ///
     /// The value is converted to its coherent SI unit before exponentiation, applying its coefficient and constant. The
-    /// constant applies to an absolute value, rather than a difference. Valid ranges are not enforced. The numeric
-    /// result follows Numerics Extended's `Double` exponentiation, including infinity and NaN. An exponent of zero
-    /// returns a dimensionless measure with value one.
+    /// constant applies to an absolute value, rather than a difference. Valid ranges are not enforced. NaT operands,
+    /// nonfinite coherent conversions, and nonfinite powers return NaT. An exponent of zero returns a dimensionless
+    /// measure with value one only if the coherent conversion succeeds; NaT raised to zero remains NaT.
     ///
     /// - Parameters:
     ///   - lhs: The measure to raise to a power.
     ///   - rhs: The integer exponent.
-    /// - Returns: The power with each physical dimension exponent multiplied by the specified exponent.
+    /// - Returns: The power with each physical dimension exponent multiplied by the specified exponent, or NaT.
     public static func ** (
         _ lhs: Self,
         _ rhs: Self.Exponent
     ) -> Self.Power {
         let coherent: Measure<ComposedUnit> = lhs.convertedToCoherentUnit()
 
+        guard coherent.isNaT == false else {
+            return .nat
+        }
+
         let value: Double = coherent.value ** rhs
+
+        guard value.isFinite else {
+            return .nat
+        }
 
         return .init(value, (coherent.unit ** rhs))
     }
@@ -383,7 +398,7 @@ where UnitType: ComposableUnit & Equatable {
     ///
     /// - Parameter exponent: The integer exponent.
     /// - Returns: The power with a composed unit.
-    /// - Throws: No errors in the current implementation; invalid unit definitions still fail preconditions.
+    /// - Throws: No errors in the current implementation; invalid conversions and nonfinite results produce NaT.
     public func raising(to exponent: Self.Exponent) throws -> Self.Power {
         return self ** exponent
     }

@@ -90,13 +90,6 @@ where UnitType: Unit {
 
         return self.unit.validRange.contains(baseValue)
     }
-
-    /// A boolean value indicating whether the unit has a finite positive coefficient and a finite constant.
-    private var hasValidConversionUnit: Bool {
-        return self.unit.coefficient.isFinite
-            && self.unit.coefficient > 0
-            && self.unit.constant.isFinite
-    }
 }
 
 // MARK: - Addable
@@ -114,16 +107,23 @@ where UnitType: Equatable {
     /// - Parameters:
     ///   - lhs: The first measure.
     ///   - rhs: The measure to add.
-    /// - Returns: The sum in the first measure's unit.
-    /// - Precondition: The units are compatible, both coefficients are finite and positive, and both constants are
-    ///   finite.
+    /// - Returns: The sum in the first measure's unit, or NaT if either operand is NaT, the units are incompatible,
+    ///   or conversion or addition produces a nonfinite result.
     public static func + (
         _ lhs: Self,
         _ rhs: Self.Addend
     ) -> Self.Sum {
+        guard lhs.isNaT == false, rhs.isNaT == false, lhs.unit.isCompatible(with: rhs.unit) else {
+            return .nat
+        }
+
         let lhsValue: Double = lhs.value
         let rhsValue: Double = rhs.converted(to: lhs.unit).value
         let newValue: Double = lhsValue + rhsValue
+
+        guard newValue.isFinite else {
+            return .nat
+        }
 
         return .init(newValue, lhs.unit)
     }
@@ -132,14 +132,12 @@ where UnitType: Equatable {
     ///
     /// Adds the readings in this unit, retaining its constant and without clamping the result to its valid range.
     ///
-    /// Values follow ordinary `Double` arithmetic. The inherited mutating method leaves this measure unchanged if the
-    /// units are incompatible and this method throws.
+    /// Compatibility is checked before arithmetic. Compatible operands follow the operator's NaT propagation rules.
+    /// The inherited mutating method leaves this measure unchanged if the units are incompatible and this method throws.
     ///
     /// - Parameter addend: The measure to add.
-    /// - Returns: The sum in this measure's unit.
+    /// - Returns: The sum in this measure's unit, or NaT for invalid operands or a nonfinite result.
     /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
-    /// - Precondition: Both unit coefficients are finite and positive and both constants are finite, as required for
-    ///   conversion.
     public func adding(_ addend: Self.Addend) throws -> Self.Sum {
         guard self.unit.isCompatible(with: addend.unit) else {
             throw Self.UnitError.incompatibleUnits
@@ -161,8 +159,8 @@ extension Measure: ApproximatelyEquatable {
     /// Returns whether this value and another agree within either of the specified tolerances.
     ///
     /// Absolute tolerance represents a difference and ignores the unit's offset. Relative tolerance scales the larger
-    /// magnitude in the base unit. Matching infinities compare equal; NaN, invalid conversions or tolerances, and
-    /// conversion overflow return `false`.
+    /// magnitude in the base unit. NaT operands, invalid tolerances, and conversion overflow return `false`.
+    /// NaT is never approximately equal to itself.
     ///
     /// For example:
     ///
@@ -183,10 +181,10 @@ extension Measure: ApproximatelyEquatable {
         absoluteTolerance: Self.AbsoluteTolerance,
         relativeTolerance: Self.RelativeTolerance = 0
     ) -> Bool {
-        guard self.unit.isCompatible(with: other.unit),
+        guard self.isNaT == false,
+            other.isNaT == false,
+            self.unit.isCompatible(with: other.unit),
             self.unit.isCompatible(with: absoluteTolerance.unit),
-            self.hasValidConversionUnit,
-            other.hasValidConversionUnit,
             absoluteTolerance.isNaT == false,
             absoluteTolerance.value >= 0,
             relativeTolerance.isFinite,
@@ -200,13 +198,7 @@ extension Measure: ApproximatelyEquatable {
         let rhsValue: Double = (other.value * other.unit.coefficient + other.unit.constant)
         let toleranceValue: Double = absoluteTolerance.value * abs(absoluteTolerance.unit.coefficient)
 
-        // Allow an infinite converted value only when its input was already infinite. A finite input that becomes
-        // infinite during conversion has overflowed and must not compare equal to another infinity. NaN passes neither
-        // check.
-        guard toleranceValue.isFinite,
-            lhsValue.isFinite || (self.value.isInfinite && lhsValue.isInfinite),
-            rhsValue.isFinite || (other.value.isInfinite && rhsValue.isInfinite)
-        else {
+        guard toleranceValue.isFinite, lhsValue.isFinite, rhsValue.isFinite else {
             return false
         }
 
@@ -231,8 +223,8 @@ extension Measure: CanonicallyEquatable {
     /// converted to their reference scale using their coefficients and constants, then compared exactly. Unit symbols
     /// are not compared.
     ///
-    /// Conversion can introduce floating-point rounding. Equality is exact rather than approximate, and NaN values
-    /// compare unequal.
+    /// Conversion can introduce floating-point rounding. Equality is exact rather than approximate. NaT operands
+    /// and nonfinite reference-scale values compare unequal, including when comparing a measure with itself.
     ///
     /// For example:
     ///
@@ -247,14 +239,14 @@ extension Measure: CanonicallyEquatable {
     /// - Parameter other: The measure to compare with this measure.
     /// - Returns: `true` if the units are compatible and the converted values are exactly equal, and `false` otherwise.
     public func isCanonicallyEqual(to other: Self) -> Bool {
-        guard self.unit.isCompatible(with: other.unit) else {
+        guard self.isNaT == false, other.isNaT == false, self.unit.isCompatible(with: other.unit) else {
             return false
         }
 
         let lhsValue: Double = self.value * self.unit.coefficient + self.unit.constant
         let rhsValue: Double = other.value * other.unit.coefficient + other.unit.constant
 
-        return lhsValue == rhsValue
+        return lhsValue.isFinite && rhsValue.isFinite && lhsValue == rhsValue
     }
 }
 
@@ -264,12 +256,11 @@ extension Measure: Comparable
 where UnitType: Equatable {
     /// Returns a boolean value indicating whether this measure is less than the specified measure.
     ///
-    /// Compatible units follow ordinary `Double` comparison behavior, including unordered NaN values.
+    /// Compatible units are compared after conversion. NaT operands or a nonfinite conversion result return `false`.
     ///
     /// - Parameter other: The measure to compare with this measure.
     /// - Returns: The comparison result after converting the other measure to this measure's unit.
     /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
-    /// - Precondition: Compatible units have finite positive coefficients and finite constants.
     public func isLess(than other: Self) throws -> Bool {
         guard self.unit.isCompatible(with: other.unit) else {
             throw Self.UnitError.incompatibleUnits
@@ -280,12 +271,11 @@ where UnitType: Equatable {
 
     /// Returns a boolean value indicating whether this measure is less than or equal to the specified measure.
     ///
-    /// Compatible units follow ordinary `Double` comparison behavior, including unordered NaN values.
+    /// Compatible units are compared after conversion. NaT operands or a nonfinite conversion result return `false`.
     ///
     /// - Parameter other: The measure to compare with this measure.
     /// - Returns: The comparison result after converting the other measure to this measure's unit.
     /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
-    /// - Precondition: Compatible units have finite positive coefficients and finite constants.
     public func isLessThanOrEqual(to other: Self) throws -> Bool {
         guard self.unit.isCompatible(with: other.unit) else {
             throw Self.UnitError.incompatibleUnits
@@ -296,12 +286,11 @@ where UnitType: Equatable {
 
     /// Returns a boolean value indicating whether this measure is greater than the specified measure.
     ///
-    /// Compatible units follow ordinary `Double` comparison behavior, including unordered NaN values.
+    /// Compatible units are compared after conversion. NaT operands or a nonfinite conversion result return `false`.
     ///
     /// - Parameter other: The measure to compare with this measure.
     /// - Returns: The comparison result after converting the other measure to this measure's unit.
     /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
-    /// - Precondition: Compatible units have finite positive coefficients and finite constants.
     public func isGreater(than other: Self) throws -> Bool {
         guard self.unit.isCompatible(with: other.unit) else {
             throw Self.UnitError.incompatibleUnits
@@ -312,12 +301,11 @@ where UnitType: Equatable {
 
     /// Returns a boolean value indicating whether this measure is greater than or equal to the specified measure.
     ///
-    /// Compatible units follow ordinary `Double` comparison behavior, including unordered NaN values.
+    /// Compatible units are compared after conversion. NaT operands or a nonfinite conversion result return `false`.
     ///
     /// - Parameter other: The measure to compare with this measure.
     /// - Returns: The comparison result after converting the other measure to this measure's unit.
     /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
-    /// - Precondition: Compatible units have finite positive coefficients and finite constants.
     public func isGreaterThanOrEqual(to other: Self) throws -> Bool {
         guard self.unit.isCompatible(with: other.unit) else {
             throw Self.UnitError.incompatibleUnits
@@ -328,19 +316,18 @@ where UnitType: Equatable {
 
     /// Returns a boolean value indicating whether the first measure is less than the second.
     ///
-    /// Incompatible units are unordered and return `false`. Compatible units are compared after converting the second
-    /// measure to the first measure's unit, following ordinary `Double` comparison behavior.
+    /// Incompatible units, NaT operands, and nonfinite conversion results are unordered and return `false`. Otherwise,
+    /// the second measure is converted to the first measure's unit before comparison.
     ///
     /// - Parameters:
     ///   - lhs: The first measure to compare.
     ///   - rhs: The second measure to compare.
     /// - Returns: The comparison result, or `false` if the units are incompatible.
-    /// - Precondition: Compatible units have finite positive coefficients and finite constants.
     public static func < (
         _ lhs: Self,
         _ rhs: Self
     ) -> Bool {
-        guard lhs.unit.isCompatible(with: rhs.unit) else {
+        guard lhs.isNaT == false, rhs.isNaT == false, lhs.unit.isCompatible(with: rhs.unit) else {
             return false
         }
 
@@ -352,19 +339,18 @@ where UnitType: Equatable {
 
     /// Returns a boolean value indicating whether the first measure is less than or equal to the second.
     ///
-    /// Incompatible units are unordered and return `false`. Compatible units are compared after converting the second
-    /// measure to the first measure's unit, following ordinary `Double` comparison behavior.
+    /// Incompatible units, NaT operands, and nonfinite conversion results are unordered and return `false`. Otherwise,
+    /// the second measure is converted to the first measure's unit before comparison.
     ///
     /// - Parameters:
     ///   - lhs: The first measure to compare.
     ///   - rhs: The second measure to compare.
     /// - Returns: The comparison result, or `false` if the units are incompatible.
-    /// - Precondition: Compatible units have finite positive coefficients and finite constants.
     public static func <= (
         _ lhs: Self,
         _ rhs: Self
     ) -> Bool {
-        guard lhs.unit.isCompatible(with: rhs.unit) else {
+        guard lhs.isNaT == false, rhs.isNaT == false, lhs.unit.isCompatible(with: rhs.unit) else {
             return false
         }
 
@@ -376,19 +362,18 @@ where UnitType: Equatable {
 
     /// Returns a boolean value indicating whether the first measure is greater than the second.
     ///
-    /// Incompatible units are unordered and return `false`. Compatible units are compared after converting the second
-    /// measure to the first measure's unit, following ordinary `Double` comparison behavior.
+    /// Incompatible units, NaT operands, and nonfinite conversion results are unordered and return `false`. Otherwise,
+    /// the second measure is converted to the first measure's unit before comparison.
     ///
     /// - Parameters:
     ///   - lhs: The first measure to compare.
     ///   - rhs: The second measure to compare.
     /// - Returns: The comparison result, or `false` if the units are incompatible.
-    /// - Precondition: Compatible units have finite positive coefficients and finite constants.
     public static func > (
         _ lhs: Self,
         _ rhs: Self
     ) -> Bool {
-        guard lhs.unit.isCompatible(with: rhs.unit) else {
+        guard lhs.isNaT == false, rhs.isNaT == false, lhs.unit.isCompatible(with: rhs.unit) else {
             return false
         }
 
@@ -400,19 +385,18 @@ where UnitType: Equatable {
 
     /// Returns a boolean value indicating whether the first measure is greater than or equal to the second.
     ///
-    /// Incompatible units are unordered and return `false`. Compatible units are compared after converting the second
-    /// measure to the first measure's unit, following ordinary `Double` comparison behavior.
+    /// Incompatible units, NaT operands, and nonfinite conversion results are unordered and return `false`. Otherwise,
+    /// the second measure is converted to the first measure's unit before comparison.
     ///
     /// - Parameters:
     ///   - lhs: The first measure to compare.
     ///   - rhs: The second measure to compare.
     /// - Returns: The comparison result, or `false` if the units are incompatible.
-    /// - Precondition: Compatible units have finite positive coefficients and finite constants.
     public static func >= (
         _ lhs: Self,
         _ rhs: Self
     ) -> Bool {
-        guard lhs.unit.isCompatible(with: rhs.unit) else {
+        guard lhs.isNaT == false, rhs.isNaT == false, lhs.unit.isCompatible(with: rhs.unit) else {
             return false
         }
 
@@ -429,10 +413,11 @@ extension Measure: Convertible {
     /// Returns this measure converted to the specified unit.
     ///
     /// Conversion applies both units' coefficients and constants without simplifying or normalizing the destination
-    /// unit. Values outside the unit's valid range are not rejected. Measurement values follow ordinary `Double`
-    /// arithmetic: infinity and NaN propagate, and overflow may produce infinity.
+    /// unit. Values outside the unit's valid range are not rejected. NaT inputs, invalid destination conversion
+    /// parameters, incompatible dimensions, and nonfinite conversion results return NaT of the destination unit type.
     ///
-    /// The source and destination units must be compatible. For composable units, their physical dimensions must match.
+    /// Compatible composable units have matching physical dimensions. A NaT result uses the unit type's NaT
+    /// representation rather than retaining the requested destination unit.
     ///
     /// For example:
     ///
@@ -444,34 +429,16 @@ extension Measure: Convertible {
     /// ```
     ///
     /// - Parameter unit: The unit to convert to.
-    /// - Returns: A measure expressed in the destination unit.
-    /// - Precondition: The source and destination units are compatible, both coefficients are finite and positive, and
-    ///   both constants are finite.
+    /// - Returns: A measure expressed in the destination unit, or NaT when conversion cannot produce a finite result.
     public func converted(to unit: UnitType) -> Self {
-        precondition(
-            self.unit.isCompatible(with: unit),
-            "Cannot convert between units with incompatible dimensions."
-        )
-
-        precondition(
-            self.unit.coefficient.isFinite && self.unit.coefficient > 0,
-            "Conversion requires a finite positive source coefficient."
-        )
-
-        precondition(
-            unit.coefficient.isFinite && unit.coefficient > 0,
-            "Conversion requires a finite positive destination coefficient."
-        )
-
-        precondition(
-            self.unit.constant.isFinite,
-            "Conversion requires a finite source constant."
-        )
-
-        precondition(
+        guard self.isNaT == false,
+            unit.coefficient.isFinite,
+            unit.coefficient > 0,
             unit.constant.isFinite,
-            "Conversion requires a finite destination constant."
-        )
+            self.unit.isCompatible(with: unit)
+        else {
+            return .nat
+        }
 
         // Identical scales and offsets cancel; preserve the value without conversion rounding.
         if self.unit.coefficient == unit.coefficient, self.unit.constant == unit.constant {
@@ -480,6 +447,10 @@ extension Measure: Convertible {
 
         let referenceValue: Double = self.value * self.unit.coefficient + self.unit.constant
         let value: Double = (referenceValue - unit.constant) / unit.coefficient
+
+        guard value.isFinite else {
+            return .nat
+        }
 
         return .init(value, unit)
     }
@@ -627,6 +598,10 @@ where UnitType: Equatable {
         _ lhs: Self,
         _ rhs: Self
     ) -> Bool {
+        guard lhs.isNaT == false, rhs.isNaT == false else {
+            return false
+        }
+
         return lhs.value == rhs.value
             && lhs.unit == rhs.unit
     }
@@ -734,16 +709,23 @@ where UnitType: Equatable {
     /// - Parameters:
     ///   - lhs: The first measure.
     ///   - rhs: The measure to subtract.
-    /// - Returns: The difference in the first measure's unit.
-    /// - Precondition: The units are compatible, both coefficients are finite and positive, and both constants are
-    ///   finite.
+    /// - Returns: The difference in the first measure's unit, or NaT if either operand is NaT, the units are
+    ///   incompatible, or conversion or subtraction produces a nonfinite result.
     public static func - (
         _ lhs: Self,
         _ rhs: Self.Subtrahend
     ) -> Self.Difference {
+        guard lhs.isNaT == false, rhs.isNaT == false, lhs.unit.isCompatible(with: rhs.unit) else {
+            return .nat
+        }
+
         let lhsValue: Double = lhs.value
         let rhsValue: Double = rhs.converted(to: lhs.unit).value
         let newValue: Double = lhsValue - rhsValue
+
+        guard newValue.isFinite else {
+            return .nat
+        }
 
         return .init(newValue, lhs.unit)
     }
@@ -753,14 +735,12 @@ where UnitType: Equatable {
     /// Subtracts the readings in this unit, retaining its constant and without clamping the result to its valid range.
     /// Subtracting temperatures does not create a distinct temperature-difference quantity.
     ///
-    /// Values follow ordinary `Double` arithmetic. The inherited mutating method leaves this measure unchanged if the
-    /// units are incompatible and this method throws.
+    /// Compatibility is checked before arithmetic. Compatible operands follow the operator's NaT propagation rules.
+    /// The inherited mutating method leaves this measure unchanged if the units are incompatible and this method throws.
     ///
     /// - Parameter subtrahend: The measure to subtract.
-    /// - Returns: The difference in this measure's unit.
+    /// - Returns: The difference in this measure's unit, or NaT for invalid operands or a nonfinite result.
     /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
-    /// - Precondition: Both unit coefficients are finite and positive and both constants are finite, as required for
-    ///   conversion.
     public func subtracting(_ subtrahend: Self.Subtrahend) throws -> Self.Difference {
         guard self.unit.isCompatible(with: subtrahend.unit) else {
             throw Self.UnitError.incompatibleUnits
