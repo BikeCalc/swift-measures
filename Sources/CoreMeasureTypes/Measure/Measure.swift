@@ -15,7 +15,8 @@ import NumericsExtended
 /// the source and destination coefficients and constants.
 ///
 /// Initialization, conversion, and arithmetic do not enforce the unit's valid range or clamp values to its bounds. Use
-/// `isValid` to check the value and conversion definition against the unit's reference-scale range.
+/// `isValid` to check the value and conversion definition against the unit's reference-scale range. `isNaT` detects
+/// nonfinite values and invalid conversion parameters independently of that range.
 ///
 /// Addition and subtraction operate on readings expressed in the left operand's unit. Scalar multiplication and
 /// division scale the stored reading without applying the unit's coefficient or constant. For offset units, this
@@ -79,24 +80,18 @@ where UnitType: Unit {
 
     /// A boolean value indicating whether this measure has a valid conversion and lies within its unit's valid range.
     public var isValid: Bool {
-        return self.isValidForConversion
+        return self.isNaT == false
             && self.isWithinValidRange
     }
 
-    /// A Boolean value indicating whether this measure is within its dimension's valid range.
+    /// A boolean value indicating whether this measure is within its dimension's valid range.
     internal var isWithinValidRange: Bool {
         let baseValue: Double = self.value * self.unit.coefficient + self.unit.constant
 
         return self.unit.validRange.contains(baseValue)
     }
 
-    /// A Boolean value indicating whether this measure has a finite value and a valid conversion definition.
-    package var isValidForConversion: Bool {
-        return self.value.isFinite
-            && self.hasValidConversionUnit
-    }
-
-    /// A Boolean value indicating whether the unit has a finite positive coefficient and a finite constant.
+    /// A boolean value indicating whether the unit has a finite positive coefficient and a finite constant.
     private var hasValidConversionUnit: Bool {
         return self.unit.coefficient.isFinite
             && self.unit.coefficient > 0
@@ -192,7 +187,7 @@ extension Measure: ApproximatelyEquatable {
             self.unit.isCompatible(with: absoluteTolerance.unit),
             self.hasValidConversionUnit,
             other.hasValidConversionUnit,
-            absoluteTolerance.isValidForConversion,
+            absoluteTolerance.isNaT == false,
             absoluteTolerance.value >= 0,
             relativeTolerance.isFinite,
             relativeTolerance >= 0,
@@ -558,8 +553,8 @@ where UnitType: Equatable {
 
     public func isDivisible(by other: Self) -> Bool {
         guard self.unit.isCompatible(with: other.unit),
-            self.isValidForConversion,
-            other.isValidForConversion
+            self.isNaT == false,
+            other.isNaT == false
         else {
             return false
         }
@@ -656,8 +651,8 @@ where UnitType: Equatable {
 
     public func isMultiple(of other: Self) -> Bool {
         guard self.unit.isCompatible(with: other.unit),
-            self.isValidForConversion,
-            other.isValidForConversion
+            self.isNaT == false,
+            other.isNaT == false
         else {
             return false
         }
@@ -694,6 +689,27 @@ where UnitType: Equatable {
         let newValue: Double = lhsValue * rhs
 
         return .init(newValue, lhs.unit)
+    }
+}
+
+// MARK: - RepresentableByNaT
+
+extension Measure: RepresentableByNaT {
+    public var isNaT: Bool {
+        return self.value.isFinite == false
+            || self.unit.coefficient.isFinite == false
+            || self.unit.coefficient <= 0
+            || self.unit.constant.isFinite == false
+    }
+
+    public static var nat: Self {
+        let unit: UnitType = .init(
+            coefficient: .nan,
+            constant: .nan,
+            symbol: "NaT"
+        )
+
+        return .init(Double.nan, unit)
     }
 }
 

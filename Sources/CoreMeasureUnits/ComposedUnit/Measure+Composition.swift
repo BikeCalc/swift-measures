@@ -304,7 +304,7 @@ where UnitType: ComposableUnit & Equatable {
     /// - Returns: `true` if an integer power of the base represents this quantity; otherwise, `false`.
     public func isPower<Other>(of other: Measure<Other>) -> Bool
     where Other: ComposableUnit {
-        guard self.isValidForConversion, other.isValidForConversion else {
+        guard self.isNaT == false, other.isNaT == false else {
             return false
         }
 

@@ -9,7 +9,7 @@
 /// A type that can represent not-a-thing values.
 public protocol RepresentableByNaT {
     /// A boolean value indicating whether this instance is not a thing.
-    var isNAT: Bool { get }
+    var isNaT: Bool { get }
 
     /// The not-a-thing value.
     static var nat: Self { get }

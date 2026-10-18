@@ -343,6 +343,27 @@ extension ComposedUnit: CanonicallyEquatable {}
 // MARK: - ComposableUnit
 
 extension ComposedUnit: ComposableUnit {
+    /// Creates a single dimensionless factor with the specified conversion parameters and symbol.
+    ///
+    /// - Parameters:
+    ///   - coefficient: The multiplicative scale relative to the dimensionless reference.
+    ///   - constant: The additive offset, defaulting to zero.
+    ///   - symbol: The display label for the factor.
+    public init(
+        coefficient: Double,
+        constant: Double = 0,
+        symbol: String
+    ) {
+        let unit: Self.AnyDefinedUnit = .init(
+            coefficient: coefficient,
+            constant: constant,
+            symbol: symbol,
+            dimension: .init()
+        )
+        let factor: Self.Factor = .init(unit: unit)
+        self.factors = [factor]
+    }
+
     /// The product of the captured coefficients raised to their factor exponents.
     ///
     /// Evaluation follows stored factor order and may overflow or underflow.
@@ -365,11 +386,6 @@ extension ComposedUnit: ComposableUnit {
     }
 
     /// The stored factors formatted with multiplication dots and signed superscript exponents.
-    ///
-    /// Formatting preserves factor order and does not simplify. Zero exponents are omitted; no active factors produce
-    /// an empty string. Active factor labels must be nonempty, have no surrounding whitespace, contain balanced
-    /// nonempty parentheses, and supply operands around multiplication, division, and power operators. Invalid labels
-    /// fail a precondition when this property is read. Internal spaces, such as in `imp ton`, are allowed.
     public var symbol: String {
         let formatter: ComposedUnitSymbolFormatter = .init(factors: self.factors)
         return formatter.format()
