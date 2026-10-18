@@ -551,28 +551,54 @@ where UnitType: Equatable {
     /// Returns the quotient by dividing the stored reading by a scalar.
     ///
     /// The unit is preserved without applying its coefficient or constant. For offset units, this scales the reading,
-    /// not the absolute reference value. The result follows ordinary `Double` arithmetic and is not clamped.
+    /// not the absolute reference value. Finite results are not clamped to the valid range. NaT operands, nonfinite
+    /// scalars, and nonfinite results produce NaT.
     ///
     /// - Parameters:
     ///   - lhs: The measure whose reading is scaled.
     ///   - rhs: The scalar used to scale the reading.
-    /// - Returns: The quotient in the original unit.
+    /// - Returns: The finite quotient in the original unit, or NaT, including when the divisor is zero.
     public static func / (
         _ lhs: Self,
         _ rhs: Self.Divisor
     ) -> Self.Quotient {
+        guard lhs.isNaT == false, rhs.isFinite else {
+            return .nat
+        }
+
         let lhsValue: Double = lhs.value
         let newValue: Double = lhsValue / rhs
+
+        guard newValue.isFinite else {
+            return .nat
+        }
 
         return .init(newValue, lhs.unit)
     }
 
+    /// Returns the truncating remainder of the stored reading divided by a scalar.
+    ///
+    /// Finite results retain the original unit without applying its coefficient or constant. NaT operands, nonfinite
+    /// scalars, and nonfinite results produce NaT. Valid ranges are not enforced.
+    ///
+    /// - Parameters:
+    ///   - lhs: The measure whose reading is divided.
+    ///   - rhs: The scalar divisor.
+    /// - Returns: The finite remainder in the original unit, or NaT, including when the divisor is zero.
     public static func % (
         _ lhs: Self,
         _ rhs: Self.RemainderDivisor
     ) -> Self.Remainder {
+        guard lhs.isNaT == false, rhs.isFinite else {
+            return .nat
+        }
+
         let lhsValue: Double = lhs.value
         let newValue: Double = lhsValue.truncatingRemainder(dividingBy: rhs)
+
+        guard newValue.isFinite else {
+            return .nat
+        }
 
         return .init(newValue, lhs.unit)
     }
@@ -650,18 +676,27 @@ where UnitType: Equatable {
     /// Returns the product by multiplying the stored reading by a scalar.
     ///
     /// The unit is preserved without applying its coefficient or constant. For offset units, this scales the reading,
-    /// not the absolute reference value. The result follows ordinary `Double` arithmetic and is not clamped.
+    /// not the absolute reference value. Finite results are not clamped to the valid range. NaT operands, nonfinite
+    /// scalars, and nonfinite results produce NaT.
     ///
     /// - Parameters:
     ///   - lhs: The measure whose reading is scaled.
     ///   - rhs: The scalar used to scale the reading.
-    /// - Returns: The product in the original unit.
+    /// - Returns: The finite product in the original unit, or NaT.
     public static func * (
         _ lhs: Self,
         _ rhs: Self.Multiplier
     ) -> Self.Product {
+        guard lhs.isNaT == false, rhs.isFinite else {
+            return .nat
+        }
+
         let lhsValue: Double = lhs.value
         let newValue: Double = lhsValue * rhs
+
+        guard newValue.isFinite else {
+            return .nat
+        }
 
         return .init(newValue, lhs.unit)
     }
