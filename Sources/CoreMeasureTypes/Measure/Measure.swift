@@ -36,14 +36,6 @@ where UnitType: Unit {
         case unit = "unit"
     }
 
-    /// An error related to a measure's units.
-    public enum UnitError: Equatable, Error, Sendable {
-        /// The units are incompatible.
-        ///
-        /// For composed units, this means their physical dimensions differ.
-        case incompatibleUnits
-    }
-
     /// The value of this measure.
     public let value: Double
 
@@ -126,24 +118,6 @@ where UnitType: Equatable {
         }
 
         return .init(newValue, lhs.unit)
-    }
-
-    /// Returns the sum after converting the other measure to this measure's unit.
-    ///
-    /// Adds the readings in this unit, retaining its constant and without clamping the result to its valid range.
-    ///
-    /// Compatibility is checked before arithmetic. Compatible operands follow the operator's NaT propagation rules.
-    /// The inherited mutating method leaves this measure unchanged if the units are incompatible and this method throws.
-    ///
-    /// - Parameter addend: The measure to add.
-    /// - Returns: The sum in this measure's unit, or NaT for invalid operands or a nonfinite result.
-    /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
-    public func adding(_ addend: Self.Addend) throws -> Self.Sum {
-        guard self.unit.isCompatible(with: addend.unit) else {
-            throw Self.UnitError.incompatibleUnits
-        }
-
-        return self + addend
     }
 }
 
@@ -254,66 +228,6 @@ extension Measure: CanonicallyEquatable {
 
 extension Measure: Comparable
 where UnitType: Equatable {
-    /// Returns a boolean value indicating whether this measure is less than the specified measure.
-    ///
-    /// Compatible units are compared after conversion. NaT operands or a nonfinite conversion result return `false`.
-    ///
-    /// - Parameter other: The measure to compare with this measure.
-    /// - Returns: The comparison result after converting the other measure to this measure's unit.
-    /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
-    public func isLess(than other: Self) throws -> Bool {
-        guard self.unit.isCompatible(with: other.unit) else {
-            throw Self.UnitError.incompatibleUnits
-        }
-
-        return self < other
-    }
-
-    /// Returns a boolean value indicating whether this measure is less than or equal to the specified measure.
-    ///
-    /// Compatible units are compared after conversion. NaT operands or a nonfinite conversion result return `false`.
-    ///
-    /// - Parameter other: The measure to compare with this measure.
-    /// - Returns: The comparison result after converting the other measure to this measure's unit.
-    /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
-    public func isLessThanOrEqual(to other: Self) throws -> Bool {
-        guard self.unit.isCompatible(with: other.unit) else {
-            throw Self.UnitError.incompatibleUnits
-        }
-
-        return self <= other
-    }
-
-    /// Returns a boolean value indicating whether this measure is greater than the specified measure.
-    ///
-    /// Compatible units are compared after conversion. NaT operands or a nonfinite conversion result return `false`.
-    ///
-    /// - Parameter other: The measure to compare with this measure.
-    /// - Returns: The comparison result after converting the other measure to this measure's unit.
-    /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
-    public func isGreater(than other: Self) throws -> Bool {
-        guard self.unit.isCompatible(with: other.unit) else {
-            throw Self.UnitError.incompatibleUnits
-        }
-
-        return self > other
-    }
-
-    /// Returns a boolean value indicating whether this measure is greater than or equal to the specified measure.
-    ///
-    /// Compatible units are compared after conversion. NaT operands or a nonfinite conversion result return `false`.
-    ///
-    /// - Parameter other: The measure to compare with this measure.
-    /// - Returns: The comparison result after converting the other measure to this measure's unit.
-    /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
-    public func isGreaterThanOrEqual(to other: Self) throws -> Bool {
-        guard self.unit.isCompatible(with: other.unit) else {
-            throw Self.UnitError.incompatibleUnits
-        }
-
-        return self >= other
-    }
-
     /// Returns a boolean value indicating whether the first measure is less than the second.
     ///
     /// Incompatible units, NaT operands, and nonfinite conversion results are unordered and return `false`. Otherwise,
@@ -763,24 +677,5 @@ where UnitType: Equatable {
         }
 
         return .init(newValue, lhs.unit)
-    }
-
-    /// Returns the difference after converting the other measure to this measure's unit.
-    ///
-    /// Subtracts the readings in this unit, retaining its constant and without clamping the result to its valid range.
-    /// Subtracting temperatures does not create a distinct temperature-difference quantity.
-    ///
-    /// Compatibility is checked before arithmetic. Compatible operands follow the operator's NaT propagation rules.
-    /// The inherited mutating method leaves this measure unchanged if the units are incompatible and this method throws.
-    ///
-    /// - Parameter subtrahend: The measure to subtract.
-    /// - Returns: The difference in this measure's unit, or NaT for invalid operands or a nonfinite result.
-    /// - Throws: `Self.UnitError.incompatibleUnits` if the operand units are incompatible.
-    public func subtracting(_ subtrahend: Self.Subtrahend) throws -> Self.Difference {
-        guard self.unit.isCompatible(with: subtrahend.unit) else {
-            throw Self.UnitError.incompatibleUnits
-        }
-
-        return self - subtrahend
     }
 }
