@@ -29,7 +29,7 @@ Measures is written in Swift and avoids platform-specific APIs where possible.
         dependencies: [
             .package(
                 url: "https://github.com/bikecalc/swift-measures.git",
-                from: "2.0.0"
+                from: "3.0.0"
             )
         ],
         ...
