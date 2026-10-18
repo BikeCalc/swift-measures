@@ -274,10 +274,7 @@ where UnitType == ComposedUnit {
 
 extension Measure: Raisable
 where UnitType: ComposableUnit & Equatable {
-    /// The integer exponent applied to the value and its physical dimension.
     public typealias Exponent = Int
-
-    /// The result of exponentiation, whose dimension may differ from the original measure.
     public typealias Power = Measure<ComposedUnit>
 
     /// Returns a boolean value indicating whether this measure is an integer power of a possibly different measure

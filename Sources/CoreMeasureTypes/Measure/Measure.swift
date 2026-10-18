@@ -157,10 +157,7 @@ where UnitType: Equatable {
 // MARK: - ApproximatelyEquatable
 
 extension Measure: ApproximatelyEquatable {
-    /// The measure type used to express an absolute difference.
     public typealias AbsoluteTolerance = Self
-
-    /// The floating-point type used to express a dimensionless relative difference.
     public typealias RelativeTolerance = Double
 
     /// Returns whether this value and another agree within either of the specified tolerances.
