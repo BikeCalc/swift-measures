@@ -79,10 +79,7 @@ internal struct UnitRegistry {
         }
 
         guard definitions.count == 1 else {
-            throw CalculationError(
-                code: .ambiguousUnit,
-                message: "The unit symbol '\(symbol)' has multiple definitions and cannot be resolved unambiguously."
-            )
+            throw CalculationError.ambiguousUnit(symbol)
         }
 
         return definitions.first

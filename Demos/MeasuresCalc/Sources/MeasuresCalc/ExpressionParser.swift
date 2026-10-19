@@ -29,11 +29,7 @@ internal struct ExpressionParser {
                     // Juxtaposition is multiplication: 2 m^2 is 2 * (m^2),
                     // while 2^2 m is (2^2) * m. Adjacent numbers remain an error.
                     if case .number = token.kind, previousWasNumber {
-                        throw CalculationError(
-                            code: .invalidSyntax,
-                            message: "Expected an operator between numbers.",
-                            span: token.span
-                        )
+                        throw CalculationError.expectedOperator(span: token.span)
                     }
 
                     try self.push(
@@ -76,11 +72,7 @@ internal struct ExpressionParser {
                 }
             case .punctuation(.rightParenthesis):
                 guard expectsOperand == false else {
-                    throw CalculationError(
-                        code: .invalidSyntax,
-                        message: "Expected an expression before ')'.",
-                        span: token.span
-                    )
+                    throw CalculationError.expectedExpressionBeforeClosingParenthesis(span: token.span)
                 }
 
                 while let last: Token = operators.last, last.kind != .punctuation(.leftParenthesis) {
@@ -96,11 +88,7 @@ internal struct ExpressionParser {
                     let opening: Token = operators.popLast(),
                     let lastExpression: Expression = values.popLast()
                 else {
-                    throw CalculationError(
-                        code: .invalidSyntax,
-                        message: "Unmatched closing parenthesis.",
-                        span: token.span
-                    )
+                    throw CalculationError.unmatchedClosingParenthesis(span: token.span)
                 }
 
                 let expression: Expression = .init(
@@ -117,11 +105,7 @@ internal struct ExpressionParser {
             case .operation(let operation):
                 if expectsOperand {
                     guard operation == .add || operation == .subtract else {
-                        throw CalculationError(
-                            code: .invalidSyntax,
-                            message: "Expected a number, unit, or '('.",
-                            span: token.span
-                        )
+                        throw CalculationError.expectedOperand(span: token.span)
                     }
 
                     // Prefix signs must not pop a pending power: 2^-2 is valid.
@@ -141,17 +125,9 @@ internal struct ExpressionParser {
                     expectsOperand = true
                 }
             case .punctuation(.equals):
-                throw CalculationError(
-                    code: .invalidSyntax,
-                    message: "Use equation solving for expressions containing '='.",
-                    span: token.span
-                )
+                throw CalculationError.equationRequiresSolver(span: token.span)
             case .punctuation:
-                throw CalculationError(
-                    code: .invalidSyntax,
-                    message: "Unexpected numeric punctuation.",
-                    span: token.span
-                )
+                throw CalculationError.unexpectedNumericPunctuation(span: token.span)
             }
 
             if case .number = token.kind {
@@ -162,20 +138,16 @@ internal struct ExpressionParser {
         }
 
         guard expectsOperand == false else {
-            throw CalculationError(
-                code: .invalidSyntax,
-                message: tokens.isEmpty ? "The expression is empty." : "The expression is missing an operand.",
-                span: tokens.last?.span
-            )
+            if tokens.isEmpty {
+                throw CalculationError.emptyExpression(span: tokens.last?.span)
+            } else {
+                throw CalculationError.missingExpressionOperand(span: tokens.last?.span)
+            }
         }
 
         while let token: Token = operators.popLast() {
             guard token.kind != .punctuation(.leftParenthesis) else {
-                throw CalculationError(
-                    code: .invalidSyntax,
-                    message: "Unmatched opening parenthesis.",
-                    span: token.span
-                )
+                throw CalculationError.unmatchedOpeningParenthesis(span: token.span)
             }
 
             try self.apply(
@@ -185,10 +157,7 @@ internal struct ExpressionParser {
         }
 
         guard values.count == 1, let result: Expression = values.first else {
-            throw CalculationError(
-                code: .invalidSyntax,
-                message: "Expected a single expression."
-            )
+            throw CalculationError.expectedSingleExpression()
         }
 
         return result
@@ -211,7 +180,8 @@ internal struct ExpressionParser {
         }
 
         while let last: Token = operators.last, case .operation(let pending) = last.kind {
-            let shouldApply: Bool = pending.precedence > incoming.precedence
+            let shouldApply: Bool =
+                pending.precedence > incoming.precedence
                 || (pending.precedence == incoming.precedence && incoming.isRightAssociative == false)
 
             guard shouldApply else {
@@ -240,11 +210,7 @@ internal struct ExpressionParser {
         to values: inout Array<Expression>
     ) throws {
         guard case .operation(let operation) = token.kind, let rhs: Expression = values.popLast() else {
-            throw CalculationError(
-                code: .invalidSyntax,
-                message: "Missing operand.",
-                span: token.span
-            )
+            throw CalculationError.missingOperand(span: token.span)
         }
 
         let expression: Expression
@@ -260,11 +226,7 @@ internal struct ExpressionParser {
             )
         } else {
             guard let lhs: Expression = values.popLast() else {
-                throw CalculationError(
-                    code: .invalidSyntax,
-                    message: "Missing left operand.",
-                    span: token.span
-                )
+                throw CalculationError.missingLeftOperand(span: token.span)
             }
 
             expression = .init(
@@ -278,12 +240,9 @@ internal struct ExpressionParser {
         }
 
         guard expression.depth <= 128 else {
-            throw CalculationError(
-                code: .limitExceeded,
-                message: "Expressions are limited to 128 levels of operations.",
-                span: expression.span
-            )
+            throw CalculationError.expressionDepthLimitExceeded(span: expression.span)
         }
+        
         values.append(expression)
     }
 }

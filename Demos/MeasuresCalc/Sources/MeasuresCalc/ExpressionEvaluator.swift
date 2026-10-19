@@ -41,10 +41,7 @@ internal struct ExpressionEvaluator {
                 return try measure.validated()
             case .variable(let name):
                 guard let measure: Measure<ComposedUnit> = variables[name] else {
-                    throw CalculationError(
-                        code: .unknownIdentifier,
-                        message: "Unknown unit or variable '\(name)'."
-                    )
+                    throw CalculationError.unknownIdentifier(name)
                 }
 
                 return measure
@@ -113,7 +110,7 @@ internal struct ExpressionEvaluator {
                 let right: ComposedUnit = try self.outputUnit(rhs)
 
                 guard left.constant == 0, right.constant == 0 else {
-                    throw self.offsetUnitError()
+                    throw CalculationError.offsetUnitComposition()
                 }
 
                 try Measure<ComposedUnit>.validateComposition(
@@ -125,14 +122,14 @@ internal struct ExpressionEvaluator {
                 unit = operation == .divide ? left / right : left * right
             case .power:
                 guard self.isNumericExpression(rhs) else {
-                    throw self.invalidOutput()
+                    throw CalculationError.invalidOutputUnit()
                 }
 
                 let measure: Measure<ComposedUnit> = try self.evaluate(rhs)
                 let exponent: Int = try measure.exponent()
 
                 guard left.constant == 0 || exponent == 0 || exponent == 1 else {
-                    throw self.offsetUnitError()
+                    throw CalculationError.offsetUnitComposition()
                 }
 
                 try Measure<ComposedUnit>.validatePower(
@@ -142,10 +139,10 @@ internal struct ExpressionEvaluator {
 
                 unit = (left ** exponent)
             default:
-                throw self.invalidOutput()
+                throw CalculationError.invalidOutputUnit()
             }
         default:
-            throw self.invalidOutput()
+            throw CalculationError.invalidOutputUnit()
         }
 
         try Measure<ComposedUnit>.validate(unit)
@@ -190,25 +187,5 @@ internal struct ExpressionEvaluator {
         case .unit, .variable:
             return false
         }
-    }
-
-    /// Creates a diagnostic explaining unsupported composition of offset units.
-    ///
-    /// - Returns: An invalid-unit diagnostic directing the caller to compose measurements instead.
-    private func offsetUnitError() -> CalculationError {
-        return .init(
-            code: .invalidUnit,
-            message: "Offset units cannot be composed alone. Use measurements, such as (10 °C) * (2 s)."
-        )
-    }
-
-    /// Creates a diagnostic for an unsupported output-unit expression.
-    ///
-    /// - Returns: An invalid-output-unit diagnostic.
-    private func invalidOutput() -> CalculationError {
-        return .init(
-            code: .invalidOutputUnit,
-            message: "An output unit must contain units, products, quotients, and integer powers only."
-        )
     }
 }

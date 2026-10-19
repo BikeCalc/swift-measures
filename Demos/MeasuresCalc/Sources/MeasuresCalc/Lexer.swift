@@ -34,10 +34,7 @@ internal struct Lexer {
     /// - Throws: A calculation error for unrecognized input, malformed numbers, or more than 4,096 characters.
     internal func tokenize(_ source: String) throws -> Array<Token> {
         guard source.count <= 4_096 else {
-            throw CalculationError(
-                code: .limitExceeded,
-                message: "Expressions are limited to 4,096 characters."
-            )
+            throw CalculationError.expressionLengthLimitExceeded()
         }
 
         let characters: Array<Character> = Array(source)
@@ -84,9 +81,7 @@ internal struct Lexer {
                 }
 
                 guard index > digitStart, let exponent: Double = .init(text), exponent.isFinite else {
-                    throw CalculationError(
-                        code: .invalidSyntax,
-                        message: "Expected a finite number; commas and underscores must separate groups of three digits.",
+                    throw CalculationError.invalidNumberGrouping(
                         span: SourceSpan(
                             start: start,
                             end: index
@@ -119,9 +114,8 @@ internal struct Lexer {
                 } else if symbol == self.variable {
                     kind = .variable(symbol)
                 } else {
-                    throw CalculationError(
-                        code: .unknownIdentifier,
-                        message: "Unknown unit or variable '\(symbol)'.",
+                    throw CalculationError.unknownIdentifier(
+                        symbol,
                         span: SourceSpan(
                             start: start,
                             end: index
@@ -138,9 +132,8 @@ internal struct Lexer {
                 {
                     kind = .punctuation(punctuation)
                 } else {
-                    throw CalculationError(
-                        code: .invalidSyntax,
-                        message: "Unexpected character '\(character)'.",
+                    throw CalculationError.unexpectedCharacter(
+                        character,
                         span: SourceSpan(
                             start: start,
                             end: index
@@ -191,9 +184,7 @@ internal struct Lexer {
                 index += 1
             } else if let punctuation: PunctuationToken = .init(rawValue: character), punctuation.isGroupingSeparator {
                 guard hasGrouping ? groupSize == 3 : (1 ... 3).contains(groupSize) else {
-                    throw CalculationError(
-                        code: .invalidSyntax,
-                        message: "Expected a finite number; commas and underscores must separate groups of digits.",
+                    throw CalculationError.invalidNumber(
                         span: SourceSpan(
                             start: start,
                             end: index + 1
@@ -210,9 +201,7 @@ internal struct Lexer {
         }
 
         guard hasGrouping == false || groupSize == 3 else {
-            throw CalculationError(
-                code: .invalidSyntax,
-                message: "Expected a finite number; commas and underscores must separate groups of digits.",
+            throw CalculationError.invalidNumber(
                 span: SourceSpan(
                     start: start,
                     end: index
@@ -250,9 +239,7 @@ internal struct Lexer {
             }
 
             guard index > exponentStart else {
-                throw CalculationError(
-                    code: .invalidSyntax,
-                    message: "Expected a finite number; commas and underscores must separate groups of digits.",
+                throw CalculationError.invalidNumber(
                     span: SourceSpan(
                         start: start,
                         end: index
@@ -261,12 +248,11 @@ internal struct Lexer {
             }
         }
 
-        if index < characters.count, let punctuation: PunctuationToken = .init(rawValue: characters[index]),
+        if index < characters.count,
+            let punctuation: PunctuationToken = .init(rawValue: characters[index]),
             punctuation.isGroupingSeparator || punctuation == .decimalPoint
         {
-            throw CalculationError(
-                code: .invalidSyntax,
-                message: "Expected a finite number; commas and underscores must separate groups of digits.",
+            throw CalculationError.invalidNumber(
                 span: SourceSpan(
                     start: start,
                     end: index + 1
@@ -275,9 +261,7 @@ internal struct Lexer {
         }
 
         guard hasDigit, let value: Double = .init(text), value.isFinite else {
-            throw CalculationError(
-                code: .invalidSyntax,
-                message: "Expected a finite number; commas and underscores must separate groups of digits.",
+            throw CalculationError.invalidNumber(
                 span: SourceSpan(
                     start: start,
                     end: index

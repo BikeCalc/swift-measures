@@ -76,10 +76,7 @@ package struct Calculator {
             .filter { tokens[$0].kind == .punctuation(.equals) }
 
         guard separators.count == 1, let separator: Int = separators.first else {
-            throw CalculationError(
-                code: .invalidSyntax,
-                message: "An equation requires exactly one '='."
-            )
+            throw CalculationError.expectedEquation()
         }
 
         let parser: ExpressionParser = .init()
@@ -131,10 +128,7 @@ package struct Calculator {
             let unit: ComposedUnit = try evaluator.outputUnit(expression)
 
             guard quantity.unit.isCompatible(with: unit) else {
-                throw CalculationError(
-                    code: .incompatibleDimensions,
-                    message: "The output unit has an incompatible dimension."
-                )
+                throw CalculationError.incompatibleOutputDimension()
             }
 
             measure = try quantity.converted(to: unit).validated()

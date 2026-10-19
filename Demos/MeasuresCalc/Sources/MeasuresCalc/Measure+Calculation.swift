@@ -23,10 +23,7 @@ where UnitType == ComposedUnit {
         try Self.validate(self.unit)
 
         guard self.value.isFinite else {
-            throw CalculationError(
-                code: .nonFiniteResult,
-                message: "The calculation produced a non-finite value."
-            )
+            throw CalculationError.nonFiniteResult()
         }
 
         return self
@@ -40,19 +37,13 @@ where UnitType == ComposedUnit {
         _ = try self.validated()
 
         guard self.unit.dimension.isDimensionless else {
-            throw CalculationError(
-                code: .invalidPower,
-                message: "Powers must be dimensionless integers between -64 and 64."
-            )
+            throw CalculationError.invalidPower()
         }
 
         let value: Double = self.converted(to: Self.scalarUnit).value
 
         guard value.isFinite, value.rounded(.towardZero) == value, (-64 ... 64).contains(value) else {
-            throw CalculationError(
-                code: .invalidPower,
-                message: "Powers must be dimensionless integers between -64 and 64."
-            )
+            throw CalculationError.invalidPower()
         }
 
         return Int(value)
@@ -78,10 +69,7 @@ where UnitType == ComposedUnit {
         switch operation {
         case .add, .subtract:
             guard self.unit.isCompatible(with: rhs.unit) else {
-                throw CalculationError(
-                    code: .incompatibleDimensions,
-                    message: "Cannot add or subtract incompatible units."
-                )
+                throw CalculationError.incompatibleArithmeticDimensions()
             }
 
             result = try operation == .add ? self.adding(rhs) : self.subtracting(rhs)
@@ -103,10 +91,7 @@ where UnitType == ComposedUnit {
 
             result = try self.raising(to: exponent)
         case .positive, .negative:
-            throw CalculationError(
-                code: .invalidSyntax,
-                message: "Expected a binary operator."
-            )
+            throw CalculationError.expectedBinaryOperator()
         }
 
         return try result.validated()
@@ -127,17 +112,11 @@ where UnitType == ComposedUnit {
     ///   exponent.
     internal static func validate(_ unit: ComposedUnit) throws {
         guard unit.coefficient.isFinite, unit.coefficient > 0, unit.constant.isFinite else {
-            throw CalculationError(
-                code: .invalidUnit,
-                message: "A unit requires a finite positive scale and finite offset."
-            )
+            throw CalculationError.invalidUnitConversion()
         }
 
         guard Self.exponents(unit.dimension).allSatisfy({ (-64 ... 64).contains($0) }) else {
-            throw CalculationError(
-                code: .limitExceeded,
-                message: "Dimension exponents must be between -64 and 64."
-            )
+            throw CalculationError.dimensionLimitExceeded()
         }
     }
 
@@ -160,10 +139,7 @@ where UnitType == ComposedUnit {
             let result: Int = operation == .divide ? left - right : left + right
 
             guard (-64 ... 64).contains(result) else {
-                throw CalculationError(
-                    code: .limitExceeded,
-                    message: "The resulting dimension exceeds calculator limits."
-                )
+                throw CalculationError.resultingDimensionLimitExceeded()
             }
         }
     }
@@ -183,10 +159,7 @@ where UnitType == ComposedUnit {
         guard (-64 ... 64).contains(exponent),
             Self.exponents(unit.dimension).allSatisfy({ (-64 ... 64).contains($0 * exponent) })
         else {
-            throw CalculationError(
-                code: .limitExceeded,
-                message: "The resulting dimension exceeds calculator limits."
-            )
+            throw CalculationError.resultingDimensionLimitExceeded()
         }
     }
 
