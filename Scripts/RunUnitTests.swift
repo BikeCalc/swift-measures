@@ -98,7 +98,7 @@ fileprivate struct Arguments {
 
 // MARK: - UnitTestRunner
 
-/// Runs unit tests and generates coverage artifacts for local use and continuous integration.
+/// Runs library and demo tests and generates separate coverage artifacts for local use and continuous integration.
 fileprivate struct UnitTestRunner {
     /// Creates a unit test runner.
     fileprivate init() {}
@@ -109,7 +109,7 @@ fileprivate struct UnitTestRunner {
         isDirectory: true
     )
 
-    /// Runs the tests with coverage enabled and prints the generated Markdown report.
+    /// Runs both packages with coverage and prints their separate coverage reports.
     ///
     /// Test output is directed to standard error so standard output contains only the report.
     /// Subprocess failures terminate the script with the same exit status; signals result in a failure status.
@@ -117,11 +117,43 @@ fileprivate struct UnitTestRunner {
     /// - Throws: `UnitTestRunnerError` if a command fails or coverage artifacts cannot be exported.
     fileprivate func run() throws(UnitTestRunnerError) {
         try self.runSwift(arguments: ["test", "--enable-code-coverage"])
+        try self.runSwift(arguments: ["test", "--package-path", "Demos/MeasuresCalc", "--enable-code-coverage"])
+
+        try self.exportCoverage(
+            packagePath: ".",
+            sourcesPath: "Sources",
+            reportName: "Measures"
+        )
+
+        try self.exportCoverage(
+            packagePath: "Demos/MeasuresCalc",
+            sourcesPath: "Demos/MeasuresCalc/Sources",
+            reportName: "Measures Calc"
+        )
+    }
+
+    /// Exports one package's coverage and prints its labelled Markdown report.
+    ///
+    /// - Parameters:
+    ///   - packagePath: The package directory relative to the repository root.
+    ///   - sourcesPath: The source directory included in the Markdown report.
+    ///   - reportName: The report heading, also used for lowercase filenames with spaces replaced by hyphens.
+    /// - Throws: `UnitTestRunnerError` if coverage cannot be located, generated, or saved.
+    private func exportCoverage(
+        packagePath: String,
+        sourcesPath: String,
+        reportName: String
+    ) throws(UnitTestRunnerError) {
+        let filename: String = reportName.lowercased().replacingOccurrences(
+            of: " ",
+            with: "-"
+        )
 
         let pathData: Data = try self.runSwift(
-            arguments: ["test", "--show-codecov-path"],
+            arguments: ["test", "--package-path", packagePath, "--show-codecov-path"],
             captureOutput: true
         )
+
         let reportPath: String = .init(decoding: pathData, as: UTF8.self)
             .trimmingCharacters(in: .whitespacesAndNewlines)
 
@@ -130,6 +162,7 @@ fileprivate struct UnitTestRunner {
         }
 
         let coverageData: Data
+
         do {
             coverageData = try .init(contentsOf: URL(fileURLWithPath: reportPath))
         } catch let error {
@@ -140,7 +173,7 @@ fileprivate struct UnitTestRunner {
             arguments: [
                 "Scripts/GenerateCodeCoverageReport.swift",
                 "--report", reportPath,
-                "--sources", "Sources"
+                "--sources", sourcesPath
             ],
             captureOutput: true
         )
@@ -151,18 +184,20 @@ fileprivate struct UnitTestRunner {
                 withIntermediateDirectories: true
             )
             try coverageData.write(
-                to: self.reportDirectory.appendingPathComponent("code-coverage.json"),
+                to: self.reportDirectory.appendingPathComponent("\(filename).json"),
                 options: .atomic
             )
             try markdown.write(
-                to: self.reportDirectory.appendingPathComponent("code-coverage.md"),
+                to: self.reportDirectory.appendingPathComponent("\(filename).md"),
                 options: .atomic
             )
         } catch let error {
             throw UnitTestRunnerError.coverageExportFailed(underlyingError: error)
         }
 
+        FileHandle.standardOutput.write(Data("# \(reportName)\n\n".utf8))
         FileHandle.standardOutput.write(markdown)
+        FileHandle.standardOutput.write(Data("\n".utf8))
     }
 
     /// Runs Swift, optionally capturing standard output for the next reporting step.
@@ -179,9 +214,11 @@ fileprivate struct UnitTestRunner {
         captureOutput: Bool = false
     ) throws(UnitTestRunnerError) -> Data {
         let output: Pipe? = captureOutput ? .init() : nil
+
         let process: Process = .init()
         process.executableURL = .init(fileURLWithPath: "/usr/bin/env")
         process.arguments = ["swift"] + arguments
+
         if let output {
             process.standardOutput = output
         } else {
@@ -196,11 +233,13 @@ fileprivate struct UnitTestRunner {
 
         // Drain captured output before waiting so a large report cannot block the subprocess.
         let data: Data = output?.fileHandleForReading.readDataToEndOfFile() ?? .init()
+
         process.waitUntilExit()
 
         guard process.terminationReason == .exit else {
             throw UnitTestRunnerError.commandInterrupted(signal: process.terminationStatus)
         }
+
         guard process.terminationStatus == EXIT_SUCCESS else {
             throw UnitTestRunnerError.commandFailed(
                 arguments: arguments,
