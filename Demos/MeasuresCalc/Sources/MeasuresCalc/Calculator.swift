@@ -65,12 +65,15 @@ package struct Calculator {
         for variable: String = "x",
         to outputUnit: String? = nil
     ) throws -> CalculationResult {
-        let tokens: Array<Token> = try Lexer(
+        let lexer: Lexer = .init(
             units: self.units,
             variable: variable
-        ).tokenize(source)
+        )
 
-        let separators: Array<Int> = tokens.indices.filter { return tokens[$0].kind == .punctuation(.equals) }
+        let tokens: Array<Token> = try lexer.tokenize(source)
+
+        let separators: Array<Int> = tokens.indices
+            .filter { tokens[$0].kind == .punctuation(.equals) }
 
         guard separators.count == 1, let separator: Int = separators.first else {
             throw CalculationError(
@@ -82,7 +85,9 @@ package struct Calculator {
         let parser: ExpressionParser = .init()
         let lhs: Expression = try parser.parse(Array(tokens[..<separator]))
         let rhs: Expression = try parser.parse(Array(tokens[(separator + 1)...]))
-        let quantity: Measure<ComposedUnit> = try LinearEquationSolver(units: self.units).solve(
+        let solver: LinearEquationSolver = .init(units: self.units)
+
+        let quantity: Measure<ComposedUnit> = try solver.solve(
             lhs: lhs,
             rhs: rhs,
             variable: variable
@@ -100,7 +105,11 @@ package struct Calculator {
     /// - Returns: The parsed expression tree.
     /// - Throws: A calculation error for invalid tokens or syntax.
     private func parse(_ source: String) throws -> Expression {
-        return try ExpressionParser().parse(Lexer(units: self.units).tokenize(source))
+        let parser: ExpressionParser = .init()
+        let lexer: Lexer = .init(units: self.units)
+        let tokens: Array<Token> = try lexer.tokenize(source)
+
+        return try parser.parse(tokens)
     }
 
     /// Converts an evaluated measurement and prepares its display representation.
@@ -117,19 +126,26 @@ package struct Calculator {
         let measure: Measure<ComposedUnit>
 
         if let outputUnit {
-            let unit: ComposedUnit = try ExpressionEvaluator().outputUnit(self.parse(outputUnit))
+            let evaluator: ExpressionEvaluator = .init()
+            let expression: Expression = try self.parse(outputUnit)
+            let unit: ComposedUnit = try evaluator.outputUnit(expression)
+
             guard quantity.unit.isCompatible(with: unit) else {
                 throw CalculationError(
                     code: .incompatibleDimensions,
                     message: "The output unit has an incompatible dimension."
                 )
             }
+
             measure = try quantity.converted(to: unit).validated()
         } else {
             _ = try quantity.validated()
+
             @Converted(to: .coherent)
             var coherent: Measure<ComposedUnit> = quantity
+
             _ = try coherent.validated()
+
             measure = .init(coherent.value, coherent.unit.canonicalized())
         }
 

@@ -81,12 +81,11 @@ extension MeasuresCalcCommand: ParsableCommand {
 
                 print("\(variable) = \(result)")
             } else {
-                print(
-                    try calculator.evaluate(
-                        expression,
-                        to: self.outputUnit
-                    )
+                let result: CalculationResult = try calculator.evaluate(
+                    expression,
+                    to: self.outputUnit
                 )
+                print(result)
             }
         } catch let error as CalculationError {
             throw ValidationError(error.description)

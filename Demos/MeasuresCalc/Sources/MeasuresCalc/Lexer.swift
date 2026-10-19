@@ -39,24 +39,29 @@ internal struct Lexer {
                 message: "Expressions are limited to 4,096 characters."
             )
         }
+
         let characters: Array<Character> = Array(source)
         var tokens: Array<Token> = []
         var index: Int = 0
+
         while index < characters.count {
             let character: Character = characters[index]
+
             if character.isWhitespace {
                 index += 1
                 continue
             }
+
             let start: Int = index
             let kind: Token.Kind
+
             if DigitToken(rawValue: character) != nil || PunctuationToken(rawValue: character) == .decimalPoint {
-                kind = .number(
-                    try self.number(
-                        in: characters,
-                        index: &index
-                    )
+                let number: Double = try self.number(
+                    in: characters,
+                    index: &index
                 )
+
+                kind = .number(number)
             } else if let match: UnitRegistry.Match = try self.units.match(
                 in: characters,
                 at: index
@@ -65,21 +70,30 @@ internal struct Lexer {
                 index += match.count
             } else if DigitToken(superscript: character) != nil || character == "⁻" || character == "⁺" {
                 var text: String = ""
+
                 if character == "⁻" || character == "⁺" {
                     text = character == "⁻" ? "-" : "+"
                     index += 1
                 }
+
                 let digitStart: Int = index
+
                 while index < characters.count, let digit: DigitToken = .init(superscript: characters[index]) {
                     text.append(digit.rawValue)
                     index += 1
                 }
+
                 guard index > digitStart, let exponent: Double = .init(text), exponent.isFinite else {
-                    throw self.invalidNumber(
-                        start: start,
-                        end: index
+                    throw CalculationError(
+                        code: .invalidSyntax,
+                        message: "Expected a finite number; commas and underscores must separate groups of three digits.",
+                        span: SourceSpan(
+                            start: start,
+                            end: index
+                        )
                     )
                 }
+
                 tokens.append(
                     .init(
                         kind: .operation(.power),
@@ -89,13 +103,17 @@ internal struct Lexer {
                         )
                     )
                 )
+
                 kind = .number(exponent)
             } else if character.isLetter {
                 index += 1
+
                 while index < characters.count && characters[index].isLetter {
                     index += 1
                 }
+
                 let symbol: String = .init(characters[start ..< index])
+
                 if let unit: UnitToken = try self.units.unit(for: symbol) {
                     kind = .unit(unit)
                 } else if symbol == self.variable {
@@ -112,10 +130,11 @@ internal struct Lexer {
                 }
             } else {
                 index += 1
+
                 if let operation: OperatorToken = .init(rawValue: character) {
                     kind = .operation(operation)
                 } else if let punctuation: PunctuationToken = .init(rawValue: character),
-                    !punctuation.isGroupingSeparator
+                    punctuation.isGroupingSeparator == false
                 {
                     kind = .punctuation(punctuation)
                 } else {
@@ -129,6 +148,7 @@ internal struct Lexer {
                     )
                 }
             }
+
             tokens.append(
                 Token(
                     kind: kind,
@@ -139,6 +159,7 @@ internal struct Lexer {
                 )
             )
         }
+
         return tokens
     }
 
@@ -158,9 +179,11 @@ internal struct Lexer {
         var groupSize: Int = 0
         var hasGrouping: Bool = false
         var hasDigit: Bool = false
+
         // Commas and underscores are equivalent thousands separators in the integer part.
         while index < characters.count {
             let character: Character = characters[index]
+
             if let digit: DigitToken = .init(rawValue: character) {
                 text.append(digit.rawValue)
                 groupSize += 1
@@ -168,11 +191,16 @@ internal struct Lexer {
                 index += 1
             } else if let punctuation: PunctuationToken = .init(rawValue: character), punctuation.isGroupingSeparator {
                 guard hasGrouping ? groupSize == 3 : (1 ... 3).contains(groupSize) else {
-                    throw self.invalidNumber(
-                        start: start,
-                        end: index + 1
+                    throw CalculationError(
+                        code: .invalidSyntax,
+                        message: "Expected a finite number; commas and underscores must separate groups of digits.",
+                        span: SourceSpan(
+                            start: start,
+                            end: index + 1
+                        )
                     )
                 }
+
                 hasGrouping = true
                 groupSize = 0
                 index += 1
@@ -180,78 +208,83 @@ internal struct Lexer {
                 break
             }
         }
-        guard !hasGrouping || groupSize == 3 else {
-            throw self.invalidNumber(
-                start: start,
-                end: index
+
+        guard hasGrouping == false || groupSize == 3 else {
+            throw CalculationError(
+                code: .invalidSyntax,
+                message: "Expected a finite number; commas and underscores must separate groups of digits.",
+                span: SourceSpan(
+                    start: start,
+                    end: index
+                )
             )
         }
+
         if index < characters.count && PunctuationToken(rawValue: characters[index]) == .decimalPoint {
             text.append(PunctuationToken.decimalPoint.rawValue)
             index += 1
+
             while index < characters.count, let digit: DigitToken = .init(rawValue: characters[index]) {
                 text.append(digit.rawValue)
                 hasDigit = true
                 index += 1
             }
         }
+
         if index < characters.count && (characters[index] == "e" || characters[index] == "E") {
             text.append("e")
             index += 1
+
             if index < characters.count, let operation: OperatorToken = .init(rawValue: characters[index]),
                 operation == .add || operation == .subtract
             {
                 text.append(operation.rawValue)
                 index += 1
             }
+
             let exponentStart: Int = index
+
             while index < characters.count, let digit: DigitToken = .init(rawValue: characters[index]) {
                 text.append(digit.rawValue)
                 index += 1
             }
+
             guard index > exponentStart else {
-                throw self.invalidNumber(
-                    start: start,
-                    end: index
+                throw CalculationError(
+                    code: .invalidSyntax,
+                    message: "Expected a finite number; commas and underscores must separate groups of digits.",
+                    span: SourceSpan(
+                        start: start,
+                        end: index
+                    )
                 )
             }
         }
+
         if index < characters.count, let punctuation: PunctuationToken = .init(rawValue: characters[index]),
             punctuation.isGroupingSeparator || punctuation == .decimalPoint
         {
-            throw self.invalidNumber(
-                start: start,
-                end: index + 1
+            throw CalculationError(
+                code: .invalidSyntax,
+                message: "Expected a finite number; commas and underscores must separate groups of digits.",
+                span: SourceSpan(
+                    start: start,
+                    end: index + 1
+                )
             )
         }
-        guard hasDigit, let value: Double = .init(text), value.isFinite else {
-            throw self.invalidNumber(
-                start: start,
-                end: index
-            )
-        }
-        return value
-    }
 
-    /// Creates a diagnostic for a malformed numeric literal.
-    ///
-    /// - Parameters:
-    ///   - start: The first character offset of the number.
-    ///   - end: The exclusive end offset of the invalid portion.
-    /// - Returns: A syntax diagnostic with the affected source range.
-    private func invalidNumber(
-        start: Int,
-        end: Int
-    ) -> CalculationError {
-        return CalculationError(
-            code: .invalidSyntax,
-            message:
-                "Expected a finite decimal number; commas and underscores must separate "
-                + "groups of three integer digits.",
-            span: SourceSpan(
-                start: start,
-                end: end
+        guard hasDigit, let value: Double = .init(text), value.isFinite else {
+            throw CalculationError(
+                code: .invalidSyntax,
+                message: "Expected a finite number; commas and underscores must separate groups of digits.",
+                span: SourceSpan(
+                    start: start,
+                    end: index
+                )
             )
-        )
+        }
+
+        return value
     }
 }

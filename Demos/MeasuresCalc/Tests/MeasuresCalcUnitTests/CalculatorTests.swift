@@ -61,6 +61,7 @@ internal struct CalculatorTests {
             expression,
             to: output
         )
+
         #expect(abs(result.value - expected) <= self.accuracy * max(1, abs(expected)))
         #expect(result.unit == symbol)
     }
@@ -85,6 +86,7 @@ internal struct CalculatorTests {
             expression,
             to: output
         )
+
         #expect(abs(result.value - expected) < self.accuracy)
     }
 
@@ -123,6 +125,7 @@ internal struct CalculatorTests {
                 expression,
                 to: output
             )
+
             Issue.record("Expected a calculation diagnostic.")
         } catch let error as CalculationError {
             #expect(error.code == expected)
@@ -150,6 +153,7 @@ internal struct CalculatorTests {
         do {
             let calculator: Calculator = .init()
             _ = try calculator.solve(expression)
+
             Issue.record("Expected an equation diagnostic.")
         } catch let error as CalculationError {
             #expect(error.code == expected)

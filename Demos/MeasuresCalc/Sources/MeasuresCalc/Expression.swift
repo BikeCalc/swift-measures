@@ -54,34 +54,28 @@ internal struct Expression {
     /// A boolean value indicating whether this expression contains a unit with a nonzero conversion constant.
     internal var containsOffsetUnit: Bool {
         switch self.kind {
-        case .unit(let token): return token.unit.constant != 0
-        case .unary(
-            _,
-            let operand
-        ): return operand.containsOffsetUnit
-        case .binary(
-            _,
-            let lhs,
-            let rhs
-        ): return lhs.containsOffsetUnit || rhs.containsOffsetUnit
-        case .number, .variable: return false
+        case .unit(let token):
+            return token.unit.constant != 0
+        case .unary(_, let operand):
+            return operand.containsOffsetUnit
+        case .binary(_, let lhs, let rhs):
+            return lhs.containsOffsetUnit || rhs.containsOffsetUnit
+        case .number, .variable:
+            return false
         }
     }
 
     /// A boolean value indicating whether this expression contains an unknown variable.
     internal var containsVariable: Bool {
         switch self.kind {
-        case .variable: return true
-        case .unary(
-            _,
-            let operand
-        ): return operand.containsVariable
-        case .binary(
-            _,
-            let lhs,
-            let rhs
-        ): return lhs.containsVariable || rhs.containsVariable
-        case .number, .unit: return false
+        case .variable:
+            return true
+        case .unary(_, let operand):
+            return operand.containsVariable
+        case .binary(_, let lhs, let rhs):
+            return lhs.containsVariable || rhs.containsVariable
+        case .number, .unit:
+            return false
         }
     }
 }

@@ -39,9 +39,6 @@ extension PunctuationToken: Equatable {}
 // MARK: - RawRepresentable
 
 extension PunctuationToken: RawRepresentable {
-    /// Creates a token from a supported character, returning `nil` when it is unrecognized.
-    ///
-    /// - Parameter rawValue: The input character to resolve.
     internal init?(rawValue: Character) {
         switch rawValue {
         case "(": self = .leftParenthesis
@@ -54,7 +51,6 @@ extension PunctuationToken: RawRepresentable {
         }
     }
 
-    /// The ASCII character representing this punctuation.
     internal var rawValue: Character {
         switch self {
         case .leftParenthesis: return "("

@@ -21,12 +21,14 @@ where UnitType == ComposedUnit {
     /// - Throws: A calculation error for invalid conversion values, excessive dimensions, or a non-finite value.
     internal func validated() throws -> Self {
         try Self.validate(self.unit)
+
         guard self.value.isFinite else {
             throw CalculationError(
                 code: .nonFiniteResult,
                 message: "The calculation produced a non-finite value."
             )
         }
+
         return self
     }
 
@@ -36,19 +38,23 @@ where UnitType == ComposedUnit {
     /// - Throws: A calculation error for an invalid measurement or an exponent outside the supported integer range.
     internal func exponent() throws -> Int {
         _ = try self.validated()
+
         guard self.unit.dimension.isDimensionless else {
             throw CalculationError(
                 code: .invalidPower,
                 message: "Powers must be dimensionless integers between -64 and 64."
             )
         }
+
         let value: Double = self.converted(to: Self.scalarUnit).value
+
         guard value.isFinite, value.rounded(.towardZero) == value, (-64 ... 64).contains(value) else {
             throw CalculationError(
                 code: .invalidPower,
                 message: "Powers must be dimensionless integers between -64 and 64."
             )
         }
+
         return Int(value)
     }
 
@@ -77,6 +83,7 @@ where UnitType == ComposedUnit {
                     message: "Cannot add or subtract incompatible units."
                 )
             }
+
             result = try operation == .add ? self.adding(rhs) : self.subtracting(rhs)
         case .multiply, .juxtapose, .divide:
             try Self.validateComposition(
@@ -84,13 +91,16 @@ where UnitType == ComposedUnit {
                 rhs.unit,
                 operation: operation
             )
+
             result = try operation == .divide ? self.dividing(by: rhs) : self.multiplying(by: rhs)
         case .power:
             let exponent: Int = try rhs.exponent()
+
             try Self.validatePower(
                 self.unit,
                 exponent: exponent
             )
+
             result = try self.raising(to: exponent)
         case .positive, .negative:
             throw CalculationError(
@@ -122,7 +132,8 @@ where UnitType == ComposedUnit {
                 message: "A unit requires a finite positive scale and finite offset."
             )
         }
-        guard Self.exponents(unit.dimension).allSatisfy({ return (-64 ... 64).contains($0) }) else {
+
+        guard Self.exponents(unit.dimension).allSatisfy({ (-64 ... 64).contains($0) }) else {
             throw CalculationError(
                 code: .limitExceeded,
                 message: "Dimension exponents must be between -64 and 64."
@@ -145,11 +156,9 @@ where UnitType == ComposedUnit {
         try Self.validate(lhs)
         try Self.validate(rhs)
 
-        for (left, right) in zip(
-            Self.exponents(lhs.dimension),
-            Self.exponents(rhs.dimension)
-        ) {
+        for (left, right) in zip(Self.exponents(lhs.dimension), Self.exponents(rhs.dimension)) {
             let result: Int = operation == .divide ? left - right : left + right
+
             guard (-64 ... 64).contains(result) else {
                 throw CalculationError(
                     code: .limitExceeded,
@@ -172,7 +181,7 @@ where UnitType == ComposedUnit {
         try Self.validate(unit)
 
         guard (-64 ... 64).contains(exponent),
-            Self.exponents(unit.dimension).allSatisfy({ return (-64 ... 64).contains($0 * exponent) })
+            Self.exponents(unit.dimension).allSatisfy({ (-64 ... 64).contains($0 * exponent) })
         else {
             throw CalculationError(
                 code: .limitExceeded,

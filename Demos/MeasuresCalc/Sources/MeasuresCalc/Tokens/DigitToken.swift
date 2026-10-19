@@ -81,9 +81,6 @@ extension DigitToken: CaseIterable {}
 // MARK: - RawRepresentable
 
 extension DigitToken: RawRepresentable {
-    /// Creates a token from a supported character, returning `nil` when it is unrecognized.
-    ///
-    /// - Parameter rawValue: The input character to resolve.
     internal init?(rawValue: Character) {
         switch rawValue {
         case "0": self = .zero
@@ -100,7 +97,6 @@ extension DigitToken: RawRepresentable {
         }
     }
 
-    /// The ordinary ASCII character representing the digit.
     internal var rawValue: Character {
         switch self {
         case .zero: return "0"

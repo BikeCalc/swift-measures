@@ -95,9 +95,11 @@ internal struct LinearExpression {
         guard let lhs else {
             return rhs
         }
+
         guard let rhs else {
             return lhs
         }
+
         return try lhs.applying(
             .add,
             to: rhs

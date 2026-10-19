@@ -62,23 +62,19 @@ internal enum OperatorToken {
 // MARK: - Equatable
 
 extension OperatorToken: Equatable {
-    // Several semantic cases share a symbol, so raw-value equality is insufficient.
-
-    /// Returns a boolean value indicating whether both arguments represent the same operation.
-    ///
-    /// Semantic cases are compared directly because several operations share a raw character.
-    ///
-    /// - Parameters:
-    ///   - lhs: The first operation.
-    ///   - rhs: The second operation.
-    /// - Returns: Whether the semantic operations match.
     internal static func == (
         _ lhs: Self,
         _ rhs: Self
     ) -> Bool {
         switch (lhs, rhs) {
-        case (.add, .add), (.subtract, .subtract), (.multiply, .multiply), (.divide, .divide),
-            (.juxtapose, .juxtapose), (.power, .power), (.positive, .positive), (.negative, .negative):
+        case (.add, .add),
+            (.subtract, .subtract),
+            (.multiply, .multiply),
+            (.divide, .divide),
+            (.juxtapose, .juxtapose),
+            (.power, .power),
+            (.positive, .positive),
+            (.negative, .negative):
             return true
         default:
             return false
@@ -89,9 +85,6 @@ extension OperatorToken: Equatable {
 // MARK: - RawRepresentable
 
 extension OperatorToken: RawRepresentable {
-    /// Creates a token from a supported character, returning `nil` when it is unrecognized.
-    ///
-    /// - Parameter rawValue: The input character to resolve.
     internal init?(rawValue: Character) {
         switch rawValue {
         case "+": self = .add
@@ -103,7 +96,6 @@ extension OperatorToken: RawRepresentable {
         }
     }
 
-    /// The canonical ASCII spelling; unary signs and juxtaposition share their corresponding binary symbols.
     internal var rawValue: Character {
         switch self {
         case .add, .positive: return "+"
