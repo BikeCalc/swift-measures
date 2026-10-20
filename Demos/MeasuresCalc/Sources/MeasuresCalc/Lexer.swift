@@ -37,14 +37,14 @@ internal struct Lexer {
             throw CalculationError.expressionLengthLimitExceeded()
         }
 
-        let characters: Array<Character> = Array(source)
+        let characters: Array<Character> = .init(source)
         var tokens: Array<Token> = []
         var index: Int = 0
 
         while index < characters.count {
             let character: Character = characters[index]
 
-            if character.isWhitespace {
+            if character.isWhitespace == true {
                 index += 1
                 continue
             }
@@ -57,7 +57,6 @@ internal struct Lexer {
                     in: characters,
                     index: &index
                 )
-
                 kind = .number(number)
             } else if let match: UnitRegistry.Match = try self.units.match(
                 in: characters,
@@ -80,7 +79,7 @@ internal struct Lexer {
                     index += 1
                 }
 
-                guard index > digitStart, let exponent: Double = .init(text), exponent.isFinite else {
+                guard index > digitStart, let exponent: Double = .init(text), exponent.isFinite == true else {
                     throw CalculationError.invalidNumberGrouping(
                         span: SourceSpan(
                             start: start,
@@ -98,12 +97,11 @@ internal struct Lexer {
                         )
                     )
                 )
-
                 kind = .number(exponent)
-            } else if character.isLetter {
+            } else if character.isLetter == true {
                 index += 1
 
-                while index < characters.count && characters[index].isLetter {
+                while index < characters.count && characters[index].isLetter == true {
                     index += 1
                 }
 
@@ -182,8 +180,10 @@ internal struct Lexer {
                 groupSize += 1
                 hasDigit = true
                 index += 1
-            } else if let punctuation: PunctuationToken = .init(rawValue: character), punctuation.isGroupingSeparator {
-                guard hasGrouping ? groupSize == 3 : (1 ... 3).contains(groupSize) else {
+            } else if let punctuation: PunctuationToken = .init(rawValue: character),
+                punctuation.isGroupingSeparator == true
+            {
+                guard hasGrouping == true ? groupSize == 3 : (1 ... 3).contains(groupSize) else {
                     throw CalculationError.invalidNumber(
                         span: SourceSpan(
                             start: start,
@@ -250,7 +250,7 @@ internal struct Lexer {
 
         if index < characters.count,
             let punctuation: PunctuationToken = .init(rawValue: characters[index]),
-            punctuation.isGroupingSeparator || punctuation == .decimalPoint
+            punctuation.isGroupingSeparator == true || punctuation == .decimalPoint
         {
             throw CalculationError.invalidNumber(
                 span: SourceSpan(
@@ -260,7 +260,7 @@ internal struct Lexer {
             )
         }
 
-        guard hasDigit, let value: Double = .init(text), value.isFinite else {
+        guard hasDigit == true, let value: Double = .init(text), value.isFinite == true else {
             throw CalculationError.invalidNumber(
                 span: SourceSpan(
                     start: start,

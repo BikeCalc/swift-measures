@@ -62,7 +62,7 @@ extension MeasuresCalcCommand: ParsableCommand {
     internal mutating func run() throws {
         let calculator: Calculator = .init()
 
-        if self.listUnits {
+        if self.listUnits == true {
             print(calculator.supportedUnits.joined(separator: ", "))
             return
         }
@@ -78,7 +78,6 @@ extension MeasuresCalcCommand: ParsableCommand {
                     for: variable,
                     to: self.outputUnit
                 )
-
                 print("\(variable) = \(result)")
             } else {
                 let result: CalculationResult = try calculator.evaluate(

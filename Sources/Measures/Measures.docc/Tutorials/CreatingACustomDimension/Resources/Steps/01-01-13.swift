@@ -2,7 +2,9 @@ import Measures
 
 struct DataTransferRate: Equatable, Unit {
     let coefficient: Double
+
     let constant: Double
+
     let symbol: String
 
     init(
@@ -35,14 +37,17 @@ struct DataTransferRate: Equatable, Unit {
         memory: .gigabit,
         time: .second
     )
+
     static let megabytesPerSecond: Self = .init(
         memory: .megabyte,
         time: .second
     )
+
     static let megabitsPerSecond: Self = .init(
         memory: .megabit,
         time: .second
     )
+
     static let bitsPerSecond: Self = .init(
         memory: .bit,
         time: .second

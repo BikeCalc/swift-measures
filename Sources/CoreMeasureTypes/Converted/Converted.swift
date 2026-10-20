@@ -21,8 +21,7 @@ import NumericsExtended
 /// For example:
 ///
 /// ```swift
-/// @Converted(to: .base)
-/// var distance: Measure<Length> = .init(100, .centimeter)
+/// @Converted(to: .base) var distance: Measure<Length> = .init(100, .centimeter)
 ///
 /// print(distance)
 /// // Prints "1.0 m"

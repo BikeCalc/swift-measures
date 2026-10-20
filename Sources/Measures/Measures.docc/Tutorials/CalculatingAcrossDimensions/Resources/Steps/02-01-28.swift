@@ -7,8 +7,7 @@ let area: Measure<ComposedUnit> = length * width
 print(area)
 // Prints "12.0 m·m"
 
-@Canonicalized
-var areaUnit: ComposedUnit = area.unit
+@Canonicalized var areaUnit: ComposedUnit = area.unit
 
 print(areaUnit.symbol)
 // Prints "m²"
@@ -26,8 +25,7 @@ print(namedArea)
 
 let height: Measure<Length> = .init(2.5, .meter)
 
-@Converted(to: .coherent)
-var volume: Measure<ComposedUnit> = area * height
+@Converted(to: .coherent) var volume: Measure<ComposedUnit> = area * height
 
 print(volume)
 // Prints "30.0 m³"

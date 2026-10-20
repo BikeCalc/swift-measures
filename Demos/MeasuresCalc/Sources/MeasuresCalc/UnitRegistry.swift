@@ -24,7 +24,7 @@ internal struct UnitRegistry {
 
     /// Registers all predefined composable units without discarding duplicate symbols.
     internal init() {
-        self.units = Dictionary(grouping: Self.definitions) { $0.unit.symbol }
+        self.units = .init(grouping: Self.definitions) { $0.unit.symbol }
         self.atomicSymbols = self.units.keys
             .filter { $0.contains("/") == false && $0.contains("·") == false }
             .sorted { $0.count == $1.count ? $0 < $1 : $0.count > $1.count }

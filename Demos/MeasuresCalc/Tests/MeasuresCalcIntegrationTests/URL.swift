@@ -25,7 +25,7 @@ extension URL {
         while directory.path != "/" {
             let executable: Self = directory.appendingPathComponent("measures-calc")
 
-            if FileManager.default.isExecutableFile(atPath: executable.path) {
+            if FileManager.default.isExecutableFile(atPath: executable.path) == true {
                 return executable
             }
 

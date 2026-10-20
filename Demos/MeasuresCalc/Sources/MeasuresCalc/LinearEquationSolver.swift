@@ -40,12 +40,12 @@ internal struct LinearEquationSolver {
     ) throws -> Measure<ComposedUnit> {
         guard self.units.symbols.contains(variable) == false,
             variable.isEmpty == false,
-            variable.allSatisfy({ $0.isLetter })
+            variable.allSatisfy({ $0.isLetter }) == true
         else {
             throw CalculationError.invalidVariableName()
         }
 
-        guard !lhs.containsOffsetUnit, !rhs.containsOffsetUnit else {
+        guard lhs.containsOffsetUnit == false, rhs.containsOffsetUnit == false else {
             throw CalculationError.offsetEquation()
         }
 
@@ -53,18 +53,16 @@ internal struct LinearEquationSolver {
             lhs,
             variable: variable
         )
-
         let right: LinearExpression = try self.linearize(
             rhs,
             variable: variable
         )
-
         let difference: LinearExpression = try left.adding(right.negated())
 
         guard let coefficient: Measure<ComposedUnit> = difference.coefficient, coefficient.value != 0 else {
             let isIdentity: Bool = difference.constant == nil || difference.constant?.value == 0
 
-            if isIdentity {
+            if isIdentity == true {
                 throw CalculationError.infiniteSolutions()
             } else {
                 throw CalculationError.noSolution()
@@ -74,18 +72,15 @@ internal struct LinearEquationSolver {
         let constant: Measure<ComposedUnit> =
             difference.constant
             ?? Measure<ComposedUnit>(0, Measure<ComposedUnit>.scalarUnit)
-
         let solution: Measure<ComposedUnit> = try constant.negated().applying(
             .divide,
             to: coefficient
         )
-
         // Substitution validates the dimensions of the original equation, including canceled terms.
         let resolvedLeft: Measure<ComposedUnit> = try self.evaluator.evaluate(
             lhs,
             variables: [variable: solution]
         )
-
         let resolvedRight: Measure<ComposedUnit> = try self.evaluator.evaluate(
             rhs,
             variables: [variable: solution]
@@ -118,10 +113,10 @@ internal struct LinearEquationSolver {
             case .variable(let name)
             where name == variable:
                 let measure: Measure<ComposedUnit> = .init(1, Measure<ComposedUnit>.scalarUnit)
-                return LinearExpression(coefficient: measure)
+                return .init(coefficient: measure)
             case .number, .unit, .variable:
                 let measure: Measure<ComposedUnit> = try self.evaluator.evaluate(expression)
-                return LinearExpression(constant: measure)
+                return .init(constant: measure)
             case .unary(let operation, let operand):
                 let value: LinearExpression = try self.linearize(
                     operand,
@@ -133,7 +128,6 @@ internal struct LinearEquationSolver {
                     lhs,
                     variable: variable
                 )
-
                 let right: LinearExpression = try self.linearize(
                     rhs,
                     variable: variable
@@ -179,7 +173,7 @@ internal struct LinearEquationSolver {
                     }
 
                     if left.coefficient != nil {
-                        guard exponent.unit.dimension.isDimensionless && exponent.value == 1 else {
+                        guard exponent.unit.dimension.isDimensionless == true && exponent.value == 1 else {
                             throw CalculationError.unsupportedEquation()
                         }
 
@@ -194,8 +188,7 @@ internal struct LinearEquationSolver {
                         .power,
                         to: exponent
                     )
-
-                    return LinearExpression(constant: measure)
+                    return .init(constant: measure)
                 case .positive, .negative:
                     throw CalculationError.unsupportedEquation()
                 }

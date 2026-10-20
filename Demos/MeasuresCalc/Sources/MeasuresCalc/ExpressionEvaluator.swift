@@ -25,7 +25,7 @@ internal struct ExpressionEvaluator {
         variables: Dictionary<String, Measure<ComposedUnit>> = [:]
     ) throws -> Measure<ComposedUnit> {
         do {
-            if self.isUnitExpression(expression) {
+            if self.isUnitExpression(expression) == true {
                 return try Measure(1, self.outputUnit(expression)).validated()
             }
 
@@ -33,11 +33,9 @@ internal struct ExpressionEvaluator {
             case .number(let value):
                 let unit: ComposedUnit = Measure<ComposedUnit>.scalarUnit
                 let measure: Measure<ComposedUnit> = .init(value, unit)
-
                 return try measure.validated()
             case .unit(let unit):
                 let measure: Measure<ComposedUnit> = .init(1, unit.unit)
-
                 return try measure.validated()
             case .variable(let name):
                 guard let measure: Measure<ComposedUnit> = variables[name] else {
@@ -63,11 +61,12 @@ internal struct ExpressionEvaluator {
                 )
 
                 // Juxtaposition attaches a unit to a numeric value, including its offset.
-                if operation == .juxtapose, left.unit.dimension.isDimensionless, self.isUnitExpression(rhs) {
+                if operation == .juxtapose, left.unit.dimension.isDimensionless == true,
+                    self.isUnitExpression(rhs) == true
+                {
                     let value: Double = left.converted(to: Measure<ComposedUnit>.scalarUnit).value
                     let unit: ComposedUnit = try self.outputUnit(rhs)
                     let measure: Measure<ComposedUnit> = .init(value, unit)
-
                     return try measure.validated()
                 }
 
@@ -75,7 +74,6 @@ internal struct ExpressionEvaluator {
                     rhs,
                     variables: variables
                 )
-
                 return try left.applying(
                     operation,
                     to: measure
@@ -118,10 +116,9 @@ internal struct ExpressionEvaluator {
                     right,
                     operation: operation
                 )
-
                 unit = operation == .divide ? left / right : left * right
             case .power:
-                guard self.isNumericExpression(rhs) else {
+                guard self.isNumericExpression(rhs) == true else {
                     throw CalculationError.invalidOutputUnit()
                 }
 
@@ -136,7 +133,6 @@ internal struct ExpressionEvaluator {
                     left,
                     exponent: exponent
                 )
-
                 unit = (left ** exponent)
             default:
                 throw CalculationError.invalidOutputUnit()
@@ -146,7 +142,6 @@ internal struct ExpressionEvaluator {
         }
 
         try Measure<ComposedUnit>.validate(unit)
-
         return unit
     }
 
@@ -161,9 +156,9 @@ internal struct ExpressionEvaluator {
         case .binary(let operation, let lhs, let rhs):
             switch operation {
             case .multiply, .juxtapose, .divide:
-                return self.isUnitExpression(lhs) && self.isUnitExpression(rhs)
+                return self.isUnitExpression(lhs) == true && self.isUnitExpression(rhs) == true
             case .power:
-                return self.isUnitExpression(lhs) && self.isNumericExpression(rhs)
+                return self.isUnitExpression(lhs) == true && self.isNumericExpression(rhs) == true
             default:
                 return false
             }
@@ -183,7 +178,7 @@ internal struct ExpressionEvaluator {
         case .unary(_, let operand):
             return self.isNumericExpression(operand)
         case .binary(_, let lhs, let rhs):
-            return self.isNumericExpression(lhs) && self.isNumericExpression(rhs)
+            return self.isNumericExpression(lhs) == true && self.isNumericExpression(rhs) == true
         case .unit, .variable:
             return false
         }

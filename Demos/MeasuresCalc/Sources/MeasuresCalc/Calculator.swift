@@ -41,7 +41,6 @@ package struct Calculator {
     ) throws -> CalculationResult {
         let expression: Expression = try self.parse(source)
         let quantity: Measure<ComposedUnit> = try ExpressionEvaluator().evaluate(expression)
-
         return try self.result(
             quantity,
             to: outputUnit
@@ -69,9 +68,7 @@ package struct Calculator {
             units: self.units,
             variable: variable
         )
-
         let tokens: Array<Token> = try lexer.tokenize(source)
-
         let separators: Array<Int> = tokens.indices
             .filter { tokens[$0].kind == .punctuation(.equals) }
 
@@ -83,13 +80,11 @@ package struct Calculator {
         let lhs: Expression = try parser.parse(Array(tokens[..<separator]))
         let rhs: Expression = try parser.parse(Array(tokens[(separator + 1)...]))
         let solver: LinearEquationSolver = .init(units: self.units)
-
         let quantity: Measure<ComposedUnit> = try solver.solve(
             lhs: lhs,
             rhs: rhs,
             variable: variable
         )
-
         return try self.result(
             quantity,
             to: outputUnit
@@ -105,7 +100,6 @@ package struct Calculator {
         let parser: ExpressionParser = .init()
         let lexer: Lexer = .init(units: self.units)
         let tokens: Array<Token> = try lexer.tokenize(source)
-
         return try parser.parse(tokens)
     }
 
@@ -127,19 +121,15 @@ package struct Calculator {
             let expression: Expression = try self.parse(outputUnit)
             let unit: ComposedUnit = try evaluator.outputUnit(expression)
 
-            guard quantity.unit.isCompatible(with: unit) else {
+            guard quantity.unit.isCompatible(with: unit) == true else {
                 throw CalculationError.incompatibleOutputDimension()
             }
 
             measure = try quantity.converted(to: unit).validated()
         } else {
             _ = try quantity.validated()
-
-            @Converted(to: .coherent)
-            var coherent: Measure<ComposedUnit> = quantity
-
+            @Converted(to: .coherent) var coherent: Measure<ComposedUnit> = quantity
             _ = try coherent.validated()
-
             measure = .init(coherent.value, coherent.unit.canonicalized())
         }
 

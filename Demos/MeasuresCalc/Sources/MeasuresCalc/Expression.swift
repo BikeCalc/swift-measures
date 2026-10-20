@@ -59,7 +59,7 @@ internal struct Expression {
         case .unary(_, let operand):
             return operand.containsOffsetUnit
         case .binary(_, let lhs, let rhs):
-            return lhs.containsOffsetUnit || rhs.containsOffsetUnit
+            return lhs.containsOffsetUnit == true || rhs.containsOffsetUnit == true
         case .number, .variable:
             return false
         }
@@ -73,7 +73,7 @@ internal struct Expression {
         case .unary(_, let operand):
             return operand.containsVariable
         case .binary(_, let lhs, let rhs):
-            return lhs.containsVariable || rhs.containsVariable
+            return lhs.containsVariable == true || rhs.containsVariable == true
         case .number, .unit:
             return false
         }

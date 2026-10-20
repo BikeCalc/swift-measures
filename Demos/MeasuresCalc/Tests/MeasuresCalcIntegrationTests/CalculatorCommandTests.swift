@@ -11,6 +11,8 @@ import Testing
 
 @Suite("Calculator Command Tests")
 internal struct CalculatorCommandTests {
+    internal init() {}
+
     private typealias CommandResult = (
         status: Int32,
         output: String,
@@ -33,7 +35,6 @@ internal struct CalculatorCommandTests {
         _ expected: String
     ) throws {
         let result: Self.CommandResult = try self.run(arguments)
-
         #expect(result.status == 0)
         #expect(result.output == expected)
         #expect(result.error.isEmpty == true)
@@ -42,7 +43,6 @@ internal struct CalculatorCommandTests {
     @Test("Displays help without an expression")
     internal func displaysHelp() throws {
         let result: Self.CommandResult = try self.run(["--help"])
-
         #expect(result.status == 0)
         #expect(result.output.contains("USAGE: measures-calc") == true)
         #expect(result.output.contains("--convert-to") == true)
@@ -55,7 +55,6 @@ internal struct CalculatorCommandTests {
     internal func listsUnits() throws {
         let result: Self.CommandResult = try self.run(["--list-units"])
         let symbols: Array<String> = result.output.trimmingCharacters(in: .newlines).components(separatedBy: ", ")
-
         #expect(result.status == 0)
 
         for symbol in ["m", "cm", "km", "h", "s"] {
@@ -75,7 +74,6 @@ internal struct CalculatorCommandTests {
     )
     internal func rejectsInvalidInvocations(_ arguments: Array<String>) throws {
         let result: Self.CommandResult = try self.run(arguments)
-
         #expect(result.status != 0)
         #expect(result.output.isEmpty == true)
         #expect(result.error.contains("Error:") == true)
@@ -85,20 +83,15 @@ internal struct CalculatorCommandTests {
         let process: Process = .init()
         let output: Pipe = .init()
         let error: Pipe = .init()
-
         process.executableURL = try URL.measuresCalcExecutable()
         process.arguments = arguments
         process.standardInput = FileHandle.nullDevice
         process.standardOutput = output
         process.standardError = error
-
         try process.run()
-
         let outputData: Data = output.fileHandleForReading.readDataToEndOfFile()
         let errorData: Data = error.fileHandleForReading.readDataToEndOfFile()
-
         process.waitUntilExit()
-
         return (
             status: process.terminationStatus,
             output: String(

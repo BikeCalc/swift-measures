@@ -41,7 +41,7 @@ package struct CalculationResult {
 extension CalculationResult: CustomStringConvertible {
     package var description: String {
         let number: String = .init(self.value == 0 ? 0 : self.value)
-        return self.unit.isEmpty ? number : "\(number) \(self.unit)"
+        return self.unit.isEmpty == true ? number : "\(number) \(self.unit)"
     }
 }
 

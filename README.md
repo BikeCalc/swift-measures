@@ -98,8 +98,7 @@ Measures is written in Swift and avoids platform-specific APIs where possible.
   let length: Measure<Length> = .init(4, .meter)
   let width: Measure<Length> = .init(300, .centimeter)
 
-  @Converted(to: .coherent)
-  var area: Measure<ComposedUnit> = length * width
+  @Converted(to: .coherent) var area: Measure<ComposedUnit> = length * width
 
   print(area)
   // Prints "12.0 m²"

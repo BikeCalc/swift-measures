@@ -20,7 +20,6 @@ internal struct UnitToken {
     where UnitType: ComposableUnit & DefinedUnit {
         self.unit = .init(unit)
     }
-
 }
 
 // MARK: - Equatable

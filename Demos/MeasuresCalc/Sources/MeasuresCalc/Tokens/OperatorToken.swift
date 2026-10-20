@@ -55,7 +55,7 @@ internal enum OperatorToken {
 
     /// A boolean value indicating whether equal-precedence operators group from right to left.
     internal var isRightAssociative: Bool {
-        return self == .power || self.isUnary
+        return self == .power || self.isUnary == true
     }
 }
 

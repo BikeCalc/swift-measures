@@ -213,7 +213,6 @@ fileprivate struct UnitTestRunner {
         captureOutput: Bool = false
     ) throws(UnitTestRunnerError) -> Data {
         let output: Pipe? = captureOutput ? .init() : nil
-
         let process: Process = .init()
         process.executableURL = .init(fileURLWithPath: "/usr/bin/env")
         process.arguments = ["swift"] + arguments
@@ -232,7 +231,6 @@ fileprivate struct UnitTestRunner {
 
         // Drain captured output before waiting so a large report cannot block the subprocess.
         let data: Data = output?.fileHandleForReading.readDataToEndOfFile() ?? .init()
-
         process.waitUntilExit()
 
         guard process.terminationReason == .exit else {

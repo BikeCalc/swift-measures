@@ -28,7 +28,7 @@ internal struct ExpressionParser {
                 if expectsOperand == false {
                     // Juxtaposition is multiplication: 2 m^2 is 2 * (m^2),
                     // while 2^2 m is (2^2) * m. Adjacent numbers remain an error.
-                    if case .number = token.kind, previousWasNumber {
+                    if case .number = token.kind, previousWasNumber == true {
                         throw CalculationError.expectedOperator(span: token.span)
                     }
 
@@ -77,7 +77,6 @@ internal struct ExpressionParser {
 
                 while let last: Token = operators.last, last.kind != .punctuation(.leftParenthesis) {
                     _ = operators.popLast()
-
                     try self.apply(
                         last,
                         to: &values
@@ -99,11 +98,10 @@ internal struct ExpressionParser {
                     ),
                     depth: lastExpression.depth
                 )
-
                 values.append(expression)
                 expectsOperand = false
             case .operation(let operation):
-                if expectsOperand {
+                if expectsOperand == true {
                     guard operation == .add || operation == .subtract else {
                         throw CalculationError.expectedOperand(span: token.span)
                     }
@@ -121,7 +119,6 @@ internal struct ExpressionParser {
                         operators: &operators,
                         values: &values
                     )
-
                     expectsOperand = true
                 }
             case .punctuation(.equals):
@@ -138,7 +135,7 @@ internal struct ExpressionParser {
         }
 
         guard expectsOperand == false else {
-            if tokens.isEmpty {
+            if tokens.isEmpty == true {
                 throw CalculationError.emptyExpression(span: tokens.last?.span)
             } else {
                 throw CalculationError.missingExpressionOperand(span: tokens.last?.span)
@@ -184,12 +181,11 @@ internal struct ExpressionParser {
                 pending.precedence > incoming.precedence
                 || (pending.precedence == incoming.precedence && incoming.isRightAssociative == false)
 
-            guard shouldApply else {
+            guard shouldApply == true else {
                 break
             }
 
             _ = operators.popLast()
-
             try self.apply(
                 last,
                 to: &values
@@ -215,7 +211,7 @@ internal struct ExpressionParser {
 
         let expression: Expression
 
-        if operation.isUnary {
+        if operation.isUnary == true {
             expression = .init(
                 kind: .unary(operation, rhs),
                 span: SourceSpan(
@@ -242,7 +238,7 @@ internal struct ExpressionParser {
         guard expression.depth <= 128 else {
             throw CalculationError.expressionDepthLimitExceeded(span: expression.span)
         }
-        
+
         values.append(expression)
     }
 }

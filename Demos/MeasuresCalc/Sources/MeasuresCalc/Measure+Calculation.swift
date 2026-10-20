@@ -22,7 +22,7 @@ where UnitType == ComposedUnit {
     internal func validated() throws -> Self {
         try Self.validate(self.unit)
 
-        guard self.value.isFinite else {
+        guard self.value.isFinite == true else {
             throw CalculationError.nonFiniteResult()
         }
 
@@ -36,17 +36,17 @@ where UnitType == ComposedUnit {
     internal func exponent() throws -> Int {
         _ = try self.validated()
 
-        guard self.unit.dimension.isDimensionless else {
+        guard self.unit.dimension.isDimensionless == true else {
             throw CalculationError.invalidPower()
         }
 
         let value: Double = self.converted(to: Self.scalarUnit).value
 
-        guard value.isFinite, value.rounded(.towardZero) == value, (-64 ... 64).contains(value) else {
+        guard value.isFinite == true, value.rounded(.towardZero) == value, (-64 ... 64).contains(value) == true else {
             throw CalculationError.invalidPower()
         }
 
-        return Int(value)
+        return .init(value)
     }
 
     /// Applies binary arithmetic using Measures after checking calculator limits.
@@ -63,12 +63,11 @@ where UnitType == ComposedUnit {
     ) throws -> Self {
         _ = try self.validated()
         _ = try rhs.validated()
-
         let result: Self
 
         switch operation {
         case .add, .subtract:
-            guard self.unit.isCompatible(with: rhs.unit) else {
+            guard self.unit.isCompatible(with: rhs.unit) == true else {
                 throw CalculationError.incompatibleArithmeticDimensions()
             }
 
@@ -79,16 +78,13 @@ where UnitType == ComposedUnit {
                 rhs.unit,
                 operation: operation
             )
-
             result = try operation == .divide ? self.dividing(by: rhs) : self.multiplying(by: rhs)
         case .power:
             let exponent: Int = try rhs.exponent()
-
             try Self.validatePower(
                 self.unit,
                 exponent: exponent
             )
-
             result = try self.raising(to: exponent)
         case .positive, .negative:
             throw CalculationError.expectedBinaryOperator()
@@ -111,11 +107,11 @@ where UnitType == ComposedUnit {
     /// - Throws: A calculation error for a nonpositive or non-finite scale, non-finite offset, or excessive dimension
     ///   exponent.
     internal static func validate(_ unit: ComposedUnit) throws {
-        guard unit.coefficient.isFinite, unit.coefficient > 0, unit.constant.isFinite else {
+        guard unit.coefficient.isFinite == true, unit.coefficient > 0, unit.constant.isFinite == true else {
             throw CalculationError.invalidUnitConversion()
         }
 
-        guard Self.exponents(unit.dimension).allSatisfy({ (-64 ... 64).contains($0) }) else {
+        guard Self.exponents(unit.dimension).allSatisfy({ (-64 ... 64).contains($0) }) == true else {
             throw CalculationError.dimensionLimitExceeded()
         }
     }
@@ -138,7 +134,7 @@ where UnitType == ComposedUnit {
         for (left, right) in zip(Self.exponents(lhs.dimension), Self.exponents(rhs.dimension)) {
             let result: Int = operation == .divide ? left - right : left + right
 
-            guard (-64 ... 64).contains(result) else {
+            guard (-64 ... 64).contains(result) == true else {
                 throw CalculationError.resultingDimensionLimitExceeded()
             }
         }
@@ -156,8 +152,8 @@ where UnitType == ComposedUnit {
     ) throws {
         try Self.validate(unit)
 
-        guard (-64 ... 64).contains(exponent),
-            Self.exponents(unit.dimension).allSatisfy({ (-64 ... 64).contains($0 * exponent) })
+        guard (-64 ... 64).contains(exponent) == true,
+            Self.exponents(unit.dimension).allSatisfy({ (-64 ... 64).contains($0 * exponent) }) == true
         else {
             throw CalculationError.resultingDimensionLimitExceeded()
         }
