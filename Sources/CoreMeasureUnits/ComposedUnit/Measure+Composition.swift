@@ -280,6 +280,7 @@ where UnitType == ComposedUnit {
 extension Measure: Raisable
 where UnitType: ComposableUnit & Equatable {
     public typealias Exponent = Int
+
     public typealias Power = Measure<ComposedUnit>
 
     /// Returns a boolean value indicating whether this measure is an integer power of a possibly different measure
