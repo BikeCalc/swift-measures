@@ -83,7 +83,7 @@ fileprivate struct Arguments {
     /// - Parameter arguments: The arguments following the script name.
     /// - Throws: `DocumentationBuildError.invalidArguments` if any arguments are supplied.
     fileprivate init(_ arguments: Array<String>) throws(DocumentationBuildError) {
-        guard arguments.isEmpty else {
+        guard arguments.isEmpty == true else {
             throw DocumentationBuildError.invalidArguments
         }
     }
@@ -130,7 +130,6 @@ fileprivate struct DocumentationBuilder {
     private func buildWebsite() throws(DocumentationBuildError) {
         let process: Process = .init()
         process.executableURL = .init(fileURLWithPath: "/usr/bin/env")
-
         // Keep the generated site rooted at .build/github-pages/ for the workflow's Pages artifact upload.
         process.arguments = [
             "swift", "package", "--allow-writing-to-directory", ".build/github-pages", "generate-documentation",
@@ -155,6 +154,7 @@ fileprivate struct DocumentationBuilder {
         guard process.terminationReason == .exit else {
             throw DocumentationBuildError.buildInterrupted(signal: process.terminationStatus)
         }
+
         guard process.terminationStatus == EXIT_SUCCESS else {
             throw DocumentationBuildError.buildFailed(status: process.terminationStatus)
         }

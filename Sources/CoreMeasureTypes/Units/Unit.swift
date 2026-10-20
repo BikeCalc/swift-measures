@@ -13,13 +13,36 @@ import NumericsExtended
 /// Reference values are calculated as `value * coefficient + constant`. Conversion to another compatible unit subtracts
 /// that unit's constant and divides by its coefficient. The valid range is expressed on the reference scale.
 ///
+/// Explicit initialization preserves the supplied conversion parameters and symbol, including nonfinite values.
+/// This allows measures to represent NaT without requiring units to implement a separate sentinel. A usable
+/// conversion requires a finite positive coefficient and a finite constant.
+///
 /// The default compatibility implementation accepts every instance of the same unit type. Types with dimensions that
 /// vary between instances must provide a compatibility check; `ComposableUnit` compares their dimensions.
 public protocol Unit {
-    /// The finite, strictly positive multiplicative scale relative to the reference unit.
+    /// Creates a new instance preserving the specified coefficient, constant, and symbol.
+    ///
+    /// Implementations must accept nonfinite parameters, including NaN, without rejecting or normalizing them.
+    /// The concrete type determines any physical dimension that is not expressed by these parameters.
+    ///
+    /// - Parameters:
+    ///   - coefficient: The coefficient.
+    ///   - constant: The constant.
+    ///   - symbol: The symbol.
+    init(
+        coefficient: Double,
+        constant: Double,
+        symbol: String
+    )
+
+    /// The multiplicative scale relative to the reference unit.
+    ///
+    /// Valid conversions require a finite, strictly positive value.
     var coefficient: Double { get }
 
-    /// The finite additive offset applied after scaling; it may be negative, zero, or positive.
+    /// The additive offset applied after scaling.
+    ///
+    /// Valid conversions require a finite value, which may be negative, zero, or positive.
     var constant: Double { get }
 
     /// The display symbol for this unit.
@@ -48,7 +71,7 @@ extension Unit {
 extension Unit
 where Self: CanonicallyEquatable {
     public func isCanonicallyEqual(to other: Self) -> Bool {
-        return self.isCompatible(with: other)
+        return self.isCompatible(with: other) == true
             && self.coefficient == other.coefficient
             && self.constant == other.constant
     }

@@ -29,12 +29,12 @@ Measures is written in Swift and avoids platform-specific APIs where possible.
 1. Add Measures to the dependencies in your `Package.swift` file:
 
     ```swift
-    let package: Package = .init(
+    internal let package: Package = .init(
         ...
         dependencies: [
             .package(
                 url: "https://github.com/bikecalc/swift-measures.git",
-                from: "2.0.0"
+                from: "3.0.0"
             )
         ],
         ...
@@ -45,7 +45,7 @@ Measures is written in Swift and avoids platform-specific APIs where possible.
    of that target:
 
     ```swift
-    let package: Package = .init(
+    internal let package: Package = .init(
         ...
         targets: [
             .target(
@@ -73,8 +73,7 @@ Measures is written in Swift and avoids platform-specific APIs where possible.
 - Keep a `Measure` in one unit while calculating with another:
 
   ```swift
-  @Converted(to: .metersPerSecond)
-  var speed: Measure<Speed> = .init(36, .kilometersPerHour)
+  @Converted(to: .metersPerSecond) internal var speed: Measure<Speed> = .init(36, .kilometersPerHour)
   print(speed)
   // Prints "10.0 m/s"
 
@@ -109,18 +108,20 @@ Measures is written in Swift and avoids platform-specific APIs where possible.
 ## Documentation
 
 You can read more about this package by visiting the
-[documentation](https://bikecalc.github.io/swift-measures/documentation/measures).
+[Documentation](https://bikecalc.github.io/swift-measures/documentation/measures).
 
 ## Contributing
 
-Everyone is welcome to contribute to Measures. See the [Contributing](/CONTRIBUTING.md) guide to get started.
+Everyone is welcome to contribute to Measures. Please read our
+[Contributing Guide](https://github.com/BikeCalc/.github/blob/main/CONTRIBUTING.md) and
+[Code of Conduct](https://github.com/BikeCalc/.github/blob/main/CODE_OF_CONDUCT.md).
 
-If you find a bug, please create an [issue](https://github.com/bikecalc/swift-measures/issues). Security vulnerabilities
-should be reported using the instructions in the [Security Policy](/SECURITY.md).
+If you find a bug, please submit a
+[Bug Report](https://github.com/bikecalc/swift-measures/issues/new?template=bug-report.yml).
+If you would like to suggest a new capability or improvement, please submit a
+[Feature Request](https://github.com/bikecalc/swift-measures/issues/new?template=feature-request.yml).
 
-## Code of Conduct
-
-This project follows a [Code of Conduct](/CODE_OF_CONDUCT.md).
+Report security vulnerabilities privately through the repository’s Security tab instead of opening a public issue.
 
 ## License
 

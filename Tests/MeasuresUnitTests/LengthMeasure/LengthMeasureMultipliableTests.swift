@@ -12,6 +12,8 @@ import Testing
 
 @Suite("Length Measure Multipliable Tests")
 internal struct LengthMeasureMultipliableTests {
+    internal init() {}
+
     private static let multiplicationArguments: [(Measure<Length>, Measure<Length>.Multiplier, Measure<Length>)] = [
         (Measure<Length>(1, .meter), 2, Measure<Length>(2, .meter)),
         (Measure<Length>(1.5, .meter), 2, Measure<Length>(3, .meter)),

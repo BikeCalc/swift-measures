@@ -11,6 +11,8 @@ import Testing
 
 @Suite("MagneticFlux Tests")
 internal struct MagneticFluxTests {
+    internal init() {}
+
     // TODO: Use Double.isApproximatelyEqual when Numerics Extended provides its conformance.
     private let accuracy: Double = 1e-12
 
@@ -28,7 +30,6 @@ internal struct MagneticFluxTests {
         expected: MagneticFluxDensity
     ) {
         let result: MagneticFluxDensity = lhs / rhs
-
         #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.accuracy)
         #expect(result.constant == expected.constant)
         #expect(result.symbol == expected.symbol)
@@ -48,7 +49,6 @@ internal struct MagneticFluxTests {
         expected: ElectricalInductance
     ) {
         let result: ElectricalInductance = lhs / rhs
-
         #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.accuracy)
         #expect(result.constant == expected.constant)
         #expect(result.symbol == expected.symbol)

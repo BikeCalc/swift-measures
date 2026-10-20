@@ -12,6 +12,8 @@ import Testing
 
 @Suite("Converted Measure Tests")
 internal struct ConvertedMeasureTests {
+    internal init() {}
+
     private static let conversionArguments: [(Measure<Length>, Measure<Length>)] = [
         (Measure<Length>(1, .meter), Measure<Length>(1, .meter)),
         (Measure<Length>(100, .centimeter), Measure<Length>(1, .meter)),
@@ -31,9 +33,7 @@ internal struct ConvertedMeasureTests {
         value: Measure<Length>,
         result: Measure<Length>
     ) {
-        @Converted(to: .meter)
-        var convertedValue: Measure<Length> = value
-
+        @Converted(to: .meter) var convertedValue: Measure<Length> = value
         #expect(convertedValue == result)
     }
 
@@ -45,11 +45,8 @@ internal struct ConvertedMeasureTests {
         value: Measure<Length>,
         result: Measure<Length>
     ) {
-        @Converted(to: .meter)
-        var convertedValue: Measure<Length> = .init(0, .base)
-
+        @Converted(to: .meter) var convertedValue: Measure<Length> = .init(0, .base)
         convertedValue = value
-
         #expect(convertedValue == result)
     }
 }

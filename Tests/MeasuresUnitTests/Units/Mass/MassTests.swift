@@ -11,6 +11,8 @@ import Testing
 
 @Suite("Mass Tests")
 internal struct MassTests {
+    internal init() {}
+
     // TODO: Use Double.isApproximatelyEqual when Numerics Extended provides its conformance.
     private let accuracy: Double = 1e-12
 
@@ -28,7 +30,6 @@ internal struct MassTests {
         expected: Force
     ) {
         let result: Force = lhs * rhs
-
         #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.accuracy)
         #expect(result.constant == expected.constant)
         #expect(result.symbol == expected.symbol)
@@ -48,7 +49,6 @@ internal struct MassTests {
         expected: SurfaceDensity
     ) {
         let result: SurfaceDensity = lhs / rhs
-
         #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.accuracy)
         #expect(result.constant == expected.constant)
         #expect(result.symbol == expected.symbol)
@@ -68,7 +68,6 @@ internal struct MassTests {
         expected: MolarMass
     ) {
         let result: MolarMass = lhs / rhs
-
         #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.accuracy)
         #expect(result.constant == expected.constant)
         #expect(result.symbol == expected.symbol)
@@ -88,7 +87,6 @@ internal struct MassTests {
         expected: Concentration
     ) {
         let result: Concentration = lhs / rhs
-
         #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.accuracy)
         #expect(result.constant == expected.constant)
         #expect(result.symbol == expected.symbol)

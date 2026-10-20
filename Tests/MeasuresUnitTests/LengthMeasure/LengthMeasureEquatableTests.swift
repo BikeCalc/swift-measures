@@ -12,6 +12,8 @@ import Testing
 
 @Suite("Length Measure Equatable Tests")
 internal struct LengthMeasureEquatableTests {
+    internal init() {}
+
     private static let equalityArguments: [(Measure<Length>, Measure<Length>, Bool)] = [
         (Measure<Length>(1, .meter), Measure<Length>(1, .meter), true),
         (Measure<Length>(1, .meter), Measure<Length>(2, .meter), false),

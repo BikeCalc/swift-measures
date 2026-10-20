@@ -11,10 +11,11 @@ import Testing
 
 @Suite("Molar Mass CaseIterable Tests")
 internal struct MolarMassCaseIterableTests {
+    internal init() {}
+
     @Test("All cases contain the predefined units and base unit without duplicates")
     internal func allCases() {
         let units: Array<MolarMass> = MolarMass.allCases
-
         #expect(units.count == 2)
         #expect(Set(units).count == 2)
         #expect(units.contains(.base) == true)

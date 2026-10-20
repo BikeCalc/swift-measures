@@ -62,14 +62,13 @@ extension UnitMacro {
         in context: some MacroExpansionContext
     ) throws -> Array<DeclSyntax> {
         // Prefixed units can only be generated for structures.
-        guard declaration.is(StructDeclSyntax.self) else {
+        guard declaration.is(StructDeclSyntax.self) == true else {
             context.diagnose(
                 Diagnostic(
                     node: Syntax(declaration),
-                    message: UnitMacroDiagnostic.structOnly(macroName)
+                    message: UnitMacroDiagnostic.structOnly(Self.macroName)
                 )
             )
-
             return []
         }
 
@@ -88,7 +87,6 @@ extension UnitMacro {
                     message: UnitMacroDiagnostic.literalRequired("unit name")
                 )
             )
-
             return []
         }
 
@@ -100,7 +98,6 @@ extension UnitMacro {
                     message: UnitMacroDiagnostic.emptyName
                 )
             )
-
             return []
         }
 
@@ -114,7 +111,6 @@ extension UnitMacro {
                     message: UnitMacroDiagnostic.literalRequired("unit symbol")
                 )
             )
-
             return []
         }
 
@@ -126,19 +122,17 @@ extension UnitMacro {
                     message: UnitMacroDiagnostic.emptySymbol
                 )
             )
-
             return []
         }
 
         // The generated factory requires an initializer with coefficient, constant and symbol parameters.
-        guard declaration.hasUnitInitializer else {
+        guard declaration.hasUnitInitializer == true else {
             context.diagnose(
                 Diagnostic(
                     node: Syntax(declaration),
                     message: UnitMacroDiagnostic.initializerRequired
                 )
             )
-
             return []
         }
 
@@ -146,11 +140,9 @@ extension UnitMacro {
         let typeName: String = declaration.cast(StructDeclSyntax.self).name.text
         let dimension: String = typeName.splitBeforeUppercase().lowercased()
         let declaredProperties: Set<String> = declaration.staticPropertyNames
-
         // The first attached unit macro with this name owns the shared unprefixed unit.
-        let generatesUnprefixedUnit: Bool = declaration.unitMacroOwner(named: name) == macroName
-        let prefixTypeName: String = .init(describing: Prefix.self)
-
+        let generatesUnprefixedUnit: Bool = declaration.unitMacroOwner(named: name) == Self.macroName
+        let prefixTypeName: String = .init(describing: Self.Prefix.self)
         // Generate one factory so every static property applies its prefix consistently.
         var members: Array<DeclSyntax> = [
             """
@@ -159,7 +151,7 @@ extension UnitMacro {
             /// - Parameter prefix: The prefix to apply.
             /// - Returns: The prefixed unit.
             private static func \(raw: name)(_ prefix: \(raw: prefixTypeName)) -> Self {
-                return self.init(
+                return .init(
                     coefficient: prefix.coefficient * \(coefficient),
                     constant: 0,
                     symbol: prefix.symbol + \(literal: symbol)
@@ -169,20 +161,19 @@ extension UnitMacro {
         ]
 
         // Generate each missing prefixed property while respecting declared units.
-        for prefix in Prefix.allCases {
+        for prefix in Self.Prefix.allCases {
             let propertyName: String = Self.propertyName(
                 for: prefix,
                 named: name
             )
 
             guard declaredProperties.contains(propertyName) == false,
-                prefix != .none || generatesUnprefixedUnit
+                prefix != .none || generatesUnprefixedUnit == true
             else {
                 continue
             }
 
             let prefixExpression: String = prefix == .none ? "\(prefixTypeName).none" : ".\(prefix.name)"
-
             members.append(
                 """
                 /// The \(raw: propertyName) unit of \(raw: dimension).

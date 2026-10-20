@@ -43,10 +43,8 @@ package struct CaseIterableUnitsMacro {
         }
 
         names.append(contentsOf: declaration.publicStaticSelfConstantNames)
-
         var seen: Set<String> = []
-
-        return names.filter { $0 != "base" && seen.insert($0).inserted }
+        return names.filter { $0 != "base" && seen.insert($0).inserted == true }
     }
 }
 
@@ -67,17 +65,11 @@ extension CaseIterableUnitsMacro: ExtensionMacro {
                     message: UnitMacroDiagnostic.structOnly("CaseIterableUnits")
                 )
             )
-
             return []
         }
 
         let names: Array<String> = Self.propertyNames(in: structure)
-
-        let elements: String =
-            names
-            .map { "." + $0 }
-            .joined(separator: ",\n")
-
+        let elements: String = names.map { "." + $0 }.joined(separator: ",\n")
         let result: DeclSyntax = """
             extension \(type): CaseIterable {
                 public static let allCases: Array<Self> = [
@@ -85,7 +77,6 @@ extension CaseIterableUnitsMacro: ExtensionMacro {
                 ]
             }
             """
-
         return [result.cast(ExtensionDeclSyntax.self)]
     }
 }

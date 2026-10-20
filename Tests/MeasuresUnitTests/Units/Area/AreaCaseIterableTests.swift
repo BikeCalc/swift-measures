@@ -11,10 +11,11 @@ import Testing
 
 @Suite("Area CaseIterable Tests")
 internal struct AreaCaseIterableTests {
+    internal init() {}
+
     @Test("All cases contain the predefined units and base unit without duplicates")
     internal func allCases() {
         let units: Array<Area> = Area.allCases
-
         #expect(units.count == 16)
         #expect(Set(units).count == 16)
         #expect(units.contains(.base) == true)

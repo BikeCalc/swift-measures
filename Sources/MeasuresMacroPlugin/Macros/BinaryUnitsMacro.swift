@@ -25,7 +25,7 @@ extension BinaryUnitsMacro: MemberMacro {
         conformingTo protocols: Array<TypeSyntax>,
         in context: some MacroExpansionContext
     ) throws -> Array<DeclSyntax> {
-        return try unitExpansion(
+        return try Self.unitExpansion(
             of: node,
             providingMembersOf: declaration,
             in: context

@@ -11,10 +11,11 @@ import Testing
 
 @Suite("Thermodynamic Temperature CaseIterable Tests")
 internal struct ThermodynamicTemperatureCaseIterableTests {
+    internal init() {}
+
     @Test("All cases contain the predefined units and base unit without duplicates")
     internal func allCases() {
         let units: Array<ThermodynamicTemperature> = ThermodynamicTemperature.allCases
-
         #expect(units.count == 27)
         #expect(Set(units).count == 27)
         #expect(units.contains(.base) == true)

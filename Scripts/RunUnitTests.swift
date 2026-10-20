@@ -90,7 +90,7 @@ fileprivate struct Arguments {
     /// - Parameter arguments: The arguments following the script name.
     /// - Throws: `UnitTestRunnerError.invalidArguments` if any arguments are supplied.
     fileprivate init(_ arguments: Array<String>) throws(UnitTestRunnerError) {
-        guard arguments.isEmpty else {
+        guard arguments.isEmpty == true else {
             throw UnitTestRunnerError.invalidArguments
         }
     }
@@ -118,13 +118,11 @@ fileprivate struct UnitTestRunner {
     fileprivate func run() throws(UnitTestRunnerError) {
         try self.runSwift(arguments: ["test", "--enable-code-coverage"])
         try self.runSwift(arguments: ["test", "--package-path", "Demos/MeasuresCalc", "--enable-code-coverage"])
-
         try self.exportCoverage(
             packagePath: ".",
             sourcesPath: "Sources",
             reportName: "Measures"
         )
-
         try self.exportCoverage(
             packagePath: "Demos/MeasuresCalc",
             sourcesPath: "Demos/MeasuresCalc/Sources",
@@ -148,16 +146,17 @@ fileprivate struct UnitTestRunner {
             of: " ",
             with: "-"
         )
-
         let pathData: Data = try self.runSwift(
             arguments: ["test", "--package-path", packagePath, "--show-codecov-path"],
             captureOutput: true
         )
+        let reportPath: String = String(
+            decoding: pathData,
+            as: UTF8.self
+        )
+        .trimmingCharacters(in: .whitespacesAndNewlines)
 
-        let reportPath: String = .init(decoding: pathData, as: UTF8.self)
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-
-        guard reportPath.isEmpty == false && FileManager.default.fileExists(atPath: reportPath) else {
+        guard reportPath.isEmpty == false && FileManager.default.fileExists(atPath: reportPath) == true else {
             throw UnitTestRunnerError.missingCoverageReport(path: reportPath)
         }
 

@@ -113,17 +113,18 @@ internal struct ComposedUnitSymbolFormatter {
 
         fileprivate var description: String {
             var remainingValue: UInt = self.value.magnitude
-            var superscripts: Array<SuperscriptToken> = []
+            var superscripts: Array<ComposedUnitSymbolFormatter.SuperscriptToken> = []
 
             repeat {
-                let superscript: SuperscriptToken = .init(digit: remainingValue % 10)
+                let superscript: ComposedUnitSymbolFormatter.SuperscriptToken = .init(digit: remainingValue % 10)
                 superscripts.append(superscript)
                 remainingValue /= 10
             } while remainingValue != 0
 
-            let sign: String = self.value < 0 ? OperatorToken.superscriptNegation.rawValue : ""
+            let sign: String =
+                self.value < 0 ? ComposedUnitSymbolFormatter.OperatorToken.superscriptNegation.rawValue : ""
 
-            let digits: Array<SuperscriptToken.RawValue> =
+            let digits: Array<ComposedUnitSymbolFormatter.SuperscriptToken.RawValue> =
                 superscripts
                 .reversed()
                 .map { $0.rawValue }
@@ -162,19 +163,19 @@ internal struct ComposedUnitSymbolFormatter {
             var depth: Int = 0
             var enclosesWholeLabel: Bool =
                 symbol.first
-                .map { PunctuationToken(rawValue: String($0)) } == .openingParenthesis
-
+                .map { Self.PunctuationToken(rawValue: String($0)) } == .openingParenthesis
             var containsSyntax: Bool = false
 
             for (index, element) in zip(symbol.indices, symbol) {
                 let rawValue: String = .init(element)
-                let punctuation: PunctuationToken? = .init(rawValue: rawValue)
+                let punctuation: Self.PunctuationToken? = .init(rawValue: rawValue)
 
                 switch punctuation {
                 case .openingParenthesis:
                     depth += 1
                 case .closingParenthesis:
                     depth -= 1
+
                     if depth == 0 && index != symbol.lastIndex {
                         enclosesWholeLabel = false
                     }
@@ -183,13 +184,13 @@ internal struct ComposedUnitSymbolFormatter {
                 }
 
                 containsSyntax =
-                    containsSyntax
+                    containsSyntax == true
                     || punctuation != nil
-                    || OperatorToken(rawValue: rawValue) != nil
-                    || SuperscriptToken(rawValue: rawValue) != nil
+                    || Self.OperatorToken(rawValue: rawValue) != nil
+                    || Self.SuperscriptToken(rawValue: rawValue) != nil
             }
 
-            return containsSyntax && enclosesWholeLabel == false
+            return containsSyntax == true && enclosesWholeLabel == false
         }
 
         /// Formats a factor, grouping its symbol when needed and appending its signed exponent.
@@ -211,24 +212,22 @@ internal struct ComposedUnitSymbolFormatter {
             }
 
             let groupedSymbol: String =
-                if needsGrouping(symbol: symbol) {
-                    PunctuationToken.openingParenthesis.rawValue
+                if needsGrouping(symbol: symbol) == true {
+                    Self.PunctuationToken.openingParenthesis.rawValue
                         + symbol
-                        + PunctuationToken.closingParenthesis.rawValue
+                        + Self.PunctuationToken.closingParenthesis.rawValue
                 } else {
                     symbol
                 }
 
-            let superscript: Superscript = .init(exponent)
-
+            let superscript: Self.Superscript = .init(exponent)
             return groupedSymbol + superscript.description
         }
 
         for factor in self.factors {
             let validator: ComposedUnitSymbolValidator = .init(symbol: factor.unit.symbol)
-
             precondition(
-                validator.validate(),
+                validator.validate() == true,
                 "Each factor must have a valid unit symbol."
             )
         }
@@ -239,7 +238,6 @@ internal struct ComposedUnitSymbolFormatter {
                 exponent: factor.exponent
             )
         }
-
-        return formattedFactors.joined(separator: OperatorToken.multiplication.rawValue)
+        return formattedFactors.joined(separator: Self.OperatorToken.multiplication.rawValue)
     }
 }

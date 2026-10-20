@@ -11,6 +11,8 @@ import Testing
 
 @Suite("SubstanceAmount Tests")
 internal struct SubstanceAmountTests {
+    internal init() {}
+
     // TODO: Use Double.isApproximatelyEqual when Numerics Extended provides its conformance.
     private let accuracy: Double = 1e-12
 
@@ -28,7 +30,6 @@ internal struct SubstanceAmountTests {
         expected: CatalyticActivity
     ) {
         let result: CatalyticActivity = lhs / rhs
-
         #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.accuracy)
         #expect(result.constant == expected.constant)
         #expect(result.symbol == expected.symbol)

@@ -12,6 +12,8 @@ import Testing
 
 @Suite("Converted Measure Hashable Tests")
 internal struct ConvertedMeasureHashableTests {
+    internal init() {}
+
     @Test(
         "Equivalent representations produce equal hashes",
         arguments: [
@@ -25,9 +27,14 @@ internal struct ConvertedMeasureHashableTests {
         lhs: Measure<Length>,
         rhs: Measure<Length>
     ) {
-        let lhsWrapper: Converted<Length> = .init(wrappedValue: lhs, to: .meter)
-        let rhsWrapper: Converted<Length> = .init(wrappedValue: rhs, to: .meter)
-
+        let lhsWrapper: Converted<Length> = .init(
+            wrappedValue: lhs,
+            to: .meter
+        )
+        let rhsWrapper: Converted<Length> = .init(
+            wrappedValue: rhs,
+            to: .meter
+        )
         #expect(lhsWrapper == rhsWrapper)
         #expect(lhsWrapper.hashValue == rhsWrapper.hashValue)
         #expect(Set([lhsWrapper, rhsWrapper]).count == 1)

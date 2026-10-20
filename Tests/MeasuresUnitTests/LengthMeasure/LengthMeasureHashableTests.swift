@@ -12,6 +12,8 @@ import Testing
 
 @Suite("Length Measure Hashable Tests")
 internal struct LengthMeasureHashableTests {
+    internal init() {}
+
     @Test(
         "Equal stored values produce equal hashes",
         arguments: [

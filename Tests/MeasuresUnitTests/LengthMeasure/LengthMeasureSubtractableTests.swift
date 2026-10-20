@@ -12,6 +12,8 @@ import Testing
 
 @Suite("Length Measure Subtractable Tests")
 internal struct LengthMeasureSubtractableTests {
+    internal init() {}
+
     private static let subtractionArguments: [(Measure<Length>, Measure<Length>.Subtrahend, Measure<Length>)] = [
         (Measure<Length>(3, .meter), Measure<Length>(1, .meter), Measure<Length>(2, .meter)),
         (Measure<Length>(2, .meter), Measure<Length>(50, .centimeter), Measure<Length>(1.5, .meter)),
@@ -83,6 +85,6 @@ extension LengthMeasureSubtractableTests {
         subtrahend: Measure<Length>.Subtrahend,
         difference _: Measure<Length>
     ) {
-        #expect(!(minuend - subtrahend).isCanonicallyEqual(to: subtrahend - minuend))
+        #expect((minuend - subtrahend).isCanonicallyEqual(to: subtrahend - minuend) == false)
     }
 }

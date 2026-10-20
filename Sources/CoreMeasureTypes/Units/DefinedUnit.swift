@@ -15,18 +15,6 @@
 /// decoder treats an omitted constant as zero and recreates the unit through its initializer. Dimension information is
 /// supplied by the concrete type rather than encoded by this protocol's implementation.
 public protocol DefinedUnit: Unit {
-    /// Creates a new instance with the specified coefficient, constant and symbol.
-    ///
-    /// - Parameters:
-    ///   - coefficient: The coefficient.
-    ///   - constant: The constant.
-    ///   - symbol: The symbol.
-    init(
-        coefficient: Double,
-        constant: Double,
-        symbol: String
-    )
-
     /// The shared reference unit through which values of this unit type are converted.
     static var base: Self { get }
 }
@@ -37,11 +25,19 @@ where Self: Decodable {
         let container: KeyedDecodingContainer<UnitCodingKeys> = try decoder.container(
             keyedBy: UnitCodingKeys.self
         )
-
-        let coefficient: Double = try container.decode(Double.self, forKey: .coefficient)
-        let constant: Double = try container.decodeIfPresent(Double.self, forKey: .constant) ?? .zero
-        let symbol: String = try container.decode(String.self, forKey: .symbol)
-
+        let coefficient: Double = try container.decode(
+            Double.self,
+            forKey: .coefficient
+        )
+        let constant: Double =
+            try container.decodeIfPresent(
+                Double.self,
+                forKey: .constant
+            ) ?? .zero
+        let symbol: String = try container.decode(
+            String.self,
+            forKey: .symbol
+        )
         self.init(
             coefficient: coefficient,
             constant: constant,
@@ -54,9 +50,17 @@ extension DefinedUnit
 where Self: Encodable {
     public func encode(to encoder: Encoder) throws {
         var container: KeyedEncodingContainer<UnitCodingKeys> = encoder.container(keyedBy: UnitCodingKeys.self)
-
-        try container.encode(self.coefficient, forKey: .coefficient)
-        try container.encode(self.constant, forKey: .constant)
-        try container.encode(self.symbol, forKey: .symbol)
+        try container.encode(
+            self.coefficient,
+            forKey: .coefficient
+        )
+        try container.encode(
+            self.constant,
+            forKey: .constant
+        )
+        try container.encode(
+            self.symbol,
+            forKey: .symbol
+        )
     }
 }

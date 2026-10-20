@@ -11,10 +11,11 @@ import Testing
 
 @Suite("Surface Density CaseIterable Tests")
 internal struct SurfaceDensityCaseIterableTests {
+    internal init() {}
+
     @Test("All cases contain the predefined units and base unit without duplicates")
     internal func allCases() {
         let units: Array<SurfaceDensity> = SurfaceDensity.allCases
-
         #expect(units.count == 3)
         #expect(Set(units).count == 3)
         #expect(units.contains(.base) == true)

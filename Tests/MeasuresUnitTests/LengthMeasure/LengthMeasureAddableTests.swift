@@ -12,6 +12,8 @@ import Testing
 
 @Suite("Length Measure Addable Tests")
 internal struct LengthMeasureAddableTests {
+    internal init() {}
+
     private static let additionArguments: [(Measure<Length>, Measure<Length>.Addend, Measure<Length>)] = [
         (Measure<Length>(1, .meter), Measure<Length>(2, .meter), Measure<Length>(3, .meter)),
         (Measure<Length>(1, .meter), Measure<Length>(100, .centimeter), Measure<Length>(2, .meter)),
@@ -83,6 +85,6 @@ extension LengthMeasureAddableTests {
         addend: Measure<Length>.Addend,
         sum _: Measure<Length>
     ) {
-        #expect((augend + addend).isCanonicallyEqual(to: addend + augend))
+        #expect((augend + addend).isCanonicallyEqual(to: addend + augend) == true)
     }
 }

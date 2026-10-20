@@ -11,10 +11,11 @@ import Testing
 
 @Suite("Luminous Flux CaseIterable Tests")
 internal struct LuminousFluxCaseIterableTests {
+    internal init() {}
+
     @Test("All cases contain the predefined units and base unit without duplicates")
     internal func allCases() {
         let units: Array<LuminousFlux> = LuminousFlux.allCases
-
         #expect(units.count == 25)
         #expect(Set(units).count == 25)
         #expect(units.contains(.base) == true)

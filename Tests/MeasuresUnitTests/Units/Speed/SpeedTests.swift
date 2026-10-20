@@ -11,6 +11,8 @@ import Testing
 
 @Suite("Speed Tests")
 internal struct SpeedTests {
+    internal init() {}
+
     // TODO: Use Double.isApproximatelyEqual when Numerics Extended provides its conformance.
     private let accuracy: Double = 1e-12
 
@@ -28,7 +30,6 @@ internal struct SpeedTests {
         expected: Acceleration
     ) {
         let result: Acceleration = lhs / rhs
-
         #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.accuracy)
         #expect(result.constant == expected.constant)
         #expect(result.symbol == expected.symbol)

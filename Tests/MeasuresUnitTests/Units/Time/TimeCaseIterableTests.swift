@@ -11,10 +11,11 @@ import Testing
 
 @Suite("Time CaseIterable Tests")
 internal struct TimeCaseIterableTests {
+    internal init() {}
+
     @Test("All cases contain the predefined units and base unit without duplicates")
     internal func allCases() {
         let units: Array<Time> = Time.allCases
-
         #expect(units.count == 35)
         #expect(Set(units).count == 35)
         #expect(units.contains(.base) == true)

@@ -11,10 +11,11 @@ import Testing
 
 @Suite("Cadence CaseIterable Tests")
 internal struct CadenceCaseIterableTests {
+    internal init() {}
+
     @Test("All cases contain the predefined units and base unit without duplicates")
     internal func allCases() {
         let units: Array<Cadence> = Cadence.allCases
-
         #expect(units.count == 3)
         #expect(Set(units).count == 3)
         #expect(units.contains(.base) == true)
