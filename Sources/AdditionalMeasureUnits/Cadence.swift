@@ -27,16 +27,26 @@ public struct Cadence {
         self.symbol = symbol
     }
 
+    /// Creates a unit of cadence expressed in revolutions per the specified time unit.
+    ///
+    /// - Parameter time: The time unit used for one revolution.
+    private init(per time: Time) {
+        self.init(
+            coefficient: Time.base.coefficient / time.coefficient,
+            symbol: "r/" + time.symbol
+        )
+    }
+
     // MARK: Other Units
 
     /// The revolutions per second unit of cadence.
-    public static let revolutionsPerSecond: Self = .dividing(by: .second)
+    public static let revolutionsPerSecond: Self = .init(per: .second)
 
     /// The revolutions per minute unit of cadence.
-    public static let revolutionsPerMinute: Self = .dividing(by: .minute)
+    public static let revolutionsPerMinute: Self = .init(per: .minute)
 
     /// The revolutions per hour unit of cadence.
-    public static let revolutionsPerHour: Self = .dividing(by: .hour)
+    public static let revolutionsPerHour: Self = .init(per: .hour)
 }
 
 // MARK: - Codable
@@ -46,24 +56,6 @@ extension Cadence: Codable {}
 // MARK: - Comparable
 
 extension Cadence: Comparable {}
-
-// MARK: - Divisible
-
-extension Cadence {
-    /// Returns the quotient of dividing this value by the specified value.
-    ///
-    /// - Parameter time: A unit of time.
-    /// - Returns: A unit of cadence.
-    fileprivate static func dividing(by time: Time) -> Self {
-        let coefficient: Double = Time.base.coefficient * (1 / time.coefficient)
-        let symbol: String = "r" + "/" + time.symbol
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
-}
 
 // MARK: - Equatable
 

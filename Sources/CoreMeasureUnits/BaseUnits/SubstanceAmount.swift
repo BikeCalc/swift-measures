@@ -27,6 +27,22 @@ public struct SubstanceAmount {
         self.constant = constant
         self.symbol = symbol
     }
+
+    /// Returns a unit of catalytic activity by dividing the specified units.
+    ///
+    /// - Parameters:
+    ///   - lhs: The substance amount unit.
+    ///   - rhs: The time unit.
+    /// - Returns: A unit of catalytic activity.
+    public static func / (
+        lhs: Self,
+        rhs: Time
+    ) -> CatalyticActivity {
+        return .init(
+            substanceAmount: lhs,
+            time: rhs
+        )
+    }
 }
 
 // MARK: - Codable
@@ -36,24 +52,6 @@ extension SubstanceAmount: Codable {}
 // MARK: - Comparable
 
 extension SubstanceAmount: Comparable {}
-
-// MARK: - Divisible
-
-extension SubstanceAmount {
-    /// Returns the quotient of dividing this value by the specified value.
-    ///
-    /// - Parameter time: A unit of time.
-    /// - Returns: A unit of catalytic activity.
-    public func dividing(by time: Time) -> CatalyticActivity {
-        let coefficient: Double = self.coefficient * (1 / time.coefficient)
-        let symbol: String = self.symbol + "/" + time.symbol
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
-}
 
 // MARK: - Equatable
 

@@ -7,10 +7,13 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import Testing
+
 @testable import Measures
 
 @Suite("Length Measure Multipliable Tests")
 internal struct LengthMeasureMultipliableTests {
+    internal init() {}
+
     private static let multipleArguments: [(Measure<Length>, Double, Bool)] = [
         (Measure<Length>(10, .meter), 2, true),
         (Measure<Length>(10, .meter), 3, false),

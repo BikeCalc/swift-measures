@@ -28,10 +28,30 @@ public struct MagneticFluxDensity {
         self.symbol = symbol
     }
 
+    /// Creates a unit of magnetic flux density from the specified units.
+    ///
+    /// The coefficient and symbol are formed by dividing the magnetic flux unit by the area unit.
+    ///
+    /// - Parameters:
+    ///   - magneticFlux: The magnetic flux unit.
+    ///   - area: The area unit.
+    internal init(
+        magneticFlux: MagneticFlux,
+        area: Area
+    ) {
+        self.init(
+            coefficient: magneticFlux.coefficient * (1 / area.coefficient),
+            symbol: magneticFlux.symbol + "/" + area.symbol
+        )
+    }
+
     // MARK: Composed Units
 
     /// The weber per square meter unit of magnetic flux density.
-    public static let weberPerSquareMeter: Self = MagneticFlux.weber.dividing(by: .squareMeter)
+    public static let weberPerSquareMeter: Self = .init(
+        magneticFlux: .weber,
+        area: .squareMeter
+    )
 }
 
 // MARK: - Codable

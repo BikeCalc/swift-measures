@@ -28,10 +28,62 @@ public struct Power {
         self.symbol = symbol
     }
 
+    /// Creates a unit of power from the specified units.
+    ///
+    /// The coefficient and symbol are formed by dividing the energy unit by the time unit.
+    ///
+    /// - Parameters:
+    ///   - energy: The energy unit.
+    ///   - time: The time unit.
+    internal init(
+        energy: Energy,
+        time: Time
+    ) {
+        self.init(
+            coefficient: energy.coefficient * (1 / time.coefficient),
+            symbol: energy.symbol + "/" + time.symbol
+        )
+    }
+
+    /// Returns a unit of energy by multiplying the specified units.
+    ///
+    /// - Parameters:
+    ///   - lhs: The power unit.
+    ///   - rhs: The time unit.
+    /// - Returns: A unit of energy.
+    public static func * (
+        lhs: Self,
+        rhs: Time
+    ) -> Energy {
+        return .init(
+            power: lhs,
+            time: rhs
+        )
+    }
+
+    /// Returns a unit of electric potential by dividing the specified units.
+    ///
+    /// - Parameters:
+    ///   - lhs: The power unit.
+    ///   - rhs: The electric current unit.
+    /// - Returns: A unit of electric potential.
+    public static func / (
+        lhs: Self,
+        rhs: ElectricCurrent
+    ) -> ElectricPotential {
+        return .init(
+            power: lhs,
+            electricCurrent: rhs
+        )
+    }
+
     // MARK: Composed Units
 
     /// The joule per second unit of power.
-    public static let joulePerSecond: Self = Energy.joule.dividing(by: .second)
+    public static let joulePerSecond: Self = .init(
+        energy: .joule,
+        time: .second
+    )
 
     // MARK: U.S. Customary and Imperial Units
 
@@ -49,24 +101,6 @@ extension Power: Codable {}
 // MARK: - Comparable
 
 extension Power: Comparable {}
-
-// MARK: - Multipliable
-
-extension Power {
-    /// Returns the product of multiplying this value by the specified value.
-    ///
-    /// - Parameter time: A unit of time.
-    /// - Returns: A unit of energy.
-    public func multiplying(by time: Time) -> Energy {
-        let coefficient: Double = self.coefficient * time.coefficient
-        let symbol: String = self.symbol + "⋅" + time.symbol
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
-}
 
 // MARK: - Equatable
 

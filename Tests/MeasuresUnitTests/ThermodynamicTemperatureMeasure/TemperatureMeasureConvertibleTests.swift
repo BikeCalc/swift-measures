@@ -7,10 +7,13 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import Testing
+
 @testable import Measures
 
 @Suite("Temperature Measure Convertible Tests")
 internal struct TemperatureMeasureConvertibleTests {
+    internal init() {}
+
     @Test(
         "Conversion succeeds",
         arguments: [
@@ -39,7 +42,6 @@ internal struct TemperatureMeasureConvertibleTests {
         let converted: Measure<ThermodynamicTemperature> = source.converted(to: unit)
         var mutated: Measure<ThermodynamicTemperature> = source
         mutated.convert(to: unit)
-
         #expect(abs(converted.value - expected.value) < 1e-10)
         #expect(converted.unit == expected.unit)
         #expect(abs(mutated.value - expected.value) < 1e-10)

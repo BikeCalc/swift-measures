@@ -43,7 +43,3 @@
 - ``decare``
 - ``are``
 - ``centiare``
-
-### Multiplying Units
-
-- ``multiplying(by:)``

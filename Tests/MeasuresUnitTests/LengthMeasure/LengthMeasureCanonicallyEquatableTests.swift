@@ -7,10 +7,13 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import Testing
+
 @testable import Measures
 
 @Suite("Length Measure CanonicallyEquatable Tests")
 internal struct LengthMeasureCanonicallyEquatableTests {
+    internal init() {}
+
     @Test(
         "Canonical equality succeeds",
         arguments: [

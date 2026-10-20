@@ -70,13 +70,8 @@
 
 ### Dividing Units
 
-- ``dividing(by:)``
+- ``/(_:_:)->Speed``
 
 ### Multiplying Units
 
-- ``multiplying(by:)``
-
-### Raising Units
-
-- ``squared()``
-- ``cubed()``
+- ``*(_:_:)->Energy``

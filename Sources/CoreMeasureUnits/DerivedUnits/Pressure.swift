@@ -28,6 +28,23 @@ public struct Pressure {
         self.symbol = symbol
     }
 
+    /// Creates a unit of pressure from the specified units.
+    ///
+    /// The coefficient and symbol are formed by dividing the force unit by the area unit.
+    ///
+    /// - Parameters:
+    ///   - force: The force unit.
+    ///   - area: The area unit.
+    internal init(
+        force: Force,
+        area: Area
+    ) {
+        self.init(
+            coefficient: force.coefficient * (1 / area.coefficient),
+            symbol: force.symbol + "/" + area.symbol
+        )
+    }
+
     // MARK: Composed Units
 
     /// The pounds per square inch unit of pressure.
@@ -37,10 +54,16 @@ public struct Pressure {
     )
 
     /// The pounds per square foot unit of pressure.
-    public static let poundsPerSquareFoot: Self = Force.poundForce.dividing(by: .squareFoot)
+    public static let poundsPerSquareFoot: Self = .init(
+        force: .poundForce,
+        area: .squareFoot
+    )
 
     /// The newtons per square meter unit of pressure.
-    public static let newtonsPerSquareMeter: Self = Force.newton.dividing(by: .squareMeter)
+    public static let newtonsPerSquareMeter: Self = .init(
+        force: .newton,
+        area: .squareMeter
+    )
 
     // MARK: Other Metric Units
 

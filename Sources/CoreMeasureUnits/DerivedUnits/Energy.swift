@@ -28,32 +28,116 @@ public struct Energy {
         self.symbol = symbol
     }
 
+    /// Creates a unit of energy from the specified units.
+    ///
+    /// The coefficient and symbol are formed by multiplying the force unit by the length unit.
+    ///
+    /// - Parameters:
+    ///   - force: The force unit.
+    ///   - length: The length unit.
+    internal init(
+        force: Force,
+        length: Length
+    ) {
+        self.init(
+            coefficient: force.coefficient * length.coefficient,
+            symbol: force.symbol + "⋅" + length.symbol
+        )
+    }
+
+    /// Creates a unit of energy from the specified units.
+    ///
+    /// The coefficient and symbol are formed by multiplying the power unit by the time unit.
+    ///
+    /// - Parameters:
+    ///   - power: The power unit.
+    ///   - time: The time unit.
+    internal init(
+        power: Power,
+        time: Time
+    ) {
+        self.init(
+            coefficient: power.coefficient * time.coefficient,
+            symbol: power.symbol + "⋅" + time.symbol
+        )
+    }
+
+    /// Returns a unit of absorbed dose by dividing the specified units.
+    ///
+    /// - Parameters:
+    ///   - lhs: The energy unit.
+    ///   - rhs: The mass unit.
+    /// - Returns: A unit of absorbed dose.
+    public static func / (
+        lhs: Self,
+        rhs: Mass
+    ) -> AbsorbedDose {
+        return .init(
+            energy: lhs,
+            mass: rhs
+        )
+    }
+
+    /// Returns a unit of power by dividing the specified units.
+    ///
+    /// - Parameters:
+    ///   - lhs: The energy unit.
+    ///   - rhs: The time unit.
+    /// - Returns: A unit of power.
+    public static func / (
+        lhs: Self,
+        rhs: Time
+    ) -> Power {
+        return .init(
+            energy: lhs,
+            time: rhs
+        )
+    }
+
     // MARK: Composed Units
 
     /// The kilowatt year unit of energy.
-    public static let kilowattYear: Self = Power.kilowatt.multiplying(by: .year)
+    public static let kilowattYear: Self = .init(
+        power: .kilowatt,
+        time: .year
+    )
 
     /// The kilowatt hour unit of energy.
-    public static let kilowattHour: Self = Power.kilowatt.multiplying(by: .hour)
+    public static let kilowattHour: Self = .init(
+        power: .kilowatt,
+        time: .hour
+    )
 
     /// The watt-hour unit of energy.
-    public static let wattHour: Self = Power.watt.multiplying(by: .hour)
+    public static let wattHour: Self = .init(
+        power: .watt,
+        time: .hour
+    )
 
     /// The kilowatt second unit of energy.
-    public static let kilowattSecond: Self = Power.kilowatt.multiplying(by: .second)
+    public static let kilowattSecond: Self = .init(
+        power: .kilowatt,
+        time: .second
+    )
 
     /// The newton-meter unit of energy.
-    public static let newtonMeter: Self = Force.newton.multiplying(by: .meter)
+    public static let newtonMeter: Self = .init(
+        force: .newton,
+        length: .meter
+    )
 
     /// The watt-second unit of energy.
-    public static let wattSecond: Self = Power.watt.multiplying(by: .second)
+    public static let wattSecond: Self = .init(
+        power: .watt,
+        time: .second
+    )
 
     // MARK: U.S. Customary and Imperial Units
 
     /// The foot-pound-force unit of energy.
     public static let footPoundForce: Self = .init(
         coefficient: Force.poundForce.coefficient * Length.foot.coefficient,
-        symbol: "ft·lbf"
+        symbol: Length.foot.symbol + "·" + Force.poundForce.symbol
     )
 
     /// The British thermal unit based on the International Table calorie.
@@ -97,38 +181,6 @@ extension Energy: Hashable {}
 
 extension Energy: Measurable {
     public static let base: Self = .joule
-}
-
-// MARK: - Divisible
-
-extension Energy {
-    /// Returns the quotient of dividing this value by the specified value.
-    ///
-    /// - Parameter mass: A unit of mass.
-    /// - Returns: A unit of absorbed dose.
-    public func dividing(by mass: Mass) -> AbsorbedDose {
-        let coefficient: Double = self.coefficient * (1 / mass.coefficient)
-        let symbol: String = self.symbol + "/" + mass.symbol
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
-
-    /// Returns the quotient of dividing this value by the specified value.
-    ///
-    /// - Parameter time: A unit of time.
-    /// - Returns: A unit of power.
-    public func dividing(by time: Time) -> Power {
-        let coefficient: Double = self.coefficient * (1 / time.coefficient)
-        let symbol: String = self.symbol + "/" + time.symbol
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
 }
 
 // MARK: - Sendable

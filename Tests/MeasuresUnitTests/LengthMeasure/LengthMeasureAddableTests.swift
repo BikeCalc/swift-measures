@@ -7,10 +7,13 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import Testing
+
 @testable import Measures
 
 @Suite("Length Measure Addable Tests")
 internal struct LengthMeasureAddableTests {
+    internal init() {}
+
     private static let additionArguments: [(Measure<Length>, Measure<Length>, Measure<Length>)] = [
         (Measure<Length>(1, .meter), Measure<Length>(2, .meter), Measure<Length>(3, .meter)),
         (Measure<Length>(1, .meter), Measure<Length>(100, .centimeter), Measure<Length>(2, .meter)),

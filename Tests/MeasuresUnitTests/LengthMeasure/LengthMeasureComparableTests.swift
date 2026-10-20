@@ -7,10 +7,13 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import Testing
+
 @testable import Measures
 
 @Suite("Length Measure Comparable Tests")
 internal struct LengthMeasureComparableTests {
+    internal init() {}
+
     private static let comparisonArguments: [(Measure<Length>, Measure<Length>, Bool, Bool, Bool, Bool)] = [
         (Measure<Length>(1, .meter), Measure<Length>(1, .meter), false, true, false, true),
         (Measure<Length>(1, .meter), Measure<Length>(100, .centimeter), false, true, false, true),
@@ -107,7 +110,6 @@ internal struct LengthMeasureComparableTests {
         upperBound: Measure<Length>
     ) {
         let range: ClosedRange<Measure<Length>> = lowerBound ... upperBound
-
         #expect(value.isWithin(range) == range.contains(value))
     }
 
@@ -121,7 +123,6 @@ internal struct LengthMeasureComparableTests {
         upperBound: Measure<Length>
     ) {
         let valueIsWithinBounds: Bool = value.isWithin(lowerBound, upperBound) == true
-
         #expect(valueIsWithinBounds == (value >= lowerBound && value <= upperBound))
     }
 
@@ -135,7 +136,6 @@ internal struct LengthMeasureComparableTests {
         upperBound: Measure<Length>
     ) {
         let valueIsBetweenBounds: Bool = value.isBetween(lowerBound, upperBound) == true
-
         #expect(valueIsBetweenBounds == (value > lowerBound && value < upperBound))
     }
 }

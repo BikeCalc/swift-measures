@@ -28,10 +28,30 @@ public struct Illuminance {
         self.symbol = symbol
     }
 
+    /// Creates a unit of illuminance from the specified units.
+    ///
+    /// The coefficient and symbol are formed by dividing the luminous flux unit by the area unit.
+    ///
+    /// - Parameters:
+    ///   - luminousFlux: The luminous flux unit.
+    ///   - area: The area unit.
+    internal init(
+        luminousFlux: LuminousFlux,
+        area: Area
+    ) {
+        self.init(
+            coefficient: luminousFlux.coefficient * (1 / area.coefficient),
+            symbol: luminousFlux.symbol + "/" + area.symbol
+        )
+    }
+
     // MARK: Composed Units
 
     /// The lumen per square meter unit of illuminance.
-    public static let lumenPerSquareMeter: Self = LuminousFlux.lumen.dividing(by: .squareMeter)
+    public static let lumenPerSquareMeter: Self = .init(
+        luminousFlux: .lumen,
+        area: .squareMeter
+    )
 }
 
 // MARK: - Codable

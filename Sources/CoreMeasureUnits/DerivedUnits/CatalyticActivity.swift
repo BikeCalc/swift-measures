@@ -28,10 +28,30 @@ public struct CatalyticActivity {
         self.symbol = symbol
     }
 
+    /// Creates a unit of catalytic activity from the specified units.
+    ///
+    /// The coefficient and symbol are formed by dividing the substance amount unit by the time unit.
+    ///
+    /// - Parameters:
+    ///   - substanceAmount: The substance amount unit.
+    ///   - time: The time unit.
+    internal init(
+        substanceAmount: SubstanceAmount,
+        time: Time
+    ) {
+        self.init(
+            coefficient: substanceAmount.coefficient * (1 / time.coefficient),
+            symbol: substanceAmount.symbol + "/" + time.symbol
+        )
+    }
+
     // MARK: Composed Units
 
     /// The mole per second unit of catalytic activity.
-    public static let molePerSecond: Self = SubstanceAmount.mole.dividing(by: .second)
+    public static let molePerSecond: Self = .init(
+        substanceAmount: .mole,
+        time: .second
+    )
 }
 
 // MARK: - Codable

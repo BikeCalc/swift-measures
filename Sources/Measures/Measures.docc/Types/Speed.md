@@ -33,4 +33,4 @@
 
 ### Dividing Units
 
-- ``dividing(by:)``
+- ``/(_:_:)->Acceleration``

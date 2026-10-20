@@ -7,10 +7,13 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import Testing
+
 @testable import Measures
 
 @Suite("Length Measure CustomDebugStringConvertible Tests")
 internal struct LengthMeasureCustomDebugStringConvertibleTests {
+    internal init() {}
+
     @Test(
         "Debug description succeeds",
         arguments: [

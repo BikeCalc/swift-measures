@@ -27,6 +27,16 @@ public struct Frequency {
         self.constant = constant
         self.symbol = symbol
     }
+
+    /// Creates a unit of frequency expressed in cycles per the specified time unit.
+    ///
+    /// - Parameter time: The time unit used as the denominator.
+    internal init(per time: Time) {
+        self.init(
+            coefficient: 1 / time.coefficient,
+            symbol: "1/" + time.symbol
+        )
+    }
 }
 
 // MARK: - Codable
@@ -54,25 +64,3 @@ extension Frequency: Measurable {
 // MARK: - Sendable
 
 extension Frequency: Sendable {}
-
-// MARK: - Measure
-
-extension Measure
-where Unit == Frequency {
-    /// Returns this measure converted to the specified unit of time.
-    ///
-    /// ```swift
-    /// let measure: Measure<Frequency> = .init(1, .hertz).converted(to: .second)
-    /// print(measure)
-    /// // Prints "1.0 s"
-    /// ```
-    ///
-    /// - Parameter rhs: The unit of time to convert to.
-    /// - Returns: The converted measure of time.
-    public func converted(to rhs: Time) -> Measure<Time> {
-        let baseValue: Double = self.value * self.unit.coefficient + self.unit.constant
-        let newValue: Double = (baseValue - rhs.constant) / rhs.coefficient
-
-        return .init(1 / newValue, rhs)
-    }
-}

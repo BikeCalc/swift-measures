@@ -45,13 +45,16 @@ fileprivate enum UnitCodingKeys: String, CodingKey {
 
 extension Measurable {
     public static var validRange: ClosedRange<Double> {
-        return -.infinity ... .infinity
+        return .negativeInfinity ... .infinity
     }
 }
 
 extension Measurable
 where Self: Comparable {
-    public static func < (_ lhs: Self, _ rhs: Self) -> Bool {
+    public static func < (
+        _ lhs: Self,
+        _ rhs: Self
+    ) -> Bool {
         return lhs.coefficient + lhs.constant < rhs.coefficient + rhs.constant
     }
 }
@@ -62,11 +65,19 @@ where Self: Decodable {
         let container: KeyedDecodingContainer<UnitCodingKeys> = try decoder.container(
             keyedBy: UnitCodingKeys.self
         )
-
-        let coefficient: Double = try container.decode(Double.self, forKey: .coefficient)
-        let constant: Double = try container.decodeIfPresent(Double.self, forKey: .constant) ?? .zero
-        let symbol: String = try container.decode(String.self, forKey: .symbol)
-
+        let coefficient: Double = try container.decode(
+            Double.self,
+            forKey: .coefficient
+        )
+        let constant: Double =
+            try container.decodeIfPresent(
+                Double.self,
+                forKey: .constant
+            ) ?? .zero
+        let symbol: String = try container.decode(
+            String.self,
+            forKey: .symbol
+        )
         self.init(
             coefficient: coefficient,
             constant: constant,
@@ -78,11 +89,19 @@ where Self: Decodable {
 extension Measurable
 where Self: Encodable {
     public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: UnitCodingKeys.self)
-
-        try container.encode(self.coefficient, forKey: .coefficient)
-        try container.encode(self.constant, forKey: .constant)
-        try container.encode(self.symbol, forKey: .symbol)
+        var container: KeyedEncodingContainer<UnitCodingKeys> = encoder.container(keyedBy: UnitCodingKeys.self)
+        try container.encode(
+            self.coefficient,
+            forKey: .coefficient
+        )
+        try container.encode(
+            self.constant,
+            forKey: .constant
+        )
+        try container.encode(
+            self.symbol,
+            forKey: .symbol
+        )
     }
 }
 
@@ -94,7 +113,10 @@ where Self: Equatable {
         return self == Self.base
     }
 
-    public static func == (_ lhs: Self, _ rhs: Self) -> Bool {
+    public static func == (
+        _ lhs: Self,
+        _ rhs: Self
+    ) -> Bool {
         return lhs.coefficient == rhs.coefficient
             && lhs.constant == rhs.constant
             && lhs.symbol == rhs.symbol

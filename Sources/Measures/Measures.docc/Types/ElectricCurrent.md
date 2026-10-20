@@ -50,9 +50,8 @@
 
 ### Dividing Units
 
-- ``dividing(by:)``
+- ``/(_:_:)->ElectricConductance``
 
 ### Multiplying Units
 
-- ``multiplying(by:)->ElectricCharge``
-- ``multiplying(by:)->Power``
+- ``*(_:_:)->ElectricCharge``

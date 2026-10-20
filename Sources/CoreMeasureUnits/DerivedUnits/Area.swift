@@ -26,37 +26,47 @@ public struct Area {
         self.symbol = symbol
     }
 
+    /// Creates a unit of area by squaring the specified length unit.
+    ///
+    /// - Parameter length: The length unit to square.
+    internal init(squaring length: Length) {
+        self.init(
+            coefficient: length.coefficient * length.coefficient,
+            symbol: length.symbol + "²"
+        )
+    }
+
     // MARK: Composed Units
 
     /// The square mile unit of area.
-    public static let squareMile: Self = Length.mile.squared()
+    public static let squareMile: Self = .init(squaring: .mile)
 
     /// The square kilometer unit of area.
-    public static let squareKilometer: Self = Length.kilometer.squared()
+    public static let squareKilometer: Self = .init(squaring: .kilometer)
 
     /// The square meter unit of area.
-    public static let squareMeter: Self = Length.meter.squared()
+    public static let squareMeter: Self = .init(squaring: .meter)
 
     /// The square yard unit of area.
-    public static let squareYard: Self = Length.yard.squared()
+    public static let squareYard: Self = .init(squaring: .yard)
 
     /// The square foot unit of area.
-    public static let squareFoot: Self = Length.foot.squared()
+    public static let squareFoot: Self = .init(squaring: .foot)
 
     /// The square inch unit of area.
-    public static let squareInch: Self = Length.inch.squared()
+    public static let squareInch: Self = .init(squaring: .inch)
 
     /// The square centimeter unit of area.
-    public static let squareCentimeter: Self = Length.centimeter.squared()
+    public static let squareCentimeter: Self = .init(squaring: .centimeter)
 
     /// The square millimeter unit of area.
-    public static let squareMillimeter: Self = Length.millimeter.squared()
+    public static let squareMillimeter: Self = .init(squaring: .millimeter)
 
     // MARK: Customary and Imperial Units
 
     /// The acre unit of area.
     public static let acre: Self = .init(
-        coefficient: Length.chain.squared().coefficient * 10,
+        coefficient: Self(squaring: .chain).coefficient * 10,
         symbol: "ac"
     )
 
@@ -67,7 +77,7 @@ public struct Area {
     )
 
     /// The perch unit of area.
-    public static let perch: Self = Length.rod.squared()
+    public static let perch: Self = .init(squaring: .rod)
 
     // MARK: Customary Units
 
@@ -124,24 +134,6 @@ extension Area: Hashable {}
 
 extension Area: Measurable {
     public static let base: Self = .squareMeter
-}
-
-// MARK: - Multipliable
-
-extension Area {
-    /// Returns the product of multiplying this value by the specified value.
-    ///
-    /// - Parameter length: A unit of length.
-    /// - Returns: A unit of volume.
-    public func multiplying(by length: Length) -> Volume {
-        let coefficient: Double = self.coefficient * length.coefficient
-        let symbol: String = self.symbol + "⋅" + length.symbol
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
 }
 
 // MARK: - Sendable

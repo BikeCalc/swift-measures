@@ -28,10 +28,30 @@ public struct AbsorbedDose {
         self.symbol = symbol
     }
 
+    /// Creates a unit of absorbed dose from the specified units.
+    ///
+    /// The coefficient and symbol are formed by dividing the energy unit by the mass unit.
+    ///
+    /// - Parameters:
+    ///   - energy: The energy unit.
+    ///   - mass: The mass unit.
+    internal init(
+        energy: Energy,
+        mass: Mass
+    ) {
+        self.init(
+            coefficient: energy.coefficient * (1 / mass.coefficient),
+            symbol: energy.symbol + "/" + mass.symbol
+        )
+    }
+
     // MARK: Composed Units
 
     /// The joule per kilogram unit of absorbed dose.
-    public static let joulePerKilogram: Self = Energy.joule.dividing(by: .kilogram)
+    public static let joulePerKilogram: Self = .init(
+        energy: .joule,
+        mass: .kilogram
+    )
 }
 
 // MARK: - Codable

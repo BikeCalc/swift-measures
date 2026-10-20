@@ -28,16 +28,74 @@ public struct ElectricCharge {
         self.symbol = symbol
     }
 
+    /// Creates a unit of electric charge from the specified units.
+    ///
+    /// The coefficient and symbol are formed by multiplying the electric current unit by the time unit.
+    ///
+    /// - Parameters:
+    ///   - electricCurrent: The electric current unit.
+    ///   - time: The time unit.
+    internal init(
+        electricCurrent: ElectricCurrent,
+        time: Time
+    ) {
+        self.init(
+            coefficient: electricCurrent.coefficient * time.coefficient,
+            symbol: electricCurrent.symbol + "⋅" + time.symbol
+        )
+    }
+
+    /// Returns a unit of electrical capacitance by dividing the specified units.
+    ///
+    /// - Parameters:
+    ///   - lhs: The electric charge unit.
+    ///   - rhs: The electric potential unit.
+    /// - Returns: A unit of electrical capacitance.
+    public static func / (
+        lhs: Self,
+        rhs: ElectricPotential
+    ) -> ElectricalCapacitance {
+        return .init(
+            electricCharge: lhs,
+            electricPotential: rhs
+        )
+    }
+
+    /// Returns a unit of electric current by dividing the specified units.
+    ///
+    /// - Parameters:
+    ///   - lhs: The electric charge unit.
+    ///   - rhs: The time unit.
+    /// - Returns: A unit of electric current.
+    public static func / (
+        lhs: Self,
+        rhs: Time
+    ) -> ElectricCurrent {
+        return .init(
+            electricCharge: lhs,
+            time: rhs
+        )
+    }
+
     // MARK: Composed Units
 
     /// The ampere hour unit of electric charge.
-    public static let ampereHour: Self = ElectricCurrent.ampere.multiplying(by: .hour)
+    public static let ampereHour: Self = .init(
+        electricCurrent: .ampere,
+        time: .hour
+    )
 
     /// The milliampere-hour unit of electric charge.
-    public static let milliampereHour: Self = ElectricCurrent.milliampere.multiplying(by: .hour)
+    public static let milliampereHour: Self = .init(
+        electricCurrent: .milliampere,
+        time: .hour
+    )
 
     /// The ampere second unit of electric charge.
-    public static let ampereSecond: Self = ElectricCurrent.ampere.multiplying(by: .second)
+    public static let ampereSecond: Self = .init(
+        electricCurrent: .ampere,
+        time: .second
+    )
 }
 
 // MARK: - Codable
@@ -47,38 +105,6 @@ extension ElectricCharge: Codable {}
 // MARK: - Comparable
 
 extension ElectricCharge: Comparable {}
-
-// MARK: - Divisible
-
-extension ElectricCharge {
-    /// Returns the quotient of dividing this value by the specified value.
-    ///
-    /// - Parameter electricPotential: A unit of electric potential.
-    /// - Returns: A unit of electrical capacitance.
-    public func dividing(by electricPotential: ElectricPotential) -> ElectricalCapacitance {
-        let coefficient: Double = self.coefficient * (1 / electricPotential.coefficient)
-        let symbol: String = self.symbol + "/" + electricPotential.symbol
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
-
-    /// Returns the quotient of dividing this value by the specified value.
-    ///
-    /// - Parameter time: A unit of time.
-    /// - Returns: A unit of electric current.
-    public func dividing(by time: Time) -> ElectricCurrent {
-        let coefficient: Double = self.coefficient * (1 / time.coefficient)
-        let symbol: String = self.symbol + "/" + time.symbol
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
-}
 
 // MARK: - Equatable
 

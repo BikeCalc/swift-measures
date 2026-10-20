@@ -26,15 +26,30 @@ public struct Acceleration {
         self.symbol = symbol
     }
 
-    // MARK: Composed Units
-
-    /// Creates a new instance with the specified length and squared time units.
+    /// Creates a unit of acceleration from the specified units.
+    ///
+    /// The coefficient and symbol are formed by dividing the speed unit by the time unit.
     ///
     /// - Parameters:
-    ///   - length: A unit of length.
-    ///   - time: A unit of time.
-    fileprivate init(
-        _ length: Length,
+    ///   - speed: The speed unit.
+    ///   - time: The time unit.
+    internal init(
+        speed: Speed,
+        time: Time
+    ) {
+        self.init(
+            coefficient: speed.coefficient * (1 / time.coefficient),
+            symbol: speed.symbol + "/" + time.symbol
+        )
+    }
+
+    /// Creates a unit of acceleration by dividing a length unit by the square of a time unit.
+    ///
+    /// - Parameters:
+    ///   - length: The length unit.
+    ///   - time: The time unit to square before dividing.
+    internal init(
+        length: Length,
         perSquare time: Time
     ) {
         self.init(
@@ -43,11 +58,35 @@ public struct Acceleration {
         )
     }
 
+    /// Returns a unit of force by multiplying the specified units.
+    ///
+    /// - Parameters:
+    ///   - lhs: The acceleration unit.
+    ///   - rhs: The mass unit.
+    /// - Returns: A unit of force.
+    public static func * (
+        lhs: Self,
+        rhs: Mass
+    ) -> Force {
+        return .init(
+            mass: rhs,
+            acceleration: lhs
+        )
+    }
+
+    // MARK: Composed Units
+
     /// The meter per square second unit of acceleration.
-    public static let meterPerSquareSecond: Self = .init(.meter, perSquare: .second)
+    public static let meterPerSquareSecond: Self = .init(
+        length: .meter,
+        perSquare: .second
+    )
 
     /// The foot per square second unit of acceleration.
-    public static let footPerSquareSecond: Self = .init(.foot, perSquare: .second)
+    public static let footPerSquareSecond: Self = .init(
+        length: .foot,
+        perSquare: .second
+    )
 }
 
 // MARK: - Codable

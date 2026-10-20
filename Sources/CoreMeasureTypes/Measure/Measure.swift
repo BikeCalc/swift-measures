@@ -31,8 +31,10 @@ where Unit: Equatable & Measurable & Sendable {
     /// - Parameters:
     ///   - value: The value.
     ///   - unit: The unit.
-    public init<Value>(_ value: Value, _ unit: Unit)
-    where Value: BinaryFloatingPoint {
+    public init<Value>(
+        _ value: Value,
+        _ unit: Unit
+    ) where Value: BinaryFloatingPoint {
         self.value = .init(value)
         self.unit = unit
     }
@@ -42,16 +44,18 @@ where Unit: Equatable & Measurable & Sendable {
     /// - Parameters:
     ///   - value: The value.
     ///   - unit: The unit.
-    public init<Value>(_ value: Value, _ unit: Unit)
-    where Value: BinaryInteger {
+    public init<Value>(
+        _ value: Value,
+        _ unit: Unit
+    ) where Value: BinaryInteger {
         self.value = .init(value)
         self.unit = unit
     }
 
     /// A Boolean value indicating whether this measure is valid.
     public var isValid: Bool {
-        return self.isValidForConversion
-            && self.isWithinValidRange
+        return self.isValidForConversion == true
+            && self.isWithinValidRange == true
     }
 
     /// A Boolean value indicating whether this measure is within its dimension's valid range.
@@ -63,25 +67,27 @@ where Unit: Equatable & Measurable & Sendable {
 
     /// A Boolean value indicating whether this measure defines a finite, invertible conversion.
     internal var isValidForConversion: Bool {
-        return self.value.isFinite && self.hasValidConversionUnit
+        return self.value.isFinite == true && self.hasValidConversionUnit == true
     }
 
     /// A Boolean value indicating whether the unit defines a finite, invertible conversion.
     private var hasValidConversionUnit: Bool {
-        return self.unit.coefficient.isFinite
-            && !self.unit.coefficient.isZero
-            && self.unit.constant.isFinite
+        return self.unit.coefficient.isFinite == true
+            && self.unit.coefficient.isZero == false
+            && self.unit.constant.isFinite == true
     }
 }
 
 // MARK: - Addable
 
 extension Measure: Addable {
-    public static func + (_ lhs: Self, _ rhs: Self) -> Self {
+    public static func + (
+        _ lhs: Self,
+        _ rhs: Self
+    ) -> Self {
         let lhsValue: Double = lhs.value
         let rhsValue: Double = rhs.converted(to: lhs.unit).value
         let newValue: Double = lhsValue + rhsValue
-
         return .init(newValue, lhs.unit)
     }
 }
@@ -120,11 +126,11 @@ extension Measure: ApproximatelyEquatable {
         absoluteTolerance: Self.AbsoluteTolerance,
         relativeTolerance: Self.RelativeTolerance = 0
     ) -> Bool {
-        guard self.hasValidConversionUnit,
-            other.hasValidConversionUnit,
-            absoluteTolerance.isValidForConversion,
+        guard self.hasValidConversionUnit == true,
+            other.hasValidConversionUnit == true,
+            absoluteTolerance.isValidForConversion == true,
             absoluteTolerance.value >= 0,
-            relativeTolerance.isFinite,
+            relativeTolerance.isFinite == true,
             relativeTolerance >= 0,
             relativeTolerance <= 1
         else {
@@ -138,9 +144,9 @@ extension Measure: ApproximatelyEquatable {
         // Allow an infinite converted value only when its input was already infinite. A finite input that becomes
         // infinite during conversion has overflowed and must not compare equal to another infinity. NaN passes neither
         // check.
-        guard toleranceValue.isFinite,
-            lhsValue.isFinite || (self.value.isInfinite && lhsValue.isInfinite),
-            rhsValue.isFinite || (other.value.isInfinite && rhsValue.isInfinite)
+        guard toleranceValue.isFinite == true,
+            lhsValue.isFinite == true || (self.value.isInfinite == true && lhsValue.isInfinite == true),
+            rhsValue.isFinite == true || (other.value.isInfinite == true && rhsValue.isInfinite == true)
         else {
             return false
         }
@@ -152,8 +158,7 @@ extension Measure: ApproximatelyEquatable {
         let difference: Double = abs(lhsValue - rhsValue)
         let scale: Double = max(abs(lhsValue), abs(rhsValue))
         let bound: Double = max(toleranceValue, relativeTolerance * scale)
-
-        return difference.isFinite && difference <= bound
+        return difference.isFinite == true && difference <= bound
     }
 }
 
@@ -179,7 +184,6 @@ extension Measure: CanonicallyEquatable {
     public func isCanonicallyEqual(to rhs: Self) -> Bool {
         let lhsValue: Double = self.converted(to: .base).value
         let rhsValue: Double = rhs.converted(to: .base).value
-
         return lhsValue == rhsValue
     }
 }
@@ -187,10 +191,12 @@ extension Measure: CanonicallyEquatable {
 // MARK: - Comparable
 
 extension Measure: Comparable {
-    public static func < (_ lhs: Self, _ rhs: Self) -> Bool {
+    public static func < (
+        _ lhs: Self,
+        _ rhs: Self
+    ) -> Bool {
         let lhsValue: Double = lhs.value
         let rhsValue: Double = rhs.converted(to: lhs.unit).value
-
         return lhsValue < rhsValue
     }
 }
@@ -267,10 +273,14 @@ extension Measure: Decodable
 where Unit: Decodable {
     public init(from decoder: Decoder) throws {
         let container: KeyedDecodingContainer<Self.CodingKeys> = try decoder.container(keyedBy: Self.CodingKeys.self)
-
-        let value: Double = try container.decode(Double.self, forKey: .value)
-        let unit: Unit = try container.decode(Unit.self, forKey: .unit)
-
+        let value: Double = try container.decode(
+            Double.self,
+            forKey: .value
+        )
+        let unit: Unit = try container.decode(
+            Unit.self,
+            forKey: .unit
+        )
         self.init(value, unit)
     }
 }
@@ -292,10 +302,12 @@ extension Measure {
     ///   - lhs: The dividend.
     ///   - rhs: The divisor.
     /// - Returns: The quotient.
-    public static func / (_ lhs: Self, _ rhs: Double) -> Self {
+    public static func / (
+        _ lhs: Self,
+        _ rhs: Double
+    ) -> Self {
         let lhsValue: Double = lhs.value
         let newValue: Double = lhsValue / rhs
-
         return .init(newValue, lhs.unit)
     }
 
@@ -304,7 +316,10 @@ extension Measure {
     /// - Parameters:
     ///   - lhs: The dividend.
     ///   - rhs: The divisor.
-    public static func /= (_ lhs: inout Self, _ rhs: Double) {
+    public static func /= (
+        _ lhs: inout Self,
+        _ rhs: Double
+    ) {
         lhs = lhs / rhs
     }
 
@@ -314,10 +329,12 @@ extension Measure {
     ///   - lhs: The dividend.
     ///   - rhs: The divisor.
     /// - Returns: The remainder.
-    public static func % (_ lhs: Self, _ rhs: Double) -> Self {
+    public static func % (
+        _ lhs: Self,
+        _ rhs: Double
+    ) -> Self {
         let lhsValue: Double = lhs.value
         let newValue: Double = lhsValue.truncatingRemainder(dividingBy: rhs)
-
         return .init(newValue, lhs.unit)
     }
 
@@ -326,7 +343,10 @@ extension Measure {
     /// - Parameters:
     ///   - lhs: The dividend.
     ///   - rhs: The divisor.
-    public static func %= (_ lhs: inout Self, _ rhs: Double) {
+    public static func %= (
+        _ lhs: inout Self,
+        _ rhs: Double
+    ) {
         lhs = lhs % rhs
     }
 
@@ -365,9 +385,14 @@ extension Measure: Encodable
 where Unit: Encodable {
     public func encode(to encoder: Encoder) throws {
         var container: KeyedEncodingContainer<Self.CodingKeys> = encoder.container(keyedBy: Self.CodingKeys.self)
-
-        try container.encode(self.value, forKey: .value)
-        try container.encode(self.unit, forKey: .unit)
+        try container.encode(
+            self.value,
+            forKey: .value
+        )
+        try container.encode(
+            self.unit,
+            forKey: .unit
+        )
     }
 }
 
@@ -375,7 +400,10 @@ where Unit: Encodable {
 
 extension Measure: Equatable
 where Unit: Equatable {
-    public static func == (_ lhs: Self, _ rhs: Self) -> Bool {
+    public static func == (
+        _ lhs: Self,
+        _ rhs: Self
+    ) -> Bool {
         return lhs.value == rhs.value
             && lhs.unit == rhs.unit
     }
@@ -408,10 +436,12 @@ extension Measure {
     ///   - lhs: The multiplicand.
     ///   - rhs: The multiplier.
     /// - Returns: The product.
-    public static func * (_ lhs: Self, _ rhs: Double) -> Self {
+    public static func * (
+        _ lhs: Self,
+        _ rhs: Double
+    ) -> Self {
         let lhsValue: Double = lhs.value
         let newValue: Double = lhsValue * rhs
-
         return .init(newValue, lhs.unit)
     }
 
@@ -421,10 +451,12 @@ extension Measure {
     ///   - lhs: The multiplicand.
     ///   - rhs: The multiplier.
     /// - Returns: The product.
-    public static func * (_ lhs: Double, _ rhs: Self) -> Self {
+    public static func * (
+        _ lhs: Double,
+        _ rhs: Self
+    ) -> Self {
         let rhsValue: Double = rhs.value
         let newValue: Double = lhs * rhsValue
-
         return .init(newValue, rhs.unit)
     }
 
@@ -433,7 +465,10 @@ extension Measure {
     /// - Parameters:
     ///   - lhs: The multiplicand.
     ///   - rhs: The multiplier.
-    public static func *= (_ lhs: inout Self, _ rhs: Double) {
+    public static func *= (
+        _ lhs: inout Self,
+        _ rhs: Double
+    ) {
         lhs = lhs * rhs
     }
 
@@ -472,11 +507,13 @@ extension Measure: Sendable {}
 // MARK: - Subtractable
 
 extension Measure: Subtractable {
-    public static func - (_ lhs: Self, _ rhs: Self) -> Self {
+    public static func - (
+        _ lhs: Self,
+        _ rhs: Self
+    ) -> Self {
         let lhsValue: Double = lhs.value
         let rhsValue: Double = rhs.converted(to: lhs.unit).value
         let newValue: Double = lhsValue - rhsValue
-
         return .init(newValue, lhs.unit)
     }
 }

@@ -28,10 +28,30 @@ public struct ElectricalInductance {
         self.symbol = symbol
     }
 
+    /// Creates a unit of electrical inductance from the specified units.
+    ///
+    /// The coefficient and symbol are formed by dividing the magnetic flux unit by the electric current unit.
+    ///
+    /// - Parameters:
+    ///   - magneticFlux: The magnetic flux unit.
+    ///   - electricCurrent: The electric current unit.
+    internal init(
+        magneticFlux: MagneticFlux,
+        electricCurrent: ElectricCurrent
+    ) {
+        self.init(
+            coefficient: magneticFlux.coefficient * (1 / electricCurrent.coefficient),
+            symbol: magneticFlux.symbol + "/" + electricCurrent.symbol
+        )
+    }
+
     // MARK: Composed Units
 
     /// The weber per ampere unit of electrical inductance.
-    public static let weberPerAmpere: Self = MagneticFlux.weber.dividing(by: .ampere)
+    public static let weberPerAmpere: Self = .init(
+        magneticFlux: .weber,
+        electricCurrent: .ampere
+    )
 }
 
 // MARK: - Codable

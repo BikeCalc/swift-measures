@@ -7,10 +7,13 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import Testing
+
 @testable import Measures
 
 @Suite("Converted Measure Equatable Tests")
 internal struct ConvertedMeasureEquatableTests {
+    internal init() {}
+
     private static let equalityArguments: [(Measure<Length>, Measure<Length>, Bool)] = [
         (Measure<Length>(1, .meter), Measure<Length>(1, .meter), true),
         (Measure<Length>(1, .meter), Measure<Length>(2, .meter), false),
@@ -29,9 +32,14 @@ internal struct ConvertedMeasureEquatableTests {
         rhs: Measure<Length>,
         result: Bool
     ) {
-        let lhsWrapper: Converted<Length> = .init(wrappedValue: lhs, to: lhs.unit)
-        let rhsWrapper: Converted<Length> = .init(wrappedValue: rhs, to: rhs.unit)
-
+        let lhsWrapper: Converted<Length> = .init(
+            wrappedValue: lhs,
+            to: lhs.unit
+        )
+        let rhsWrapper: Converted<Length> = .init(
+            wrappedValue: rhs,
+            to: rhs.unit
+        )
         #expect((lhsWrapper == rhsWrapper) == result)
     }
 
@@ -44,9 +52,14 @@ internal struct ConvertedMeasureEquatableTests {
         rhs: Measure<Length>,
         result: Bool
     ) {
-        let lhsWrapper: Converted<Length> = .init(wrappedValue: lhs, to: lhs.unit)
-        let rhsWrapper: Converted<Length> = .init(wrappedValue: rhs, to: rhs.unit)
-
+        let lhsWrapper: Converted<Length> = .init(
+            wrappedValue: lhs,
+            to: lhs.unit
+        )
+        let rhsWrapper: Converted<Length> = .init(
+            wrappedValue: rhs,
+            to: rhs.unit
+        )
         #expect((lhsWrapper != rhsWrapper) == !result)
     }
 
@@ -59,9 +72,14 @@ internal struct ConvertedMeasureEquatableTests {
         rhs: Measure<Length>,
         result: Bool
     ) {
-        let lhsWrapper: Converted<Length> = .init(wrappedValue: lhs, to: lhs.unit)
-        let rhsWrapper: Converted<Length> = .init(wrappedValue: rhs, to: rhs.unit)
-
+        let lhsWrapper: Converted<Length> = .init(
+            wrappedValue: lhs,
+            to: lhs.unit
+        )
+        let rhsWrapper: Converted<Length> = .init(
+            wrappedValue: rhs,
+            to: rhs.unit
+        )
         #expect(lhsWrapper.isEqual(to: rhsWrapper) == result)
     }
 
@@ -74,9 +92,14 @@ internal struct ConvertedMeasureEquatableTests {
         rhs: Measure<Length>,
         result: Bool
     ) {
-        let lhsWrapper: Converted<Length> = .init(wrappedValue: lhs, to: lhs.unit)
-        let rhsWrapper: Converted<Length> = .init(wrappedValue: rhs, to: rhs.unit)
-
+        let lhsWrapper: Converted<Length> = .init(
+            wrappedValue: lhs,
+            to: lhs.unit
+        )
+        let rhsWrapper: Converted<Length> = .init(
+            wrappedValue: rhs,
+            to: rhs.unit
+        )
         #expect(lhsWrapper.isUnequal(to: rhsWrapper) == !result)
     }
 }

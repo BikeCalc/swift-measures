@@ -11,7 +11,9 @@ import SwiftSyntax
 import SwiftSyntaxMacros
 
 /// The implementation of the `MetricUnits` macro.
-package struct MetricUnitsMacro {}
+package struct MetricUnitsMacro {
+    package init() {}
+}
 
 // MARK: - UnitMacro
 
@@ -32,7 +34,7 @@ extension MetricUnitsMacro: MemberMacro {
         conformingTo protocols: Array<TypeSyntax>,
         in context: some MacroExpansionContext
     ) throws -> Array<DeclSyntax> {
-        return try unitExpansion(
+        return try Self.unitExpansion(
             of: node,
             providingMembersOf: declaration,
             in: context

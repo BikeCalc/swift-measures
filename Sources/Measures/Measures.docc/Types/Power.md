@@ -54,4 +54,8 @@
 
 ### Multiplying Units
 
-- ``multiplying(by:)``
+- ``*(_:_:)->Energy``
+
+### Dividing Units
+
+- ``/(_:_:)->ElectricPotential``

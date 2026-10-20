@@ -7,10 +7,13 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import Testing
+
 @testable import Measures
 
 @Suite("Length Measure Divisible Tests")
 internal struct LengthMeasureDivisibleTests {
+    internal init() {}
+
     private static let divisionArguments: [(Measure<Length>, Double, Measure<Length>)] = [
         (Measure<Length>(2, .meter), 2, Measure<Length>(1, .meter)),
         (Measure<Length>(3, .meter), 2, Measure<Length>(1.5, .meter)),

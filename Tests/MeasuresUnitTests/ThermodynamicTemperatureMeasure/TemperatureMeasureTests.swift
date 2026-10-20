@@ -7,10 +7,13 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import Testing
+
 @testable import Measures
 
 @Suite("Temperature Measure Tests")
 internal struct TemperatureMeasureTests {
+    internal init() {}
+
     @Test(
         "Bounded valid range succeeds",
         arguments: [

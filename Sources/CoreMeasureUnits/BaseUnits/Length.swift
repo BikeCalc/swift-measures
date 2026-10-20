@@ -28,6 +28,38 @@ public struct Length {
         self.symbol = symbol
     }
 
+    /// Returns a unit of energy by multiplying the specified units.
+    ///
+    /// - Parameters:
+    ///   - lhs: The length unit.
+    ///   - rhs: The force unit.
+    /// - Returns: A unit of energy.
+    public static func * (
+        lhs: Self,
+        rhs: Force
+    ) -> Energy {
+        return .init(
+            force: rhs,
+            length: lhs
+        )
+    }
+
+    /// Returns a unit of speed by dividing the specified units.
+    ///
+    /// - Parameters:
+    ///   - lhs: The length unit.
+    ///   - rhs: The time unit.
+    /// - Returns: A unit of speed.
+    public static func / (
+        lhs: Self,
+        rhs: Time
+    ) -> Speed {
+        return .init(
+            length: lhs,
+            time: rhs
+        )
+    }
+
     // MARK: Astronomical Units
 
     /// The parsec unit of length.
@@ -131,7 +163,7 @@ public struct Length {
     /// The pica unit of length.
     public static let pica: Self = .init(
         coefficient: Self.inch.coefficient / 6,
-        symbol: "pc"
+        symbol: "p"
     )
 
     /// The point unit of length.
@@ -155,24 +187,6 @@ extension Length: Codable {}
 
 extension Length: Comparable {}
 
-// MARK: - Divisible
-
-extension Length {
-    /// Returns the quotient of dividing this value by the specified value.
-    ///
-    /// - Parameter time: A unit of time.
-    /// - Returns: A unit of speed.
-    public func dividing(by time: Time) -> Speed {
-        let coefficient: Double = self.coefficient * (1 / time.coefficient)
-        let symbol: String = self.symbol + "/" + time.symbol
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
-}
-
 // MARK: - Equatable
 
 extension Length: Equatable {}
@@ -185,52 +199,6 @@ extension Length: Hashable {}
 
 extension Length: Measurable {
     public static let base: Self = .meter
-}
-
-// MARK: - Multipliable
-
-extension Length {
-    /// Returns the product of multiplying this value by the specified value.
-    ///
-    /// - Parameter length: A unit of length.
-    /// - Returns: A unit of area.
-    public func multiplying(by length: Length) -> Area {
-        let coefficient: Double = self.coefficient * length.coefficient
-        let symbol: String = self.symbol + "⋅" + length.symbol
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
-}
-
-// MARK: - Raisable
-
-extension Length {
-    /// Returns the result of raising this value to its square.
-    ///
-    /// - Returns: A unit of area.
-    public func squared() -> Area {
-        let unit: Area = self.multiplying(by: self)
-
-        return .init(
-            coefficient: unit.coefficient,
-            symbol: self.symbol + "²"
-        )
-    }
-
-    /// Returns the result of raising this value to its cube.
-    ///
-    /// - Returns: A unit of volume.
-    public func cubed() -> Volume {
-        let unit: Volume = self.squared().multiplying(by: self)
-
-        return .init(
-            coefficient: unit.coefficient,
-            symbol: self.symbol + "³"
-        )
-    }
 }
 
 // MARK: - Sendable

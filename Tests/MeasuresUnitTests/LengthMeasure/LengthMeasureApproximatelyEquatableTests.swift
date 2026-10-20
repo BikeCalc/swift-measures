@@ -11,6 +11,8 @@ import Testing
 
 @Suite("Length Measure ApproximatelyEquatable Tests")
 internal struct LengthMeasureApproximatelyEquatableTests {
+    internal init() {}
+
     private typealias LengthMeasure = Measure<Length>
 
     @Test(

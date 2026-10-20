@@ -28,10 +28,62 @@ public struct ElectricCurrent {
         self.symbol = symbol
     }
 
+    /// Creates a unit of electric current from the specified units.
+    ///
+    /// The coefficient and symbol are formed by dividing the electric charge unit by the time unit.
+    ///
+    /// - Parameters:
+    ///   - electricCharge: The electric charge unit.
+    ///   - time: The time unit.
+    internal init(
+        electricCharge: ElectricCharge,
+        time: Time
+    ) {
+        self.init(
+            coefficient: electricCharge.coefficient * (1 / time.coefficient),
+            symbol: electricCharge.symbol + "/" + time.symbol
+        )
+    }
+
+    /// Returns a unit of electric charge by multiplying the specified units.
+    ///
+    /// - Parameters:
+    ///   - lhs: The electric current unit.
+    ///   - rhs: The time unit.
+    /// - Returns: A unit of electric charge.
+    public static func * (
+        lhs: Self,
+        rhs: Time
+    ) -> ElectricCharge {
+        return .init(
+            electricCurrent: lhs,
+            time: rhs
+        )
+    }
+
+    /// Returns a unit of electric conductance by dividing the specified units.
+    ///
+    /// - Parameters:
+    ///   - lhs: The electric current unit.
+    ///   - rhs: The electric potential unit.
+    /// - Returns: A unit of electric conductance.
+    public static func / (
+        lhs: Self,
+        rhs: ElectricPotential
+    ) -> ElectricConductance {
+        return .init(
+            electricCurrent: lhs,
+            electricPotential: rhs
+        )
+    }
+
     // MARK: Composed Units
 
     /// The coulomb per second unit of electric current.
-    public static let coulombPerSecond: Self = ElectricCharge.coulomb.dividing(by: .second)
+    public static let coulombPerSecond: Self = .init(
+        electricCharge: .coulomb,
+        time: .second
+    )
 }
 
 // MARK: - Codable
@@ -41,56 +93,6 @@ extension ElectricCurrent: Codable {}
 // MARK: - Comparable
 
 extension ElectricCurrent: Comparable {}
-
-// MARK: - Multipliable
-
-extension ElectricCurrent {
-    /// Returns the product of multiplying this value by the specified value.
-    ///
-    /// - Parameter time: A unit of time.
-    /// - Returns: A unit of electric charge.
-    public func multiplying(by time: Time) -> ElectricCharge {
-        let coefficient: Double = self.coefficient * time.coefficient
-        let symbol: String = self.symbol + "⋅" + time.symbol
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
-
-    /// Returns the product of multiplying this value by the specified value.
-    ///
-    /// - Parameter electricPotential: A unit of electric potential.
-    /// - Returns: A unit of power.
-    public func multiplying(by electricPotential: ElectricPotential) -> Power {
-        let coefficient: Double = self.coefficient * electricPotential.coefficient
-        let symbol: String = self.symbol + "⋅" + electricPotential.symbol
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
-}
-
-// MARK: - Divisible
-
-extension ElectricCurrent {
-    /// Returns the quotient of dividing this value by the specified value.
-    ///
-    /// - Parameter electricPotential: A unit of electric potential.
-    /// - Returns: A unit of electric conductance.
-    public func dividing(by electricPotential: ElectricPotential) -> ElectricConductance {
-        let coefficient: Double = self.coefficient * (1 / electricPotential.coefficient)
-        let symbol: String = self.symbol + "/" + electricPotential.symbol
-
-        return .init(
-            coefficient: coefficient,
-            symbol: symbol
-        )
-    }
-}
 
 // MARK: - Equatable
 
