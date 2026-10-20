@@ -128,6 +128,6 @@ internal struct MetricUnitsMacroTests {
                 failures.append(failure)
             }
         )
-        #expect(failures.isEmpty)
+        #expect(failures.isEmpty == true)
     }
 }

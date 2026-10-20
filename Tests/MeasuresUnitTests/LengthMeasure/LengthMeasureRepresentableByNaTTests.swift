@@ -12,6 +12,8 @@ import Testing
 
 @Suite("Length Measure RepresentableByNaT Tests")
 internal struct LengthMeasureRepresentableByNaTTests {
+    internal init() {}
+
     private func makeNaT<Value>() -> Value
     where Value: RepresentableByNaT {
         return .nat
@@ -40,7 +42,6 @@ extension LengthMeasureRepresentableByNaTTests {
             symbol: "u"
         )
         let measure: Measure<Length> = .init(value, unit)
-
         #expect(measure.isNaT == false)
     }
 }
@@ -51,7 +52,6 @@ extension LengthMeasureRepresentableByNaTTests {
     @Test("NaT is available through the protocol")
     internal func natIsAvailableThroughProtocol() {
         let measure: Measure<Length> = self.makeNaT()
-
         #expect(measure.isNaT == true)
         #expect(measure.value.isNaN == true)
         #expect(measure.unit.coefficient.isNaN == true)
@@ -70,7 +70,6 @@ extension LengthMeasureRepresentableByNaTTests {
     )
     internal func nonfiniteValuesAreNaT(value: Double) {
         let measure: Measure<Length> = .init(value, .meter)
-
         #expect(measure.isNaT == true)
     }
 
@@ -98,7 +97,6 @@ extension LengthMeasureRepresentableByNaTTests {
             symbol: "u"
         )
         let measure: Measure<Length> = .init(1, unit)
-
         #expect(measure.isNaT == true)
     }
 }

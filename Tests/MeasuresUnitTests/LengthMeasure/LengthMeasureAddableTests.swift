@@ -85,6 +85,6 @@ extension LengthMeasureAddableTests {
         addend: Measure<Length>.Addend,
         sum _: Measure<Length>
     ) {
-        #expect((augend + addend).isCanonicallyEqual(to: addend + augend))
+        #expect((augend + addend).isCanonicallyEqual(to: addend + augend) == true)
     }
 }

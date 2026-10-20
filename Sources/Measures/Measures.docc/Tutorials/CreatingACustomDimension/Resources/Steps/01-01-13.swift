@@ -21,7 +21,6 @@ struct DataTransferRate: Equatable, Unit {
     ) {
         let coefficient: Double = memory.coefficient * (1 / time.coefficient)
         let symbol: String = memory.symbol + "/" + time.symbol
-
         self.init(
             coefficient: coefficient,
             symbol: symbol

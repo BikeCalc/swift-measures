@@ -37,14 +37,13 @@ where UnitType: ComposableUnit {
     /// - Returns: `true` if the units are compatible and the converted values are exactly equal, and `false` otherwise.
     public func isCanonicallyEqual<Other>(to other: Measure<Other>) -> Bool
     where Other: ComposableUnit {
-        guard self.isNaT == false, other.isNaT == false, self.unit.isCompatible(with: other.unit) else {
+        guard self.isNaT == false, other.isNaT == false, self.unit.isCompatible(with: other.unit) == true else {
             return false
         }
 
         let lhsValue: Double = self.value * self.unit.coefficient + self.unit.constant
         let rhsValue: Double = other.value * other.unit.coefficient + other.unit.constant
-
-        return lhsValue.isFinite && rhsValue.isFinite && lhsValue == rhsValue
+        return lhsValue.isFinite == true && rhsValue.isFinite == true && lhsValue == rhsValue
     }
 }
 
@@ -75,10 +74,10 @@ where UnitType: ComposableUnit {
     public func converted<Destination>(to unit: Destination) -> Measure<Destination>
     where Destination: ComposableUnit {
         guard self.isNaT == false,
-            unit.coefficient.isFinite,
+            unit.coefficient.isFinite == true,
             unit.coefficient > 0,
-            unit.constant.isFinite,
-            self.unit.isCompatible(with: unit)
+            unit.constant.isFinite == true,
+            self.unit.isCompatible(with: unit) == true
         else {
             return .nat
         }
@@ -91,7 +90,7 @@ where UnitType: ComposableUnit {
         let referenceValue: Double = self.value * self.unit.coefficient + self.unit.constant
         let value: Double = (referenceValue - unit.constant) / unit.coefficient
 
-        guard value.isFinite else {
+        guard value.isFinite == true else {
             return .nat
         }
 
@@ -110,12 +109,11 @@ where UnitType: ComposableUnit {
 
         let value: Double = self.value * self.unit.coefficient + self.unit.constant
 
-        guard value.isFinite else {
+        guard value.isFinite == true else {
             return .nat
         }
 
         let unit: ComposedUnit = .init(dimension: self.unit.dimension)
-
         return .init(value, unit)
     }
 }
@@ -148,7 +146,7 @@ where UnitType: ComposableUnit {
 
         let value: Double = left.value / right.value
 
-        guard value.isFinite else {
+        guard value.isFinite == true else {
             return .nat
         }
 
@@ -231,7 +229,7 @@ where UnitType: ComposableUnit {
 
         let value: Double = left.value * right.value
 
-        guard value.isFinite else {
+        guard value.isFinite == true else {
             return .nat
         }
 
@@ -315,7 +313,7 @@ where UnitType: ComposableUnit & Equatable {
         let value: Double = self.value * self.unit.coefficient + self.unit.constant
         let base: Double = other.value * other.unit.coefficient + other.unit.constant
 
-        guard value.isFinite, base.isFinite else {
+        guard value.isFinite == true, base.isFinite == true else {
             return false
         }
 
@@ -357,8 +355,7 @@ where UnitType: ComposableUnit & Equatable {
         }
 
         let power: Double = base ** exponent
-
-        return power.isFinite && value == power
+        return power.isFinite == true && value == power
     }
 
     /// Returns this measure raised to an integer power in a composed coherent SI unit.
@@ -384,7 +381,7 @@ where UnitType: ComposableUnit & Equatable {
 
         let value: Double = coherent.value ** rhs
 
-        guard value.isFinite else {
+        guard value.isFinite == true else {
             return .nat
         }
 

@@ -57,7 +57,7 @@ internal struct LengthMeasureTests {
         ]
     )
     internal func unboundedValidRangeSucceeds(measure: Measure<Length>) {
-        #expect(measure.isValid)
+        #expect(measure.isValid == true)
     }
 
     @Test(

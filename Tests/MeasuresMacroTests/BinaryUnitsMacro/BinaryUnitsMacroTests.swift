@@ -80,6 +80,6 @@ internal struct BinaryUnitsMacroTests {
                 failures.append(failure)
             }
         )
-        #expect(failures.isEmpty)
+        #expect(failures.isEmpty == true)
     }
 }

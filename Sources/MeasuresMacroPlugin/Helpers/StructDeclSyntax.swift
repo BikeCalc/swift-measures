@@ -15,8 +15,8 @@ extension StructDeclSyntax {
 
         for member in self.memberBlock.members {
             guard let variable: VariableDeclSyntax = member.decl.as(VariableDeclSyntax.self),
-                variable.modifiers.contains(where: { $0.name.text == "public" }),
-                variable.modifiers.contains(where: { $0.name.text == "static" }),
+                variable.modifiers.contains(where: { $0.name.text == "public" }) == true,
+                variable.modifiers.contains(where: { $0.name.text == "static" }) == true,
                 variable.bindingSpecifier.tokenKind == .keyword(.let)
             else {
                 continue

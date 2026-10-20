@@ -11,10 +11,11 @@ import Testing
 
 @Suite("Pressure CaseIterable Tests")
 internal struct PressureCaseIterableTests {
+    internal init() {}
+
     @Test("All cases contain the predefined units and base unit without duplicates")
     internal func allCases() {
         let units: Array<Pressure> = Pressure.allCases
-
         #expect(units.count == 33)
         #expect(Set(units).count == 33)
         #expect(units.contains(.base) == true)

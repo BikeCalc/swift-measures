@@ -15,10 +15,11 @@ import Testing
 
 @Suite("CaseIterableUnitsMacro")
 internal struct CaseIterableUnitsMacroTests {
+    internal init() {}
+
     @Test("Expands case-iterable units")
     internal func expansion() {
         var failures: Array<TestFailureSpec> = []
-
         // swift-format-ignore
         assertMacroExpansion(
             """
@@ -56,14 +57,12 @@ internal struct CaseIterableUnitsMacroTests {
                 failures.append(failure)
             }
         )
-
-        #expect(failures.isEmpty)
+        #expect(failures.isEmpty == true)
     }
 
     @Test("Expands combined prefix units")
     internal func combinedPrefixUnits() {
         var failures: Array<TestFailureSpec> = []
-
         // swift-format-ignore
         assertMacroExpansion(
             """
@@ -129,7 +128,6 @@ internal struct CaseIterableUnitsMacroTests {
                 failures.append(failure)
             }
         )
-
-        #expect(failures.isEmpty)
+        #expect(failures.isEmpty == true)
     }
 }

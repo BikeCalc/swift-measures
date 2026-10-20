@@ -63,7 +63,7 @@ internal struct ComposedUnitFactorValidator {
             return true
         }
 
-        return hasValidConversions()
-            && hasValidConstants()
+        return hasValidConversions() == true
+            && hasValidConstants() == true
     }
 }

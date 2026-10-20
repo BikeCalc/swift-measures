@@ -53,6 +53,7 @@ internal struct ComposedUnitSymbolValidator {
             guard let first: Character = self.symbol.first, let last: Character = self.symbol.last else {
                 return false
             }
+
             return first.isWhitespace == false
                 && last.isWhitespace == false
         }
@@ -65,13 +66,14 @@ internal struct ComposedUnitSymbolValidator {
             var depth: Int = 0
 
             for character in self.symbol {
-                switch PunctuationToken(rawValue: character) {
+                switch Self.PunctuationToken(rawValue: character) {
                 case .openingParenthesis:
                     depth += 1
                 case .closingParenthesis:
                     guard depth > 0 else {
                         return false
                     }
+
                     depth -= 1
                 case nil:
                     break
@@ -91,18 +93,19 @@ internal struct ComposedUnitSymbolValidator {
 
             for character in self.symbol
             where character.isWhitespace == false {
-                switch PunctuationToken(rawValue: character) {
+                switch Self.PunctuationToken(rawValue: character) {
                 case .openingParenthesis:
                     expectsOperand = true
                 case .closingParenthesis:
-                    if expectsOperand {
+                    if expectsOperand == true {
                         return false
                     }
                 case nil:
-                    if OperatorToken(rawValue: character) != nil {
+                    if Self.OperatorToken(rawValue: character) != nil {
                         guard expectsOperand == false else {
                             return false
                         }
+
                         expectsOperand = true
                     } else {
                         expectsOperand = false
@@ -113,8 +116,8 @@ internal struct ComposedUnitSymbolValidator {
             return expectsOperand == false
         }
 
-        return hasValidBoundaries()
-            && hasBalancedParentheses()
-            && hasRequiredOperands()
+        return hasValidBoundaries() == true
+            && hasBalancedParentheses() == true
+            && hasRequiredOperands() == true
     }
 }

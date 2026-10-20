@@ -71,7 +71,7 @@ extension Unit {
 extension Unit
 where Self: CanonicallyEquatable {
     public func isCanonicallyEqual(to other: Self) -> Bool {
-        return self.isCompatible(with: other)
+        return self.isCompatible(with: other) == true
             && self.coefficient == other.coefficient
             && self.constant == other.constant
     }

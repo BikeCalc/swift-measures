@@ -12,6 +12,8 @@ import Testing
 
 @Suite("ComposedUnit Measure RepresentableByNaT Tests")
 internal struct ComposedUnitMeasureRepresentableByNaTTests {
+    internal init() {}
+
     private func makeNaT<Value>() -> Value
     where Value: RepresentableByNaT {
         return .nat
@@ -25,7 +27,6 @@ extension ComposedUnitMeasureRepresentableByNaTTests {
     internal func dimensionlessMeasureIsNotNaT() {
         let unit: ComposedUnit = ComposedUnit(Length.meter) / ComposedUnit(Length.meter)
         let measure: Measure<ComposedUnit> = .init(1, unit)
-
         #expect(measure.unit.dimension.isDimensionless == true)
         #expect(measure.isNaT == false)
     }
@@ -53,7 +54,6 @@ extension ComposedUnitMeasureRepresentableByNaTTests {
             symbol: "u"
         )
         let measure: Measure<ComposedUnit> = .init(value, unit)
-
         #expect(measure.isNaT == false)
     }
 }
@@ -64,7 +64,6 @@ extension ComposedUnitMeasureRepresentableByNaTTests {
     @Test("NaT is available through the protocol")
     internal func natIsAvailableThroughProtocol() {
         let measure: Measure<ComposedUnit> = self.makeNaT()
-
         #expect(measure.isNaT == true)
         #expect(measure.value.isNaN == true)
         #expect(measure.unit.coefficient.isNaN == true)
@@ -83,7 +82,6 @@ extension ComposedUnitMeasureRepresentableByNaTTests {
     )
     internal func nonfiniteValuesAreNaT(value: Double) {
         let measure: Measure<ComposedUnit> = .init(value, ComposedUnit(Length.meter))
-
         #expect(measure.isNaT == true)
     }
 
@@ -111,7 +109,6 @@ extension ComposedUnitMeasureRepresentableByNaTTests {
             symbol: "u"
         )
         let measure: Measure<ComposedUnit> = .init(1, unit)
-
         #expect(measure.isNaT == true)
     }
 }

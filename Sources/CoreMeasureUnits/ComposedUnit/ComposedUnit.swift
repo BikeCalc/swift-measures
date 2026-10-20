@@ -80,16 +80,16 @@ public struct ComposedUnit {
 
         /// A boolean value indicating whether the conversion values are finite and the coefficient is positive.
         internal var hasValidConversion: Bool {
-            return self.coefficient.isFinite
+            return self.coefficient.isFinite == true
                 && self.coefficient > 0
-                && self.constant.isFinite
+                && self.constant.isFinite == true
         }
     }
 
     /// A unit representation and its signed integer exponent.
     internal struct Factor: Codable, Comparable, Hashable, Sendable {
         /// The complete captured unit used to identify matching factors.
-        internal let unit: AnyDefinedUnit
+        internal let unit: ComposedUnit.AnyDefinedUnit
 
         /// The signed power applied to the captured unit.
         internal let exponent: Int
@@ -100,7 +100,7 @@ public struct ComposedUnit {
         ///   - unit: The complete unit representation used for matching factors.
         ///   - exponent: The power applied to this unit.
         internal init(
-            unit: AnyDefinedUnit,
+            unit: ComposedUnit.AnyDefinedUnit,
             exponent: Int = 1
         ) {
             self.unit = unit
@@ -167,7 +167,7 @@ public struct ComposedUnit {
     /// - Precondition: The unit has a finite positive coefficient and a finite constant.
     public init<UnitType>(_ unit: UnitType)
     where UnitType: ComposableUnit & DefinedUnit {
-        let factor: Factor = .init(unit: AnyDefinedUnit(unit))
+        let factor: Self.Factor = .init(unit: ComposedUnit.AnyDefinedUnit(unit))
         self.init(factors: [factor])
     }
 
@@ -180,12 +180,10 @@ public struct ComposedUnit {
     /// - Parameter factors: The factors to compose. An empty collection represents the dimensionless identity.
     internal init(factors: Array<Self.Factor>) {
         let validator: ComposedUnitFactorValidator = .init(factors: factors)
-
         precondition(
-            validator.validate(),
+            validator.validate() == true,
             "Factors require finite positive coefficients, finite constants, and valid constant combinations."
         )
-
         self.factors = factors
     }
 
@@ -198,7 +196,7 @@ public struct ComposedUnit {
     ///
     /// - Parameter dimension: The exponents of the seven base quantities.
     internal init(dimension: Dimension) {
-        let factors: Array<Factor> = [
+        let factors: Array<Self.Factor> = [
             .init(
                 unit: Self.AnyDefinedUnit(Length.base),
                 exponent: dimension.length
@@ -245,8 +243,7 @@ public struct ComposedUnit {
             lhs.constant == 0 && rhs.constant == 0,
             "Multiplication of units requires zero constants."
         )
-
-        let factors: Array<Factor> = lhs.factors + rhs.factors
+        let factors: Array<Self.Factor> = lhs.factors + rhs.factors
         return .init(factors: factors)
     }
 
@@ -264,9 +261,8 @@ public struct ComposedUnit {
             lhs.constant == 0 && rhs.constant == 0,
             "Division of units requires zero constants."
         )
-
-        let invertedFactors: Array<Factor> = rhs.factors.map { $0.inverted }
-        let factors: Array<Factor> = lhs.factors + invertedFactors
+        let invertedFactors: Array<Self.Factor> = rhs.factors.map { $0.inverted }
+        let factors: Array<Self.Factor> = lhs.factors + invertedFactors
         return .init(factors: factors)
     }
 
@@ -290,14 +286,12 @@ public struct ComposedUnit {
                 lhs.constant == 0,
                 "Exponentiation requires a zero constant unless the exponent is zero or one."
             )
-
-            let factors: Array<Factor> = lhs.factors.map { factor in
+            let factors: Array<Self.Factor> = lhs.factors.map { factor in
                 return .init(
                     unit: factor.unit,
                     exponent: factor.exponent * rhs
                 )
             }
-
             return .init(factors: factors)
         }
     }
@@ -319,7 +313,7 @@ extension ComposedUnit: Canonicalizable {
     ///
     /// This checks whether the stored factors already have the structure produced by `canonicalized()`.
     public var isCanonicalized: Bool {
-        return self.isSimplified && self.isNormalized
+        return self.isSimplified == true && self.isNormalized == true
     }
 
     /// Simplifies matching factors and then orders their representations consistently.
@@ -328,10 +322,9 @@ extension ComposedUnit: Canonicalizable {
     /// - Precondition: `isCanonicalizable` is `true`.
     public func canonicalized() -> Self {
         precondition(
-            self.isCanonicalizable,
+            self.isCanonicalizable == true,
             "The composed unit must be canonicalizable."
         )
-
         return self.simplified().normalized()
     }
 }
@@ -373,6 +366,7 @@ extension ComposedUnit: ComposableUnit {
             guard factor.unit.coefficient != 1 else {
                 return result
             }
+
             return result * factor.raisedCoefficient
         }
     }
@@ -427,17 +421,17 @@ extension ComposedUnit: Decodable {
     ///   composition nor the NaT representation.
     public init(from decoder: any Decoder) throws {
         let container: any SingleValueDecodingContainer = try decoder.singleValueContainer()
-        let factors: Array<Factor> = try container.decode(Array<Factor>.self)
+        let factors: Array<Self.Factor> = try container.decode(Array<Self.Factor>.self)
         let validator: ComposedUnitFactorValidator = .init(factors: factors)
-
-        let isNaTRepresentation: Bool = factors.count == 1
+        let isNaTRepresentation: Bool =
+            factors.count == 1
             && factors[0].exponent == 1
-            && factors[0].unit.dimension.isDimensionless
-            && factors[0].unit.coefficient.isNaN
-            && factors[0].unit.constant.isNaN
+            && factors[0].unit.dimension.isDimensionless == true
+            && factors[0].unit.coefficient.isNaN == true
+            && factors[0].unit.constant.isNaN == true
             && factors[0].unit.symbol == "NaT"
 
-        guard validator.validate() || isNaTRepresentation else {
+        guard validator.validate() == true || isNaTRepresentation == true else {
             throw DecodingError.dataCorruptedError(
                 in: container,
                 debugDescription: "Factors must describe a valid composition or the dimensionless NaT representation."
@@ -526,11 +520,10 @@ extension ComposedUnit: Normalizable {
     /// - Precondition: `isNormalizable` is `true`.
     internal func normalized() -> Self {
         precondition(
-            self.isNormalizable,
+            self.isNormalizable == true,
             "The composed unit must be normalizable."
         )
-
-        return Self(factors: self.factors.sorted())
+        return .init(factors: self.factors.sorted())
     }
 }
 
@@ -550,7 +543,7 @@ extension ComposedUnit: Simplifiable {
 
     /// A boolean value indicating whether every factor is nonzero and each unit representation occurs only once.
     internal var isSimplified: Bool {
-        var units: Set<AnyDefinedUnit> = []
+        var units: Set<Self.AnyDefinedUnit> = []
 
         for factor in self.factors
         where factor.exponent == 0 || units.insert(factor.unit).inserted == false {
@@ -581,7 +574,7 @@ extension ComposedUnit: Simplifiable {
     ///
     /// - Returns: The simplified factors, or `nil` if an intermediate exponent sum overflows.
     private func _simplified() -> Array<Self.Factor>? {
-        var exponents: Dictionary<ComposedUnit.AnyDefinedUnit, Int> = [:]
+        var exponents: Dictionary<Self.AnyDefinedUnit, Int> = [:]
 
         for factor in self.factors
         where factor.exponent != 0 {
@@ -594,7 +587,7 @@ extension ComposedUnit: Simplifiable {
             exponents[factor.unit] = sum.partialValue
         }
 
-        var simplifiedFactors: Array<Factor> = []
+        var simplifiedFactors: Array<Self.Factor> = []
 
         for factor in self.factors
         where factor.exponent != 0 {
@@ -606,7 +599,6 @@ extension ComposedUnit: Simplifiable {
                 unit: factor.unit,
                 exponent: exponent
             )
-
             simplifiedFactors.append(simplifiedFactor)
         }
 

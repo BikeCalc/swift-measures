@@ -11,10 +11,11 @@ import Testing
 
 @Suite("Memory CaseIterable Tests")
 internal struct MemoryCaseIterableTests {
+    internal init() {}
+
     @Test("All cases contain the predefined units and base unit without duplicates")
     internal func allCases() {
         let units: Array<Memory> = Memory.allCases
-
         #expect(units.count == 66)
         #expect(Set(units).count == 66)
         #expect(units.contains(.base) == true)

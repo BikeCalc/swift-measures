@@ -337,10 +337,10 @@ extension Measure: Convertible {
     /// - Returns: A measure expressed in the destination unit, or NaT when conversion cannot produce a finite result.
     public func converted(to unit: UnitType) -> Self {
         guard self.isNaT == false,
-            unit.coefficient.isFinite,
+            unit.coefficient.isFinite == true,
             unit.coefficient > 0,
-            unit.constant.isFinite,
-            self.unit.isCompatible(with: unit)
+            unit.constant.isFinite == true,
+            self.unit.isCompatible(with: unit) == true
         else {
             return .nat
         }
@@ -353,7 +353,7 @@ extension Measure: Convertible {
         let referenceValue: Double = self.value * self.unit.coefficient + self.unit.constant
         let value: Double = (referenceValue - unit.constant) / unit.coefficient
 
-        guard value.isFinite else {
+        guard value.isFinite == true else {
             return .nat
         }
 
