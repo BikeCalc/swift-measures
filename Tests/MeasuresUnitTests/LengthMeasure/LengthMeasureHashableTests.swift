@@ -7,10 +7,13 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import Testing
+
 @testable import Measures
 
 @Suite("Length Measure Hashable Tests")
 internal struct LengthMeasureHashableTests {
+    internal init() {}
+
     @Test(
         "Equal stored values produce equal hashes",
         arguments: [

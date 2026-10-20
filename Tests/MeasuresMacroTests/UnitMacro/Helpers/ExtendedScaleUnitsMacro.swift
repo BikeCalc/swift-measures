@@ -8,6 +8,7 @@
 
 import SwiftSyntax
 import SwiftSyntaxMacros
+
 @testable import MeasuresMacroPlugin
 
 internal struct ExtendedScaleUnitsMacro {

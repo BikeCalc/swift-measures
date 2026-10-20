@@ -24,7 +24,7 @@ Measures is written in Swift and avoids platform-specific APIs where possible.
 1. Add Measures to the dependencies in your `Package.swift` file:
 
     ```swift
-    let package: Package = .init(
+    internal let package: Package = .init(
         ...
         dependencies: [
             .package(
@@ -40,7 +40,7 @@ Measures is written in Swift and avoids platform-specific APIs where possible.
    name of that target:
 
     ```swift
-    let package: Package = .init(
+    internal let package: Package = .init(
         ...
         targets: [
             .target(
@@ -68,8 +68,7 @@ Measures is written in Swift and avoids platform-specific APIs where possible.
 Keep a `Measure` in one unit while calculating with another:
 
 ```swift
-@Converted(to: .metersPerSecond)
-var speed: Measure<Speed> = .init(36, .kilometersPerHour)
+@Converted(to: .metersPerSecond) internal var speed: Measure<Speed> = .init(36, .kilometersPerHour)
 print(speed)
 // Prints "10.0 m/s"
 
@@ -90,7 +89,7 @@ Beyond the operations shown here, `Measure` also supports subtraction, division 
 ## Documentation
 
 You can read more about this package by visiting the
-[documentation](https://bikecalc.github.io/swift-measures/documentation/measures).
+[Documentation](https://bikecalc.github.io/swift-measures/documentation/measures).
 
 ## Contributing
 

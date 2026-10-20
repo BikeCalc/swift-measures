@@ -7,10 +7,13 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import Testing
+
 @testable import Measures
 
 @Suite("Length Measure Convertible Tests")
 internal struct LengthMeasureConvertibleTests {
+    internal init() {}
+
     @Test(
         "Conversion succeeds",
         arguments: [
@@ -29,7 +32,6 @@ internal struct LengthMeasureConvertibleTests {
         let converted: Measure<Length> = source.converted(to: unit)
         var mutated: Measure<Length> = source
         mutated.convert(to: unit)
-
         #expect(abs(converted.value - expected.value) < 1e-10)
         #expect(converted.unit == expected.unit)
         #expect(abs(mutated.value - expected.value) < 1e-10)

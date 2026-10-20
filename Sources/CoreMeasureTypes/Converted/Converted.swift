@@ -106,7 +106,6 @@ where Unit: Decodable {
     /// - Throws: Any error thrown while decoding the wrapped measure.
     public init(from decoder: any Decoder) throws {
         let value: Measure<Unit> = try .init(from: decoder)
-
         self.init(
             wrappedValue: value,
             to: value.unit
@@ -136,7 +135,10 @@ extension Converted: Equatable {
     ///   - lhs: The first converted value to compare.
     ///   - rhs: The second converted value to compare.
     /// - Returns: The result of comparing the wrapped measures for equality.
-    public static func == (_ lhs: Self, _ rhs: Self) -> Bool {
+    public static func == (
+        _ lhs: Self,
+        _ rhs: Self
+    ) -> Bool {
         return lhs.wrappedValue == rhs.wrappedValue
     }
 }

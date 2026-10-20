@@ -90,9 +90,11 @@ fileprivate struct Arguments {
             let url: URL = .init(fileURLWithPath: arguments[index + 1])
 
             switch arguments[index] {
-            case "--report" where reportURL == nil:
+            case "--report"
+            where reportURL == nil:
                 reportURL = url
-            case "--sources" where sourcesURL == nil:
+            case "--sources"
+            where sourcesURL == nil:
                 sourcesURL = url
             default:
                 throw CodeCoverageReportError.invalidArguments
@@ -365,9 +367,9 @@ fileprivate struct CodeCoverageReporter {
                 underlyingError: error
             )
         }
+
         let standardizedSourcesURL: URL = sourcesURL.standardizedFileURL
         let sourcePathPrefix: String = standardizedSourcesURL.path + "/"
-
         // LLVM exports coverage for dependencies and generated files alongside package sources. Retain only files
         // located beneath the explicitly selected source directory.
         self.files = report.data
@@ -375,7 +377,7 @@ fileprivate struct CodeCoverageReporter {
             .compactMap { file -> SourceCodeCoverage? in
                 let fileURL: URL = URL(fileURLWithPath: file.filename).standardizedFileURL
 
-                guard fileURL.path.hasPrefix(sourcePathPrefix) else {
+                guard fileURL.path.hasPrefix(sourcePathPrefix) == true else {
                     return nil
                 }
 
@@ -397,7 +399,6 @@ fileprivate struct CodeCoverageReporter {
     fileprivate func printReport() {
         print("## Code Coverage")
         print()
-
         self.printTargets()
         print()
         self.printFiles()
@@ -465,8 +466,11 @@ fileprivate struct CodeCoverageReporter {
             percentage = Double(metric.covered) / Double(metric.count) * 100
         }
 
-        return "\(self.format(metric.covered))/\(self.format(metric.count)) "
-            + "(\(String(format: "%.2f%%", percentage)))"
+        let formattedPercentage: String = .init(
+            format: "%.2f%%",
+            percentage
+        )
+        return "\(Self.format(metric.covered))/\(Self.format(metric.count)) (\(formattedPercentage))"
     }
 
     /// Formats an integer using the project's numeric formatting convention.
@@ -479,7 +483,6 @@ fileprivate struct CodeCoverageReporter {
         formatter.numberStyle = .decimal
         formatter.usesGroupingSeparator = true
         formatter.maximumFractionDigits = 0
-
         return formatter.string(from: NSNumber(value: value)) ?? String(value)
     }
 }
@@ -492,7 +495,6 @@ do throws(CodeCoverageReportError) {
         reportURL: arguments.reportURL,
         sourcesURL: arguments.sourcesURL
     )
-
     reporter.printReport()
 } catch let error {
     FileHandle.standardError.write(Data("\(error)\n".utf8))
