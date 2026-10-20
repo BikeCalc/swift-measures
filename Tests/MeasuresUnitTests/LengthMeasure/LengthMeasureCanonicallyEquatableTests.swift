@@ -12,6 +12,8 @@ import Testing
 
 @Suite("Length Measure CanonicallyEquatable Tests")
 internal struct LengthMeasureCanonicallyEquatableTests {
+    internal init() {}
+
     @Test(
         "Canonical equality succeeds",
         arguments: [

@@ -16,10 +16,11 @@ import Testing
 
 @Suite("BinaryUnitsMacro")
 internal struct BinaryUnitsMacroTests {
+    internal init() {}
+
     @Test("Expands binary units")
     internal func expansion() {
         var failures: Array<TestFailureSpec> = []
-
         // swift-format-ignore
         assertMacroExpansion(
             """
@@ -37,7 +38,7 @@ internal struct BinaryUnitsMacroTests {
                 /// - Parameter prefix: The prefix to apply.
                 /// - Returns: The prefixed unit.
                 private static func wibble(_ prefix: BinaryUnitPrefix) -> Self {
-                    return self.init(
+                    return .init(
                         coefficient: prefix.coefficient * 1,
                         constant: 0,
                         symbol: prefix.symbol + "w"
@@ -79,7 +80,6 @@ internal struct BinaryUnitsMacroTests {
                 failures.append(failure)
             }
         )
-
         #expect(failures.isEmpty)
     }
 }

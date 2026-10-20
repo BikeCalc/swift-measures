@@ -12,6 +12,8 @@ import Testing
 
 @Suite("Temperature Measure Tests")
 internal struct TemperatureMeasureTests {
+    internal init() {}
+
     @Test(
         "Bounded valid range succeeds",
         arguments: [

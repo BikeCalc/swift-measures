@@ -14,6 +14,8 @@ import Testing
 
 @Suite("Converted Measure Encodable Tests")
 internal struct ConvertedMeasureEncodableTests {
+    internal init() {}
+
     @Test(
         "Encode to JSON succeeds",
         arguments: [
@@ -26,15 +28,11 @@ internal struct ConvertedMeasureEncodableTests {
         value: Measure<Length>,
         json: String
     ) throws {
-        @Converted(to: .meter)
-        var convertedValue: Measure<Length> = value
-
+        @Converted(to: .meter) var convertedValue: Measure<Length> = value
         let encoder: JSONEncoder = .init()
         encoder.outputFormatting = .sortedKeys
-
         let result: Data = try encoder.encode(_convertedValue)
         let expected: Data = try #require(json.data(using: .utf8))
-
         #expect(result == expected)
     }
 }

@@ -50,8 +50,7 @@ where UnitType: Unit {
     public init<Source>(
         _ value: Source,
         _ unit: UnitType
-    )
-    where Source: BinaryFloatingPoint {
+    ) where Source: BinaryFloatingPoint {
         self.value = .init(value)
         self.unit = unit
     }
@@ -64,8 +63,7 @@ where UnitType: Unit {
     public init<Source>(
         _ value: Source,
         _ unit: UnitType
-    )
-    where Source: BinaryInteger {
+    ) where Source: BinaryInteger {
         self.value = .init(value)
         self.unit = unit
     }
@@ -73,7 +71,7 @@ where UnitType: Unit {
     /// A boolean value indicating whether this measure has a valid conversion and lies within its unit's valid range.
     public var isValid: Bool {
         return self.isNaT == false
-            && self.isWithinValidRange
+            && self.isWithinValidRange == true
     }
 
     /// A boolean value indicating whether this measure is within its dimension's valid range.
@@ -89,6 +87,7 @@ where UnitType: Unit {
 extension Measure: Addable
 where UnitType: Equatable {
     public typealias Addend = Self
+
     public typealias Sum = Self
 
     /// Returns the sum of readings expressed in the first measure's unit.
@@ -105,7 +104,7 @@ where UnitType: Equatable {
         _ lhs: Self,
         _ rhs: Self.Addend
     ) -> Self.Sum {
-        guard lhs.isNaT == false, rhs.isNaT == false, lhs.unit.isCompatible(with: rhs.unit) else {
+        guard lhs.isNaT == false, rhs.isNaT == false, lhs.unit.isCompatible(with: rhs.unit) == true else {
             return .nat
         }
 
@@ -113,7 +112,7 @@ where UnitType: Equatable {
         let rhsValue: Double = rhs.converted(to: lhs.unit).value
         let newValue: Double = lhsValue + rhsValue
 
-        guard newValue.isFinite else {
+        guard newValue.isFinite == true else {
             return .nat
         }
 
@@ -125,6 +124,7 @@ where UnitType: Equatable {
 
 extension Measure: ApproximatelyEquatable {
     public typealias AbsoluteTolerance = Self
+
     public typealias RelativeTolerance = Double
 
     /// Returns whether this value and another agree within either of the specified tolerances.
@@ -154,11 +154,11 @@ extension Measure: ApproximatelyEquatable {
     ) -> Bool {
         guard self.isNaT == false,
             other.isNaT == false,
-            self.unit.isCompatible(with: other.unit),
-            self.unit.isCompatible(with: absoluteTolerance.unit),
+            self.unit.isCompatible(with: other.unit) == true,
+            self.unit.isCompatible(with: absoluteTolerance.unit) == true,
             absoluteTolerance.isNaT == false,
             absoluteTolerance.value >= 0,
-            relativeTolerance.isFinite,
+            relativeTolerance.isFinite == true,
             relativeTolerance >= 0,
             relativeTolerance <= 1
         else {
@@ -169,7 +169,7 @@ extension Measure: ApproximatelyEquatable {
         let rhsValue: Double = (other.value * other.unit.coefficient + other.unit.constant)
         let toleranceValue: Double = absoluteTolerance.value * abs(absoluteTolerance.unit.coefficient)
 
-        guard toleranceValue.isFinite, lhsValue.isFinite, rhsValue.isFinite else {
+        guard toleranceValue.isFinite == true, lhsValue.isFinite == true, rhsValue.isFinite == true else {
             return false
         }
 
@@ -180,8 +180,7 @@ extension Measure: ApproximatelyEquatable {
         let difference: Double = abs(lhsValue - rhsValue)
         let scale: Double = max(abs(lhsValue), abs(rhsValue))
         let bound: Double = max(toleranceValue, relativeTolerance * scale)
-
-        return difference.isFinite && difference <= bound
+        return difference.isFinite == true && difference <= bound
     }
 }
 
@@ -210,14 +209,13 @@ extension Measure: CanonicallyEquatable {
     /// - Parameter other: The measure to compare with this measure.
     /// - Returns: `true` if the units are compatible and the converted values are exactly equal, and `false` otherwise.
     public func isCanonicallyEqual(to other: Self) -> Bool {
-        guard self.isNaT == false, other.isNaT == false, self.unit.isCompatible(with: other.unit) else {
+        guard self.isNaT == false, other.isNaT == false, self.unit.isCompatible(with: other.unit) == true else {
             return false
         }
 
         let lhsValue: Double = self.value * self.unit.coefficient + self.unit.constant
         let rhsValue: Double = other.value * other.unit.coefficient + other.unit.constant
-
-        return lhsValue.isFinite && rhsValue.isFinite && lhsValue == rhsValue
+        return lhsValue.isFinite == true && rhsValue.isFinite == true && lhsValue == rhsValue
     }
 }
 
@@ -238,13 +236,12 @@ where UnitType: Equatable {
         _ lhs: Self,
         _ rhs: Self
     ) -> Bool {
-        guard lhs.isNaT == false, rhs.isNaT == false, lhs.unit.isCompatible(with: rhs.unit) else {
+        guard lhs.isNaT == false, rhs.isNaT == false, lhs.unit.isCompatible(with: rhs.unit) == true else {
             return false
         }
 
         let lhsValue: Double = lhs.value
         let rhsValue: Double = rhs.converted(to: lhs.unit).value
-
         return lhsValue < rhsValue
     }
 
@@ -261,13 +258,12 @@ where UnitType: Equatable {
         _ lhs: Self,
         _ rhs: Self
     ) -> Bool {
-        guard lhs.isNaT == false, rhs.isNaT == false, lhs.unit.isCompatible(with: rhs.unit) else {
+        guard lhs.isNaT == false, rhs.isNaT == false, lhs.unit.isCompatible(with: rhs.unit) == true else {
             return false
         }
 
         let lhsValue: Double = lhs.value
         let rhsValue: Double = rhs.converted(to: lhs.unit).value
-
         return lhsValue <= rhsValue
     }
 
@@ -284,13 +280,12 @@ where UnitType: Equatable {
         _ lhs: Self,
         _ rhs: Self
     ) -> Bool {
-        guard lhs.isNaT == false, rhs.isNaT == false, lhs.unit.isCompatible(with: rhs.unit) else {
+        guard lhs.isNaT == false, rhs.isNaT == false, lhs.unit.isCompatible(with: rhs.unit) == true else {
             return false
         }
 
         let lhsValue: Double = lhs.value
         let rhsValue: Double = rhs.converted(to: lhs.unit).value
-
         return lhsValue > rhsValue
     }
 
@@ -307,13 +302,12 @@ where UnitType: Equatable {
         _ lhs: Self,
         _ rhs: Self
     ) -> Bool {
-        guard lhs.isNaT == false, rhs.isNaT == false, lhs.unit.isCompatible(with: rhs.unit) else {
+        guard lhs.isNaT == false, rhs.isNaT == false, lhs.unit.isCompatible(with: rhs.unit) == true else {
             return false
         }
 
         let lhsValue: Double = lhs.value
         let rhsValue: Double = rhs.converted(to: lhs.unit).value
-
         return lhsValue >= rhsValue
     }
 }
@@ -399,10 +393,14 @@ extension Measure: Decodable
 where UnitType: Decodable {
     public init(from decoder: Decoder) throws {
         let container: KeyedDecodingContainer<Self.CodingKeys> = try decoder.container(keyedBy: Self.CodingKeys.self)
-
-        let value: Double = try container.decode(Double.self, forKey: .value)
-        let unit: UnitType = try container.decode(UnitType.self, forKey: .unit)
-
+        let value: Double = try container.decode(
+            Double.self,
+            forKey: .value
+        )
+        let unit: UnitType = try container.decode(
+            UnitType.self,
+            forKey: .unit
+        )
         self.init(value, unit)
     }
 }
@@ -412,8 +410,11 @@ where UnitType: Decodable {
 extension Measure: Divisible
 where UnitType: Equatable {
     public typealias Divisor = Double
+
     public typealias Quotient = Self
+
     public typealias RemainderDivisor = Double
+
     public typealias Remainder = Self
 
     @available(*, deprecated)
@@ -434,7 +435,7 @@ where UnitType: Equatable {
     }
 
     public func isDivisible(by other: Self) -> Bool {
-        guard self.unit.isCompatible(with: other.unit),
+        guard self.unit.isCompatible(with: other.unit) == true,
             self.isNaT == false,
             other.isNaT == false
         else {
@@ -452,7 +453,7 @@ where UnitType: Equatable {
         let lhsValue: Double = self.value * self.unit.coefficient + self.unit.constant
         let rhsValue: Double = other.value * other.unit.coefficient + other.unit.constant
 
-        guard lhsValue.isFinite, rhsValue.isFinite else {
+        guard lhsValue.isFinite == true, rhsValue.isFinite == true else {
             return false
         }
 
@@ -473,14 +474,14 @@ where UnitType: Equatable {
         _ lhs: Self,
         _ rhs: Self.Divisor
     ) -> Self.Quotient {
-        guard lhs.isNaT == false, rhs.isFinite else {
+        guard lhs.isNaT == false, rhs.isFinite == true else {
             return .nat
         }
 
         let lhsValue: Double = lhs.value
         let newValue: Double = lhsValue / rhs
 
-        guard newValue.isFinite else {
+        guard newValue.isFinite == true else {
             return .nat
         }
 
@@ -500,14 +501,14 @@ where UnitType: Equatable {
         _ lhs: Self,
         _ rhs: Self.RemainderDivisor
     ) -> Self.Remainder {
-        guard lhs.isNaT == false, rhs.isFinite else {
+        guard lhs.isNaT == false, rhs.isFinite == true else {
             return .nat
         }
 
         let lhsValue: Double = lhs.value
         let newValue: Double = lhsValue.truncatingRemainder(dividingBy: rhs)
 
-        guard newValue.isFinite else {
+        guard newValue.isFinite == true else {
             return .nat
         }
 
@@ -521,9 +522,14 @@ extension Measure: Encodable
 where UnitType: Encodable {
     public func encode(to encoder: Encoder) throws {
         var container: KeyedEncodingContainer<Self.CodingKeys> = encoder.container(keyedBy: Self.CodingKeys.self)
-
-        try container.encode(self.value, forKey: .value)
-        try container.encode(self.unit, forKey: .unit)
+        try container.encode(
+            self.value,
+            forKey: .value
+        )
+        try container.encode(
+            self.unit,
+            forKey: .unit
+        )
     }
 }
 
@@ -559,10 +565,11 @@ where UnitType: Hashable {
 extension Measure: Multipliable
 where UnitType: Equatable {
     public typealias Multiplier = Double
+
     public typealias Product = Self
 
     public func isMultiple(of other: Self) -> Bool {
-        guard self.unit.isCompatible(with: other.unit),
+        guard self.unit.isCompatible(with: other.unit) == true,
             self.isNaT == false,
             other.isNaT == false
         else {
@@ -577,7 +584,7 @@ where UnitType: Equatable {
         let lhsValue: Double = self.value * self.unit.coefficient + self.unit.constant
         let rhsValue: Double = other.value * other.unit.coefficient + other.unit.constant
 
-        guard lhsValue.isFinite, rhsValue.isFinite else {
+        guard lhsValue.isFinite == true, rhsValue.isFinite == true else {
             return false
         }
 
@@ -598,14 +605,14 @@ where UnitType: Equatable {
         _ lhs: Self,
         _ rhs: Self.Multiplier
     ) -> Self.Product {
-        guard lhs.isNaT == false, rhs.isFinite else {
+        guard lhs.isNaT == false, rhs.isFinite == true else {
             return .nat
         }
 
         let lhsValue: Double = lhs.value
         let newValue: Double = lhsValue * rhs
 
-        guard newValue.isFinite else {
+        guard newValue.isFinite == true else {
             return .nat
         }
 
@@ -644,6 +651,7 @@ where UnitType: Sendable {}
 extension Measure: Subtractable
 where UnitType: Equatable {
     public typealias Subtrahend = Self
+
     public typealias Difference = Self
 
     /// Returns the difference of readings expressed in the first measure's unit.
@@ -661,7 +669,7 @@ where UnitType: Equatable {
         _ lhs: Self,
         _ rhs: Self.Subtrahend
     ) -> Self.Difference {
-        guard lhs.isNaT == false, rhs.isNaT == false, lhs.unit.isCompatible(with: rhs.unit) else {
+        guard lhs.isNaT == false, rhs.isNaT == false, lhs.unit.isCompatible(with: rhs.unit) == true else {
             return .nat
         }
 
@@ -669,7 +677,7 @@ where UnitType: Equatable {
         let rhsValue: Double = rhs.converted(to: lhs.unit).value
         let newValue: Double = lhsValue - rhsValue
 
-        guard newValue.isFinite else {
+        guard newValue.isFinite == true else {
             return .nat
         }
 

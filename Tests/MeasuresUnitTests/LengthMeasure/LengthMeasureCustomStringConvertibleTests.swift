@@ -12,6 +12,8 @@ import Testing
 
 @Suite("Length Measure CustomStringConvertible Tests")
 internal struct LengthMeasureCustomStringConvertibleTests {
+    internal init() {}
+
     @Test(
         "Description succeeds",
         arguments: [

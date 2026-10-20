@@ -17,6 +17,8 @@ import Testing
 
 @Suite("UnitMacro")
 internal struct UnitMacroTests {
+    internal init() {}
+
     @Test("Expands prefixed units")
     internal func expansion() {
         // swift-format-ignore
@@ -36,7 +38,7 @@ internal struct UnitMacroTests {
                 /// - Parameter prefix: The prefix to apply.
                 /// - Returns: The prefixed unit.
                 private static func bite(_ prefix: BasicScaleUnitPrefix) -> Self {
-                    return self.init(
+                    return .init(
                         coefficient: prefix.coefficient * 2,
                         constant: 0,
                         symbol: prefix.symbol + "B"
@@ -77,7 +79,7 @@ internal struct UnitMacroTests {
                 /// - Parameter prefix: The prefix to apply.
                 /// - Returns: The prefixed unit.
                 private static func bite(_ prefix: BasicScaleUnitPrefix) -> Self {
-                    return self.init(
+                    return .init(
                         coefficient: prefix.coefficient * 1,
                         constant: 0,
                         symbol: prefix.symbol + "B"
@@ -97,7 +99,6 @@ internal struct UnitMacroTests {
     @Test("Generates a shared unprefixed unit once")
     internal func sharedUnprefixedUnit() {
         var failures: Array<TestFailureSpec> = []
-
         // swift-format-ignore
         assertMacroExpansion(
             """
@@ -116,7 +117,7 @@ internal struct UnitMacroTests {
                 /// - Parameter prefix: The prefix to apply.
                 /// - Returns: The prefixed unit.
                 private static func bite(_ prefix: BasicScaleUnitPrefix) -> Self {
-                    return self.init(
+                    return .init(
                         coefficient: prefix.coefficient * 1,
                         constant: 0,
                         symbol: prefix.symbol + "B"
@@ -137,7 +138,7 @@ internal struct UnitMacroTests {
                 /// - Parameter prefix: The prefix to apply.
                 /// - Returns: The prefixed unit.
                 private static func bite(_ prefix: ExtendedScaleUnitPrefix) -> Self {
-                    return self.init(
+                    return .init(
                         coefficient: prefix.coefficient * 1,
                         constant: 0,
                         symbol: prefix.symbol + "B"
@@ -159,7 +160,6 @@ internal struct UnitMacroTests {
                 failures.append(failure)
             }
         )
-
         #expect(failures.isEmpty)
     }
 
@@ -296,7 +296,6 @@ internal struct UnitMacroTests {
         diagnostics: Array<DiagnosticSpec> = []
     ) {
         var failures: Array<TestFailureSpec> = []
-
         assertMacroExpansion(
             source,
             expandedSource: expandedSource,
@@ -308,7 +307,6 @@ internal struct UnitMacroTests {
                 failures.append(failure)
             }
         )
-
         #expect(failures.isEmpty)
     }
 }

@@ -18,7 +18,6 @@ extension DeclGroupSyntax {
 
             let parameters: FunctionParameterListSyntax = initializer.signature.parameterClause.parameters
             let labels: Array<String> = parameters.map(\.firstName.text)
-
             return labels == [
                 "coefficient",
                 "constant",
@@ -31,7 +30,7 @@ extension DeclGroupSyntax {
     internal var staticPropertyNames: Set<String> {
         return self.memberBlock.members.reduce(into: Set<String>()) { result, member in
             guard let variable: VariableDeclSyntax = member.decl.as(VariableDeclSyntax.self),
-                variable.modifiers.contains(where: { $0.name.text == "static" })
+                variable.modifiers.contains(where: { $0.name.text == "static" }) == true
             else {
                 return
             }

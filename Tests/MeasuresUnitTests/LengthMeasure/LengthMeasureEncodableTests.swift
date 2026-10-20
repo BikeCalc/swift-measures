@@ -14,6 +14,8 @@ import Testing
 
 @Suite("Length Measure Encodable Tests")
 internal struct LengthMeasureEncodableTests {
+    internal init() {}
+
     @Test(
         "Encode to JSON succeeds",
         arguments: [
@@ -37,10 +39,8 @@ internal struct LengthMeasureEncodableTests {
     ) throws {
         let encoder: JSONEncoder = .init()
         encoder.outputFormatting = .sortedKeys
-
         let result: Data = try encoder.encode(value)
         let expected: Data = try #require(json.data(using: .utf8))
-
         #expect(result == expected)
     }
 }

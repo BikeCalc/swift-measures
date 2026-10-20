@@ -90,7 +90,7 @@ fileprivate struct Arguments {
     /// - Parameter arguments: The arguments following the script name.
     /// - Throws: `UnitTestRunnerError.invalidArguments` if any arguments are supplied.
     fileprivate init(_ arguments: Array<String>) throws(UnitTestRunnerError) {
-        guard arguments.isEmpty else {
+        guard arguments.isEmpty == true else {
             throw UnitTestRunnerError.invalidArguments
         }
     }
@@ -117,19 +117,22 @@ fileprivate struct UnitTestRunner {
     /// - Throws: `UnitTestRunnerError` if a command fails or coverage artifacts cannot be exported.
     fileprivate func run() throws(UnitTestRunnerError) {
         try self.runSwift(arguments: ["test", "--enable-code-coverage"])
-
         let pathData: Data = try self.runSwift(
             arguments: ["test", "--show-codecov-path"],
             captureOutput: true
         )
-        let reportPath: String = .init(decoding: pathData, as: UTF8.self)
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+        let reportPath: String = String(
+            decoding: pathData,
+            as: UTF8.self
+        )
+        .trimmingCharacters(in: .whitespacesAndNewlines)
 
-        guard reportPath.isEmpty == false && FileManager.default.fileExists(atPath: reportPath) else {
+        guard reportPath.isEmpty == false && FileManager.default.fileExists(atPath: reportPath) == true else {
             throw UnitTestRunnerError.missingCoverageReport(path: reportPath)
         }
 
         let coverageData: Data
+
         do {
             coverageData = try .init(contentsOf: URL(fileURLWithPath: reportPath))
         } catch let error {
@@ -182,6 +185,7 @@ fileprivate struct UnitTestRunner {
         let process: Process = .init()
         process.executableURL = .init(fileURLWithPath: "/usr/bin/env")
         process.arguments = ["swift"] + arguments
+
         if let output {
             process.standardOutput = output
         } else {
@@ -201,6 +205,7 @@ fileprivate struct UnitTestRunner {
         guard process.terminationReason == .exit else {
             throw UnitTestRunnerError.commandInterrupted(signal: process.terminationStatus)
         }
+
         guard process.terminationStatus == EXIT_SUCCESS else {
             throw UnitTestRunnerError.commandFailed(
                 arguments: arguments,

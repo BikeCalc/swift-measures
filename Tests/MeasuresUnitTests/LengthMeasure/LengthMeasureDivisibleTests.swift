@@ -12,6 +12,8 @@ import Testing
 
 @Suite("Length Measure Divisible Tests")
 internal struct LengthMeasureDivisibleTests {
+    internal init() {}
+
     private static let divisionArguments: [(Measure<Length>, Measure<Length>.Divisor, Measure<Length>)] = [
         (Measure<Length>(2, .meter), 2, Measure<Length>(1, .meter)),
         (Measure<Length>(3, .meter), 2, Measure<Length>(1.5, .meter)),

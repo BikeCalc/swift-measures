@@ -12,7 +12,7 @@ import the module in source files that use its measurement types.
 Add the package to the dependencies in your `Package.swift` file.
 
 ```swift
-let package: Package = .init(
+internal let package: Package = .init(
     ...
     dependencies: [
         .package(
@@ -30,7 +30,7 @@ Add the `Measures` product to the dependencies of the target that will import it
 that target.
 
 ```swift
-let package: Package = .init(
+internal let package: Package = .init(
     ...
     targets: [
         .target(

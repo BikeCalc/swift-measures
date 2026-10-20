@@ -160,7 +160,6 @@ where UnitType: Decodable {
     /// - Throws: Any error thrown while decoding the wrapped measure.
     public init(from decoder: any Decoder) throws {
         let value: Measure<UnitType> = try .init(from: decoder)
-
         self.init(
             wrappedValue: value,
             to: value.unit

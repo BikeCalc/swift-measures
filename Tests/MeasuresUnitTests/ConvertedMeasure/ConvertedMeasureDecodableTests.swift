@@ -14,6 +14,8 @@ import Testing
 
 @Suite("Converted Measure Decodable Tests")
 internal struct ConvertedMeasureDecodableTests {
+    internal init() {}
+
     @Test(
         "Decode from JSON succeeds",
         arguments: [
@@ -31,7 +33,6 @@ internal struct ConvertedMeasureDecodableTests {
             Converted<Length>.self,
             from: data
         )
-
         #expect(result.wrappedValue == value)
     }
 
@@ -47,7 +48,6 @@ internal struct ConvertedMeasureDecodableTests {
     )
     internal func decodeFromJSONThrows(json: String) throws {
         let data: Data = try #require(json.data(using: .utf8))
-
         #expect(throws: DecodingError.self) {
             try JSONDecoder().decode(
                 Converted<Length>.self,
