@@ -88,3 +88,7 @@ extension LengthMeasureSubtractableTests {
         #expect((minuend - subtrahend).isCanonicallyEqual(to: subtrahend - minuend) == false)
     }
 }
+
+// MARK: - NaT
+
+extension LengthMeasureSubtractableTests {}

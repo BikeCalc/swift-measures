@@ -12,8 +12,8 @@ import Testing
 
 @testable import Measures
 
-@Suite("Converted Measure Decodable Tests")
-internal struct ConvertedMeasureDecodableTests {
+@Suite("Converted Length Measure Decodable Tests")
+internal struct ConvertedLengthMeasureDecodableTests {
     internal init() {}
 
     @Test(
@@ -57,3 +57,7 @@ internal struct ConvertedMeasureDecodableTests {
     }
 }
 #endif
+
+// MARK: - NaT
+
+extension ConvertedLengthMeasureDecodableTests {}

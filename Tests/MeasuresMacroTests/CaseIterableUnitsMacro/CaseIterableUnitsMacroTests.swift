@@ -13,7 +13,7 @@ import Testing
 
 @testable import MeasuresMacroPlugin
 
-@Suite("CaseIterableUnitsMacro")
+@Suite("CaseIterableUnitsMacro Tests")
 internal struct CaseIterableUnitsMacroTests {
     internal init() {}
 

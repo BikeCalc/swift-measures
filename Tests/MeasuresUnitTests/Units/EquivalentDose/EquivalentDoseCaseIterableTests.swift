@@ -6,10 +6,11 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-import Measures
 import Testing
 
-@Suite("Equivalent Dose CaseIterable Tests")
+@testable import Measures
+
+@Suite("EquivalentDose CaseIterable Tests")
 internal struct EquivalentDoseCaseIterableTests {
     internal init() {}
 

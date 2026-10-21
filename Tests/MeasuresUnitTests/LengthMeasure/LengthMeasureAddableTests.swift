@@ -88,3 +88,7 @@ extension LengthMeasureAddableTests {
         #expect((augend + addend).isCanonicallyEqual(to: addend + augend) == true)
     }
 }
+
+// MARK: - NaT
+
+extension LengthMeasureAddableTests {}

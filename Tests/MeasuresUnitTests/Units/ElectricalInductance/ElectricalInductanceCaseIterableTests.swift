@@ -6,10 +6,11 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-import Measures
 import Testing
 
-@Suite("Electrical Inductance CaseIterable Tests")
+@testable import Measures
+
+@Suite("ElectricalInductance CaseIterable Tests")
 internal struct ElectricalInductanceCaseIterableTests {
     internal init() {}
 

@@ -128,3 +128,7 @@ internal struct LengthMeasureDivisibleTests {
         #expect(runningRemainder == remainder)
     }
 }
+
+// MARK: - NaT
+
+extension LengthMeasureDivisibleTests {}

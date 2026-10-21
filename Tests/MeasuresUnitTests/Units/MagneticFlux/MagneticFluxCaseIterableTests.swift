@@ -6,10 +6,11 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-import Measures
 import Testing
 
-@Suite("Magnetic Flux CaseIterable Tests")
+@testable import Measures
+
+@Suite("MagneticFlux CaseIterable Tests")
 internal struct MagneticFluxCaseIterableTests {
     internal init() {}
 

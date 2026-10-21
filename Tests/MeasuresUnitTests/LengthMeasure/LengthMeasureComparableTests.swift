@@ -139,3 +139,7 @@ internal struct LengthMeasureComparableTests {
         #expect(valueIsBetweenBounds == (value > lowerBound && value < upperBound))
     }
 }
+
+// MARK: - NaT
+
+extension LengthMeasureComparableTests {}

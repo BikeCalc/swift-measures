@@ -50,3 +50,7 @@ internal struct LengthMeasureCustomDebugStringConvertibleTests {
         #expect(value.debugDescription == result)
     }
 }
+
+// MARK: - NaT
+
+extension LengthMeasureCustomDebugStringConvertibleTests {}

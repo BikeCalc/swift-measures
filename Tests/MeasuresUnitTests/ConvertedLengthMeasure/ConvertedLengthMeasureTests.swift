@@ -10,8 +10,8 @@ import Testing
 
 @testable import Measures
 
-@Suite("Converted Measure Tests")
-internal struct ConvertedMeasureTests {
+@Suite("Converted Length Measure Tests")
+internal struct ConvertedLengthMeasureTests {
     internal init() {}
 
     private static let conversionArguments: [(Measure<Length>, Measure<Length>)] = [
@@ -50,3 +50,7 @@ internal struct ConvertedMeasureTests {
         #expect(convertedValue == result)
     }
 }
+
+// MARK: - NaT
+
+extension ConvertedLengthMeasureTests {}

@@ -10,8 +10,8 @@ import Testing
 
 @testable import Measures
 
-@Suite("Converted Measure Hashable Tests")
-internal struct ConvertedMeasureHashableTests {
+@Suite("Converted Length Measure Hashable Tests")
+internal struct ConvertedLengthMeasureHashableTests {
     internal init() {}
 
     @Test(
