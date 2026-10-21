@@ -37,3 +37,7 @@ internal struct LengthMeasureCanonicallyEquatableTests {
         #expect(lhs.isCanonicallyEqual(to: rhs) == result)
     }
 }
+
+// MARK: - NaT
+
+extension LengthMeasureCanonicallyEquatableTests {}

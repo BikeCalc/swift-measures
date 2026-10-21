@@ -10,7 +10,7 @@ import Testing
 
 @testable import Measures
 
-@Suite("Temperature Measure Convertible Tests")
+@Suite("ThermodynamicTemperature Measure Convertible Tests")
 internal struct TemperatureMeasureConvertibleTests {
     internal init() {}
 

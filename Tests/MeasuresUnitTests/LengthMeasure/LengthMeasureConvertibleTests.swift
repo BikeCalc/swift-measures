@@ -14,6 +14,29 @@ import Testing
 internal struct LengthMeasureConvertibleTests {
     internal init() {}
 
+    @Test("Identical conversions preserve the value and use the destination unit")
+    internal func identicalConversionsPreserveValue() {
+        let sourceUnit: Length = .init(
+            coefficient: 0.01,
+            constant: 1e20,
+            symbol: "source"
+        )
+        let destinationUnit: Length = .init(
+            coefficient: 0.01,
+            constant: 1e20,
+            symbol: "destination"
+        )
+        let source: Measure<Length> = .init(1, sourceUnit)
+        let converted: Measure<Length> = source.converted(to: destinationUnit)
+        var mutated: Measure<Length> = source
+        mutated.convert(to: destinationUnit)
+        #expect(converted.value == 1)
+        #expect(converted.unit == destinationUnit)
+        #expect(mutated == converted)
+        #expect((source + converted).value == 2)
+        #expect((source - converted).value == 0)
+    }
+
     @Test(
         "Conversion succeeds",
         arguments: [
@@ -38,3 +61,7 @@ internal struct LengthMeasureConvertibleTests {
         #expect(mutated.unit == expected.unit)
     }
 }
+
+// MARK: - NaT
+
+extension LengthMeasureConvertibleTests {}

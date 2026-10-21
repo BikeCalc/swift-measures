@@ -31,3 +31,7 @@ internal struct LengthMeasureCustomStringConvertibleTests {
         #expect(value.description == result)
     }
 }
+
+// MARK: - NaT
+
+extension LengthMeasureCustomStringConvertibleTests {}

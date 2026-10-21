@@ -12,17 +12,8 @@ import SwiftSyntaxMacros
 
 /// The implementation of the `MetricUnits` macro.
 package struct MetricUnitsMacro {
+    /// Creates the metric units macro.
     package init() {}
-}
-
-// MARK: - UnitMacro
-
-extension MetricUnitsMacro: UnitMacro {
-    internal typealias Prefix = MetricUnitPrefix
-
-    internal static var macroName: String {
-        return "MetricUnits"
-    }
 }
 
 // MARK: - MemberMacro
@@ -39,5 +30,15 @@ extension MetricUnitsMacro: MemberMacro {
             providingMembersOf: declaration,
             in: context
         )
+    }
+}
+
+// MARK: - UnitMacro
+
+extension MetricUnitsMacro: UnitMacro {
+    internal typealias Prefix = MetricUnitPrefix
+
+    internal static var macroName: String {
+        return "MetricUnits"
     }
 }

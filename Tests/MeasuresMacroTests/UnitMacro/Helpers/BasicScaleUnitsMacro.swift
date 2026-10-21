@@ -15,16 +15,6 @@ internal struct BasicScaleUnitsMacro {
     internal init() {}
 }
 
-// MARK: - UnitMacro
-
-extension BasicScaleUnitsMacro: UnitMacro {
-    internal typealias Prefix = BasicScaleUnitPrefix
-
-    internal static var macroName: String {
-        return "BasicScaleUnits"
-    }
-}
-
 // MARK: - MemberMacro
 
 extension BasicScaleUnitsMacro: MemberMacro {
@@ -39,5 +29,15 @@ extension BasicScaleUnitsMacro: MemberMacro {
             providingMembersOf: declaration,
             in: context
         )
+    }
+}
+
+// MARK: - UnitMacro
+
+extension BasicScaleUnitsMacro: UnitMacro {
+    internal typealias Prefix = BasicScaleUnitPrefix
+
+    internal static var macroName: String {
+        return "BasicScaleUnits"
     }
 }

@@ -172,7 +172,8 @@ fileprivate struct UnitTestRunner {
     ///
     /// - Parameters:
     ///   - arguments: The arguments passed to Swift.
-    ///   - captureOutput: Whether to capture standard output instead of forwarding it to standard error.
+    ///   - captureOutput: A boolean value indicating whether to capture standard output instead of forwarding it to
+    ///   standard error.
     /// - Returns: The captured output, or empty data when output is forwarded.
     /// - Throws: `UnitTestRunnerError` if the Swift process cannot start or does not complete successfully.
     @discardableResult
