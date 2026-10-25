@@ -13,8 +13,6 @@ import Testing
 @Suite("ComposedUnit Measure CustomStringConvertible Tests")
 internal struct ComposedUnitMeasureCustomStringConvertibleTests {
     internal init() {}
+
+    // TODO: Implement tests for this suite.
 }
-
-// MARK: - NaT
-
-extension ComposedUnitMeasureCustomStringConvertibleTests {}

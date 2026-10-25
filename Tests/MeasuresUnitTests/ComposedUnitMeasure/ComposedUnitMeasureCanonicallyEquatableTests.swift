@@ -13,8 +13,6 @@ import Testing
 @Suite("ComposedUnit Measure CanonicallyEquatable Tests")
 internal struct ComposedUnitMeasureCanonicallyEquatableTests {
     internal init() {}
+
+    // TODO: Implement tests for this suite.
 }
-
-// MARK: - NaT
-
-extension ComposedUnitMeasureCanonicallyEquatableTests {}
