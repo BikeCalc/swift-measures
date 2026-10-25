@@ -14,7 +14,6 @@ import Testing
 internal struct SpeedTests {
     internal init() {}
 
-    // TODO: Use Double.isApproximatelyEqual when Numerics Extended provides its conformance.
     private let accuracy: Double = 1e-12
 
     @Test(
