@@ -14,7 +14,7 @@ import Testing
 @testable import CoreMeasureTypes
 @testable import MeasuresMacroPlugin
 
-@Suite("BinaryUnitsMacro")
+@Suite("BinaryUnitsMacro Tests")
 internal struct BinaryUnitsMacroTests {
     internal init() {}
 
@@ -80,6 +80,6 @@ internal struct BinaryUnitsMacroTests {
                 failures.append(failure)
             }
         )
-        #expect(failures.isEmpty)
+        #expect(failures.isEmpty == true)
     }
 }

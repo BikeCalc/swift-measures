@@ -15,7 +15,7 @@ import Testing
 @testable import CoreMeasureTypes
 @testable import MeasuresMacroPlugin
 
-@Suite("UnitMacro")
+@Suite("UnitMacro Tests")
 internal struct UnitMacroTests {
     internal init() {}
 
@@ -160,7 +160,7 @@ internal struct UnitMacroTests {
                 failures.append(failure)
             }
         )
-        #expect(failures.isEmpty)
+        #expect(failures.isEmpty == true)
     }
 
     @Test("Rejects a non-structure declaration")
@@ -307,6 +307,6 @@ internal struct UnitMacroTests {
                 failures.append(failure)
             }
         )
-        #expect(failures.isEmpty)
+        #expect(failures.isEmpty == true)
     }
 }

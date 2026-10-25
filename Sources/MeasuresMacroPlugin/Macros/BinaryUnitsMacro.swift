@@ -12,17 +12,8 @@ import SwiftSyntaxMacros
 
 /// The implementation of the `BinaryUnits` macro.
 package struct BinaryUnitsMacro {
+    /// Creates the binary units macro.
     package init() {}
-}
-
-// MARK: - UnitMacro
-
-extension BinaryUnitsMacro: UnitMacro {
-    internal typealias Prefix = BinaryUnitPrefix
-
-    internal static var macroName: String {
-        return "BinaryUnits"
-    }
 }
 
 // MARK: - MemberMacro
@@ -39,5 +30,15 @@ extension BinaryUnitsMacro: MemberMacro {
             providingMembersOf: declaration,
             in: context
         )
+    }
+}
+
+// MARK: - UnitMacro
+
+extension BinaryUnitsMacro: UnitMacro {
+    internal typealias Prefix = BinaryUnitPrefix
+
+    internal static var macroName: String {
+        return "BinaryUnits"
     }
 }

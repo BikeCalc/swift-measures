@@ -9,7 +9,7 @@
 import SwiftSyntax
 
 extension DeclGroupSyntax {
-    /// A Boolean value indicating whether this declaration contains the initializer required by a unit macro.
+    /// A boolean value indicating whether this declaration contains the initializer required by a unit macro.
     internal var hasUnitInitializer: Bool {
         return self.memberBlock.members.contains { member in
             guard let initializer: InitializerDeclSyntax = member.decl.as(InitializerDeclSyntax.self) else {

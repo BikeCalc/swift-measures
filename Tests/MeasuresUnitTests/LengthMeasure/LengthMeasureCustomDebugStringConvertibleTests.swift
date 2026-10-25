@@ -19,15 +19,27 @@ internal struct LengthMeasureCustomDebugStringConvertibleTests {
         arguments: [
             (
                 Measure<Length>(1, .meter),
-                "Measure<Length>(1.0, CoreMeasureUnits.Length(coefficient: 1.0, constant: 0.0, symbol: \"m\"))"
+                """
+                Measure<Length>(1.0, Length(coefficient: 1.0, constant: 0.0, symbol: "m", dimension: \
+                Dimension(length: 1, mass: 0, time: 0, electricCurrent: 0, thermodynamicTemperature: 0, \
+                substanceAmount: 0, luminousIntensity: 0)))
+                """
             ),
             (
                 Measure<Length>(-1, .meter),
-                "Measure<Length>(-1.0, CoreMeasureUnits.Length(coefficient: 1.0, constant: 0.0, symbol: \"m\"))"
+                """
+                Measure<Length>(-1.0, Length(coefficient: 1.0, constant: 0.0, symbol: "m", dimension: \
+                Dimension(length: 1, mass: 0, time: 0, electricCurrent: 0, thermodynamicTemperature: 0, \
+                substanceAmount: 0, luminousIntensity: 0)))
+                """
             ),
             (
                 Measure<Length>(100, .centimeter),
-                "Measure<Length>(100.0, CoreMeasureUnits.Length(coefficient: 0.01, constant: 0.0, symbol: \"cm\"))"
+                """
+                Measure<Length>(100.0, Length(coefficient: 0.01, constant: 0.0, symbol: "cm", dimension: \
+                Dimension(length: 1, mass: 0, time: 0, electricCurrent: 0, thermodynamicTemperature: 0, \
+                substanceAmount: 0, luminousIntensity: 0)))
+                """
             )
         ]
     )
@@ -38,3 +50,7 @@ internal struct LengthMeasureCustomDebugStringConvertibleTests {
         #expect(value.debugDescription == result)
     }
 }
+
+// MARK: - NaT
+
+extension LengthMeasureCustomDebugStringConvertibleTests {}

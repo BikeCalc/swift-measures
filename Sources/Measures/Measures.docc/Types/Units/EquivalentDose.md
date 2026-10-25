@@ -1,0 +1,46 @@
+# ``CoreMeasureUnits/EquivalentDose``
+
+## Topics
+
+### Creating Units
+
+- ``init(coefficient:constant:symbol:)``
+
+### Unit Properties
+
+- ``coefficient``
+- ``constant``
+- ``symbol``
+- ``dimension``
+
+### Base Unit
+
+- ``base``
+
+### Metric Units
+
+- ``quettasievert``
+- ``ronnasievert``
+- ``yottasievert``
+- ``zettasievert``
+- ``exasievert``
+- ``petasievert``
+- ``terasievert``
+- ``gigasievert``
+- ``megasievert``
+- ``kilosievert``
+- ``hectosievert``
+- ``decasievert``
+- ``sievert``
+- ``decisievert``
+- ``centisievert``
+- ``millisievert``
+- ``microsievert``
+- ``nanosievert``
+- ``picosievert``
+- ``femtosievert``
+- ``attosievert``
+- ``zeptosievert``
+- ``yoctosievert``
+- ``rontosievert``
+- ``quectosievert``
