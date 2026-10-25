@@ -141,7 +141,7 @@ internal struct ExpressionEvaluator {
             throw CalculationError.invalidOutputUnit()
         }
 
-        try Measure<ComposedUnit>.validate(unit)
+        try Measure<ComposedUnit>.validateUnit(unit)
         return unit
     }
 

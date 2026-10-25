@@ -20,12 +20,11 @@ where UnitType == ComposedUnit {
     /// - Returns: This measurement unchanged after validation.
     /// - Throws: A calculation error for invalid conversion values, excessive dimensions, or a non-finite value.
     internal func validated() throws -> Self {
-        try Self.validate(self.unit)
-
         guard self.value.isFinite == true else {
             throw CalculationError.nonFiniteResult()
         }
 
+        try Self.validateUnit(self.unit)
         return self
     }
 
@@ -106,7 +105,7 @@ where UnitType == ComposedUnit {
     /// - Parameter unit: The unit to validate; its stored dimension arithmetic must already be representable.
     /// - Throws: A calculation error for a nonpositive or non-finite scale, non-finite offset, or excessive dimension
     ///   exponent.
-    internal static func validate(_ unit: ComposedUnit) throws {
+    internal static func validateUnit(_ unit: ComposedUnit) throws {
         guard unit.coefficient.isFinite == true, unit.coefficient > 0, unit.constant.isFinite == true else {
             throw CalculationError.invalidUnitConversion()
         }
@@ -128,8 +127,8 @@ where UnitType == ComposedUnit {
         _ rhs: ComposedUnit,
         operation: OperatorToken
     ) throws {
-        try Self.validate(lhs)
-        try Self.validate(rhs)
+        try Self.validateUnit(lhs)
+        try Self.validateUnit(rhs)
 
         for (left, right) in zip(Self.exponents(lhs.dimension), Self.exponents(rhs.dimension)) {
             let result: Int = operation == .divide ? left - right : left + right
@@ -150,7 +149,7 @@ where UnitType == ComposedUnit {
         _ unit: ComposedUnit,
         exponent: Int
     ) throws {
-        try Self.validate(unit)
+        try Self.validateUnit(unit)
 
         guard (-64 ... 64).contains(exponent) == true,
             Self.exponents(unit.dimension).allSatisfy({ (-64 ... 64).contains($0 * exponent) }) == true
