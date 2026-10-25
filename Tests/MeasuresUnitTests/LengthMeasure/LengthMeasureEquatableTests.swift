@@ -71,3 +71,7 @@ internal struct LengthMeasureEquatableTests {
         #expect(try lhs.isUnequal(to: rhs) == !result)
     }
 }
+
+// MARK: - NaT
+
+extension LengthMeasureEquatableTests {}

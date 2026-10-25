@@ -61,3 +61,7 @@ internal struct LengthMeasureConvertibleTests {
         #expect(mutated.unit == expected.unit)
     }
 }
+
+// MARK: - NaT
+
+extension LengthMeasureConvertibleTests {}

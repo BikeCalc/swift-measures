@@ -94,3 +94,7 @@ internal struct LengthMeasureMultipliableTests {
         #expect(runningProduct == product)
     }
 }
+
+// MARK: - NaT
+
+extension LengthMeasureMultipliableTests {}

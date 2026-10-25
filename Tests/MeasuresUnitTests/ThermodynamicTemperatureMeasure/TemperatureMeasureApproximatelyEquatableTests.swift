@@ -6,10 +6,11 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-import Measures
 import Testing
 
-@Suite("Temperature Measure ApproximatelyEquatable Tests")
+@testable import Measures
+
+@Suite("ThermodynamicTemperature Measure ApproximatelyEquatable Tests")
 internal struct TemperatureMeasureApproximatelyEquatableTests {
     internal init() {}
 

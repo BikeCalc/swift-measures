@@ -6,10 +6,11 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-import Measures
 import Testing
 
-@Suite("Surface Density CaseIterable Tests")
+@testable import Measures
+
+@Suite("SurfaceDensity CaseIterable Tests")
 internal struct SurfaceDensityCaseIterableTests {
     internal init() {}
 

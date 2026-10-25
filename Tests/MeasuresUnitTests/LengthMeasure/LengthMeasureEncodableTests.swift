@@ -45,3 +45,7 @@ internal struct LengthMeasureEncodableTests {
     }
 }
 #endif
+
+// MARK: - NaT
+
+extension LengthMeasureEncodableTests {}

@@ -6,10 +6,11 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-import Measures
 import Testing
 
-@Suite("Luminous Flux CaseIterable Tests")
+@testable import Measures
+
+@Suite("LuminousFlux CaseIterable Tests")
 internal struct LuminousFluxCaseIterableTests {
     internal init() {}
 

@@ -14,7 +14,7 @@ import Testing
 @testable import CoreMeasureTypes
 @testable import MeasuresMacroPlugin
 
-@Suite("MetricUnitsMacro")
+@Suite("MetricUnitsMacro Tests")
 internal struct MetricUnitsMacroTests {
     internal init() {}
 

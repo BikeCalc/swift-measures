@@ -10,8 +10,8 @@ import Testing
 
 @testable import Measures
 
-@Suite("Converted Measure Comparable Tests")
-internal struct ConvertedMeasureComparableTests {
+@Suite("Converted Length Measure Comparable Tests")
+internal struct ConvertedLengthMeasureComparableTests {
     internal init() {}
 
     private static let comparisonArguments: [(Measure<Length>, Measure<Length>, Bool, Bool, Bool, Bool)] = [
@@ -207,3 +207,7 @@ internal struct ConvertedMeasureComparableTests {
         #expect(valueIsBetweenBounds == (valueWrapper > lowerBoundWrapper && valueWrapper < upperBoundWrapper))
     }
 }
+
+// MARK: - NaT
+
+extension ConvertedLengthMeasureComparableTests {}

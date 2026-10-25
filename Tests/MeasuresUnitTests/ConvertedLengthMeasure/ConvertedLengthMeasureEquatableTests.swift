@@ -10,8 +10,8 @@ import Testing
 
 @testable import Measures
 
-@Suite("Converted Measure Equatable Tests")
-internal struct ConvertedMeasureEquatableTests {
+@Suite("Converted Length Measure Equatable Tests")
+internal struct ConvertedLengthMeasureEquatableTests {
     internal init() {}
 
     private static let equalityArguments: [(Measure<Length>, Measure<Length>, Bool)] = [
@@ -103,3 +103,7 @@ internal struct ConvertedMeasureEquatableTests {
         #expect(try lhsWrapper.isUnequal(to: rhsWrapper) == !result)
     }
 }
+
+// MARK: - NaT
+
+extension ConvertedLengthMeasureEquatableTests {}

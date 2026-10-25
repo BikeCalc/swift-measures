@@ -6,10 +6,11 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-import Measures
 import Testing
 
-@Suite("Substance Amount CaseIterable Tests")
+@testable import Measures
+
+@Suite("SubstanceAmount CaseIterable Tests")
 internal struct SubstanceAmountCaseIterableTests {
     internal init() {}
 

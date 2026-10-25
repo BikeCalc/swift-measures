@@ -6,10 +6,11 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-import Measures
 import Testing
 
-@Suite("Molar Mass CaseIterable Tests")
+@testable import Measures
+
+@Suite("MolarMass CaseIterable Tests")
 internal struct MolarMassCaseIterableTests {
     internal init() {}
 
