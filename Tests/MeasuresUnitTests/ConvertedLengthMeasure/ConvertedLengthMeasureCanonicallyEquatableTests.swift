@@ -13,6 +13,37 @@ import Testing
 @Suite("Converted Length Measure CanonicallyEquatable Tests")
 internal struct ConvertedLengthMeasureCanonicallyEquatableTests {
     internal init() {}
+
+    @Test(
+        "Canonical equality succeeds",
+        arguments: [
+            (Measure<Length>(1, .meter), Measure<Length>(1, .meter), true),
+            (Measure<Length>(1, .meter), Measure<Length>(100, .centimeter), true),
+            (Measure<Length>(100, .centimeter), Measure<Length>(1, .meter), true),
+            (Measure<Length>(1, .foot), Measure<Length>(12, .inch), true),
+            (Measure<Length>(12, .inch), Measure<Length>(1, .foot), true),
+            (Measure<Length>(-1, .meter), Measure<Length>(-100, .centimeter), true),
+            (Measure<Length>(0, .meter), Measure<Length>(0, .foot), true),
+            (Measure<Length>(1, .meter), Measure<Length>(99, .centimeter), false),
+            (Measure<Length>(1, .foot), Measure<Length>(13, .inch), false),
+            (Measure<Length>(-1, .meter), Measure<Length>(100, .centimeter), false)
+        ]
+    )
+    internal func canonicalEqualitySucceeds(
+        lhs: Measure<Length>,
+        rhs: Measure<Length>,
+        result: Bool
+    ) {
+        let lhsWrapper: Converted<Length> = .init(
+            wrappedValue: lhs,
+            to: lhs.unit
+        )
+        let rhsWrapper: Converted<Length> = .init(
+            wrappedValue: rhs,
+            to: rhs.unit
+        )
+        #expect(lhsWrapper.isCanonicallyEqual(to: rhsWrapper) == result)
+    }
 }
 
 // MARK: - NaT
