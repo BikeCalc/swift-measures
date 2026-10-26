@@ -15,23 +15,35 @@ internal struct LengthMeasureMultipliableTests {
     internal init() {}
 
     private static let multiplicationArguments: [(Measure<Length>, Measure<Length>.Multiplier, Measure<Length>)] = [
-        (Measure<Length>(1, .meter), 2, Measure<Length>(2, .meter)),
-        (Measure<Length>(1.5, .meter), 2, Measure<Length>(3, .meter)),
-        (Measure<Length>(-1, .meter), 2, Measure<Length>(-2, .meter)),
-        (Measure<Length>(-1, .meter), -2, Measure<Length>(2, .meter)),
-        (Measure<Length>(50, .centimeter), 3, Measure<Length>(150, .centimeter))
+        (Measure<Length>(2.0, .meter), 3.0, Measure<Length>(6.0, .meter)),
+        (Measure<Length>(3.0, .meter), 4.0, Measure<Length>(12.0, .meter)),
+        (Measure<Length>(-2.0, .meter), 3.0, Measure<Length>(-6.0, .meter)),
+        (Measure<Length>(-3.0, .meter), -4.0, Measure<Length>(12.0, .meter)),
+        (Measure<Length>(0.5, .meter), 1.5, Measure<Length>(0.75, .meter)),
+        (Measure<Length>(1.5, .meter), 2.5, Measure<Length>(3.75, .meter)),
+        (Measure<Length>(-0.5, .meter), 1.5, Measure<Length>(-0.75, .meter)),
+        (Measure<Length>(-1.5, .meter), -2.5, Measure<Length>(3.75, .meter)),
+        (Measure<Length>(200.0, .centimeter), 3.0, Measure<Length>(600.0, .centimeter)),
+        (Measure<Length>(300.0, .centimeter), 4.0, Measure<Length>(1_200.0, .centimeter)),
+        (Measure<Length>(-200.0, .centimeter), 3.0, Measure<Length>(-600.0, .centimeter)),
+        (Measure<Length>(-300.0, .centimeter), -4.0, Measure<Length>(1_200.0, .centimeter))
     ]
 
     @Test(
-        "Is multiple of succeeds",
+        "Is multiple of",
         arguments: [
-            (Measure<Length>(10, .meter), Measure<Length>(2, .meter), true),
-            (Measure<Length>(10, .meter), Measure<Length>(3, .meter), false),
-            (Measure<Length>(-10, .meter), Measure<Length>(2, .meter), true),
-            (Measure<Length>(10.5, .meter), Measure<Length>(0.5, .meter), true),
-            (Measure<Length>(0, .meter), Measure<Length>(2, .meter), true),
-            (Measure<Length>(10, .meter), Measure<Length>(0, .meter), false),
-            (Measure<Length>(100, .centimeter), Measure<Length>(2, .centimeter), true)
+            (Measure<Length>(6.0, .meter), Measure<Length>(3.0, .meter), true),
+            (Measure<Length>(7.0, .meter), Measure<Length>(3.0, .meter), false),
+            (Measure<Length>(-6.0, .meter), Measure<Length>(3.0, .meter), true),
+            (Measure<Length>(-7.0, .meter), Measure<Length>(3.0, .meter), false),
+            (Measure<Length>(1.5, .meter), Measure<Length>(0.5, .meter), true),
+            (Measure<Length>(1.5, .meter), Measure<Length>(2.5, .meter), false),
+            (Measure<Length>(-1.5, .meter), Measure<Length>(0.5, .meter), true),
+            (Measure<Length>(-1.5, .meter), Measure<Length>(2.5, .meter), false),
+            (Measure<Length>(6.0, .meter), Measure<Length>(300.0, .centimeter), true),
+            (Measure<Length>(600.0, .centimeter), Measure<Length>(3.0, .meter), true),
+            (Measure<Length>(7.0, .meter), Measure<Length>(300.0, .centimeter), false),
+            (Measure<Length>(700.0, .centimeter), Measure<Length>(3.0, .meter), false)
         ]
     )
     internal func isMultipleOfSucceeds(

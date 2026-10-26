@@ -15,11 +15,18 @@ internal struct LengthMeasureAddableTests {
     internal init() {}
 
     private static let additionArguments: [(Measure<Length>, Measure<Length>.Addend, Measure<Length>)] = [
-        (Measure<Length>(1, .meter), Measure<Length>(2, .meter), Measure<Length>(3, .meter)),
-        (Measure<Length>(1, .meter), Measure<Length>(100, .centimeter), Measure<Length>(2, .meter)),
-        (Measure<Length>(100, .centimeter), Measure<Length>(1, .meter), Measure<Length>(200, .centimeter)),
-        (Measure<Length>(-1, .meter), Measure<Length>(50, .centimeter), Measure<Length>(-0.5, .meter)),
-        (Measure<Length>(-100, .centimeter), Measure<Length>(-1, .meter), Measure<Length>(-200, .centimeter))
+        (Measure<Length>(2.0, .meter), Measure<Length>(3.0, .meter), Measure<Length>(5.0, .meter)),
+        (Measure<Length>(3.0, .meter), Measure<Length>(4.0, .meter), Measure<Length>(7.0, .meter)),
+        (Measure<Length>(-2.0, .meter), Measure<Length>(3.0, .meter), Measure<Length>(1.0, .meter)),
+        (Measure<Length>(-3.0, .meter), Measure<Length>(-4.0, .meter), Measure<Length>(-7.0, .meter)),
+        (Measure<Length>(0.5, .meter), Measure<Length>(1.5, .meter), Measure<Length>(2.0, .meter)),
+        (Measure<Length>(1.5, .meter), Measure<Length>(2.5, .meter), Measure<Length>(4.0, .meter)),
+        (Measure<Length>(-0.5, .meter), Measure<Length>(1.5, .meter), Measure<Length>(1.0, .meter)),
+        (Measure<Length>(-1.5, .meter), Measure<Length>(-2.5, .meter), Measure<Length>(-4.0, .meter)),
+        (Measure<Length>(2.0, .meter), Measure<Length>(300.0, .centimeter), Measure<Length>(5.0, .meter)),
+        (Measure<Length>(200.0, .centimeter), Measure<Length>(3.0, .meter), Measure<Length>(500.0, .centimeter)),
+        (Measure<Length>(-2.0, .meter), Measure<Length>(300.0, .centimeter), Measure<Length>(1.0, .meter)),
+        (Measure<Length>(-200.0, .centimeter), Measure<Length>(3.0, .meter), Measure<Length>(100.0, .centimeter))
     ]
 
     @Test(

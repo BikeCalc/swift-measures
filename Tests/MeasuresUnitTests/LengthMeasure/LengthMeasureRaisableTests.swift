@@ -15,26 +15,50 @@ internal struct LengthMeasureRaisableTests {
     internal init() {}
 
     private static let exponentiationArguments: [(Measure<Length>, Measure<Length>.Exponent, Double)] = [
-        (.init(2, .meter), 2, 4),
-        (.init(1.5, .meter), 2, 2.25),
-        (.init(-2, .meter), 2, 4),
-        (.init(-2, .meter), 3, -8),
-        (.init(2, .meter), -1, 0.5),
-        (.init(-2, .meter), -1, -0.5),
-        (.init(2, .meter), 0, 1),
-        (.init(50, .centimeter), 2, 0.25),
-        (.init(50, .centimeter), -1, 2)
+        (.init(2.0, .meter), 2, 4.0),
+        (.init(2.0, .meter), 3, 8.0),
+        (.init(2.0, .meter), -2, 0.25),
+        (.init(2.0, .meter), -3, 0.125),
+        (.init(-2.0, .meter), 2, 4.0),
+        (.init(-2.0, .meter), 3, -8.0),
+        (.init(-2.0, .meter), -2, 0.25),
+        (.init(-2.0, .meter), -3, -0.125),
+        (.init(1.0, .meter), -2, 1.0),
+        (.init(1.0, .meter), -3, 1.0),
+        (.init(-1.0, .meter), -2, 1.0),
+        (.init(-1.0, .meter), -3, -1.0),
+        (.init(0.5, .meter), 2, 0.25),
+        (.init(0.5, .meter), 3, 0.125),
+        (.init(0.5, .meter), -2, 4.0),
+        (.init(0.5, .meter), -3, 8.0),
+        (.init(-0.5, .meter), 2, 0.25),
+        (.init(-0.5, .meter), 3, -0.125),
+        (.init(-0.5, .meter), -2, 4.0),
+        (.init(-0.5, .meter), -3, -8.0),
+        (.init(200.0, .centimeter), 2, 4.0),
+        (.init(200.0, .centimeter), 3, 8.0),
+        (.init(-200.0, .centimeter), 2, 4.0),
+        (.init(-200.0, .centimeter), 3, -8.0)
     ]
 
     @Test(
-        "Is power of succeeds",
+        "Is power of",
         arguments: [
-            (Measure<Length>(2, .meter), Measure<Length>(2, .meter), true),
-            (Measure<Length>(4, .meter), Measure<Length>(2, .meter), false),
-            (Measure<Length>(-2, .meter), Measure<Length>(-2, .meter), true),
-            (Measure<Length>(-2, .meter), Measure<Length>(2, .meter), false),
-            (Measure<Length>(1, .meter), Measure<Length>(100, .centimeter), true),
-            (Measure<Length>(1, .meter), Measure<Length>(50, .centimeter), false)
+            (Measure<Length>(4.0, .meter), Measure<Length>(2.0, .meter), false),
+            (Measure<Length>(6.0, .meter), Measure<Length>(2.0, .meter), false),
+            (Measure<Length>(8.0, .meter), Measure<Length>(2.0, .meter), false),
+            (Measure<Length>(9.0, .meter), Measure<Length>(2.0, .meter), false),
+            (Measure<Length>(4.0, .meter), Measure<Length>(-2.0, .meter), false),
+            (Measure<Length>(-8.0, .meter), Measure<Length>(-2.0, .meter), false),
+            (Measure<Length>(6.0, .meter), Measure<Length>(-2.0, .meter), false),
+            (Measure<Length>(0.25, .meter), Measure<Length>(2.0, .meter), false),
+            (Measure<Length>(4.0, .meter), Measure<Length>(0.5, .meter), false),
+            (Measure<Length>(-0.125, .meter), Measure<Length>(-2.0, .meter), false),
+            (Measure<Length>(0.2, .meter), Measure<Length>(2.0, .meter), false),
+            (Measure<Length>(2.0, .meter), Measure<Length>(200.0, .centimeter), true),
+            (Measure<Length>(200.0, .centimeter), Measure<Length>(2.0, .meter), true),
+            (Measure<Length>(4.0, .meter), Measure<Length>(200.0, .centimeter), false),
+            (Measure<Length>(400.0, .centimeter), Measure<Length>(2.0, .meter), false)
         ]
     )
     internal func isPowerOfSucceeds(
