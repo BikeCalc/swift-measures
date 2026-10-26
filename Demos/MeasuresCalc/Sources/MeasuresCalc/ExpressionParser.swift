@@ -16,7 +16,7 @@ internal struct ExpressionParser {
     /// - Parameter tokens: The tokens for one side of an equation or a standalone expression.
     /// - Returns: The root of the parsed expression tree.
     /// - Throws: A calculation error for invalid syntax or a tree deeper than 128 nodes.
-    internal func parse(_ tokens: Array<Token>) throws -> Expression {
+    internal func parse(_ tokens: Array<Token>) throws(CalculationError) -> Expression {
         var values: Array<Expression> = []
         var operators: Array<Token> = []
         var expectsOperand: Bool = true
@@ -171,7 +171,7 @@ internal struct ExpressionParser {
         _ token: Token,
         operators: inout Array<Token>,
         values: inout Array<Expression>
-    ) throws {
+    ) throws(CalculationError) {
         guard case .operation(let incoming) = token.kind else {
             return
         }
@@ -204,7 +204,7 @@ internal struct ExpressionParser {
     private func apply(
         _ token: Token,
         to values: inout Array<Expression>
-    ) throws {
+    ) throws(CalculationError) {
         guard case .operation(let operation) = token.kind, let rhs: Expression = values.popLast() else {
             throw CalculationError.missingOperand(span: token.span)
         }

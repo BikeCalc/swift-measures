@@ -37,7 +37,7 @@ internal struct LinearEquationSolver {
         lhs: Expression,
         rhs: Expression,
         variable: String
-    ) throws -> Measure<ComposedUnit> {
+    ) throws(CalculationError) -> Measure<ComposedUnit> {
         guard self.units.symbols.contains(variable) == false,
             variable.isEmpty == false,
             variable.allSatisfy({ $0.isLetter }) == true
@@ -103,8 +103,8 @@ internal struct LinearEquationSolver {
     private func linearize(
         _ expression: Expression,
         variable: String
-    ) throws -> LinearExpression {
-        do {
+    ) throws(CalculationError) -> LinearExpression {
+        do throws(CalculationError) {
             if expression.containsVariable == false {
                 return try .init(constant: self.evaluator.evaluate(expression))
             }
@@ -193,7 +193,7 @@ internal struct LinearEquationSolver {
                     throw CalculationError.unsupportedEquation()
                 }
             }
-        } catch let error as CalculationError {
+        } catch let error {
             throw CalculationError(
                 code: error.code,
                 message: error.message,

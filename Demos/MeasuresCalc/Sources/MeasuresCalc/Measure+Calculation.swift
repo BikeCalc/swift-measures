@@ -19,7 +19,7 @@ where UnitType == ComposedUnit {
     ///
     /// - Returns: This measurement unchanged after validation.
     /// - Throws: A calculation error for invalid conversion values, excessive dimensions, or a non-finite value.
-    internal func validated() throws -> Self {
+    internal func validated() throws(CalculationError) -> Self {
         guard self.value.isFinite == true else {
             throw CalculationError.nonFiniteResult()
         }
@@ -32,7 +32,7 @@ where UnitType == ComposedUnit {
     ///
     /// - Returns: The integer value in the dimensionless reference unit.
     /// - Throws: A calculation error for an invalid measurement or an exponent outside the supported integer range.
-    internal func exponent() throws -> Int {
+    internal func exponent() throws(CalculationError) -> Int {
         _ = try self.validated()
 
         guard self.unit.dimension.isDimensionless == true else {
@@ -59,7 +59,7 @@ where UnitType == ComposedUnit {
     internal func applying(
         _ operation: OperatorToken,
         to rhs: Self
-    ) throws -> Self {
+    ) throws(CalculationError) -> Self {
         _ = try self.validated()
         _ = try rhs.validated()
         let result: Self
@@ -70,21 +70,21 @@ where UnitType == ComposedUnit {
                 throw CalculationError.incompatibleArithmeticDimensions()
             }
 
-            result = try operation == .add ? self.adding(rhs) : self.subtracting(rhs)
+            result = operation == .add ? self + rhs : self - rhs
         case .multiply, .juxtapose, .divide:
             try Self.validateComposition(
                 self.unit,
                 rhs.unit,
                 operation: operation
             )
-            result = try operation == .divide ? self.dividing(by: rhs) : self.multiplying(by: rhs)
+            result = operation == .divide ? self / rhs : self * rhs
         case .power:
             let exponent: Int = try rhs.exponent()
             try Self.validatePower(
                 self.unit,
                 exponent: exponent
             )
-            result = try self.raising(to: exponent)
+            result = (self ** exponent)
         case .positive, .negative:
             throw CalculationError.expectedBinaryOperator()
         }
@@ -96,7 +96,7 @@ where UnitType == ComposedUnit {
     ///
     /// - Returns: The negated measurement.
     /// - Throws: A calculation error for an invalid unit or non-finite value.
-    internal func negated() throws -> Self {
+    internal func negated() throws(CalculationError) -> Self {
         return try Self(-self.value, self.unit).validated()
     }
 
@@ -105,7 +105,7 @@ where UnitType == ComposedUnit {
     /// - Parameter unit: The unit to validate; its stored dimension arithmetic must already be representable.
     /// - Throws: A calculation error for a nonpositive or non-finite scale, non-finite offset, or excessive dimension
     ///   exponent.
-    internal static func validateUnit(_ unit: ComposedUnit) throws {
+    internal static func validateUnit(_ unit: ComposedUnit) throws(CalculationError) {
         guard unit.coefficient.isFinite == true, unit.coefficient > 0, unit.constant.isFinite == true else {
             throw CalculationError.invalidUnitConversion()
         }
@@ -126,7 +126,7 @@ where UnitType == ComposedUnit {
         _ lhs: ComposedUnit,
         _ rhs: ComposedUnit,
         operation: OperatorToken
-    ) throws {
+    ) throws(CalculationError) {
         try Self.validateUnit(lhs)
         try Self.validateUnit(rhs)
 
@@ -148,7 +148,7 @@ where UnitType == ComposedUnit {
     internal static func validatePower(
         _ unit: ComposedUnit,
         exponent: Int
-    ) throws {
+    ) throws(CalculationError) {
         try Self.validateUnit(unit)
 
         guard (-64 ... 64).contains(exponent) == true,

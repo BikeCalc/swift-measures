@@ -59,7 +59,7 @@ extension MeasuresCalcCommand: ParsableCommand {
             """
     )
 
-    internal mutating func run() throws {
+    internal mutating func run() throws(ValidationError) {
         let calculator: Calculator = .init()
 
         if self.listUnits == true {
@@ -71,7 +71,7 @@ extension MeasuresCalcCommand: ParsableCommand {
             throw ValidationError("Provide a quoted expression or equation, or use --list-units to list units.")
         }
 
-        do {
+        do throws(CalculationError) {
             if let variable: String = self.solve {
                 let result: CalculationResult = try calculator.solve(
                     expression,
@@ -86,7 +86,7 @@ extension MeasuresCalcCommand: ParsableCommand {
                 )
                 print(result)
             }
-        } catch let error as CalculationError {
+        } catch let error {
             throw ValidationError(error.description)
         }
     }

@@ -23,8 +23,8 @@ internal struct ExpressionEvaluator {
     internal func evaluate(
         _ expression: Expression,
         variables: Dictionary<String, Measure<ComposedUnit>> = [:]
-    ) throws -> Measure<ComposedUnit> {
-        do {
+    ) throws(CalculationError) -> Measure<ComposedUnit> {
+        do throws(CalculationError) {
             if self.isUnitExpression(expression) == true {
                 return try Measure(1, self.outputUnit(expression)).validated()
             }
@@ -79,7 +79,7 @@ internal struct ExpressionEvaluator {
                     to: measure
                 )
             }
-        } catch let error as CalculationError {
+        } catch let error {
             throw CalculationError(
                 code: error.code,
                 message: error.message,
@@ -94,7 +94,7 @@ internal struct ExpressionEvaluator {
     /// - Returns: The composed destination unit.
     /// - Throws: A calculation error for invalid unit syntax, unsupported offset composition, or invalid conversion
     ///   values.
-    internal func outputUnit(_ expression: Expression) throws -> ComposedUnit {
+    internal func outputUnit(_ expression: Expression) throws(CalculationError) -> ComposedUnit {
         let unit: ComposedUnit
 
         switch expression.kind {

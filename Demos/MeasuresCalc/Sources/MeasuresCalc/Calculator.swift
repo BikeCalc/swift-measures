@@ -38,7 +38,7 @@ package struct Calculator {
     package func evaluate(
         _ source: String,
         to outputUnit: String? = nil
-    ) throws -> CalculationResult {
+    ) throws(CalculationError) -> CalculationResult {
         let expression: Expression = try self.parse(source)
         let quantity: Measure<ComposedUnit> = try ExpressionEvaluator().evaluate(expression)
         return try self.result(
@@ -63,7 +63,7 @@ package struct Calculator {
         _ source: String,
         for variable: String = "x",
         to outputUnit: String? = nil
-    ) throws -> CalculationResult {
+    ) throws(CalculationError) -> CalculationResult {
         let lexer: Lexer = .init(
             units: self.units,
             variable: variable
@@ -96,7 +96,7 @@ package struct Calculator {
     /// - Parameter source: The input expression.
     /// - Returns: The parsed expression tree.
     /// - Throws: A calculation error for invalid tokens or syntax.
-    private func parse(_ source: String) throws -> Expression {
+    private func parse(_ source: String) throws(CalculationError) -> Expression {
         let parser: ExpressionParser = .init()
         let lexer: Lexer = .init(units: self.units)
         let tokens: Array<Token> = try lexer.tokenize(source)
@@ -113,7 +113,7 @@ package struct Calculator {
     private func result(
         _ quantity: Measure<ComposedUnit>,
         to outputUnit: String?
-    ) throws -> CalculationResult {
+    ) throws(CalculationError) -> CalculationResult {
         let measure: Measure<ComposedUnit>
 
         if let outputUnit {

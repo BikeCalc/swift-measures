@@ -32,7 +32,7 @@ internal struct Lexer {
     /// - Parameter source: The expression or equation to tokenize.
     /// - Returns: The ordered tokens, including resolved units and numeric exponents.
     /// - Throws: A calculation error for unrecognized input, malformed numbers, or more than 4,096 characters.
-    internal func tokenize(_ source: String) throws -> Array<Token> {
+    internal func tokenize(_ source: String) throws(CalculationError) -> Array<Token> {
         guard source.count <= 4_096 else {
             throw CalculationError.expressionLengthLimitExceeded()
         }
@@ -164,7 +164,7 @@ internal struct Lexer {
     private func number(
         in characters: Array<Character>,
         index: inout Int
-    ) throws -> Double {
+    ) throws(CalculationError) -> Double {
         let start: Int = index
         var text: String = ""
         var groupSize: Int = 0

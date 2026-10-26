@@ -45,7 +45,7 @@ internal struct UnitRegistry {
     internal func match(
         in characters: Array<Character>,
         at index: Int
-    ) throws -> Self.Match? {
+    ) throws(CalculationError) -> Self.Match? {
         for symbol in self.atomicSymbols {
             let spelling: Array<Character> = .init(symbol)
             let end: Int = index + spelling.count
@@ -73,7 +73,7 @@ internal struct UnitRegistry {
     /// - Parameter symbol: The case-sensitive symbol to resolve.
     /// - Returns: The registered unit token, or `nil` for an unknown symbol.
     /// - Throws: A calculation error if the symbol has more than one definition.
-    internal func unit(for symbol: String) throws -> UnitToken? {
+    internal func unit(for symbol: String) throws(CalculationError) -> UnitToken? {
         guard let definitions: Array<UnitToken> = self.units[symbol] else {
             return nil
         }

@@ -126,10 +126,8 @@ internal struct CalculatorTests {
                 to: output
             )
             Issue.record("Expected a calculation diagnostic.")
-        } catch let error as CalculationError {
+        } catch let error {
             #expect(error.code == expected)
-        } catch {
-            Issue.record("Unexpected error: \(error)")
         }
     }
 
@@ -153,10 +151,8 @@ internal struct CalculatorTests {
             let calculator: Calculator = .init()
             _ = try calculator.solve(expression)
             Issue.record("Expected an equation diagnostic.")
-        } catch let error as CalculationError {
+        } catch let error {
             #expect(error.code == expected)
-        } catch {
-            Issue.record("Unexpected error: \(error)")
         }
     }
 }

@@ -34,7 +34,7 @@ internal struct LinearExpression {
     /// - Parameter rhs: The expression to add.
     /// - Returns: The combined linear expression.
     /// - Throws: A calculation error when corresponding terms are incompatible or arithmetic is invalid.
-    internal func adding(_ rhs: Self) throws -> Self {
+    internal func adding(_ rhs: Self) throws(CalculationError) -> Self {
         return try Self(
             coefficient: Self.add(
                 self.coefficient,
@@ -51,7 +51,7 @@ internal struct LinearExpression {
     ///
     /// - Returns: The negated linear expression.
     /// - Throws: A calculation error if a term is invalid or its value is non-finite.
-    internal func negated() throws -> Self {
+    internal func negated() throws(CalculationError) -> Self {
         return try Self(
             coefficient: self.coefficient?.negated(),
             constant: self.constant?.negated()
@@ -68,7 +68,7 @@ internal struct LinearExpression {
     internal func scaled(
         by value: Measure<ComposedUnit>,
         operation: OperatorToken
-    ) throws -> Self {
+    ) throws(CalculationError) -> Self {
         return try Self(
             coefficient: self.coefficient?.applying(
                 operation,
@@ -91,7 +91,7 @@ internal struct LinearExpression {
     private static func add(
         _ lhs: Measure<ComposedUnit>?,
         _ rhs: Measure<ComposedUnit>?
-    ) throws -> Measure<ComposedUnit>? {
+    ) throws(CalculationError) -> Measure<ComposedUnit>? {
         guard let lhs else {
             return rhs
         }
