@@ -107,6 +107,7 @@ let package: Package = .init(
                 "AdditionalMeasureUnits",
                 "CoreMeasureTypes",
                 "CoreMeasureUnits",
+                "MeasuresFoundation",
                 "MeasuresMacro",
                 .product(
                     name: "NumericsExtended",
@@ -115,9 +116,22 @@ let package: Package = .init(
             ]
         ),
         .target(
+            name: "MeasuresFoundation",
+            dependencies: [
+                "CoreMeasureTypes"
+            ]
+        ),
+        .target(
             name: "MeasuresMacro",
             dependencies: [
                 "MeasuresMacroPlugin"
+            ]
+        ),
+        .testTarget(
+            name: "MeasuresFoundationUnitTests",
+            dependencies: [
+                "Measures",
+                "MeasuresFoundation"
             ]
         ),
         .testTarget(
