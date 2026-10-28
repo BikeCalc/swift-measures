@@ -21,7 +21,7 @@ import Foundation
 /// For example:
 ///
 /// ```swift
-/// let distance: Measure<Length> = .init(1234.5, .meter)
+/// let distance: Measure<Length> = .init(1_234.5, .meter)
 /// let style: MeasureFormatStyle<Length> = .init()
 ///
 /// print(style.locale(Locale(identifier: "en_US")).format(distance))

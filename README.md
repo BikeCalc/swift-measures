@@ -111,7 +111,7 @@ Measures is written in Swift and avoids platform-specific APIs where possible.
   import Foundation
   import Measures
 
-  let measure: Measure<Length> = .init(1234.5, .meter)
+  let measure: Measure<Length> = .init(1_234.5, .meter)
   let formatter: Measure<Length>.FormatStyle = .measure()
   let locale: Locale = .init(identifier: "en_US")
 
