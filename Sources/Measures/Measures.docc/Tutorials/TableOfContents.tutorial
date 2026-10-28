@@ -1,0 +1,33 @@
+@Tutorials(name: "Swift Measures") {
+    @Intro(title: "Build with Measures") {
+        Define custom units, calculate across dimensions, convert and canonicalize results with property wrappers, and
+        format measures for different locales.
+    }
+
+    @Chapter(name: "Create Units") {
+        @Image(
+            source: "Chapter1Banner.png",
+            alt: "The Swift Measures logo beside illustrations of measuring instruments."
+        )
+
+        @TutorialReference(tutorial: "doc:CreatingACustomDimension")
+    }
+
+    @Chapter(name: "Compose Units") {
+        @Image(
+            source: "Chapter2Banner.png",
+            alt: "The Swift Measures logo beside illustrations of measuring instruments."
+        )
+
+        @TutorialReference(tutorial: "doc:CalculatingAcrossDimensions")
+    }
+
+    @Chapter(name: "Format Measures") {
+        @Image(
+            source: "Chapter3Banner.png",
+            alt: "The Swift Measures logo beside illustrations of measuring instruments."
+        )
+
+        @TutorialReference(tutorial: "doc:FormattingMeasures")
+    }
+}
