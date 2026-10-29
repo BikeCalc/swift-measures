@@ -3,7 +3,7 @@
 import CompilerPluginSupport
 import PackageDescription
 
-let package = Package(
+let package: Package = .init(
     name: "swift-measures",
     defaultLocalization: "en",
     platforms: [
@@ -20,7 +20,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/bikecalc/swift-numerics-extended.git",
-            from: "2.3.1"
+            from: "3.0.0"
         ),
         .package(
             url: "https://github.com/swiftlang/swift-docc-plugin.git",
@@ -107,6 +107,7 @@ let package = Package(
                 "AdditionalMeasureUnits",
                 "CoreMeasureTypes",
                 "CoreMeasureUnits",
+                "MeasuresFoundation",
                 "MeasuresMacro",
                 .product(
                     name: "NumericsExtended",
@@ -115,9 +116,22 @@ let package = Package(
             ]
         ),
         .target(
+            name: "MeasuresFoundation",
+            dependencies: [
+                "CoreMeasureTypes"
+            ]
+        ),
+        .target(
             name: "MeasuresMacro",
             dependencies: [
                 "MeasuresMacroPlugin"
+            ]
+        ),
+        .testTarget(
+            name: "MeasuresFoundationUnitTests",
+            dependencies: [
+                "Measures",
+                "MeasuresFoundation"
             ]
         ),
         .testTarget(

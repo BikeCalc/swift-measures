@@ -6,11 +6,14 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-import Measures
 import Testing
+
+@testable import Measures
 
 @Suite("Length Measure ApproximatelyEquatable Tests")
 internal struct LengthMeasureApproximatelyEquatableTests {
+    internal init() {}
+
     private typealias LengthMeasure = Measure<Length>
 
     @Test(
@@ -42,3 +45,7 @@ internal struct LengthMeasureApproximatelyEquatableTests {
         )
     }
 }
+
+// MARK: - NaT
+
+extension LengthMeasureApproximatelyEquatableTests {}

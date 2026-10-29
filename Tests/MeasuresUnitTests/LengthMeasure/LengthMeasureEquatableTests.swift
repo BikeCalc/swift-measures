@@ -7,10 +7,13 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import Testing
+
 @testable import Measures
 
 @Suite("Length Measure Equatable Tests")
 internal struct LengthMeasureEquatableTests {
+    internal init() {}
+
     private static let equalityArguments: [(Measure<Length>, Measure<Length>, Bool)] = [
         (Measure<Length>(1, .meter), Measure<Length>(1, .meter), true),
         (Measure<Length>(1, .meter), Measure<Length>(2, .meter), false),
@@ -52,8 +55,8 @@ internal struct LengthMeasureEquatableTests {
         lhs: Measure<Length>,
         rhs: Measure<Length>,
         result: Bool
-    ) {
-        #expect(lhs.isEqual(to: rhs) == result)
+    ) throws {
+        #expect(try lhs.isEqual(to: rhs) == result)
     }
 
     @Test(
@@ -64,7 +67,11 @@ internal struct LengthMeasureEquatableTests {
         lhs: Measure<Length>,
         rhs: Measure<Length>,
         result: Bool
-    ) {
-        #expect(lhs.isUnequal(to: rhs) == !result)
+    ) throws {
+        #expect(try lhs.isUnequal(to: rhs) == !result)
     }
 }
+
+// MARK: - NaT
+
+extension LengthMeasureEquatableTests {}

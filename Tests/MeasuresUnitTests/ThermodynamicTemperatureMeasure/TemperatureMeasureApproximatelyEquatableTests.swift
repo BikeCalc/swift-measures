@@ -6,11 +6,14 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-import Measures
 import Testing
 
-@Suite("Temperature Measure ApproximatelyEquatable Tests")
+@testable import Measures
+
+@Suite("ThermodynamicTemperature Measure ApproximatelyEquatable Tests")
 internal struct TemperatureMeasureApproximatelyEquatableTests {
+    internal init() {}
+
     private typealias TemperatureMeasure = Measure<ThermodynamicTemperature>
 
     @Test(
@@ -33,7 +36,6 @@ internal struct TemperatureMeasureApproximatelyEquatableTests {
         result: Bool
     ) {
         let rhs: Measure<ThermodynamicTemperature> = .init(274.15, .kelvin)
-
         #expect(
             lhs.isApproximatelyEqual(
                 to: rhs,

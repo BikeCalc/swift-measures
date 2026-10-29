@@ -7,16 +7,26 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import Testing
+
 @testable import Measures
 
 @Suite("Length Measure Subtractable Tests")
 internal struct LengthMeasureSubtractableTests {
-    private static let subtractionArguments: [(Measure<Length>, Measure<Length>, Measure<Length>)] = [
-        (Measure<Length>(3, .meter), Measure<Length>(1, .meter), Measure<Length>(2, .meter)),
-        (Measure<Length>(2, .meter), Measure<Length>(50, .centimeter), Measure<Length>(1.5, .meter)),
-        (Measure<Length>(200, .centimeter), Measure<Length>(1, .meter), Measure<Length>(100, .centimeter)),
-        (Measure<Length>(-1, .meter), Measure<Length>(50, .centimeter), Measure<Length>(-1.5, .meter)),
-        (Measure<Length>(-100, .centimeter), Measure<Length>(-50, .centimeter), Measure<Length>(-50, .centimeter))
+    internal init() {}
+
+    private static let subtractionArguments: [(Measure<Length>, Measure<Length>.Subtrahend, Measure<Length>)] = [
+        (Measure<Length>(3.0, .meter), Measure<Length>(2.0, .meter), Measure<Length>(1.0, .meter)),
+        (Measure<Length>(5.0, .meter), Measure<Length>(3.0, .meter), Measure<Length>(2.0, .meter)),
+        (Measure<Length>(-3.0, .meter), Measure<Length>(2.0, .meter), Measure<Length>(-5.0, .meter)),
+        (Measure<Length>(-5.0, .meter), Measure<Length>(-3.0, .meter), Measure<Length>(-2.0, .meter)),
+        (Measure<Length>(1.5, .meter), Measure<Length>(0.5, .meter), Measure<Length>(1.0, .meter)),
+        (Measure<Length>(3.5, .meter), Measure<Length>(1.5, .meter), Measure<Length>(2.0, .meter)),
+        (Measure<Length>(-1.5, .meter), Measure<Length>(0.5, .meter), Measure<Length>(-2.0, .meter)),
+        (Measure<Length>(-3.5, .meter), Measure<Length>(-1.5, .meter), Measure<Length>(-2.0, .meter)),
+        (Measure<Length>(3.0, .meter), Measure<Length>(200.0, .centimeter), Measure<Length>(1.0, .meter)),
+        (Measure<Length>(300.0, .centimeter), Measure<Length>(2.0, .meter), Measure<Length>(100.0, .centimeter)),
+        (Measure<Length>(-3.0, .meter), Measure<Length>(200.0, .centimeter), Measure<Length>(-5.0, .meter)),
+        (Measure<Length>(-300.0, .centimeter), Measure<Length>(2.0, .meter), Measure<Length>(-500.0, .centimeter))
     ]
 
     @Test(
@@ -25,7 +35,7 @@ internal struct LengthMeasureSubtractableTests {
     )
     internal func subtractionSucceeds(
         minuend: Measure<Length>,
-        subtrahend: Measure<Length>,
+        subtrahend: Measure<Length>.Subtrahend,
         difference: Measure<Length>
     ) {
         #expect(minuend - subtrahend == difference)
@@ -37,7 +47,7 @@ internal struct LengthMeasureSubtractableTests {
     )
     internal func subtractionEqualSucceeds(
         minuend: Measure<Length>,
-        subtrahend: Measure<Length>,
+        subtrahend: Measure<Length>.Subtrahend,
         difference: Measure<Length>
     ) {
         var runningDifference: Measure<Length> = minuend
@@ -51,10 +61,10 @@ internal struct LengthMeasureSubtractableTests {
     )
     internal func subtractingSucceeds(
         minuend: Measure<Length>,
-        subtrahend: Measure<Length>,
+        subtrahend: Measure<Length>.Subtrahend,
         difference: Measure<Length>
-    ) {
-        #expect(minuend.subtracting(subtrahend) == difference)
+    ) throws {
+        #expect(try minuend.subtracting(subtrahend) == difference)
     }
 
     @Test(
@@ -63,11 +73,11 @@ internal struct LengthMeasureSubtractableTests {
     )
     internal func subtractSucceeds(
         minuend: Measure<Length>,
-        subtrahend: Measure<Length>,
+        subtrahend: Measure<Length>.Subtrahend,
         difference: Measure<Length>
-    ) {
+    ) throws {
         var runningDifference: Measure<Length> = minuend
-        runningDifference.subtract(subtrahend)
+        try runningDifference.subtract(subtrahend)
         #expect(runningDifference == difference)
     }
 }
@@ -79,9 +89,13 @@ extension LengthMeasureSubtractableTests {
     )
     internal func subtractionIsNotCanonicallyCommutative(
         minuend: Measure<Length>,
-        subtrahend: Measure<Length>,
+        subtrahend: Measure<Length>.Subtrahend,
         difference _: Measure<Length>
     ) {
-        #expect(!(minuend - subtrahend).isCanonicallyEqual(to: subtrahend - minuend))
+        #expect((minuend - subtrahend).isCanonicallyEqual(to: subtrahend - minuend) == false)
     }
 }
+
+// MARK: - NaT
+
+extension LengthMeasureSubtractableTests {}

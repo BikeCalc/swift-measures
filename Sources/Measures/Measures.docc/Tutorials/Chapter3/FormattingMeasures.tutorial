@@ -1,0 +1,85 @@
+@Tutorial(time: 5) {
+    @Intro(title: "Formatting Measures") {
+        Create a reusable formatter, customize its numeric presentation, and choose a locale for displaying measures.
+    }
+
+    @Section(title: "Format a measure") {
+        @ContentAndMedia {
+            Start with the default formatter, configure the number of fractional digits, and then apply an explicit
+            locale. The measure keeps its stored value and unit throughout these changes.
+        }
+
+        @Steps {
+            @Step {
+                Start a new file by importing `Measures`.
+
+                @Code(name: "main.swift", file: "03-01-01.swift")
+            }
+
+            @Step {
+                Add `Foundation` to access its numeric formatting types and `Locale`. Formatting is available through
+                the existing Measures product on platforms that support Foundation.
+
+                @Code(name: "main.swift", file: "03-01-02.swift")
+            }
+
+            @Step {
+                Create a measure representing a distance of 1,234.5 meters.
+
+                @Code(name: "main.swift", file: "03-01-03.swift")
+            }
+
+            @Step {
+                Create a formatter using `.measure()`. Its type, `Measure<Length>.FormatStyle`, associates the formatter
+                with the measure's unit type.
+
+                @Code(name: "main.swift", file: "03-01-04.swift")
+            }
+
+            @Step {
+                Pass the formatter to `formatted(_:)` and print the result. The default number presentation follows
+                the current locale, so your separators may differ from the example comment. A nonbreaking space
+                separates the number from the unchanged unit symbol.
+
+                @Code(name: "main.swift", file: "03-01-05.swift")
+            }
+
+            @Step {
+                Customize the formatter by supplying a Foundation number style with exactly two fractional digits.
+                The same number style also supports options for grouping, signs, and rounding.
+
+                @Code(name: "main.swift", file: "03-01-06.swift")
+            }
+
+            @Step {
+                Create a French locale to select the numeric conventions explicitly instead of using the current
+                locale.
+
+                @Code(name: "main.swift", file: "03-01-07.swift")
+            }
+
+            @Step {
+                Apply the locale to the formatter before formatting the measure. The two-digit precision is preserved.
+                French uses a comma for decimals and a narrow nonbreaking space for grouping. The measure remains in
+                meters; formatting does not convert the unit.
+
+                @Code(name: "main.swift", file: "03-01-08.swift")
+            }
+        }
+    }
+
+    @Section(title: "Format NaT") {
+        @ContentAndMedia {
+            A measure that is not a thing has a single textual representation: `NaT`.
+        }
+
+        @Steps {
+            @Step {
+                In this standalone example, create a measure using `.nat` and format it with the same API. Whenever
+                `isNaT` is true, the formatter returns only `NaT`, without a number or unit symbol.
+
+                @Code(name: "main.swift", file: "03-02-01.swift")
+            }
+        }
+    }
+}

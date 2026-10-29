@@ -9,10 +9,13 @@
 #if canImport(Foundation)
 import Foundation
 import Testing
+
 @testable import Measures
 
 @Suite("Length Measure Decodable Tests")
 internal struct LengthMeasureDecodableTests {
+    internal init() {}
+
     @Test(
         "Decode from JSON succeeds",
         arguments: [
@@ -31,7 +34,6 @@ internal struct LengthMeasureDecodableTests {
             Measure<Length>.self,
             from: data
         )
-
         #expect(result == value)
     }
 
@@ -50,7 +52,6 @@ internal struct LengthMeasureDecodableTests {
     )
     internal func decodeFromJSONThrows(json: String) throws {
         let data: Data = try #require(json.data(using: .utf8))
-
         #expect(throws: DecodingError.self) {
             try JSONDecoder().decode(
                 Measure<Length>.self,
@@ -60,3 +61,7 @@ internal struct LengthMeasureDecodableTests {
     }
 }
 #endif
+
+// MARK: - NaT
+
+extension LengthMeasureDecodableTests {}

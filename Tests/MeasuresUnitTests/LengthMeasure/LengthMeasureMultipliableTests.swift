@@ -7,42 +7,48 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import Testing
+
 @testable import Measures
 
 @Suite("Length Measure Multipliable Tests")
 internal struct LengthMeasureMultipliableTests {
-    private static let multipleArguments: [(Measure<Length>, Double, Bool)] = [
-        (Measure<Length>(10, .meter), 2, true),
-        (Measure<Length>(10, .meter), 3, false),
-        (Measure<Length>(-10, .meter), 2, true),
-        (Measure<Length>(10.5, .meter), 0.5, true),
-        (Measure<Length>(0, .meter), 2, true),
-        (Measure<Length>(10, .meter), 0, false),
-        (Measure<Length>(100, .centimeter), 2, true)
-    ]
+    internal init() {}
 
-    private static let multiplicationArguments: [(Measure<Length>, Double, Measure<Length>)] = [
-        (Measure<Length>(1, .meter), 2, Measure<Length>(2, .meter)),
-        (Measure<Length>(1.5, .meter), 2, Measure<Length>(3, .meter)),
-        (Measure<Length>(-1, .meter), 2, Measure<Length>(-2, .meter)),
-        (Measure<Length>(-1, .meter), -2, Measure<Length>(2, .meter)),
-        (Measure<Length>(50, .centimeter), 3, Measure<Length>(150, .centimeter))
-    ]
-
-    private static let doublingArguments: [(Measure<Length>, Measure<Length>)] = [
-        (Measure<Length>(1, .meter), Measure<Length>(2, .meter)),
-        (Measure<Length>(1.5, .meter), Measure<Length>(3, .meter)),
-        (Measure<Length>(-1, .meter), Measure<Length>(-2, .meter)),
-        (Measure<Length>(50, .centimeter), Measure<Length>(100, .centimeter))
+    private static let multiplicationArguments: [(Measure<Length>, Measure<Length>.Multiplier, Measure<Length>)] = [
+        (Measure<Length>(2.0, .meter), 3.0, Measure<Length>(6.0, .meter)),
+        (Measure<Length>(3.0, .meter), 4.0, Measure<Length>(12.0, .meter)),
+        (Measure<Length>(-2.0, .meter), 3.0, Measure<Length>(-6.0, .meter)),
+        (Measure<Length>(-3.0, .meter), -4.0, Measure<Length>(12.0, .meter)),
+        (Measure<Length>(0.5, .meter), 1.5, Measure<Length>(0.75, .meter)),
+        (Measure<Length>(1.5, .meter), 2.5, Measure<Length>(3.75, .meter)),
+        (Measure<Length>(-0.5, .meter), 1.5, Measure<Length>(-0.75, .meter)),
+        (Measure<Length>(-1.5, .meter), -2.5, Measure<Length>(3.75, .meter)),
+        (Measure<Length>(200.0, .centimeter), 3.0, Measure<Length>(600.0, .centimeter)),
+        (Measure<Length>(300.0, .centimeter), 4.0, Measure<Length>(1_200.0, .centimeter)),
+        (Measure<Length>(-200.0, .centimeter), 3.0, Measure<Length>(-600.0, .centimeter)),
+        (Measure<Length>(-300.0, .centimeter), -4.0, Measure<Length>(1_200.0, .centimeter))
     ]
 
     @Test(
-        "Is multiple of succeeds",
-        arguments: Self.multipleArguments
+        "Is multiple of",
+        arguments: [
+            (Measure<Length>(6.0, .meter), Measure<Length>(3.0, .meter), true),
+            (Measure<Length>(7.0, .meter), Measure<Length>(3.0, .meter), false),
+            (Measure<Length>(-6.0, .meter), Measure<Length>(3.0, .meter), true),
+            (Measure<Length>(-7.0, .meter), Measure<Length>(3.0, .meter), false),
+            (Measure<Length>(1.5, .meter), Measure<Length>(0.5, .meter), true),
+            (Measure<Length>(1.5, .meter), Measure<Length>(2.5, .meter), false),
+            (Measure<Length>(-1.5, .meter), Measure<Length>(0.5, .meter), true),
+            (Measure<Length>(-1.5, .meter), Measure<Length>(2.5, .meter), false),
+            (Measure<Length>(6.0, .meter), Measure<Length>(300.0, .centimeter), true),
+            (Measure<Length>(600.0, .centimeter), Measure<Length>(3.0, .meter), true),
+            (Measure<Length>(7.0, .meter), Measure<Length>(300.0, .centimeter), false),
+            (Measure<Length>(700.0, .centimeter), Measure<Length>(3.0, .meter), false)
+        ]
     )
     internal func isMultipleOfSucceeds(
         multiplicand: Measure<Length>,
-        multiplier: Double,
+        multiplier: Measure<Length>,
         result: Bool
     ) {
         #expect(multiplicand.isMultiple(of: multiplier) == result)
@@ -54,7 +60,7 @@ internal struct LengthMeasureMultipliableTests {
     )
     internal func multiplicationSucceeds(
         multiplicand: Measure<Length>,
-        multiplier: Double,
+        multiplier: Measure<Length>.Multiplier,
         product: Measure<Length>
     ) {
         #expect(multiplicand * multiplier == product)
@@ -66,7 +72,7 @@ internal struct LengthMeasureMultipliableTests {
     )
     internal func multiplicationEqualSucceeds(
         multiplicand: Measure<Length>,
-        multiplier: Double,
+        multiplier: Measure<Length>.Multiplier,
         product: Measure<Length>
     ) {
         var runningProduct: Measure<Length> = multiplicand
@@ -80,10 +86,10 @@ internal struct LengthMeasureMultipliableTests {
     )
     internal func multiplyingBySucceeds(
         multiplicand: Measure<Length>,
-        multiplier: Double,
+        multiplier: Measure<Length>.Multiplier,
         product: Measure<Length>
-    ) {
-        #expect(multiplicand.multiplying(by: multiplier) == product)
+    ) throws {
+        #expect(try multiplicand.multiplying(by: multiplier) == product)
     }
 
     @Test(
@@ -92,49 +98,15 @@ internal struct LengthMeasureMultipliableTests {
     )
     internal func multiplyBySucceeds(
         multiplicand: Measure<Length>,
-        multiplier: Double,
+        multiplier: Measure<Length>.Multiplier,
         product: Measure<Length>
-    ) {
+    ) throws {
         var runningProduct: Measure<Length> = multiplicand
-        runningProduct.multiply(by: multiplier)
-        #expect(runningProduct == product)
-    }
-
-    @Test(
-        "Doubled succeeds",
-        arguments: Self.doublingArguments
-    )
-    internal func doubledSucceeds(
-        multiplicand: Measure<Length>,
-        product: Measure<Length>
-    ) {
-        #expect(multiplicand.doubled() == product)
-    }
-
-    @Test(
-        "Double succeeds",
-        arguments: Self.doublingArguments
-    )
-    internal func doubleSucceeds(
-        multiplicand: Measure<Length>,
-        product: Measure<Length>
-    ) {
-        var runningProduct: Measure<Length> = multiplicand
-        runningProduct.double()
+        try runningProduct.multiply(by: multiplier)
         #expect(runningProduct == product)
     }
 }
 
-extension LengthMeasureMultipliableTests {
-    @Test(
-        "Multiplication is commutative",
-        arguments: Self.multiplicationArguments
-    )
-    internal func multiplicationIsCommutative(
-        multiplicand: Measure<Length>,
-        multiplier: Double,
-        product _: Measure<Length>
-    ) {
-        #expect(multiplicand * multiplier == multiplier * multiplicand)
-    }
-}
+// MARK: - NaT
+
+extension LengthMeasureMultipliableTests {}

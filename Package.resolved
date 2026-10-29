@@ -1,5 +1,5 @@
 {
-  "originHash" : "2d5e8ea799f41b2042f3b002761cfc86abf95595f3f8d5bc25001b05f295262f",
+  "originHash" : "e328c9ded574ce0ce5c42afa7a41024696dd0ff411185f5f1d04dcea2b5ceb26",
   "pins" : [
     {
       "identity" : "swift-argument-parser",
@@ -60,8 +60,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/bikecalc/swift-numerics-extended.git",
       "state" : {
-        "revision" : "49e63f349b2952f6d6fe6ab3c96a465eaf80d701",
-        "version" : "2.3.1"
+        "revision" : "842eef5c8b6e03f2dacc65ae14e0a4cf50b4fab4",
+        "version" : "3.0.0"
       }
     },
     {

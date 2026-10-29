@@ -4,12 +4,17 @@ A Swift package for defining, converting, and composing units of measure.
 
 ## Overview
 
-Measures provides strongly typed values and units for physical dimensions. It includes SI base and derived units,
-metric and binary prefixes, commonly used customary and imperial units, and dimensional composition for related
-units such as area, volume, speed, force, energy, and electrical quantities.
+Measures provides strongly typed values and units for physical dimensions. It includes SI base and derived units, metric
+and binary prefixes, commonly used customary and imperial units, and dimensional composition for related units such as
+area, volume, speed, force, energy, and electrical quantities.
 
-Applications can define domain-specific dimensions by creating a unit type that conforms to `Measurable`. Values can
-then be represented with `Measure`, converted between compatible units, or converted automatically with `Converted`.
+Applications can define domain-specific dimensions by creating a unit type that conforms to `Unit`. Values can then be
+represented with `Measure`, converted between compatible units, or converted automatically with `Converted`.
+
+`ComposedUnit` supports units whose physical dimensions are determined at runtime from the seven SI base quantities.
+Multiply, divide, or raise measures to integer powers to calculate across dimensions, then convert the result back to a
+compatible defined unit. Composed units preserve their factors. Use `canonicalized()` or `@Canonicalized` to combine
+matching factors and order their representations.
 
 ## Topics
 
@@ -24,7 +29,7 @@ then be represented with `Measure`, converted between compatible units, or conve
 
 ### Tutorials
 
-- <doc:/tutorials/Measures/CreatingACustomDimension>
+- <doc:/tutorials/TableOfContents>
 
 ### Converting Values
 
@@ -32,9 +37,23 @@ then be represented with `Measure`, converted between compatible units, or conve
 - ``/CoreMeasureTypes/Converted``
 - ``/CoreMeasureTypes/Convertible``
 
-### Measuring Values
+### Formatting Values
 
-- ``/CoreMeasureTypes/Measurable``
+- ``/MeasuresFoundation/Formattable``
+- ``/MeasuresFoundation/MeasureFormatStyle``
+
+### Defining Units
+
+- ``/CoreMeasureTypes/Unit``
+- ``/CoreMeasureTypes/ComposableUnit``
+- ``/CoreMeasureTypes/DefinedUnit``
+
+### Composing Units
+
+- ``/CoreMeasureTypes/Dimension``
+- ``/CoreMeasureUnits/ComposedUnit``
+- ``/CoreMeasureUnits/CoreMeasureTypes/Measure``
+- ``/CoreMeasureUnits/CoreMeasureTypes/Converted``
 
 ### Base Units
 
