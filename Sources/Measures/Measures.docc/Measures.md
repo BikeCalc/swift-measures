@@ -29,13 +29,18 @@ matching factors and order their representations.
 
 ### Tutorials
 
-- <doc:/tutorials/Measures/CreatingACustomDimension>
+- <doc:/tutorials/TableOfContents>
 
 ### Converting Values
 
 - ``/CoreMeasureTypes/Measure``
 - ``/CoreMeasureTypes/Converted``
 - ``/CoreMeasureTypes/Convertible``
+
+### Formatting Values
+
+- ``/MeasuresFoundation/Formattable``
+- ``/MeasuresFoundation/MeasureFormatStyle``
 
 ### Defining Units
 

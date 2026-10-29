@@ -375,6 +375,8 @@ extension Measure: CustomDebugStringConvertible {
 extension Measure: CustomStringConvertible {
     /// A textual representation of this instance.
     ///
+    /// Measures whose `isNaT` property is true are represented as "NaT".
+    ///
     /// For example:
     ///
     /// ```swift
@@ -383,6 +385,10 @@ extension Measure: CustomStringConvertible {
     /// // Prints "1.0 m"
     /// ```
     public var description: String {
+        guard self.isNaT == false else {
+            return "NaT"
+        }
+
         return self.value.description + " " + self.unit.symbol
     }
 }

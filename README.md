@@ -104,6 +104,21 @@ Measures is written in Swift and avoids platform-specific APIs where possible.
   // Prints "12.0 m²"
   ```
 
+- Format a `Measure` using a `Locale` while preserving its unit symbol. `Foundation` formatting is included through
+  `Measures` on supported platforms:
+
+  ```swift
+  import Foundation
+  import Measures
+
+  let measure: Measure<Length> = .init(1_234.5, .meter)
+  let formatter: Measure<Length>.FormatStyle = .measure()
+  let locale: Locale = .init(identifier: "en_US")
+
+  print(measure.formatted(formatter.locale(locale)))
+  // Prints "1,234.5 m"
+  ```
+
 ## Documentation
 
 You can read more about this package by visiting the
