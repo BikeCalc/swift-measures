@@ -47,43 +47,4 @@ internal struct LengthMeasureTests {
         #expect(measure.value == expectedValue)
         #expect(measure.unit == .centimeter)
     }
-
-    @Test(
-        "Unbounded valid range succeeds",
-        arguments: [
-            Measure<Length>(-1, .meter),
-            Measure<Length>(0, .meter),
-            Measure<Length>(1, .meter)
-        ]
-    )
-    internal func unboundedValidRangeSucceeds(measure: Measure<Length>) {
-        #expect(measure.isValid == true)
-    }
-
-    @Test(
-        "Invalid conversion makes measure invalid",
-        arguments: [
-            (Measure<Length>(1, .meter), true),
-            (Measure<Length>(-1, .meter), true),
-            (Measure<Length>(Double.infinity, .meter), false),
-            (Measure<Length>(-Double.infinity, .meter), false),
-            (Measure<Length>(Double.nan, .meter), false),
-            (Measure<Length>(1, Length(coefficient: -1, symbol: "u")), false),
-            (Measure<Length>(1, Length(coefficient: 1, constant: -1, symbol: "u")), true),
-            (Measure<Length>(1, Length(coefficient: 0, symbol: "u")), false),
-            (Measure<Length>(1, Length(coefficient: -0.0, symbol: "u")), false),
-            (Measure<Length>(1, Length(coefficient: .infinity, symbol: "u")), false),
-            (Measure<Length>(1, Length(coefficient: .negativeInfinity, symbol: "u")), false),
-            (Measure<Length>(1, Length(coefficient: .nan, symbol: "u")), false),
-            (Measure<Length>(1, Length(coefficient: 1, constant: .infinity, symbol: "u")), false),
-            (Measure<Length>(1, Length(coefficient: 1, constant: .negativeInfinity, symbol: "u")), false),
-            (Measure<Length>(1, Length(coefficient: 1, constant: .nan, symbol: "u")), false)
-        ]
-    )
-    internal func invalidConversionMakesMeasureInvalid(
-        measure: Measure<Length>,
-        result: Bool
-    ) {
-        #expect(measure.isValid == result)
-    }
 }

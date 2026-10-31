@@ -14,5 +14,37 @@ import Testing
 internal struct ComposedUnitMeasureTests {
     internal init() {}
 
-    // TODO: Implement tests for this suite.
+    @Test(
+        "Binary integer initialization succeeds",
+        arguments: [
+            (-2, -2.0),
+            (0, 0.0),
+            (2, 2.0)
+        ]
+    )
+    internal func binaryIntegerInitializationSucceeds(
+        value: Int,
+        expectedValue: Double
+    ) {
+        let measure: Measure<ComposedUnit> = .init(value, .meter)
+        #expect(measure.value == expectedValue)
+        #expect(measure.unit == .meter)
+    }
+
+    @Test(
+        "Binary floating-point initialization succeeds",
+        arguments: [
+            (Float(-1.5), -1.5),
+            (Float(0), 0.0),
+            (Float(1.5), 1.5)
+        ]
+    )
+    internal func binaryFloatingPointInitializationSucceeds(
+        value: Float,
+        expectedValue: Double
+    ) {
+        let measure: Measure<ComposedUnit> = .init(value, .centimeter)
+        #expect(measure.value == expectedValue)
+        #expect(measure.unit == .centimeter)
+    }
 }
