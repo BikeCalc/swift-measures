@@ -14,5 +14,46 @@ import Testing
 internal struct ComposedUnitMeasureHashableTests {
     internal init() {}
 
-    // TODO: Implement tests for this suite.
+    @Test(
+        "Equal stored values produce equal hashes",
+        arguments: [
+            (Measure<ComposedUnit>(1, .meter), Measure<ComposedUnit>(1, .meter)),
+            (Measure<ComposedUnit>(-1, .meter), Measure<ComposedUnit>(-1, .meter)),
+            (Measure<ComposedUnit>(100, .centimeter), Measure<ComposedUnit>(100, .centimeter)),
+            (Measure<ComposedUnit>(1, .foot), Measure<ComposedUnit>(1, .foot)),
+            (Measure<ComposedUnit>(1, .dimensionless), Measure<ComposedUnit>(1, .dimensionless)),
+            (Measure<ComposedUnit>(-1, .dimensionless), Measure<ComposedUnit>(-1, .dimensionless)),
+            (Measure<ComposedUnit>(0, .dimensionless), Measure<ComposedUnit>(0, .dimensionless)),
+            (Measure<ComposedUnit>(0.5, .dimensionless), Measure<ComposedUnit>(0.5, .dimensionless))
+        ]
+    )
+    internal func equalStoredValuesProduceEqualHashes(
+        lhs: Measure<ComposedUnit>,
+        rhs: Measure<ComposedUnit>
+    ) {
+        #expect(lhs == rhs)
+        #expect(lhs.hashValue == rhs.hashValue)
+        #expect(Set([lhs, rhs]).count == 1)
+    }
+
+    @Test(
+        "Equivalent representations remain distinct hash keys",
+        arguments: [
+            (Measure<ComposedUnit>(1, .meter), Measure<ComposedUnit>(100, .centimeter)),
+            (Measure<ComposedUnit>(1, .meter), Measure<ComposedUnit>(1_000, .millimeter)),
+            (Measure<ComposedUnit>(1, .meter), Measure<ComposedUnit>(0.001, .kilometer)),
+            (Measure<ComposedUnit>(1, .foot), Measure<ComposedUnit>(12, .inch)),
+            (
+                Measure<ComposedUnit>(1, .dimensionless),
+                Measure<ComposedUnit>(1, ComposedUnit.meter / ComposedUnit.meter)
+            )
+        ]
+    )
+    internal func equivalentRepresentationsRemainDistinctHashKeys(
+        lhs: Measure<ComposedUnit>,
+        rhs: Measure<ComposedUnit>
+    ) {
+        #expect(lhs != rhs)
+        #expect(Set([lhs, rhs]).count == 2)
+    }
 }

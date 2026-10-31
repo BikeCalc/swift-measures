@@ -17,6 +17,10 @@ extension ComposedUnit {
 
     internal static let millimeter: Self = .init(Length.millimeter)
 
+    internal static let kilometer: Self = .init(Length.kilometer)
+
+    internal static let inch: Self = .init(Length.inch)
+
     internal static let foot: Self = .init(Length.foot)
 
     internal static let dimensionless: Self = .init(dimension: Dimension())
