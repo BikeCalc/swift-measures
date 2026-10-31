@@ -8,10 +8,14 @@
 
 import Measures
 
+@testable import CoreMeasureUnits
+
 extension ComposedUnit {
     internal static let meter: Self = .init(Length.meter)
 
     internal static let centimeter: Self = .init(Length.centimeter)
 
-    internal static let dimensionless: Self = Self.meter / Self.meter
+    internal static let foot: Self = .init(Length.foot)
+
+    internal static let dimensionless: Self = .init(dimension: Dimension())
 }

@@ -376,6 +376,7 @@ extension Measure: CustomStringConvertible {
     /// A textual representation of this instance.
     ///
     /// Measures whose `isNaT` property is true are represented as "NaT".
+    /// When the unit symbol is empty, only the value is included, without a trailing space.
     ///
     /// For example:
     ///
@@ -389,7 +390,13 @@ extension Measure: CustomStringConvertible {
             return "NaT"
         }
 
-        return self.value.description + " " + self.unit.symbol
+        let symbol: String = self.unit.symbol
+
+        guard symbol.isEmpty == false else {
+            return self.value.description
+        }
+
+        return self.value.description + " " + symbol
     }
 }
 

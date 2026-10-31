@@ -14,5 +14,25 @@ import Testing
 internal struct ComposedUnitMeasureCustomStringConvertibleTests {
     internal init() {}
 
-    // TODO: Implement tests for this suite.
+    @Test(
+        "Description succeeds",
+        arguments: [
+            (Measure<ComposedUnit>(1, .meter), "1.0 m"),
+            (Measure<ComposedUnit>(-1, .meter), "-1.0 m"),
+            (Measure<ComposedUnit>(0, .meter), "0.0 m"),
+            (Measure<ComposedUnit>(100, .centimeter), "100.0 cm"),
+            (Measure<ComposedUnit>(1.5, .foot), "1.5 ft"),
+            (Measure<ComposedUnit>(1, .dimensionless), "1.0")
+        ]
+    )
+    internal func descriptionSucceeds(
+        value: Measure<ComposedUnit>,
+        result: String
+    ) {
+        #expect(value.description == result)
+    }
 }
+
+// MARK: - NaT
+
+extension ComposedUnitMeasureCustomStringConvertibleTests {}
