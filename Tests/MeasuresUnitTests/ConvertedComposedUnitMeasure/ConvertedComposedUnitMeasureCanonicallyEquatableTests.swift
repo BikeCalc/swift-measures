@@ -14,5 +14,44 @@ import Testing
 internal struct ConvertedComposedUnitMeasureCanonicallyEquatableTests {
     internal init() {}
 
-    // TODO: Implement tests for this suite.
+    @Test(
+        "Canonical equality succeeds",
+        arguments: [
+            (Measure<ComposedUnit>(1, .meter), Measure<ComposedUnit>(1, .meter), true),
+            (Measure<ComposedUnit>(1, .meter), Measure<ComposedUnit>(100, .centimeter), true),
+            (Measure<ComposedUnit>(100, .centimeter), Measure<ComposedUnit>(1, .meter), true),
+            (Measure<ComposedUnit>(1, .foot), Measure<ComposedUnit>(12, .inch), true),
+            (Measure<ComposedUnit>(12, .inch), Measure<ComposedUnit>(1, .foot), true),
+            (Measure<ComposedUnit>(-1, .meter), Measure<ComposedUnit>(-100, .centimeter), true),
+            (Measure<ComposedUnit>(0, .meter), Measure<ComposedUnit>(0, .foot), true),
+            (Measure<ComposedUnit>(1, .meter), Measure<ComposedUnit>(99, .centimeter), false),
+            (Measure<ComposedUnit>(1, .foot), Measure<ComposedUnit>(13, .inch), false),
+            (Measure<ComposedUnit>(-1, .meter), Measure<ComposedUnit>(100, .centimeter), false),
+            (Measure<ComposedUnit>(1, .dimensionless), Measure<ComposedUnit>(1, .dimensionless), true),
+            (Measure<ComposedUnit>(1, .dimensionless), Measure<ComposedUnit>(2, .dimensionless), false),
+            (Measure<ComposedUnit>(1, .cancelledMeters), Measure<ComposedUnit>(1, .dimensionless), true),
+            (Measure<ComposedUnit>(1, .dimensionless), Measure<ComposedUnit>(1, .cancelledMeters), true)
+        ]
+    )
+    internal func canonicalEqualitySucceeds(
+        lhs: Measure<ComposedUnit>,
+        rhs: Measure<ComposedUnit>,
+        result: Bool
+    ) {
+        let lhsWrapper: Converted<ComposedUnit> = .init(
+            wrappedValue: lhs,
+            to: lhs.unit
+        )
+        let rhsWrapper: Converted<ComposedUnit> = .init(
+            wrappedValue: rhs,
+            to: rhs.unit
+        )
+        #expect(lhsWrapper.isCanonicallyEqual(to: rhsWrapper) == result)
+    }
+}
+
+// MARK: - NaT
+
+extension ConvertedComposedUnitMeasureCanonicallyEquatableTests {
+    // TODO: Implement NaT tests for this suite.
 }
