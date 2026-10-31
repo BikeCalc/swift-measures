@@ -407,6 +407,17 @@ extension ComposedUnit: ComposableUnit {
     }
 }
 
+// MARK: - CustomDebugStringConvertible
+
+extension ComposedUnit: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        return """
+            ComposedUnit(coefficient: \(self.coefficient), constant: \(self.constant), symbol: \
+            \(self.symbol.debugDescription), dimension: \(self.dimension))
+            """
+    }
+}
+
 // MARK: - Decodable
 
 extension ComposedUnit: Decodable {

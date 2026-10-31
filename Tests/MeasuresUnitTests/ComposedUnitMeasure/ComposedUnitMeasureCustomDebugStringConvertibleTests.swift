@@ -14,5 +14,51 @@ import Testing
 internal struct ComposedUnitMeasureCustomDebugStringConvertibleTests {
     internal init() {}
 
-    // TODO: Implement tests for this suite.
+    @Test(
+        "Debug description succeeds",
+        arguments: [
+            (
+                Measure<ComposedUnit>(1, .meter),
+                """
+                Measure<ComposedUnit>(1.0, ComposedUnit(coefficient: 1.0, constant: 0.0, symbol: "m", dimension: \
+                Dimension(length: 1, mass: 0, time: 0, electricCurrent: 0, thermodynamicTemperature: 0, \
+                substanceAmount: 0, luminousIntensity: 0)))
+                """
+            ),
+            (
+                Measure<ComposedUnit>(-1, .meter),
+                """
+                Measure<ComposedUnit>(-1.0, ComposedUnit(coefficient: 1.0, constant: 0.0, symbol: "m", dimension: \
+                Dimension(length: 1, mass: 0, time: 0, electricCurrent: 0, thermodynamicTemperature: 0, \
+                substanceAmount: 0, luminousIntensity: 0)))
+                """
+            ),
+            (
+                Measure<ComposedUnit>(100, .centimeter),
+                """
+                Measure<ComposedUnit>(100.0, ComposedUnit(coefficient: 0.01, constant: 0.0, symbol: "cm", dimension: \
+                Dimension(length: 1, mass: 0, time: 0, electricCurrent: 0, thermodynamicTemperature: 0, \
+                substanceAmount: 0, luminousIntensity: 0)))
+                """
+            ),
+            (
+                Measure<ComposedUnit>(1, .dimensionless),
+                """
+                Measure<ComposedUnit>(1.0, ComposedUnit(coefficient: 1.0, constant: 0.0, symbol: "", dimension: \
+                Dimension(length: 0, mass: 0, time: 0, electricCurrent: 0, thermodynamicTemperature: 0, \
+                substanceAmount: 0, luminousIntensity: 0)))
+                """
+            )
+        ]
+    )
+    internal func debugDescriptionSucceeds(
+        value: Measure<ComposedUnit>,
+        result: String
+    ) {
+        #expect(value.debugDescription == result)
+    }
 }
+
+// MARK: - NaT
+
+extension ComposedUnitMeasureCustomDebugStringConvertibleTests {}
