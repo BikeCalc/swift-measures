@@ -14,6 +14,8 @@ import Testing
 internal struct TemperatureMeasureConvertibleTests {
     internal init() {}
 
+    private let absoluteTolerance: Double = 1e-10
+
     @Test(
         "Conversion succeeds",
         arguments: [
@@ -42,9 +44,9 @@ internal struct TemperatureMeasureConvertibleTests {
         let converted: Measure<ThermodynamicTemperature> = source.converted(to: unit)
         var mutated: Measure<ThermodynamicTemperature> = source
         mutated.convert(to: unit)
-        #expect(abs(converted.value - expected.value) < 1e-10)
+        #expect(abs(converted.value - expected.value) < self.absoluteTolerance)
         #expect(converted.unit == expected.unit)
-        #expect(abs(mutated.value - expected.value) < 1e-10)
+        #expect(abs(mutated.value - expected.value) < self.absoluteTolerance)
         #expect(mutated.unit == expected.unit)
     }
 }

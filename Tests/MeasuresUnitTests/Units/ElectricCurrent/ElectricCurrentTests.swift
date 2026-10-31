@@ -14,7 +14,7 @@ import Testing
 internal struct ElectricCurrentTests {
     internal init() {}
 
-    private let accuracy: Double = 1e-12
+    private let relativeTolerance: Double = 1e-12
 
     @Test(
         "Multiplying by Time returns ElectricCharge",
@@ -30,7 +30,7 @@ internal struct ElectricCurrentTests {
         expected: ElectricCharge
     ) {
         let result: ElectricCharge = lhs * rhs
-        #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.accuracy)
+        #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.relativeTolerance)
         #expect(result.constant == expected.constant)
         #expect(result.symbol == expected.symbol)
     }
@@ -49,7 +49,7 @@ internal struct ElectricCurrentTests {
         expected: ElectricConductance
     ) {
         let result: ElectricConductance = lhs / rhs
-        #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.accuracy)
+        #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.relativeTolerance)
         #expect(result.constant == expected.constant)
         #expect(result.symbol == expected.symbol)
     }

@@ -14,7 +14,7 @@ import Testing
 internal struct MassTests {
     internal init() {}
 
-    private let accuracy: Double = 1e-12
+    private let relativeTolerance: Double = 1e-12
 
     @Test(
         "Multiplying by Acceleration returns Force",
@@ -30,7 +30,7 @@ internal struct MassTests {
         expected: Force
     ) {
         let result: Force = lhs * rhs
-        #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.accuracy)
+        #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.relativeTolerance)
         #expect(result.constant == expected.constant)
         #expect(result.symbol == expected.symbol)
     }
@@ -49,7 +49,7 @@ internal struct MassTests {
         expected: SurfaceDensity
     ) {
         let result: SurfaceDensity = lhs / rhs
-        #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.accuracy)
+        #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.relativeTolerance)
         #expect(result.constant == expected.constant)
         #expect(result.symbol == expected.symbol)
     }
@@ -68,7 +68,7 @@ internal struct MassTests {
         expected: MolarMass
     ) {
         let result: MolarMass = lhs / rhs
-        #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.accuracy)
+        #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.relativeTolerance)
         #expect(result.constant == expected.constant)
         #expect(result.symbol == expected.symbol)
     }
@@ -87,7 +87,7 @@ internal struct MassTests {
         expected: Concentration
     ) {
         let result: Concentration = lhs / rhs
-        #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.accuracy)
+        #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.relativeTolerance)
         #expect(result.constant == expected.constant)
         #expect(result.symbol == expected.symbol)
     }

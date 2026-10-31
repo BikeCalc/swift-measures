@@ -14,5 +14,64 @@ import Testing
 internal struct ComposedUnitMeasureConvertibleTests {
     internal init() {}
 
-    // TODO: Implement tests for this suite.
+    private let absoluteTolerance: Double = 1e-10
+
+    @Test("Identical conversions preserve the value and use the destination unit")
+    internal func identicalConversionsPreserveValue() {
+        let sourceUnit: ComposedUnit = .init(
+            Length(
+                coefficient: 0.01,
+                constant: 1e20,
+                symbol: "source"
+            )
+        )
+        let destinationUnit: ComposedUnit = .init(
+            Length(
+                coefficient: 0.01,
+                constant: 1e20,
+                symbol: "destination"
+            )
+        )
+        let source: Measure<ComposedUnit> = .init(1, sourceUnit)
+        let converted: Measure<ComposedUnit> = source.converted(to: destinationUnit)
+        var mutated: Measure<ComposedUnit> = source
+        mutated.convert(to: destinationUnit)
+        #expect(converted.value == 1)
+        #expect(converted.unit == destinationUnit)
+        #expect(mutated == converted)
+        #expect((source + converted).value == 2)
+        #expect((source - converted).value == 0)
+    }
+
+    @Test(
+        "Conversion succeeds",
+        arguments: [
+            (Measure<ComposedUnit>(1, .meter), .centimeter, Measure<ComposedUnit>(100, .centimeter)),
+            (Measure<ComposedUnit>(100, .centimeter), .meter, Measure<ComposedUnit>(1, .meter)),
+            (Measure<ComposedUnit>(1, .foot), .inch, Measure<ComposedUnit>(12, .inch)),
+            (Measure<ComposedUnit>(1, .yard), .foot, Measure<ComposedUnit>(3, .foot)),
+            (Measure<ComposedUnit>(1, .kilometer), .meter, Measure<ComposedUnit>(1_000, .meter)),
+            (Measure<ComposedUnit>(1, .dimensionless), .dimensionless, Measure<ComposedUnit>(1, .dimensionless)),
+            (Measure<ComposedUnit>(1, .dimensionless), .cancelledMeters, Measure<ComposedUnit>(1, .cancelledMeters)),
+            (Measure<ComposedUnit>(1, .cancelledMeters),  .dimensionless, Measure<ComposedUnit>(1, .dimensionless)),
+            (Measure<ComposedUnit>(1, .cancelledMeters), .cancelledMeters, Measure<ComposedUnit>(1, .cancelledMeters))
+        ] as Array<(Measure<ComposedUnit>, ComposedUnit, Measure<ComposedUnit>)>
+    )
+    internal func conversionSucceeds(
+        source: Measure<ComposedUnit>,
+        unit: ComposedUnit,
+        expected: Measure<ComposedUnit>
+    ) {
+        let converted: Measure<ComposedUnit> = source.converted(to: unit)
+        var mutated: Measure<ComposedUnit> = source
+        mutated.convert(to: unit)
+        #expect(abs(converted.value - expected.value) < self.absoluteTolerance)
+        #expect(converted.unit == expected.unit)
+        #expect(abs(mutated.value - expected.value) < self.absoluteTolerance)
+        #expect(mutated.unit == expected.unit)
+    }
 }
+
+// MARK: - NaT
+
+extension ComposedUnitMeasureConvertibleTests {}

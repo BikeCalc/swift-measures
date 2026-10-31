@@ -14,6 +14,8 @@ import Testing
 internal struct LengthMeasureConvertibleTests {
     internal init() {}
 
+    private let absoluteTolerance: Double = 1e-10
+
     @Test("Identical conversions preserve the value and use the destination unit")
     internal func identicalConversionsPreserveValue() {
         let sourceUnit: Length = .init(
@@ -55,9 +57,9 @@ internal struct LengthMeasureConvertibleTests {
         let converted: Measure<Length> = source.converted(to: unit)
         var mutated: Measure<Length> = source
         mutated.convert(to: unit)
-        #expect(abs(converted.value - expected.value) < 1e-10)
+        #expect(abs(converted.value - expected.value) < self.absoluteTolerance)
         #expect(converted.unit == expected.unit)
-        #expect(abs(mutated.value - expected.value) < 1e-10)
+        #expect(abs(mutated.value - expected.value) < self.absoluteTolerance)
         #expect(mutated.unit == expected.unit)
     }
 }

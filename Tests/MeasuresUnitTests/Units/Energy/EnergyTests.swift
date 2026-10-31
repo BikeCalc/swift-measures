@@ -14,7 +14,7 @@ import Testing
 internal struct EnergyTests {
     internal init() {}
 
-    private let accuracy: Double = 1e-12
+    private let relativeTolerance: Double = 1e-12
 
     @Test(
         "Dividing by Mass returns AbsorbedDose",
@@ -30,7 +30,7 @@ internal struct EnergyTests {
         expected: AbsorbedDose
     ) {
         let result: AbsorbedDose = lhs / rhs
-        #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.accuracy)
+        #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.relativeTolerance)
         #expect(result.constant == expected.constant)
         #expect(result.symbol == expected.symbol)
     }
@@ -49,7 +49,7 @@ internal struct EnergyTests {
         expected: Power
     ) {
         let result: Power = lhs / rhs
-        #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.accuracy)
+        #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.relativeTolerance)
         #expect(result.constant == expected.constant)
         #expect(result.symbol == expected.symbol)
     }
