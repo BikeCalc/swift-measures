@@ -14,31 +14,31 @@ import Testing
 internal struct LengthMeasureRaisableTests {
     internal init() {}
 
-    private static let exponentiationArguments: [(Measure<Length>, Measure<Length>.Exponent, Double)] = [
-        (.init(2.0, .meter), 2, 4.0),
-        (.init(2.0, .meter), 3, 8.0),
-        (.init(2.0, .meter), -2, 0.25),
-        (.init(2.0, .meter), -3, 0.125),
-        (.init(-2.0, .meter), 2, 4.0),
-        (.init(-2.0, .meter), 3, -8.0),
-        (.init(-2.0, .meter), -2, 0.25),
-        (.init(-2.0, .meter), -3, -0.125),
-        (.init(1.0, .meter), -2, 1.0),
-        (.init(1.0, .meter), -3, 1.0),
-        (.init(-1.0, .meter), -2, 1.0),
-        (.init(-1.0, .meter), -3, -1.0),
-        (.init(0.5, .meter), 2, 0.25),
-        (.init(0.5, .meter), 3, 0.125),
-        (.init(0.5, .meter), -2, 4.0),
-        (.init(0.5, .meter), -3, 8.0),
-        (.init(-0.5, .meter), 2, 0.25),
-        (.init(-0.5, .meter), 3, -0.125),
-        (.init(-0.5, .meter), -2, 4.0),
-        (.init(-0.5, .meter), -3, -8.0),
-        (.init(200.0, .centimeter), 2, 4.0),
-        (.init(200.0, .centimeter), 3, 8.0),
-        (.init(-200.0, .centimeter), 2, 4.0),
-        (.init(-200.0, .centimeter), 3, -8.0)
+    private static let exponentiationArguments: [(Measure<Length>, Measure<Length>.Exponent, Double, Dimension)] = [
+        (.init(2.0, .meter), 2, 4.0, .init(length: 2)),
+        (.init(2.0, .meter), 3, 8.0, .init(length: 3)),
+        (.init(2.0, .meter), -2, 0.25, .init(length: -2)),
+        (.init(2.0, .meter), -3, 0.125, .init(length: -3)),
+        (.init(-2.0, .meter), 2, 4.0, .init(length: 2)),
+        (.init(-2.0, .meter), 3, -8.0, .init(length: 3)),
+        (.init(-2.0, .meter), -2, 0.25, .init(length: -2)),
+        (.init(-2.0, .meter), -3, -0.125, .init(length: -3)),
+        (.init(1.0, .meter), -2, 1.0, .init(length: -2)),
+        (.init(1.0, .meter), -3, 1.0, .init(length: -3)),
+        (.init(-1.0, .meter), -2, 1.0, .init(length: -2)),
+        (.init(-1.0, .meter), -3, -1.0, .init(length: -3)),
+        (.init(0.5, .meter), 2, 0.25, .init(length: 2)),
+        (.init(0.5, .meter), 3, 0.125, .init(length: 3)),
+        (.init(0.5, .meter), -2, 4.0, .init(length: -2)),
+        (.init(0.5, .meter), -3, 8.0, .init(length: -3)),
+        (.init(-0.5, .meter), 2, 0.25, .init(length: 2)),
+        (.init(-0.5, .meter), 3, -0.125, .init(length: 3)),
+        (.init(-0.5, .meter), -2, 4.0, .init(length: -2)),
+        (.init(-0.5, .meter), -3, -8.0, .init(length: -3)),
+        (.init(200.0, .centimeter), 2, 4.0, .init(length: 2)),
+        (.init(200.0, .centimeter), 3, 8.0, .init(length: 3)),
+        (.init(-200.0, .centimeter), 2, 4.0, .init(length: 2)),
+        (.init(-200.0, .centimeter), 3, -8.0, .init(length: 3))
     ]
 
     @Test(
@@ -76,12 +76,13 @@ internal struct LengthMeasureRaisableTests {
     internal func exponentiationSucceeds(
         base: Measure<Length>,
         exponent: Measure<Length>.Exponent,
-        value: Double
+        value: Double,
+        dimension: Dimension
     ) {
         let power: Measure<ComposedUnit> = base ** exponent
         #expect(power.isNaT == false)
         #expect(power.value == value)
-        #expect(power.unit.dimension == Dimension(length: exponent))
+        #expect(power.unit.dimension == dimension)
         #expect(power.unit.coefficient == 1)
         #expect(power.unit.constant == 0)
     }
@@ -93,12 +94,13 @@ internal struct LengthMeasureRaisableTests {
     internal func raisingToSucceeds(
         base: Measure<Length>,
         exponent: Measure<Length>.Exponent,
-        value: Double
+        value: Double,
+        dimension: Dimension
     ) throws {
         let power: Measure<ComposedUnit> = try base.raising(to: exponent)
         #expect(power.isNaT == false)
         #expect(power.value == value)
-        #expect(power.unit.dimension == Dimension(length: exponent))
+        #expect(power.unit.dimension == dimension)
         #expect(power.unit.coefficient == 1)
         #expect(power.unit.constant == 0)
     }
