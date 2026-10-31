@@ -81,7 +81,7 @@ public struct ComposedUnit {
         /// Captures the conversion and dimension information of a defined unit.
         ///
         /// - Parameter unit: A defined unit, including a developer-defined unit of an existing dimension.
-        internal init<UnitType>(_ unit: UnitType)
+        fileprivate init<UnitType>(_ unit: UnitType)
         where UnitType: ComposableUnit & DefinedUnit {
             self.dimension = unit.dimension
             self.coefficient = unit.coefficient
@@ -166,11 +166,23 @@ public struct ComposedUnit {
         ///   - unit: The complete unit representation used for matching factors.
         ///   - exponent: The power applied to this unit.
         internal init(
-            unit: ComposedUnit.AnyDefinedUnit,
-            exponent: Int = 1
+            _ unit: ComposedUnit.AnyDefinedUnit,
+            _ exponent: Int = 1
         ) {
             self.unit = unit
             self.exponent = exponent
+        }
+
+        /// Creates a factor by capturing a defined unit and its exponent.
+        ///
+        /// - Parameters:
+        ///   - unit: The defined unit whose conversion parameters, symbol, and dimension are preserved.
+        ///   - exponent: The power applied to this unit, defaulting to one.
+        internal init<UnitType>(
+            _ unit: UnitType,
+            _ exponent: Int = 1
+        ) where UnitType: ComposableUnit & DefinedUnit {
+            self.init(ComposedUnit.AnyDefinedUnit(unit), exponent)
         }
 
         /// The unit's coefficient raised to this factor's exponent.
@@ -180,10 +192,7 @@ public struct ComposedUnit {
 
         /// The same unit representation with its exponent negated.
         internal var inverted: Self {
-            return .init(
-                unit: self.unit,
-                exponent: -self.exponent
-            )
+            return .init(self.unit, -self.exponent)
         }
 
         /// Returns a boolean value indicating whether the value of the first argument is less than that of the second
@@ -233,7 +242,7 @@ public struct ComposedUnit {
     /// - Parameter unit: The defined unit to capture.
     public init<UnitType>(_ unit: UnitType)
     where UnitType: ComposableUnit & DefinedUnit {
-        let factor: Self.Factor = .init(unit: Self.AnyDefinedUnit(unit))
+        let factor: Self.Factor = .init(unit)
         self.factors = [factor]
     }
 
@@ -265,34 +274,13 @@ public struct ComposedUnit {
     /// - Parameter dimension: The exponents of the seven base quantities.
     internal init(dimension: Dimension) {
         let factors: Array<Self.Factor> = [
-            .init(
-                unit: Self.AnyDefinedUnit(Length.base),
-                exponent: dimension.length
-            ),
-            .init(
-                unit: Self.AnyDefinedUnit(Mass.base),
-                exponent: dimension.mass
-            ),
-            .init(
-                unit: Self.AnyDefinedUnit(Time.base),
-                exponent: dimension.time
-            ),
-            .init(
-                unit: Self.AnyDefinedUnit(ElectricCurrent.base),
-                exponent: dimension.electricCurrent
-            ),
-            .init(
-                unit: Self.AnyDefinedUnit(ThermodynamicTemperature.base),
-                exponent: dimension.thermodynamicTemperature
-            ),
-            .init(
-                unit: Self.AnyDefinedUnit(SubstanceAmount.base),
-                exponent: dimension.substanceAmount
-            ),
-            .init(
-                unit: Self.AnyDefinedUnit(LuminousIntensity.base),
-                exponent: dimension.luminousIntensity
-            )
+            .init(Length.base, dimension.length),
+            .init(Mass.base, dimension.mass),
+            .init(Time.base, dimension.time),
+            .init(ElectricCurrent.base, dimension.electricCurrent),
+            .init(ThermodynamicTemperature.base, dimension.thermodynamicTemperature),
+            .init(SubstanceAmount.base, dimension.substanceAmount),
+            .init(LuminousIntensity.base, dimension.luminousIntensity)
         ]
         self.init(factors: factors.filter { $0.exponent != 0 })
     }
@@ -355,10 +343,7 @@ public struct ComposedUnit {
                 "Exponentiation requires a zero constant unless the exponent is zero or one."
             )
             let factors: Array<Self.Factor> = lhs.factors.map { factor in
-                return .init(
-                    unit: factor.unit,
-                    exponent: factor.exponent * rhs
-                )
+                return .init(factor.unit, factor.exponent * rhs)
             }
             return .init(factors: factors)
         }
@@ -421,7 +406,7 @@ extension ComposedUnit: ComposableUnit {
             symbol: symbol,
             dimension: .init()
         )
-        let factor: Self.Factor = .init(unit: unit)
+        let factor: Self.Factor = .init(unit)
         self.factors = [factor]
     }
 
@@ -677,10 +662,7 @@ extension ComposedUnit: Simplifiable {
                 continue
             }
 
-            let simplifiedFactor: Self.Factor = .init(
-                unit: factor.unit,
-                exponent: exponent
-            )
+            let simplifiedFactor: Self.Factor = .init(factor.unit, exponent)
             simplifiedFactors.append(simplifiedFactor)
         }
 
