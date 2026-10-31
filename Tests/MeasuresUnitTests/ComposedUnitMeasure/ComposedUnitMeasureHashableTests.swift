@@ -43,10 +43,7 @@ internal struct ComposedUnitMeasureHashableTests {
             (Measure<ComposedUnit>(1, .meter), Measure<ComposedUnit>(1_000, .millimeter)),
             (Measure<ComposedUnit>(1, .meter), Measure<ComposedUnit>(0.001, .kilometer)),
             (Measure<ComposedUnit>(1, .foot), Measure<ComposedUnit>(12, .inch)),
-            (
-                Measure<ComposedUnit>(1, .dimensionless),
-                Measure<ComposedUnit>(1, ComposedUnit.meter / ComposedUnit.meter)
-            )
+            (Measure<ComposedUnit>(1, .dimensionless), Measure<ComposedUnit>(1, .cancelledMeters))
         ]
     )
     internal func equivalentRepresentationsRemainDistinctHashKeys(

@@ -96,7 +96,7 @@ internal struct ComposedUnitMeasureApproximatelyEquatableTests {
             ),
             (
                 Measure<ComposedUnit>(1, .dimensionless),
-                Measure<ComposedUnit>(1, ComposedUnit.meter / ComposedUnit.meter),
+                Measure<ComposedUnit>(1, .cancelledMeters),
                 Measure<ComposedUnit>(0, .dimensionless),
                 0,
                 true
