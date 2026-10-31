@@ -37,6 +37,10 @@ matching factors and order their representations.
 - ``/CoreMeasureTypes/Converted``
 - ``/CoreMeasureTypes/Convertible``
 
+### Validating Values
+
+- ``/CoreMeasureTypes/Validatable``
+
 ### Formatting Values
 
 - ``/MeasuresFoundation/Formattable``

@@ -67,19 +67,6 @@ where UnitType: Unit {
         self.value = .init(value)
         self.unit = unit
     }
-
-    /// A boolean value indicating whether this measure has a valid conversion and lies within its unit's valid range.
-    public var isValid: Bool {
-        return self.isNaT == false
-            && self.isWithinValidRange == true
-    }
-
-    /// A boolean value indicating whether this measure is within its dimension's valid range.
-    internal var isWithinValidRange: Bool {
-        let baseValue: Double = self.value * self.unit.coefficient + self.unit.constant
-
-        return self.unit.validRange.contains(baseValue)
-    }
 }
 
 // MARK: - Addable
@@ -695,5 +682,22 @@ where UnitType: Equatable {
         }
 
         return .init(newValue, lhs.unit)
+    }
+}
+
+// MARK: - Validatable
+
+extension Measure: Validatable {
+    /// A boolean value indicating whether this measure has a valid conversion and lies within its unit's valid range.
+    public var isValid: Bool {
+        /// A boolean value indicating whether this measure is within its dimension's valid range.
+        var isWithinValidRange: Bool {
+            let baseValue: Double = self.value * self.unit.coefficient + self.unit.constant
+
+            return self.unit.validRange.contains(baseValue)
+        }
+
+        return self.isNaT == false
+            && isWithinValidRange == true
     }
 }

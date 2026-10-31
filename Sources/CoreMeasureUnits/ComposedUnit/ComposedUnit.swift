@@ -226,15 +226,15 @@ public struct ComposedUnit {
 
     /// Creates a composed unit from one defined unit, retaining its offset.
     ///
-    /// The unit must have a finite positive coefficient and a finite constant. Its symbol and dimension are captured
-    /// without conversion to a coherent SI unit.
+    /// Captures conversion parameters, symbol, and dimension without validation or conversion to a coherent SI unit.
+    /// Invalid conversion parameters are preserved, matching direct construction from conversion parameters. Measures
+    /// using them report `isNaT` as `true` and `isValid` as `false`. Unit composition still requires valid factors.
     ///
     /// - Parameter unit: The defined unit to capture.
-    /// - Precondition: The unit has a finite positive coefficient and a finite constant.
     public init<UnitType>(_ unit: UnitType)
     where UnitType: ComposableUnit & DefinedUnit {
-        let factor: Self.Factor = .init(unit: ComposedUnit.AnyDefinedUnit(unit))
-        self.init(factors: [factor])
+        let factor: Self.Factor = .init(unit: Self.AnyDefinedUnit(unit))
+        self.factors = [factor]
     }
 
     /// Creates a composed unit preserving the supplied factors and their order.
