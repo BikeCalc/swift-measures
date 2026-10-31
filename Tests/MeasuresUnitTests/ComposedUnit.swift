@@ -23,6 +23,8 @@ extension ComposedUnit {
 
     internal static let foot: Self = .init(Length.foot)
 
+    internal static let yard: Self = .init(Length.yard)
+
     internal static let cancelledMeters: Self = Self.meter / Self.meter
 
     internal static let dimensionless: Self = .init(dimension: Dimension())
