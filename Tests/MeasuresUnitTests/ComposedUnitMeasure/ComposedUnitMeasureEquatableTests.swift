@@ -14,5 +14,68 @@ import Testing
 internal struct ComposedUnitMeasureEquatableTests {
     internal init() {}
 
-    // TODO: Implement tests for this suite.
+    private static let equalityArguments: [(Measure<ComposedUnit>, Measure<ComposedUnit>, Bool)] = [
+        (.init(1, .meter), .init(1, .meter), true),
+        (.init(1, .meter), .init(2, .meter), false),
+        (.init(1, .meter), .init(100, .centimeter), false),
+        (.init(1, .foot), .init(1, .foot), true),
+        (.init(1, .foot), .init(2, .foot), false),
+        (.init(1, .foot), .init(12, .inch), false),
+        (.init(1, .dimensionless), .init(1, .dimensionless), true),
+        (.init(1, .dimensionless), .init(2, .dimensionless), false),
+        (.init(-1, .dimensionless), .init(-1, .dimensionless), true),
+        (.init(1, .dimensionless),.init(1, .cancelledMeters), false)
+    ]
+
+    @Test(
+        "Equality succeeds",
+        arguments: Self.equalityArguments
+    )
+    internal func equalitySucceeds(
+        lhs: Measure<ComposedUnit>,
+        rhs: Measure<ComposedUnit>,
+        result: Bool
+    ) {
+        #expect((lhs == rhs) == result)
+    }
+
+    @Test(
+        "Inequality succeeds",
+        arguments: Self.equalityArguments
+    )
+    internal func inequalitySucceeds(
+        lhs: Measure<ComposedUnit>,
+        rhs: Measure<ComposedUnit>,
+        result: Bool
+    ) {
+        #expect((lhs != rhs) == !result)
+    }
+
+    @Test(
+        "Is equal succeeds",
+        arguments: Self.equalityArguments
+    )
+    internal func isEqualSucceeds(
+        lhs: Measure<ComposedUnit>,
+        rhs: Measure<ComposedUnit>,
+        result: Bool
+    ) throws {
+        #expect(try lhs.isEqual(to: rhs) == result)
+    }
+
+    @Test(
+        "Is unequal succeeds",
+        arguments: Self.equalityArguments
+    )
+    internal func isUnequalSucceeds(
+        lhs: Measure<ComposedUnit>,
+        rhs: Measure<ComposedUnit>,
+        result: Bool
+    ) throws {
+        #expect(try lhs.isUnequal(to: rhs) == !result)
+    }
 }
+
+// MARK: - NaT
+
+extension ComposedUnitMeasureEquatableTests {}
