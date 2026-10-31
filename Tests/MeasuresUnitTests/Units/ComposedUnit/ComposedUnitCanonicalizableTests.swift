@@ -18,44 +18,27 @@ internal struct ComposedUnitCanonicalizableTests {
     private static let canonicalizationArguments: [(ComposedUnit, Array<ComposedUnit.Factor>)] = [
         (
             ComposedUnit(Time.second) * ComposedUnit.meter * ComposedUnit.meter,
-            [
-                .init(Length.meter, 2),
-                .init(Time.second, 1)
-            ]
+            [.init(Length.meter, 2), .init(Time.second, 1)]
         ),
         (
             ComposedUnit.meter * ComposedUnit(Time.second) * ComposedUnit.meter,
-            [
-                .init(Length.meter, 2),
-                .init(Time.second, 1)
-            ]
+            [.init(Length.meter, 2), .init(Time.second, 1)]
         ),
         (
             ComposedUnit.meter,
-            [
-                .init(Length.meter, 1)
-            ]
+            [.init(Length.meter, 1)]
         ),
         (
             ComposedUnit.meter * ComposedUnit.centimeter,
-            [
-                .init(Length.centimeter, 1),
-                .init(Length.meter, 1)
-            ]
+            [.init(Length.centimeter, 1), .init(Length.meter, 1)]
         ),
         (
             ComposedUnit.centimeter * ComposedUnit.meter,
-            [
-                .init(Length.centimeter, 1),
-                .init(Length.meter, 1)
-            ]
+            [.init(Length.centimeter, 1), .init(Length.meter, 1)]
         ),
         (
             ComposedUnit(Time.second) * ComposedUnit.meter,
-            [
-                .init(Length.meter, 1),
-                .init(Time.second, 1)
-            ]
+            [.init(Length.meter, 1), .init(Time.second, 1)]
         ),
         (ComposedUnit.dimensionless, []),
         (ComposedUnit.cancelledMeters, [])

@@ -78,4 +78,6 @@ internal struct ComposedUnitMeasureEquatableTests {
 
 // MARK: - NaT
 
-extension ComposedUnitMeasureEquatableTests {}
+extension ComposedUnitMeasureEquatableTests {
+    // TODO: Implement NaT tests for this suite.
+}

@@ -106,4 +106,6 @@ internal struct ConvertedLengthMeasureEquatableTests {
 
 // MARK: - NaT
 
-extension ConvertedLengthMeasureEquatableTests {}
+extension ConvertedLengthMeasureEquatableTests {
+    // TODO: Implement NaT tests for this suite.
+}

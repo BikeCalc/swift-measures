@@ -122,4 +122,6 @@ internal struct ComposedUnitMeasureApproximatelyEquatableTests {
 
 // MARK: - NaT
 
-extension ComposedUnitMeasureApproximatelyEquatableTests {}
+extension ComposedUnitMeasureApproximatelyEquatableTests {
+    // TODO: Implement NaT tests for this suite.
+}

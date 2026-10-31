@@ -61,4 +61,6 @@ internal struct ComposedUnitMeasureCustomDebugStringConvertibleTests {
 
 // MARK: - NaT
 
-extension ComposedUnitMeasureCustomDebugStringConvertibleTests {}
+extension ComposedUnitMeasureCustomDebugStringConvertibleTests {
+    // TODO: Implement NaT tests for this suite.
+}

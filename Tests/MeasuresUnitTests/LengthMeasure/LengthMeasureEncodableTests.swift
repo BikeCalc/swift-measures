@@ -48,4 +48,6 @@ internal struct LengthMeasureEncodableTests {
 
 // MARK: - NaT
 
-extension LengthMeasureEncodableTests {}
+extension LengthMeasureEncodableTests {
+    // TODO: Implement NaT tests for this suite.
+}

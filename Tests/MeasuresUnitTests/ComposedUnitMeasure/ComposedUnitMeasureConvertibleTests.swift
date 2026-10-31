@@ -74,4 +74,6 @@ internal struct ComposedUnitMeasureConvertibleTests {
 
 // MARK: - NaT
 
-extension ComposedUnitMeasureConvertibleTests {}
+extension ComposedUnitMeasureConvertibleTests {
+    // TODO: Implement NaT tests for this suite.
+}

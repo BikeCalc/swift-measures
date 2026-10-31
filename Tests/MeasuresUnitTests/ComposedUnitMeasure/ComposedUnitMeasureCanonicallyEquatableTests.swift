@@ -44,4 +44,6 @@ internal struct ComposedUnitMeasureCanonicallyEquatableTests {
 
 // MARK: - NaT
 
-extension ComposedUnitMeasureCanonicallyEquatableTests {}
+extension ComposedUnitMeasureCanonicallyEquatableTests {
+    // TODO: Implement NaT tests for this suite.
+}

@@ -45,9 +45,3 @@ internal struct ConvertedComposedUnitMeasureHashableTests {
         #expect(Set([lhsWrapper, rhsWrapper]).count == 1)
     }
 }
-
-// MARK: - NaT
-
-extension ConvertedComposedUnitMeasureHashableTests {
-    // TODO: Implement NaT tests for this suite.
-}

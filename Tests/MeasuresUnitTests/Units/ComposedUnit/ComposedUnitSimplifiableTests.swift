@@ -18,42 +18,27 @@ internal struct ComposedUnitSimplifiableTests {
     private static let simplificationArguments: [(ComposedUnit, Array<ComposedUnit.Factor>)] = [
         (
             ComposedUnit.meter * ComposedUnit.meter,
-            [
-                .init(Length.meter, 2)
-            ]
+            [.init(Length.meter, 2)]
         ),
         (
             (ComposedUnit.meter ** 3) / ComposedUnit.meter,
-            [
-                .init(Length.meter, 2)
-            ]
+            [.init(Length.meter, 2)]
         ),
         (
             ComposedUnit(Time.second) * ComposedUnit.meter * ComposedUnit(Time.second),
-            [
-                .init(Time.second, 2),
-                .init(Length.meter, 1)
-            ]
+            [.init(Time.second, 2), .init(Length.meter, 1)]
         ),
         (
             ComposedUnit.meter,
-            [
-                .init(Length.meter, 1)
-            ]
+            [.init(Length.meter, 1)]
         ),
         (
             ComposedUnit.meter * ComposedUnit.centimeter,
-            [
-                .init(Length.meter, 1),
-                .init(Length.centimeter, 1)
-            ]
+            [.init(Length.meter, 1), .init(Length.centimeter, 1)]
         ),
         (
             ComposedUnit(Time.second) * ComposedUnit.meter,
-            [
-                .init(Time.second, 1),
-                .init(Length.meter, 1)
-            ]
+            [.init(Time.second, 1), .init(Length.meter, 1)]
         ),
         (ComposedUnit.dimensionless, []),
         (ComposedUnit.cancelledMeters, [])

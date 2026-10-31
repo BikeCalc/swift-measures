@@ -167,4 +167,6 @@ internal struct ComposedUnitMeasureDivisibleTests {
 
 // MARK: - NaT
 
-extension ComposedUnitMeasureDivisibleTests {}
+extension ComposedUnitMeasureDivisibleTests {
+    // TODO: Implement NaT tests for this suite.
+}

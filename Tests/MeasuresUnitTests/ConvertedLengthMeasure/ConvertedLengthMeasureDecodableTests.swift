@@ -60,4 +60,6 @@ internal struct ConvertedLengthMeasureDecodableTests {
 
 // MARK: - NaT
 
-extension ConvertedLengthMeasureDecodableTests {}
+extension ConvertedLengthMeasureDecodableTests {
+    // TODO: Implement NaT tests for this suite.
+}

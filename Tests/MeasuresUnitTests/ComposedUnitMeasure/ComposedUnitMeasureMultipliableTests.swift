@@ -119,4 +119,6 @@ internal struct ComposedUnitMeasureMultipliableTests {
 
 // MARK: - NaT
 
-extension ComposedUnitMeasureMultipliableTests {}
+extension ComposedUnitMeasureMultipliableTests {
+    // TODO: Implement NaT tests for this suite.
+}

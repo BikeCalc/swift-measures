@@ -150,4 +150,6 @@ internal struct ComposedUnitMeasureComparableTests {
 
 // MARK: - NaT
 
-extension ComposedUnitMeasureComparableTests {}
+extension ComposedUnitMeasureComparableTests {
+    // TODO: Implement NaT tests for this suite.
+}

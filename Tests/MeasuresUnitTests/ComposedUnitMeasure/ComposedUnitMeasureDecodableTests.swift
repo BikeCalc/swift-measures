@@ -110,5 +110,7 @@ internal struct ComposedUnitMeasureDecodableTests {
 
 // MARK: - NaT
 
-extension ComposedUnitMeasureDecodableTests {}
+extension ComposedUnitMeasureDecodableTests {
+    // TODO: Implement NaT tests for this suite.
+}
 #endif

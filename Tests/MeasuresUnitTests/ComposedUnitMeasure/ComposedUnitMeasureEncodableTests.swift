@@ -76,5 +76,7 @@ internal struct ComposedUnitMeasureEncodableTests {
 
 // MARK: - NaT
 
-extension ComposedUnitMeasureEncodableTests {}
+extension ComposedUnitMeasureEncodableTests {
+    // TODO: Implement NaT tests for this suite.
+}
 #endif
