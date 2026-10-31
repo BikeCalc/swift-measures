@@ -14,5 +14,112 @@ import Testing
 internal struct ComposedUnitMeasureApproximatelyEquatableTests {
     internal init() {}
 
-    // TODO: Implement tests for this suite.
+    @Test(
+        "Approximate equality succeeds",
+        arguments: [
+            (
+                Measure<ComposedUnit>(1, .meter),
+                Measure<ComposedUnit>(100, .centimeter),
+                Measure<ComposedUnit>(0, .meter),
+                0,
+                true
+            ),
+            (
+                Measure<ComposedUnit>(100.02, .centimeter),
+                Measure<ComposedUnit>(1, .meter),
+                Measure<ComposedUnit>(0.5, .millimeter),
+                0,
+                true
+            ),
+            (
+                Measure<ComposedUnit>(1, .meter),
+                Measure<ComposedUnit>(100.02, .centimeter),
+                Measure<ComposedUnit>(0.5, .millimeter),
+                0,
+                true
+            ),
+            (
+                Measure<ComposedUnit>(100.02, .centimeter),
+                Measure<ComposedUnit>(1, .meter),
+                Measure<ComposedUnit>(0.1, .millimeter),
+                0,
+                false
+            ),
+            (
+                Measure<ComposedUnit>(100, .centimeter),
+                Measure<ComposedUnit>(1.01, .meter),
+                Measure<ComposedUnit>(0, .meter),
+                0.01,
+                true
+            ),
+            (
+                Measure<ComposedUnit>(100, .centimeter),
+                Measure<ComposedUnit>(1.02, .meter),
+                Measure<ComposedUnit>(0, .meter),
+                0.01,
+                false
+            ),
+            (
+                Measure<ComposedUnit>(0.1 + 0.2, .meter),
+                Measure<ComposedUnit>(0.3, .meter),
+                Measure<ComposedUnit>(0.001, .millimeter),
+                0,
+                true
+            ),
+            (
+                Measure<ComposedUnit>(0.1 + 0.2, .meter),
+                Measure<ComposedUnit>(0.3, .meter),
+                Measure<ComposedUnit>(0, .meter),
+                0,
+                false
+            ),
+            (
+                Measure<ComposedUnit>(1, .dimensionless),
+                Measure<ComposedUnit>(1, .dimensionless),
+                Measure<ComposedUnit>(0, .dimensionless),
+                0,
+                true
+            ),
+            (
+                Measure<ComposedUnit>(1, .dimensionless),
+                Measure<ComposedUnit>(1.01, .dimensionless),
+                Measure<ComposedUnit>(0.02, .dimensionless),
+                0,
+                true
+            ),
+            (
+                Measure<ComposedUnit>(1, .dimensionless),
+                Measure<ComposedUnit>(1.02, .dimensionless),
+                Measure<ComposedUnit>(0.01, .dimensionless),
+                0,
+                false
+            ),
+            (
+                Measure<ComposedUnit>(1, .dimensionless),
+                Measure<ComposedUnit>(1, ComposedUnit.meter / ComposedUnit.meter),
+                Measure<ComposedUnit>(0, .dimensionless),
+                0,
+                true
+            )
+        ]
+    )
+    internal func approximateEqualitySucceeds(
+        lhs: Measure<ComposedUnit>,
+        rhs: Measure<ComposedUnit>,
+        absoluteTolerance: Measure<ComposedUnit>,
+        relativeTolerance: Double,
+        result: Bool
+    ) {
+        #expect(
+            lhs.isApproximatelyEqual(
+                to: rhs,
+                absoluteTolerance: absoluteTolerance,
+                relativeTolerance: relativeTolerance
+            ) == result
+        )
+    }
 }
+
+// MARK: - NaT
+
+extension ComposedUnitMeasureApproximatelyEquatableTests {}
