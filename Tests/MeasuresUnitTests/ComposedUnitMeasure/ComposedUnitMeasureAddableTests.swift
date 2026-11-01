@@ -108,5 +108,21 @@ extension ComposedUnitMeasureAddableTests {
 // MARK: - NaT
 
 extension ComposedUnitMeasureAddableTests {
-    // TODO: Implement NaT tests for this suite.
+    @Test(
+        "NaT propagates through addition",
+        arguments: [
+            (.nat, .init(1, .meter)),
+            (.init(1, .meter), .nat),
+            (.nat, .nat),
+            (.init(1, ComposedUnit(Length(coefficient: 0, constant: 0, symbol: "invalid"))), .init(1, .meter)),
+            (.init(1, .meter), .init(1, ComposedUnit(Length(coefficient: 0, constant: 0, symbol: "invalid"))))
+        ] as Array<(Measure<ComposedUnit>, Measure<ComposedUnit>)>
+    )
+    internal func additionPropagatesNaT(
+        lhs: Measure<ComposedUnit>,
+        rhs: Measure<ComposedUnit>
+    ) {
+        let result: Measure<ComposedUnit> = lhs + rhs
+        #expect(result.isNaT == true)
+    }
 }

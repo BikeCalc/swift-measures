@@ -102,5 +102,21 @@ extension LengthMeasureSubtractableTests {
 // MARK: - NaT
 
 extension LengthMeasureSubtractableTests {
-    // TODO: Implement NaT tests for this suite.
+    @Test(
+        "NaT propagates through subtraction",
+        arguments: [
+            (.nat, .init(1, .meter)),
+            (.init(1, .meter), .nat),
+            (.nat, .nat),
+            (.init(1, Length(coefficient: 0, constant: 0, symbol: "invalid")), .init(1, .meter)),
+            (.init(1, .meter), .init(1, Length(coefficient: 0, constant: 0, symbol: "invalid")))
+        ] as Array<(Measure<Length>, Measure<Length>)>
+    )
+    internal func subtractionPropagatesNaT(
+        lhs: Measure<Length>,
+        rhs: Measure<Length>
+    ) {
+        let result: Measure<Length> = lhs - rhs
+        #expect(result.isNaT == true)
+    }
 }

@@ -89,10 +89,10 @@ extension ComposedUnitMeasureValidatableTests {
     @Test(
         "Nonfinite values make measures invalid",
         arguments: [
-            Double.infinity,
-            Double.negativeInfinity,
-            Double.nan
-        ]
+            .infinity,
+            .negativeInfinity,
+            .nan
+        ] as Array<Double>
     )
     internal func nonfiniteValuesMakeMeasuresInvalid(value: Double) {
         let measure: Measure<ComposedUnit> = .init(value, .meter)

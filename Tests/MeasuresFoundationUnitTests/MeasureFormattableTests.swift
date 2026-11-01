@@ -74,11 +74,11 @@ extension MeasureFormattableTests {
     @Test(
         "Formatting NaT produces only NaT",
         arguments: [
-            Measure<Length>.nat,
-            Measure<Length>(Double.nan, .meter),
-            Measure<Length>(Double.infinity, .meter),
-            Measure<Length>(Double.negativeInfinity, .meter)
-        ]
+            .nat,
+            .init(Double.nan, .meter),
+            .init(Double.infinity, .meter),
+            .init(Double.negativeInfinity, .meter)
+        ] as Array<Measure<Length>>
     )
     internal func formattingNaT(measure: Measure<Length>) {
         #expect(measure.formatted() == "NaT")
@@ -88,13 +88,13 @@ extension MeasureFormattableTests {
     @Test(
         "Formatting invalid unit conversion parameters produce only NaT",
         arguments: [
-            (Double.nan, 0.0),
-            (Double.infinity, 0.0),
+            (.nan, 0.0),
+            (.infinity, 0.0),
             (0.0, 0.0),
             (-1.0, 0.0),
-            (1.0, Double.nan),
-            (1.0, Double.infinity)
-        ]
+            (1.0, .nan),
+            (1.0, .infinity)
+        ] as Array<(Double, Double)>
     )
     internal func formattingInvalidUnit(
         coefficient: Double,
