@@ -103,20 +103,33 @@ extension LengthMeasureSubtractableTests {
 
 extension LengthMeasureSubtractableTests {
     @Test(
-        "NaT propagates through subtraction",
+        "Subtracting from NaT returns NaT",
         arguments: [
             (.nat, .init(1, .meter)),
-            (.init(1, .meter), .nat),
             (.nat, .nat),
-            (.init(1, Length(coefficient: 0, constant: 0, symbol: "invalid")), .init(1, .meter)),
-            (.init(1, .meter), .init(1, Length(coefficient: 0, constant: 0, symbol: "invalid")))
+            (.invalid, .init(1, .meter))
         ] as Array<(Measure<Length>, Measure<Length>)>
     )
-    internal func subtractionPropagatesNaT(
-        lhs: Measure<Length>,
-        rhs: Measure<Length>
+    internal func subtractingFromNaTReturnsNaT(
+        minuend: Measure<Length>,
+        subtrahend: Measure<Length>
     ) {
-        let result: Measure<Length> = lhs - rhs
+        let result: Measure<Length> = minuend - subtrahend
+        #expect(result.isNaT == true)
+    }
+
+    @Test(
+        "Subtracting NaT returns NaT",
+        arguments: [
+            (.init(1, .meter), .nat),
+            (.init(1, .meter), .invalid)
+        ] as Array<(Measure<Length>, Measure<Length>)>
+    )
+    internal func subtractingNaTReturnsNaT(
+        minuend: Measure<Length>,
+        subtrahend: Measure<Length>
+    ) {
+        let result: Measure<Length> = minuend - subtrahend
         #expect(result.isNaT == true)
     }
 }

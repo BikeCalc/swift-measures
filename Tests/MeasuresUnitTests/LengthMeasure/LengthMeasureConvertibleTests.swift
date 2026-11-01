@@ -76,7 +76,7 @@ extension LengthMeasureConvertibleTests {
             .init(Double.nan, .meter),
             .init(Double.infinity, .meter),
             .init(Double.negativeInfinity, .meter),
-            .init(1, Length(coefficient: 0, constant: 0, symbol: "invalid"))
+            .invalid
         ] as Array<Measure<Length>>
     )
     internal func convertingNaTProducesNaT(value: Measure<Length>) {

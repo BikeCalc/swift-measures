@@ -109,20 +109,33 @@ extension ComposedUnitMeasureAddableTests {
 
 extension ComposedUnitMeasureAddableTests {
     @Test(
-        "NaT propagates through addition",
+        "Adding to NaT returns NaT",
         arguments: [
             (.nat, .init(1, .meter)),
-            (.init(1, .meter), .nat),
             (.nat, .nat),
-            (.init(1, ComposedUnit(Length(coefficient: 0, constant: 0, symbol: "invalid"))), .init(1, .meter)),
-            (.init(1, .meter), .init(1, ComposedUnit(Length(coefficient: 0, constant: 0, symbol: "invalid"))))
+            (.invalid, .init(1, .meter))
         ] as Array<(Measure<ComposedUnit>, Measure<ComposedUnit>)>
     )
-    internal func additionPropagatesNaT(
-        lhs: Measure<ComposedUnit>,
-        rhs: Measure<ComposedUnit>
+    internal func addingToNaTReturnsNaT(
+        augend: Measure<ComposedUnit>,
+        addend: Measure<ComposedUnit>
     ) {
-        let result: Measure<ComposedUnit> = lhs + rhs
+        let result: Measure<ComposedUnit> = augend + addend
+        #expect(result.isNaT == true)
+    }
+
+    @Test(
+        "Adding NaT returns NaT",
+        arguments: [
+            (.init(1, .meter), .nat),
+            (.init(1, .meter), .invalid)
+        ] as Array<(Measure<ComposedUnit>, Measure<ComposedUnit>)>
+    )
+    internal func addingNaTReturnsNaT(
+        augend: Measure<ComposedUnit>,
+        addend: Measure<ComposedUnit>
+    ) {
+        let result: Measure<ComposedUnit> = augend + addend
         #expect(result.isNaT == true)
     }
 }

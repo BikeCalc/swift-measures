@@ -109,20 +109,33 @@ extension ComposedUnitMeasureSubtractableTests {
 
 extension ComposedUnitMeasureSubtractableTests {
     @Test(
-        "NaT propagates through subtraction",
+        "Subtracting from NaT returns NaT",
         arguments: [
             (.nat, .init(1, .meter)),
-            (.init(1, .meter), .nat),
             (.nat, .nat),
-            (.init(1, ComposedUnit(Length(coefficient: 0, constant: 0, symbol: "invalid"))), .init(1, .meter)),
-            (.init(1, .meter), .init(1, ComposedUnit(Length(coefficient: 0, constant: 0, symbol: "invalid"))))
+            (.invalid, .init(1, .meter))
         ] as Array<(Measure<ComposedUnit>, Measure<ComposedUnit>)>
     )
-    internal func subtractionPropagatesNaT(
-        lhs: Measure<ComposedUnit>,
-        rhs: Measure<ComposedUnit>
+    internal func subtractingFromNaTReturnsNaT(
+        minuend: Measure<ComposedUnit>,
+        subtrahend: Measure<ComposedUnit>
     ) {
-        let result: Measure<ComposedUnit> = lhs - rhs
+        let result: Measure<ComposedUnit> = minuend - subtrahend
+        #expect(result.isNaT == true)
+    }
+
+    @Test(
+        "Subtracting NaT returns NaT",
+        arguments: [
+            (.init(1, .meter), .nat),
+            (.init(1, .meter), .invalid)
+        ] as Array<(Measure<ComposedUnit>, Measure<ComposedUnit>)>
+    )
+    internal func subtractingNaTReturnsNaT(
+        minuend: Measure<ComposedUnit>,
+        subtrahend: Measure<ComposedUnit>
+    ) {
+        let result: Measure<ComposedUnit> = minuend - subtrahend
         #expect(result.isNaT == true)
     }
 }
