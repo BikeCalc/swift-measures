@@ -29,7 +29,7 @@ internal struct ComposedUnitSimplifiableTests {
             [.init(Time.second, 2), .init(Length.meter, 1)]
         ),
         (
-            ComposedUnit.meter,
+            .meter,
             [.init(Length.meter, 1)]
         ),
         (
@@ -40,22 +40,22 @@ internal struct ComposedUnitSimplifiableTests {
             ComposedUnit(Time.second) * ComposedUnit.meter,
             [.init(Time.second, 1), .init(Length.meter, 1)]
         ),
-        (ComposedUnit.dimensionless, []),
-        (ComposedUnit.cancelledMeters, [])
+        (.dimensionless, []),
+        (.cancelledMeters, [])
     ]
 
     @Test(
         "Is simplifiable",
         arguments: [
             (ComposedUnit.meter * ComposedUnit.meter, true),
-            (ComposedUnit.cancelledMeters, true),
+            (.cancelledMeters, true),
             ((ComposedUnit.meter ** 3) / ComposedUnit.meter, true),
             (ComposedUnit(Time.second) * ComposedUnit.meter * ComposedUnit(Time.second), true),
-            (ComposedUnit.meter, true),
-            (ComposedUnit.dimensionless, true),
+            (.meter, true),
+            (.dimensionless, true),
             (ComposedUnit.meter * ComposedUnit.centimeter, true),
             (ComposedUnit(Time.second) * ComposedUnit.meter, true)
-        ]
+        ] as Array<(ComposedUnit, Bool)>
     )
     internal func isSimplifiable(
         value: ComposedUnit,
@@ -68,14 +68,14 @@ internal struct ComposedUnitSimplifiableTests {
         "Is simplified",
         arguments: [
             (ComposedUnit.meter * ComposedUnit.meter, false),
-            (ComposedUnit.cancelledMeters, false),
+            (.cancelledMeters, false),
             ((ComposedUnit.meter ** 3) / ComposedUnit.meter, false),
             (ComposedUnit(Time.second) * ComposedUnit.meter * ComposedUnit(Time.second), false),
-            (ComposedUnit.meter, true),
-            (ComposedUnit.dimensionless, true),
+            (.meter, true),
+            (.dimensionless, true),
             (ComposedUnit.meter * ComposedUnit.centimeter, true),
             (ComposedUnit(Time.second) * ComposedUnit.meter, true)
-        ]
+        ] as Array<(ComposedUnit, Bool)>
     )
     internal func isSimplified(
         value: ComposedUnit,
@@ -113,10 +113,10 @@ internal struct ComposedUnitSimplifiableTests {
         "Simplification is idempotent",
         arguments: [
             ComposedUnit.meter * ComposedUnit.meter,
-            ComposedUnit.cancelledMeters,
+            .cancelledMeters,
             (ComposedUnit.meter ** 3) / ComposedUnit.meter,
             ComposedUnit(Time.second) * ComposedUnit.meter * ComposedUnit(Time.second)
-        ]
+        ] as Array<ComposedUnit>
     )
     internal func simplificationIsIdempotent(value: ComposedUnit) {
         let result: ComposedUnit = value.simplified().simplified()

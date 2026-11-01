@@ -20,26 +20,26 @@ internal struct ConvertedComposedUnitMeasureEncodableTests {
         "Encode to JSON succeeds",
         arguments: [
             (
-                Measure<ComposedUnit>(1, .meter),
-                ComposedUnit.meter,
+                .init(1, .meter),
+                .meter,
                 #"{"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}],"value":1}"#
             ),
             (
-                Measure<ComposedUnit>(100, .centimeter),
-                ComposedUnit.meter,
+                .init(100, .centimeter),
+                .meter,
                 #"{"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}],"value":1}"#
             ),
             (
-                Measure<ComposedUnit>(1_000, .millimeter),
-                ComposedUnit.meter,
+                .init(1_000, .millimeter),
+                .meter,
                 #"{"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}],"value":1}"#
             ),
             (
-                Measure<ComposedUnit>(1, .dimensionless),
-                ComposedUnit.dimensionless,
+                .init(1, .dimensionless),
+                .dimensionless,
                 #"{"unit":[],"value":1}"#
             )
-        ]
+        ] as Array<(Measure<ComposedUnit>, ComposedUnit, String)>
     )
     internal func encodeToJSONSucceeds(
         value: Measure<ComposedUnit>,

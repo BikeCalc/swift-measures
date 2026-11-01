@@ -18,54 +18,54 @@ internal struct TemperatureMeasureApproximatelyEquatableTests {
         "Approximate equality succeeds",
         arguments: [
             (
-                Measure<ThermodynamicTemperature>(0, .celsius),
-                Measure<ThermodynamicTemperature>(1, .celsius),
+                .init(0, .celsius),
+                .init(1, .celsius),
                 0,
                 true
             ),
             (
-                Measure<ThermodynamicTemperature>(0, .celsius),
-                Measure<ThermodynamicTemperature>(0.5, .celsius),
-                0,
-                false
-            ),
-            (
-                Measure<ThermodynamicTemperature>(0, .celsius),
-                Measure<ThermodynamicTemperature>(1.8, .fahrenheit),
-                0,
-                true
-            ),
-            (
-                Measure<ThermodynamicTemperature>(0, .celsius),
-                Measure<ThermodynamicTemperature>(0.9, .fahrenheit),
+                .init(0, .celsius),
+                .init(0.5, .celsius),
                 0,
                 false
             ),
             (
-                Measure<ThermodynamicTemperature>(0, .celsius),
-                Measure<ThermodynamicTemperature>(0, .celsius),
+                .init(0, .celsius),
+                .init(1.8, .fahrenheit),
+                0,
+                true
+            ),
+            (
+                .init(0, .celsius),
+                .init(0.9, .fahrenheit),
+                0,
+                false
+            ),
+            (
+                .init(0, .celsius),
+                .init(0, .celsius),
                 0.01,
                 true
             ),
             (
-                Measure<ThermodynamicTemperature>(273.15, .kelvin),
-                Measure<ThermodynamicTemperature>(0, .celsius),
+                .init(273.15, .kelvin),
+                .init(0, .celsius),
                 0.01,
                 true
             ),
             (
-                Measure<ThermodynamicTemperature>(0, .celsius),
-                Measure<ThermodynamicTemperature>(0, .celsius),
+                .init(0, .celsius),
+                .init(0, .celsius),
                 0.001,
                 false
             ),
             (
-                Measure<ThermodynamicTemperature>(273.15, .kelvin),
-                Measure<ThermodynamicTemperature>(0, .celsius),
+                .init(273.15, .kelvin),
+                .init(0, .celsius),
                 0.001,
                 false
             )
-        ]
+        ] as Array<(Measure<ThermodynamicTemperature>, Measure<ThermodynamicTemperature>, Double, Bool)>
     )
     internal func approximateEqualitySucceeds(
         lhs: Measure<ThermodynamicTemperature>,

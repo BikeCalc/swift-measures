@@ -29,7 +29,7 @@ internal struct ComposedUnitNormalizableTests {
             [.init(Length.meter, -1), .init(Length.meter, 1), .init(Length.meter, 1)]
         ),
         (
-            ComposedUnit.meter,
+            .meter,
             [.init(Length.meter, 1)]
         ),
         (
@@ -41,10 +41,10 @@ internal struct ComposedUnitNormalizableTests {
             [.init(Length.centimeter, 1), .init(Length.meter, 1)]
         ),
         (
-            ComposedUnit.cancelledMeters,
+            .cancelledMeters,
             [.init(Length.meter, -1), .init(Length.meter, 1)]
         ),
-        (ComposedUnit.dimensionless, [])
+        (.dimensionless, [])
     ]
 
     @Test(
@@ -53,12 +53,12 @@ internal struct ComposedUnitNormalizableTests {
             (ComposedUnit(Time.second) * ComposedUnit.meter, true),
             (ComposedUnit.meter * ComposedUnit.centimeter, true),
             (ComposedUnit.meter * (ComposedUnit.meter ** -1) * ComposedUnit.meter, true),
-            (ComposedUnit.meter, true),
-            (ComposedUnit.dimensionless, true),
+            (.meter, true),
+            (.dimensionless, true),
             (ComposedUnit.meter * ComposedUnit(Time.second), true),
             (ComposedUnit.centimeter * ComposedUnit.meter, true),
-            (ComposedUnit.cancelledMeters, true)
-        ]
+            (.cancelledMeters, true)
+        ] as Array<(ComposedUnit, Bool)>
     )
     internal func isNormalizable(
         value: ComposedUnit,
@@ -73,12 +73,12 @@ internal struct ComposedUnitNormalizableTests {
             (ComposedUnit(Time.second) * ComposedUnit.meter, false),
             (ComposedUnit.meter * ComposedUnit.centimeter, false),
             (ComposedUnit.meter * (ComposedUnit.meter ** -1) * ComposedUnit.meter, false),
-            (ComposedUnit.meter, true),
-            (ComposedUnit.dimensionless, true),
+            (.meter, true),
+            (.dimensionless, true),
             (ComposedUnit.meter * ComposedUnit(Time.second), true),
             (ComposedUnit.centimeter * ComposedUnit.meter, true),
-            (ComposedUnit.cancelledMeters, false)
-        ]
+            (.cancelledMeters, false)
+        ] as Array<(ComposedUnit, Bool)>
     )
     internal func isNormalized(
         value: ComposedUnit,
@@ -118,8 +118,8 @@ internal struct ComposedUnitNormalizableTests {
             ComposedUnit(Time.second) * ComposedUnit.meter,
             ComposedUnit.meter * ComposedUnit.centimeter,
             ComposedUnit.meter * (ComposedUnit.meter ** -1) * ComposedUnit.meter,
-            ComposedUnit.meter
-        ]
+            .meter
+        ] as Array<ComposedUnit>
     )
     internal func normalizationIsIdempotent(value: ComposedUnit) {
         let result: ComposedUnit = value.normalized().normalized()

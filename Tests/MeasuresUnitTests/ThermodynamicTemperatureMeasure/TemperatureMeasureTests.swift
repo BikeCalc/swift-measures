@@ -17,13 +17,13 @@ internal struct TemperatureMeasureTests {
     @Test(
         "Bounded valid range succeeds",
         arguments: [
-            (Measure<ThermodynamicTemperature>(0, .kelvin), true),
-            (Measure<ThermodynamicTemperature>(-273.15, .celsius), true),
-            (Measure<ThermodynamicTemperature>(-459, .fahrenheit), true),
-            (Measure<ThermodynamicTemperature>(-1, .kelvin), false),
-            (Measure<ThermodynamicTemperature>(-273.16, .celsius), false),
-            (Measure<ThermodynamicTemperature>(-460, .fahrenheit), false)
-        ]
+            (.init(0, .kelvin), true),
+            (.init(-273.15, .celsius), true),
+            (.init(-459, .fahrenheit), true),
+            (.init(-1, .kelvin), false),
+            (.init(-273.16, .celsius), false),
+            (.init(-460, .fahrenheit), false)
+        ] as Array<(Measure<ThermodynamicTemperature>, Bool)>
     )
     internal func boundedValidRangeSucceeds(
         measure: Measure<ThermodynamicTemperature>,

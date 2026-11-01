@@ -19,10 +19,10 @@ internal struct ConvertedLengthMeasureDecodableTests {
     @Test(
         "Decode from JSON succeeds",
         arguments: [
-            (#"{"unit":{"coefficient":1,"constant":0,"symbol":"m"},"value":1}"#, Measure<Length>(1, .meter)),
+            (#"{"unit":{"coefficient":1,"constant":0,"symbol":"m"},"value":1}"#, .init(1, .meter)),
             (#"{"unit":{"coefficient":0.01,"constant":0,"symbol":"cm"},"value":100}"#, .init(100, .centimeter)),
             (#"{"unit":{"coefficient":0.001,"constant":0,"symbol":"mm"},"value":1000}"#, .init(1_000, .millimeter))
-        ]
+        ] as Array<(String, Measure<Length>)>
     )
     internal func decodeFromJSONSucceeds(
         json: String,
@@ -44,7 +44,7 @@ internal struct ConvertedLengthMeasureDecodableTests {
             #"{"unit":"m","value":1}"#,
             #"[1,"m"]"#,
             #"true"#
-        ]
+        ] as Array<String>
     )
     internal func decodeFromJSONThrows(json: String) throws {
         let data: Data = try #require(json.data(using: .utf8))

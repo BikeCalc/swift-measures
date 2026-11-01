@@ -15,52 +15,52 @@ internal struct LengthMeasureDivisibleTests {
     internal init() {}
 
     private static let divisionArguments: [(Measure<Length>, Measure<Length>.Divisor, Measure<Length>)] = [
-        (Measure<Length>(6.0, .meter), 2.0, Measure<Length>(3.0, .meter)),
-        (Measure<Length>(6.0, .meter), 3.0, Measure<Length>(2.0, .meter)),
-        (Measure<Length>(-6.0, .meter), 2.0, Measure<Length>(-3.0, .meter)),
-        (Measure<Length>(-6.0, .meter), -3.0, Measure<Length>(2.0, .meter)),
-        (Measure<Length>(1.5, .meter), 0.5, Measure<Length>(3.0, .meter)),
-        (Measure<Length>(3.75, .meter), 1.5, Measure<Length>(2.5, .meter)),
-        (Measure<Length>(-1.5, .meter), 0.5, Measure<Length>(-3.0, .meter)),
-        (Measure<Length>(-3.75, .meter), -1.5, Measure<Length>(2.5, .meter)),
-        (Measure<Length>(600.0, .centimeter), 2.0, Measure<Length>(300.0, .centimeter)),
-        (Measure<Length>(600.0, .centimeter), 3.0, Measure<Length>(200.0, .centimeter)),
-        (Measure<Length>(-600.0, .centimeter), 2.0, Measure<Length>(-300.0, .centimeter)),
-        (Measure<Length>(-600.0, .centimeter), -3.0, Measure<Length>(200.0, .centimeter))
+        (.init(6.0, .meter), 2.0, .init(3.0, .meter)),
+        (.init(6.0, .meter), 3.0, .init(2.0, .meter)),
+        (.init(-6.0, .meter), 2.0, .init(-3.0, .meter)),
+        (.init(-6.0, .meter), -3.0, .init(2.0, .meter)),
+        (.init(1.5, .meter), 0.5, .init(3.0, .meter)),
+        (.init(3.75, .meter), 1.5, .init(2.5, .meter)),
+        (.init(-1.5, .meter), 0.5, .init(-3.0, .meter)),
+        (.init(-3.75, .meter), -1.5, .init(2.5, .meter)),
+        (.init(600.0, .centimeter), 2.0, .init(300.0, .centimeter)),
+        (.init(600.0, .centimeter), 3.0, .init(200.0, .centimeter)),
+        (.init(-600.0, .centimeter), 2.0, .init(-300.0, .centimeter)),
+        (.init(-600.0, .centimeter), -3.0, .init(200.0, .centimeter))
     ]
 
     private static let remainderArguments: [(Measure<Length>, Measure<Length>.RemainderDivisor, Measure<Length>)] = [
-        (Measure<Length>(4.0, .meter), 2.0, Measure<Length>(0.0, .meter)),
-        (Measure<Length>(5.0, .meter), 2.0, Measure<Length>(1.0, .meter)),
-        (Measure<Length>(5.0, .meter), -2.0, Measure<Length>(1.0, .meter)),
-        (Measure<Length>(-5.0, .meter), 2.0, Measure<Length>(-1.0, .meter)),
-        (Measure<Length>(-5.0, .meter), -2.0, Measure<Length>(-1.0, .meter)),
-        (Measure<Length>(1.5, .meter), 0.5, Measure<Length>(0.0, .meter)),
-        (Measure<Length>(1.75, .meter), 0.5, Measure<Length>(0.25, .meter)),
-        (Measure<Length>(-1.75, .meter), 0.5, Measure<Length>(-0.25, .meter)),
-        (Measure<Length>(-1.75, .meter), -0.5, Measure<Length>(-0.25, .meter)),
-        (Measure<Length>(500.0, .centimeter), 200.0, Measure<Length>(100.0, .centimeter)),
-        (Measure<Length>(500.0, .centimeter), -200.0, Measure<Length>(100.0, .centimeter)),
-        (Measure<Length>(-500.0, .centimeter), 200.0, Measure<Length>(-100.0, .centimeter)),
-        (Measure<Length>(-500.0, .centimeter), -200.0, Measure<Length>(-100.0, .centimeter))
+        (.init(4.0, .meter), 2.0, .init(0.0, .meter)),
+        (.init(5.0, .meter), 2.0, .init(1.0, .meter)),
+        (.init(5.0, .meter), -2.0, .init(1.0, .meter)),
+        (.init(-5.0, .meter), 2.0, .init(-1.0, .meter)),
+        (.init(-5.0, .meter), -2.0, .init(-1.0, .meter)),
+        (.init(1.5, .meter), 0.5, .init(0.0, .meter)),
+        (.init(1.75, .meter), 0.5, .init(0.25, .meter)),
+        (.init(-1.75, .meter), 0.5, .init(-0.25, .meter)),
+        (.init(-1.75, .meter), -0.5, .init(-0.25, .meter)),
+        (.init(500.0, .centimeter), 200.0, .init(100.0, .centimeter)),
+        (.init(500.0, .centimeter), -200.0, .init(100.0, .centimeter)),
+        (.init(-500.0, .centimeter), 200.0, .init(-100.0, .centimeter)),
+        (.init(-500.0, .centimeter), -200.0, .init(-100.0, .centimeter))
     ]
 
     @Test(
         "Is divisible by",
         arguments: [
-            (Measure<Length>(6.0, .meter), Measure<Length>(3.0, .meter), true),
-            (Measure<Length>(7.0, .meter), Measure<Length>(3.0, .meter), false),
-            (Measure<Length>(-6.0, .meter), Measure<Length>(3.0, .meter), true),
-            (Measure<Length>(-7.0, .meter), Measure<Length>(3.0, .meter), false),
-            (Measure<Length>(1.5, .meter), Measure<Length>(0.5, .meter), true),
-            (Measure<Length>(1.5, .meter), Measure<Length>(2.5, .meter), false),
-            (Measure<Length>(-1.5, .meter), Measure<Length>(0.5, .meter), true),
-            (Measure<Length>(-1.5, .meter), Measure<Length>(2.5, .meter), false),
-            (Measure<Length>(6.0, .meter), Measure<Length>(300.0, .centimeter), true),
-            (Measure<Length>(600.0, .centimeter), Measure<Length>(3.0, .meter), true),
-            (Measure<Length>(7.0, .meter), Measure<Length>(300.0, .centimeter), false),
-            (Measure<Length>(700.0, .centimeter), Measure<Length>(3.0, .meter), false)
-        ]
+            (.init(6.0, .meter), .init(3.0, .meter), true),
+            (.init(7.0, .meter), .init(3.0, .meter), false),
+            (.init(-6.0, .meter), .init(3.0, .meter), true),
+            (.init(-7.0, .meter), .init(3.0, .meter), false),
+            (.init(1.5, .meter), .init(0.5, .meter), true),
+            (.init(1.5, .meter), .init(2.5, .meter), false),
+            (.init(-1.5, .meter), .init(0.5, .meter), true),
+            (.init(-1.5, .meter), .init(2.5, .meter), false),
+            (.init(6.0, .meter), .init(300.0, .centimeter), true),
+            (.init(600.0, .centimeter), .init(3.0, .meter), true),
+            (.init(7.0, .meter), .init(300.0, .centimeter), false),
+            (.init(700.0, .centimeter), .init(3.0, .meter), false)
+        ] as Array<(Measure<Length>, Measure<Length>, Bool)>
     )
     internal func isDivisibleBySucceeds(
         dividend: Measure<Length>,

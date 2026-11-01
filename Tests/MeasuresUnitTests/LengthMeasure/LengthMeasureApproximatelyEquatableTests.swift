@@ -18,62 +18,62 @@ internal struct LengthMeasureApproximatelyEquatableTests {
         "Approximate equality succeeds",
         arguments: [
             (
-                Measure<Length>(1, .meter),
-                Measure<Length>(100, .centimeter),
-                Measure<Length>(0, .meter),
+                .init(1, .meter),
+                .init(100, .centimeter),
+                .init(0, .meter),
                 0,
                 true
             ),
             (
-                Measure<Length>(100.02, .centimeter),
-                Measure<Length>(1, .meter),
-                Measure<Length>(0.5, .millimeter),
+                .init(100.02, .centimeter),
+                .init(1, .meter),
+                .init(0.5, .millimeter),
                 0,
                 true
             ),
             (
-                Measure<Length>(1, .meter),
-                Measure<Length>(100.02, .centimeter),
-                Measure<Length>(0.5, .millimeter),
+                .init(1, .meter),
+                .init(100.02, .centimeter),
+                .init(0.5, .millimeter),
                 0,
                 true
             ),
             (
-                Measure<Length>(100.02, .centimeter),
-                Measure<Length>(1, .meter),
-                Measure<Length>(0.1, .millimeter),
+                .init(100.02, .centimeter),
+                .init(1, .meter),
+                .init(0.1, .millimeter),
                 0,
                 false
             ),
             (
-                Measure<Length>(100, .centimeter),
-                Measure<Length>(1.01, .meter),
-                Measure<Length>(0, .meter),
+                .init(100, .centimeter),
+                .init(1.01, .meter),
+                .init(0, .meter),
                 0.01,
                 true
             ),
             (
-                Measure<Length>(100, .centimeter),
-                Measure<Length>(1.02, .meter),
-                Measure<Length>(0, .meter),
+                .init(100, .centimeter),
+                .init(1.02, .meter),
+                .init(0, .meter),
                 0.01,
                 false
             ),
             (
-                Measure<Length>(0.1 + 0.2, .meter),
-                Measure<Length>(0.3, .meter),
-                Measure<Length>(0.001, .millimeter),
+                .init(0.1 + 0.2, .meter),
+                .init(0.3, .meter),
+                .init(0.001, .millimeter),
                 0,
                 true
             ),
             (
-                Measure<Length>(0.1 + 0.2, .meter),
-                Measure<Length>(0.3, .meter),
-                Measure<Length>(0, .meter),
+                .init(0.1 + 0.2, .meter),
+                .init(0.3, .meter),
+                .init(0, .meter),
                 0,
                 false
             )
-        ]
+        ] as Array<(Measure<Length>, Measure<Length>, Measure<Length>, Double, Bool)>
     )
     internal func approximateEqualitySucceeds(
         lhs: Measure<Length>,

@@ -20,7 +20,7 @@ internal struct LengthMeasureValidatableTests {
             -1,
              0,
              1
-        ]
+        ] as Array<Int>
     )
     internal func unboundedValidRangeSucceeds(value: Int) {
         let measure: Measure<Length> = .init(value, .meter)
@@ -30,18 +30,18 @@ internal struct LengthMeasureValidatableTests {
     @Test(
         "Unit conversion parameters determine validity",
         arguments: [
-            (Measure<Length>(1, .meter), true),
-            (Measure<Length>(1, Length(coefficient: -1, symbol: "u")), false),
-            (Measure<Length>(1, Length(coefficient: 1, constant: -1, symbol: "u")), true),
-            (Measure<Length>(1, Length(coefficient: 0, symbol: "u")), false),
-            (Measure<Length>(1, Length(coefficient: -0.0, symbol: "u")), false),
-            (Measure<Length>(1, Length(coefficient: .infinity, symbol: "u")), false),
-            (Measure<Length>(1, Length(coefficient: .negativeInfinity, symbol: "u")), false),
-            (Measure<Length>(1, Length(coefficient: .nan, symbol: "u")), false),
-            (Measure<Length>(1, Length(coefficient: 1, constant: .infinity, symbol: "u")), false),
-            (Measure<Length>(1, Length(coefficient: 1, constant: .negativeInfinity, symbol: "u")), false),
-            (Measure<Length>(1, Length(coefficient: 1, constant: .nan, symbol: "u")), false)
-        ]
+            (.init(1, .meter), true),
+            (.init(1, Length(coefficient: -1, symbol: "u")), false),
+            (.init(1, Length(coefficient: 1, constant: -1, symbol: "u")), true),
+            (.init(1, Length(coefficient: 0, symbol: "u")), false),
+            (.init(1, Length(coefficient: -0.0, symbol: "u")), false),
+            (.init(1, Length(coefficient: .infinity, symbol: "u")), false),
+            (.init(1, Length(coefficient: .negativeInfinity, symbol: "u")), false),
+            (.init(1, Length(coefficient: .nan, symbol: "u")), false),
+            (.init(1, Length(coefficient: 1, constant: .infinity, symbol: "u")), false),
+            (.init(1, Length(coefficient: 1, constant: .negativeInfinity, symbol: "u")), false),
+            (.init(1, Length(coefficient: 1, constant: .nan, symbol: "u")), false)
+        ] as Array<(Measure<Length>, Bool)>
     )
     internal func unitConversionParametersDetermineValidity(
         measure: Measure<Length>,

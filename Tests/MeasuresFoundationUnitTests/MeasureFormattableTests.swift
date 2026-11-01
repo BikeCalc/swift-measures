@@ -31,7 +31,7 @@ internal struct MeasureFormattableTests {
             ("de_DE", "1.234,5\u{00A0}m"),
             ("fr_FR", "1\u{202F}234,5\u{00A0}m"),
             ("ar_EG@numbers=arab", "١٬٢٣٤٫٥\u{00A0}m")
-        ]
+        ] as Array<(String, String)>
     )
     internal func formattingUsesSpecificLocale(
         identifier: String,
@@ -53,7 +53,7 @@ internal struct MeasureFormattableTests {
             (.number.rounded(rule: .down).precision(.fractionLength(0)), "1,234\u{00A0}m"),
             (.number.rounded(rule: .up).precision(.fractionLength(0)), "1,235\u{00A0}m"),
             (.number.sign(strategy: .always()), "+1,234.5\u{00A0}m")
-        ] as [(FloatingPointFormatStyle<Double>, String)]
+        ] as Array<(FloatingPointFormatStyle<Double>, String)>
     )
     internal func formattingUsesCustomNumberFormatStyle(
         numberFormatStyle: FloatingPointFormatStyle<Double>,

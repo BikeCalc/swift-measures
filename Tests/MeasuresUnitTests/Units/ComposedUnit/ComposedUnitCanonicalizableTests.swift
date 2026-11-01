@@ -25,7 +25,7 @@ internal struct ComposedUnitCanonicalizableTests {
             [.init(Length.meter, 2), .init(Time.second, 1)]
         ),
         (
-            ComposedUnit.meter,
+            .meter,
             [.init(Length.meter, 1)]
         ),
         (
@@ -40,8 +40,8 @@ internal struct ComposedUnitCanonicalizableTests {
             ComposedUnit(Time.second) * ComposedUnit.meter,
             [.init(Length.meter, 1), .init(Time.second, 1)]
         ),
-        (ComposedUnit.dimensionless, []),
-        (ComposedUnit.cancelledMeters, [])
+        (.dimensionless, []),
+        (.cancelledMeters, [])
     ]
 
     @Test(
@@ -49,13 +49,13 @@ internal struct ComposedUnitCanonicalizableTests {
         arguments: [
             (ComposedUnit(Time.second) * ComposedUnit.meter * ComposedUnit.meter, true),
             (ComposedUnit.meter * ComposedUnit(Time.second) * ComposedUnit.meter, true),
-            (ComposedUnit.cancelledMeters, true),
-            (ComposedUnit.meter, true),
-            (ComposedUnit.dimensionless, true),
+            (.cancelledMeters, true),
+            (.meter, true),
+            (.dimensionless, true),
             (ComposedUnit.meter * ComposedUnit.centimeter, true),
             (ComposedUnit.centimeter * ComposedUnit.meter, true),
             (ComposedUnit(Time.second) * ComposedUnit.meter, true)
-        ]
+        ] as Array<(ComposedUnit, Bool)>
     )
     internal func isCanonicalizable(
         value: ComposedUnit,
@@ -69,13 +69,13 @@ internal struct ComposedUnitCanonicalizableTests {
         arguments: [
             (ComposedUnit(Time.second) * ComposedUnit.meter * ComposedUnit.meter, false),
             (ComposedUnit.meter * ComposedUnit(Time.second) * ComposedUnit.meter, false),
-            (ComposedUnit.cancelledMeters, false),
-            (ComposedUnit.meter, true),
-            (ComposedUnit.dimensionless, true),
+            (.cancelledMeters, false),
+            (.meter, true),
+            (.dimensionless, true),
             (ComposedUnit.meter * ComposedUnit.centimeter, false),
             (ComposedUnit.centimeter * ComposedUnit.meter, true),
             (ComposedUnit(Time.second) * ComposedUnit.meter, false)
-        ]
+        ] as Array<(ComposedUnit, Bool)>
     )
     internal func isCanonicalized(
         value: ComposedUnit,
@@ -114,9 +114,9 @@ internal struct ComposedUnitCanonicalizableTests {
         arguments: [
             ComposedUnit(Time.second) * ComposedUnit.meter * ComposedUnit.meter,
             ComposedUnit.meter * ComposedUnit(Time.second) * ComposedUnit.meter,
-            ComposedUnit.cancelledMeters,
-            ComposedUnit.meter
-        ]
+            .cancelledMeters,
+            .meter
+        ] as Array<ComposedUnit>
     )
     internal func canonicalizationIsIdempotent(value: ComposedUnit) {
         let result: ComposedUnit = value.canonicalized().canonicalized()

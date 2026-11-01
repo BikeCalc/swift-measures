@@ -17,13 +17,13 @@ internal struct ComposedUnitMeasureCustomStringConvertibleTests {
     @Test(
         "Description succeeds",
         arguments: [
-            (Measure<ComposedUnit>(1, .meter), "1.0 m"),
-            (Measure<ComposedUnit>(-1, .meter), "-1.0 m"),
-            (Measure<ComposedUnit>(0, .meter), "0.0 m"),
-            (Measure<ComposedUnit>(100, .centimeter), "100.0 cm"),
-            (Measure<ComposedUnit>(1.5, .foot), "1.5 ft"),
-            (Measure<ComposedUnit>(1, .dimensionless), "1.0")
-        ]
+            (.init(1, .meter), "1.0 m"),
+            (.init(-1, .meter), "-1.0 m"),
+            (.init(0, .meter), "0.0 m"),
+            (.init(100, .centimeter), "100.0 cm"),
+            (.init(1.5, .foot), "1.5 ft"),
+            (.init(1, .dimensionless), "1.0")
+        ] as Array<(Measure<ComposedUnit>, String)>
     )
     internal func descriptionSucceeds(
         value: Measure<ComposedUnit>,

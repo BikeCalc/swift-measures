@@ -20,42 +20,42 @@ internal struct ComposedUnitMeasureEncodableTests {
         "Encode to JSON succeeds",
         arguments: [
             (
-                Measure<ComposedUnit>(1, .meter),
+                .init(1, .meter),
                 #"{"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}],"value":1}"#
             ),
             (
-                Measure<ComposedUnit>(100, .centimeter),
+                .init(100, .centimeter),
                 """
                 {"unit":[{"exponent":1,"unit":{"coefficient":0.01,"dimension":{"length":1},"symbol":"cm"}}],\
                 "value":100}
                 """
             ),
             (
-                Measure<ComposedUnit>(1_000, .millimeter),
+                .init(1_000, .millimeter),
                 """
                 {"unit":[{"exponent":1,"unit":{"coefficient":0.001,"dimension":{"length":1},"symbol":"mm"}}],\
                 "value":1000}
                 """
             ),
             (
-                Measure<ComposedUnit>(1, .dimensionless),
+                .init(1, .dimensionless),
                 #"{"unit":[],"value":1}"#
             ),
             (
-                Measure<ComposedUnit>(20, ComposedUnit(ThermodynamicTemperature.celsius)),
+                .init(20, ComposedUnit(ThermodynamicTemperature.celsius)),
                 """
                 {"unit":[{"exponent":1,"unit":{"coefficient":1,"constant":273.15,\
                 "dimension":{"thermodynamic_temperature":1},"symbol":"°C"}}],"value":20}
                 """
             ),
             (
-                Measure<ComposedUnit>(10, ComposedUnit(Length.inch) / ComposedUnit(Time.minute)),
+                .init(10, ComposedUnit(Length.inch) / ComposedUnit(Time.minute)),
                 """
                 {"unit":[{"exponent":1,"unit":{"coefficient":0.0254,"dimension":{"length":1},"symbol":"in"}},\
                 {"exponent":-1,"unit":{"coefficient":60,"dimension":{"time":1},"symbol":"min"}}],"value":10}
                 """
             )
-        ]
+        ] as Array<(Measure<ComposedUnit>, String)>
     )
     internal func encodeToJSONSucceeds(
         value: Measure<ComposedUnit>,

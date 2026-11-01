@@ -19,10 +19,10 @@ internal struct ConvertedLengthMeasureEncodableTests {
     @Test(
         "Encode to JSON succeeds",
         arguments: [
-            (Measure<Length>(1, .meter), #"{"unit":{"coefficient":1,"constant":0,"symbol":"m"},"value":1}"#),
-            (Measure<Length>(100, .centimeter), #"{"unit":{"coefficient":1,"constant":0,"symbol":"m"},"value":1}"#),
-            (Measure<Length>(1_000, .millimeter), #"{"unit":{"coefficient":1,"constant":0,"symbol":"m"},"value":1}"#)
-        ]
+            (.init(1, .meter), #"{"unit":{"coefficient":1,"constant":0,"symbol":"m"},"value":1}"#),
+            (.init(100, .centimeter), #"{"unit":{"coefficient":1,"constant":0,"symbol":"m"},"value":1}"#),
+            (.init(1_000, .millimeter), #"{"unit":{"coefficient":1,"constant":0,"symbol":"m"},"value":1}"#)
+        ] as Array<(Measure<Length>, String)>
     )
     internal func encodeToJSONSucceeds(
         value: Measure<Length>,

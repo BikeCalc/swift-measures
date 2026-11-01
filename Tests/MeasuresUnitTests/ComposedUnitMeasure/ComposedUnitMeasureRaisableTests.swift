@@ -50,26 +50,26 @@ internal struct ComposedUnitMeasureRaisableTests {
     @Test(
         "Is power of",
         arguments: [
-            (Measure<ComposedUnit>(4.0, .meter), Measure<ComposedUnit>(2.0, .meter), false),
-            (Measure<ComposedUnit>(6.0, .meter), Measure<ComposedUnit>(2.0, .meter), false),
-            (Measure<ComposedUnit>(8.0, .meter), Measure<ComposedUnit>(2.0, .meter), false),
-            (Measure<ComposedUnit>(9.0, .meter), Measure<ComposedUnit>(2.0, .meter), false),
-            (Measure<ComposedUnit>(4.0, .meter), Measure<ComposedUnit>(-2.0, .meter), false),
-            (Measure<ComposedUnit>(-8.0, .meter), Measure<ComposedUnit>(-2.0, .meter), false),
-            (Measure<ComposedUnit>(6.0, .meter), Measure<ComposedUnit>(-2.0, .meter), false),
-            (Measure<ComposedUnit>(0.25, .meter), Measure<ComposedUnit>(2.0, .meter), false),
-            (Measure<ComposedUnit>(4.0, .meter), Measure<ComposedUnit>(0.5, .meter), false),
-            (Measure<ComposedUnit>(-0.125, .meter), Measure<ComposedUnit>(-2.0, .meter), false),
-            (Measure<ComposedUnit>(0.2, .meter), Measure<ComposedUnit>(2.0, .meter), false),
-            (Measure<ComposedUnit>(2.0, .meter), Measure<ComposedUnit>(200.0, .centimeter), true),
-            (Measure<ComposedUnit>(200.0, .centimeter), Measure<ComposedUnit>(2.0, .meter), true),
-            (Measure<ComposedUnit>(4.0, .meter), Measure<ComposedUnit>(200.0, .centimeter), false),
-            (Measure<ComposedUnit>(400.0, .centimeter), Measure<ComposedUnit>(2.0, .meter), false),
-            (Measure<ComposedUnit>(4.0, .dimensionless), Measure<ComposedUnit>(2.0, .dimensionless), true),
-            (Measure<ComposedUnit>(6.0, .dimensionless), Measure<ComposedUnit>(2.0, .dimensionless), false),
-            (Measure<ComposedUnit>(8.0, .dimensionless), Measure<ComposedUnit>(2.0, .dimensionless), true),
-            (Measure<ComposedUnit>(9.0, .dimensionless), Measure<ComposedUnit>(2.0, .dimensionless), false)
-        ]
+            (.init(4.0, .meter), .init(2.0, .meter), false),
+            (.init(6.0, .meter), .init(2.0, .meter), false),
+            (.init(8.0, .meter), .init(2.0, .meter), false),
+            (.init(9.0, .meter), .init(2.0, .meter), false),
+            (.init(4.0, .meter), .init(-2.0, .meter), false),
+            (.init(-8.0, .meter), .init(-2.0, .meter), false),
+            (.init(6.0, .meter), .init(-2.0, .meter), false),
+            (.init(0.25, .meter), .init(2.0, .meter), false),
+            (.init(4.0, .meter), .init(0.5, .meter), false),
+            (.init(-0.125, .meter), .init(-2.0, .meter), false),
+            (.init(0.2, .meter), .init(2.0, .meter), false),
+            (.init(2.0, .meter), .init(200.0, .centimeter), true),
+            (.init(200.0, .centimeter), .init(2.0, .meter), true),
+            (.init(4.0, .meter), .init(200.0, .centimeter), false),
+            (.init(400.0, .centimeter), .init(2.0, .meter), false),
+            (.init(4.0, .dimensionless), .init(2.0, .dimensionless), true),
+            (.init(6.0, .dimensionless), .init(2.0, .dimensionless), false),
+            (.init(8.0, .dimensionless), .init(2.0, .dimensionless), true),
+            (.init(9.0, .dimensionless), .init(2.0, .dimensionless), false)
+        ] as Array<(Measure<ComposedUnit>, Measure<ComposedUnit>, Bool)>
     )
     internal func isPowerOfSucceeds(
         measure: Measure<ComposedUnit>,

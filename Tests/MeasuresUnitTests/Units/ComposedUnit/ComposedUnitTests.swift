@@ -18,10 +18,10 @@ internal struct ComposedUnitTests {
     @Test(
         "Dimension initialization includes only nonzero factors",
         arguments: [
-            (Dimension(), [], [], ""),
-            (Dimension(length: 1), ["m"], [1], "m"),
-            (Dimension(time: -2), ["s"], [-2], "s⁻²"),
-            (Dimension(length: 1, time: -2), ["m", "s"], [1, -2], "m·s⁻²")
+            (.init(), [], [], ""),
+            (.init(length: 1), ["m"], [1], "m"),
+            (.init(time: -2), ["s"], [-2], "s⁻²"),
+            (.init(length: 1, time: -2), ["m", "s"], [1, -2], "m·s⁻²")
         ] as Array<(Dimension, Array<String>, Array<Int>, String)>
     )
     internal func dimensionInitializationIncludesOnlyNonzeroFactors(
@@ -43,27 +43,27 @@ internal struct ComposedUnitTests {
         "Multiplication retains factors without converting or combining them",
         arguments: [
             (
-                ComposedUnit.centimeter,
-                ComposedUnit.meter,
+                .centimeter,
+                .meter,
                 [.init(Length.centimeter, 1), .init(Length.meter, 1)],
                 0.01,
-                Dimension(length: 2),
+                .init(length: 2),
                 "cm·m"
             ),
             (
-                ComposedUnit.meter,
-                ComposedUnit.meter,
+                .meter,
+                .meter,
                 [.init(Length.meter, 1), .init(Length.meter, 1)],
                 1.0,
-                Dimension(length: 2),
+                .init(length: 2),
                 "m·m"
             ),
             (
-                ComposedUnit.meter,
-                ComposedUnit(Time.second),
+                .meter,
+                .init(Time.second),
                 [.init(Length.meter, 1), .init(Time.second, 1)],
                 1.0,
-                Dimension(length: 1, time: 1),
+                .init(length: 1, time: 1),
                 "m·s"
             )
         ] as Array<(ComposedUnit, ComposedUnit, Array<ComposedUnit.Factor>, Double, Dimension, String)>
@@ -87,27 +87,27 @@ internal struct ComposedUnitTests {
         "Division negates every denominator exponent",
         arguments: [
             (
-                ComposedUnit.centimeter,
-                ComposedUnit.meter,
+                .centimeter,
+                .meter,
                 [.init(Length.centimeter, 1), .init(Length.meter, -1)],
                 0.01,
-                Dimension(),
+                .init(),
                 "cm·m⁻¹"
             ),
             (
-                ComposedUnit.meter,
-                ComposedUnit(Time.second),
+                .meter,
+                .init(Time.second),
                 [.init(Length.meter, 1), .init(Time.second, -1)],
                 1.0,
-                Dimension(length: 1, time: -1),
+                .init(length: 1, time: -1),
                 "m·s⁻¹"
             ),
             (
-                ComposedUnit.centimeter,
+                .centimeter,
                 ComposedUnit.meter / ComposedUnit(Time.second),
                 [.init(Length.centimeter, 1), .init(Length.meter, -1), .init(Time.second, 1)],
                 0.01,
-                Dimension(time: 1),
+                .init(time: 1),
                 "cm·m⁻¹·s"
             )
         ] as Array<(ComposedUnit, ComposedUnit, Array<ComposedUnit.Factor>, Double, Dimension, String)>
@@ -130,10 +130,10 @@ internal struct ComposedUnitTests {
     @Test(
         "Exponentiation scales factor exponents",
         arguments: [
-            (0, [], 1.0, Dimension(), ""),
-            (1, [1, -1], 2.0, Dimension(length: 1, time: -1), "u·s⁻¹"),
-            (2, [2, -2], 4.0, Dimension(length: 2, time: -2), "u²·s⁻²"),
-            (-1, [-1, 1], 0.5, Dimension(length: -1, time: 1), "u⁻¹·s")
+            (0, [], 1.0, .init(), ""),
+            (1, [1, -1], 2.0, .init(length: 1, time: -1), "u·s⁻¹"),
+            (2, [2, -2], 4.0, .init(length: 2, time: -2), "u²·s⁻²"),
+            (-1, [-1, 1], 0.5, .init(length: -1, time: 1), "u⁻¹·s")
         ] as Array<(Int, Array<Int>, Double, Dimension, String)>
     )
     internal func exponentiationScalesFactorExponents(

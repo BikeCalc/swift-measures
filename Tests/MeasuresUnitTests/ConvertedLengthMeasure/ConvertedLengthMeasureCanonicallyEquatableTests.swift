@@ -17,17 +17,17 @@ internal struct ConvertedLengthMeasureCanonicallyEquatableTests {
     @Test(
         "Canonical equality succeeds",
         arguments: [
-            (Measure<Length>(1, .meter), Measure<Length>(1, .meter), true),
-            (Measure<Length>(1, .meter), Measure<Length>(100, .centimeter), true),
-            (Measure<Length>(100, .centimeter), Measure<Length>(1, .meter), true),
-            (Measure<Length>(1, .foot), Measure<Length>(12, .inch), true),
-            (Measure<Length>(12, .inch), Measure<Length>(1, .foot), true),
-            (Measure<Length>(-1, .meter), Measure<Length>(-100, .centimeter), true),
-            (Measure<Length>(0, .meter), Measure<Length>(0, .foot), true),
-            (Measure<Length>(1, .meter), Measure<Length>(99, .centimeter), false),
-            (Measure<Length>(1, .foot), Measure<Length>(13, .inch), false),
-            (Measure<Length>(-1, .meter), Measure<Length>(100, .centimeter), false)
-        ]
+            (.init(1, .meter), .init(1, .meter), true),
+            (.init(1, .meter), .init(100, .centimeter), true),
+            (.init(100, .centimeter), .init(1, .meter), true),
+            (.init(1, .foot), .init(12, .inch), true),
+            (.init(12, .inch), .init(1, .foot), true),
+            (.init(-1, .meter), .init(-100, .centimeter), true),
+            (.init(0, .meter), .init(0, .foot), true),
+            (.init(1, .meter), .init(99, .centimeter), false),
+            (.init(1, .foot), .init(13, .inch), false),
+            (.init(-1, .meter), .init(100, .centimeter), false)
+        ] as Array<(Measure<Length>, Measure<Length>, Bool)>
     )
     internal func canonicalEqualitySucceeds(
         lhs: Measure<Length>,

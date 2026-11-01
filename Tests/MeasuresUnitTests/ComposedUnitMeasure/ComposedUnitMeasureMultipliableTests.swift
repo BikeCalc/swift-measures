@@ -38,23 +38,23 @@ internal struct ComposedUnitMeasureMultipliableTests {
     @Test(
         "Is multiple of",
         arguments: [
-            (Measure<ComposedUnit>(6.0, .meter), Measure<ComposedUnit>(3.0, .meter), true),
-            (Measure<ComposedUnit>(7.0, .meter), Measure<ComposedUnit>(3.0, .meter), false),
-            (Measure<ComposedUnit>(-6.0, .meter), Measure<ComposedUnit>(3.0, .meter), true),
-            (Measure<ComposedUnit>(-7.0, .meter), Measure<ComposedUnit>(3.0, .meter), false),
-            (Measure<ComposedUnit>(1.5, .meter), Measure<ComposedUnit>(0.5, .meter), true),
-            (Measure<ComposedUnit>(1.5, .meter), Measure<ComposedUnit>(2.5, .meter), false),
-            (Measure<ComposedUnit>(-1.5, .meter), Measure<ComposedUnit>(0.5, .meter), true),
-            (Measure<ComposedUnit>(-1.5, .meter), Measure<ComposedUnit>(2.5, .meter), false),
-            (Measure<ComposedUnit>(6.0, .meter), Measure<ComposedUnit>(300.0, .centimeter), true),
-            (Measure<ComposedUnit>(600.0, .centimeter), Measure<ComposedUnit>(3.0, .meter), true),
-            (Measure<ComposedUnit>(7.0, .meter), Measure<ComposedUnit>(300.0, .centimeter), false),
-            (Measure<ComposedUnit>(700.0, .centimeter), Measure<ComposedUnit>(3.0, .meter), false),
-            (Measure<ComposedUnit>(6.0, .dimensionless), Measure<ComposedUnit>(3.0, .dimensionless), true),
-            (Measure<ComposedUnit>(7.0, .dimensionless), Measure<ComposedUnit>(3.0, .dimensionless), false),
-            (Measure<ComposedUnit>(-6.0, .dimensionless), Measure<ComposedUnit>(3.0, .dimensionless), true),
-            (Measure<ComposedUnit>(-7.0, .dimensionless), Measure<ComposedUnit>(3.0, .dimensionless), false)
-        ]
+            (.init(6.0, .meter), .init(3.0, .meter), true),
+            (.init(7.0, .meter), .init(3.0, .meter), false),
+            (.init(-6.0, .meter), .init(3.0, .meter), true),
+            (.init(-7.0, .meter), .init(3.0, .meter), false),
+            (.init(1.5, .meter), .init(0.5, .meter), true),
+            (.init(1.5, .meter), .init(2.5, .meter), false),
+            (.init(-1.5, .meter), .init(0.5, .meter), true),
+            (.init(-1.5, .meter), .init(2.5, .meter), false),
+            (.init(6.0, .meter), .init(300.0, .centimeter), true),
+            (.init(600.0, .centimeter), .init(3.0, .meter), true),
+            (.init(7.0, .meter), .init(300.0, .centimeter), false),
+            (.init(700.0, .centimeter), .init(3.0, .meter), false),
+            (.init(6.0, .dimensionless), .init(3.0, .dimensionless), true),
+            (.init(7.0, .dimensionless), .init(3.0, .dimensionless), false),
+            (.init(-6.0, .dimensionless), .init(3.0, .dimensionless), true),
+            (.init(-7.0, .dimensionless), .init(3.0, .dimensionless), false)
+        ] as Array<(Measure<ComposedUnit>, Measure<ComposedUnit>, Bool)>
     )
     internal func isMultipleOfSucceeds(
         multiplicand: Measure<ComposedUnit>,

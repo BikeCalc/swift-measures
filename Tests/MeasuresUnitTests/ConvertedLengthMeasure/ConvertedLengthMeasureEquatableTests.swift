@@ -15,12 +15,12 @@ internal struct ConvertedLengthMeasureEquatableTests {
     internal init() {}
 
     private static let equalityArguments: [(Measure<Length>, Measure<Length>, Bool)] = [
-        (Measure<Length>(1, .meter), Measure<Length>(1, .meter), true),
-        (Measure<Length>(1, .meter), Measure<Length>(2, .meter), false),
-        (Measure<Length>(1, .meter), Measure<Length>(100, .centimeter), false),
-        (Measure<Length>(1, .foot), Measure<Length>(1, .foot), true),
-        (Measure<Length>(1, .foot), Measure<Length>(2, .foot), false),
-        (Measure<Length>(1, .foot), Measure<Length>(12, .inch), false)
+        (.init(1, .meter), .init(1, .meter), true),
+        (.init(1, .meter), .init(2, .meter), false),
+        (.init(1, .meter), .init(100, .centimeter), false),
+        (.init(1, .foot), .init(1, .foot), true),
+        (.init(1, .foot), .init(2, .foot), false),
+        (.init(1, .foot), .init(12, .inch), false)
     ]
 
     @Test(

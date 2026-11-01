@@ -44,22 +44,22 @@ internal struct LengthMeasureRaisableTests {
     @Test(
         "Is power of",
         arguments: [
-            (Measure<Length>(4.0, .meter), Measure<Length>(2.0, .meter), false),
-            (Measure<Length>(6.0, .meter), Measure<Length>(2.0, .meter), false),
-            (Measure<Length>(8.0, .meter), Measure<Length>(2.0, .meter), false),
-            (Measure<Length>(9.0, .meter), Measure<Length>(2.0, .meter), false),
-            (Measure<Length>(4.0, .meter), Measure<Length>(-2.0, .meter), false),
-            (Measure<Length>(-8.0, .meter), Measure<Length>(-2.0, .meter), false),
-            (Measure<Length>(6.0, .meter), Measure<Length>(-2.0, .meter), false),
-            (Measure<Length>(0.25, .meter), Measure<Length>(2.0, .meter), false),
-            (Measure<Length>(4.0, .meter), Measure<Length>(0.5, .meter), false),
-            (Measure<Length>(-0.125, .meter), Measure<Length>(-2.0, .meter), false),
-            (Measure<Length>(0.2, .meter), Measure<Length>(2.0, .meter), false),
-            (Measure<Length>(2.0, .meter), Measure<Length>(200.0, .centimeter), true),
-            (Measure<Length>(200.0, .centimeter), Measure<Length>(2.0, .meter), true),
-            (Measure<Length>(4.0, .meter), Measure<Length>(200.0, .centimeter), false),
-            (Measure<Length>(400.0, .centimeter), Measure<Length>(2.0, .meter), false)
-        ]
+            (.init(4.0, .meter), .init(2.0, .meter), false),
+            (.init(6.0, .meter), .init(2.0, .meter), false),
+            (.init(8.0, .meter), .init(2.0, .meter), false),
+            (.init(9.0, .meter), .init(2.0, .meter), false),
+            (.init(4.0, .meter), .init(-2.0, .meter), false),
+            (.init(-8.0, .meter), .init(-2.0, .meter), false),
+            (.init(6.0, .meter), .init(-2.0, .meter), false),
+            (.init(0.25, .meter), .init(2.0, .meter), false),
+            (.init(4.0, .meter), .init(0.5, .meter), false),
+            (.init(-0.125, .meter), .init(-2.0, .meter), false),
+            (.init(0.2, .meter), .init(2.0, .meter), false),
+            (.init(2.0, .meter), .init(200.0, .centimeter), true),
+            (.init(200.0, .centimeter), .init(2.0, .meter), true),
+            (.init(4.0, .meter), .init(200.0, .centimeter), false),
+            (.init(400.0, .centimeter), .init(2.0, .meter), false)
+        ] as Array<(Measure<Length>, Measure<Length>, Bool)>
     )
     internal func isPowerOfSucceeds(
         measure: Measure<Length>,

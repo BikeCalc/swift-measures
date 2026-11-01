@@ -18,90 +18,90 @@ internal struct ComposedUnitMeasureApproximatelyEquatableTests {
         "Approximate equality succeeds",
         arguments: [
             (
-                Measure<ComposedUnit>(1, .meter),
-                Measure<ComposedUnit>(100, .centimeter),
-                Measure<ComposedUnit>(0, .meter),
+                .init(1, .meter),
+                .init(100, .centimeter),
+                .init(0, .meter),
                 0,
                 true
             ),
             (
-                Measure<ComposedUnit>(100.02, .centimeter),
-                Measure<ComposedUnit>(1, .meter),
-                Measure<ComposedUnit>(0.5, .millimeter),
+                .init(100.02, .centimeter),
+                .init(1, .meter),
+                .init(0.5, .millimeter),
                 0,
                 true
             ),
             (
-                Measure<ComposedUnit>(1, .meter),
-                Measure<ComposedUnit>(100.02, .centimeter),
-                Measure<ComposedUnit>(0.5, .millimeter),
+                .init(1, .meter),
+                .init(100.02, .centimeter),
+                .init(0.5, .millimeter),
                 0,
                 true
             ),
             (
-                Measure<ComposedUnit>(100.02, .centimeter),
-                Measure<ComposedUnit>(1, .meter),
-                Measure<ComposedUnit>(0.1, .millimeter),
+                .init(100.02, .centimeter),
+                .init(1, .meter),
+                .init(0.1, .millimeter),
                 0,
                 false
             ),
             (
-                Measure<ComposedUnit>(100, .centimeter),
-                Measure<ComposedUnit>(1.01, .meter),
-                Measure<ComposedUnit>(0, .meter),
+                .init(100, .centimeter),
+                .init(1.01, .meter),
+                .init(0, .meter),
                 0.01,
                 true
             ),
             (
-                Measure<ComposedUnit>(100, .centimeter),
-                Measure<ComposedUnit>(1.02, .meter),
-                Measure<ComposedUnit>(0, .meter),
+                .init(100, .centimeter),
+                .init(1.02, .meter),
+                .init(0, .meter),
                 0.01,
                 false
             ),
             (
-                Measure<ComposedUnit>(0.1 + 0.2, .meter),
-                Measure<ComposedUnit>(0.3, .meter),
-                Measure<ComposedUnit>(0.001, .millimeter),
+                .init(0.1 + 0.2, .meter),
+                .init(0.3, .meter),
+                .init(0.001, .millimeter),
                 0,
                 true
             ),
             (
-                Measure<ComposedUnit>(0.1 + 0.2, .meter),
-                Measure<ComposedUnit>(0.3, .meter),
-                Measure<ComposedUnit>(0, .meter),
+                .init(0.1 + 0.2, .meter),
+                .init(0.3, .meter),
+                .init(0, .meter),
                 0,
                 false
             ),
             (
-                Measure<ComposedUnit>(1, .dimensionless),
-                Measure<ComposedUnit>(1, .dimensionless),
-                Measure<ComposedUnit>(0, .dimensionless),
+                .init(1, .dimensionless),
+                .init(1, .dimensionless),
+                .init(0, .dimensionless),
                 0,
                 true
             ),
             (
-                Measure<ComposedUnit>(1, .dimensionless),
-                Measure<ComposedUnit>(1.01, .dimensionless),
-                Measure<ComposedUnit>(0.02, .dimensionless),
+                .init(1, .dimensionless),
+                .init(1.01, .dimensionless),
+                .init(0.02, .dimensionless),
                 0,
                 true
             ),
             (
-                Measure<ComposedUnit>(1, .dimensionless),
-                Measure<ComposedUnit>(1.02, .dimensionless),
-                Measure<ComposedUnit>(0.01, .dimensionless),
+                .init(1, .dimensionless),
+                .init(1.02, .dimensionless),
+                .init(0.01, .dimensionless),
                 0,
                 false
             ),
             (
-                Measure<ComposedUnit>(1, .dimensionless),
-                Measure<ComposedUnit>(1, .cancelledMeters),
-                Measure<ComposedUnit>(0, .dimensionless),
+                .init(1, .dimensionless),
+                .init(1, .cancelledMeters),
+                .init(0, .dimensionless),
                 0,
                 true
             )
-        ]
+        ] as Array<(Measure<ComposedUnit>, Measure<ComposedUnit>, Measure<ComposedUnit>, Double, Bool)>
     )
     internal func approximateEqualitySucceeds(
         lhs: Measure<ComposedUnit>,

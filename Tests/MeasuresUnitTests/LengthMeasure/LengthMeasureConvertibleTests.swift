@@ -44,11 +44,11 @@ internal struct LengthMeasureConvertibleTests {
     @Test(
         "Conversion succeeds",
         arguments: [
-            (Measure<Length>(1, .meter), .centimeter, Measure<Length>(100, .centimeter)),
-            (Measure<Length>(100, .centimeter), .meter, Measure<Length>(1, .meter)),
-            (Measure<Length>(1, .foot), .inch, Measure<Length>(12, .inch)),
-            (Measure<Length>(1, .yard), .foot, Measure<Length>(3, .foot)),
-            (Measure<Length>(1, .kilometer), .meter, Measure<Length>(1_000, .meter))
+            (.init(1, .meter), .centimeter, .init(100, .centimeter)),
+            (.init(100, .centimeter), .meter, .init(1, .meter)),
+            (.init(1, .foot), .inch, .init(12, .inch)),
+            (.init(1, .yard), .foot, .init(3, .foot)),
+            (.init(1, .kilometer), .meter, .init(1_000, .meter))
         ] as Array<(Measure<Length>, Length, Measure<Length>)>
     )
     internal func conversionSucceeds(

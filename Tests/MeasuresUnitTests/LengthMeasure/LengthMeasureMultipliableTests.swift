@@ -15,36 +15,36 @@ internal struct LengthMeasureMultipliableTests {
     internal init() {}
 
     private static let multiplicationArguments: [(Measure<Length>, Measure<Length>.Multiplier, Measure<Length>)] = [
-        (Measure<Length>(2.0, .meter), 3.0, Measure<Length>(6.0, .meter)),
-        (Measure<Length>(3.0, .meter), 4.0, Measure<Length>(12.0, .meter)),
-        (Measure<Length>(-2.0, .meter), 3.0, Measure<Length>(-6.0, .meter)),
-        (Measure<Length>(-3.0, .meter), -4.0, Measure<Length>(12.0, .meter)),
-        (Measure<Length>(0.5, .meter), 1.5, Measure<Length>(0.75, .meter)),
-        (Measure<Length>(1.5, .meter), 2.5, Measure<Length>(3.75, .meter)),
-        (Measure<Length>(-0.5, .meter), 1.5, Measure<Length>(-0.75, .meter)),
-        (Measure<Length>(-1.5, .meter), -2.5, Measure<Length>(3.75, .meter)),
-        (Measure<Length>(200.0, .centimeter), 3.0, Measure<Length>(600.0, .centimeter)),
-        (Measure<Length>(300.0, .centimeter), 4.0, Measure<Length>(1_200.0, .centimeter)),
-        (Measure<Length>(-200.0, .centimeter), 3.0, Measure<Length>(-600.0, .centimeter)),
-        (Measure<Length>(-300.0, .centimeter), -4.0, Measure<Length>(1_200.0, .centimeter))
+        (.init(2.0, .meter), 3.0, .init(6.0, .meter)),
+        (.init(3.0, .meter), 4.0, .init(12.0, .meter)),
+        (.init(-2.0, .meter), 3.0, .init(-6.0, .meter)),
+        (.init(-3.0, .meter), -4.0, .init(12.0, .meter)),
+        (.init(0.5, .meter), 1.5, .init(0.75, .meter)),
+        (.init(1.5, .meter), 2.5, .init(3.75, .meter)),
+        (.init(-0.5, .meter), 1.5, .init(-0.75, .meter)),
+        (.init(-1.5, .meter), -2.5, .init(3.75, .meter)),
+        (.init(200.0, .centimeter), 3.0, .init(600.0, .centimeter)),
+        (.init(300.0, .centimeter), 4.0, .init(1_200.0, .centimeter)),
+        (.init(-200.0, .centimeter), 3.0, .init(-600.0, .centimeter)),
+        (.init(-300.0, .centimeter), -4.0, .init(1_200.0, .centimeter))
     ]
 
     @Test(
         "Is multiple of",
         arguments: [
-            (Measure<Length>(6.0, .meter), Measure<Length>(3.0, .meter), true),
-            (Measure<Length>(7.0, .meter), Measure<Length>(3.0, .meter), false),
-            (Measure<Length>(-6.0, .meter), Measure<Length>(3.0, .meter), true),
-            (Measure<Length>(-7.0, .meter), Measure<Length>(3.0, .meter), false),
-            (Measure<Length>(1.5, .meter), Measure<Length>(0.5, .meter), true),
-            (Measure<Length>(1.5, .meter), Measure<Length>(2.5, .meter), false),
-            (Measure<Length>(-1.5, .meter), Measure<Length>(0.5, .meter), true),
-            (Measure<Length>(-1.5, .meter), Measure<Length>(2.5, .meter), false),
-            (Measure<Length>(6.0, .meter), Measure<Length>(300.0, .centimeter), true),
-            (Measure<Length>(600.0, .centimeter), Measure<Length>(3.0, .meter), true),
-            (Measure<Length>(7.0, .meter), Measure<Length>(300.0, .centimeter), false),
-            (Measure<Length>(700.0, .centimeter), Measure<Length>(3.0, .meter), false)
-        ]
+            (.init(6.0, .meter), .init(3.0, .meter), true),
+            (.init(7.0, .meter), .init(3.0, .meter), false),
+            (.init(-6.0, .meter), .init(3.0, .meter), true),
+            (.init(-7.0, .meter), .init(3.0, .meter), false),
+            (.init(1.5, .meter), .init(0.5, .meter), true),
+            (.init(1.5, .meter), .init(2.5, .meter), false),
+            (.init(-1.5, .meter), .init(0.5, .meter), true),
+            (.init(-1.5, .meter), .init(2.5, .meter), false),
+            (.init(6.0, .meter), .init(300.0, .centimeter), true),
+            (.init(600.0, .centimeter), .init(3.0, .meter), true),
+            (.init(7.0, .meter), .init(300.0, .centimeter), false),
+            (.init(700.0, .centimeter), .init(3.0, .meter), false)
+        ] as Array<(Measure<Length>, Measure<Length>, Bool)>
     )
     internal func isMultipleOfSucceeds(
         multiplicand: Measure<Length>,

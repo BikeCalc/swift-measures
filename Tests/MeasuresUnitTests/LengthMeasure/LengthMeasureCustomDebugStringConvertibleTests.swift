@@ -18,7 +18,7 @@ internal struct LengthMeasureCustomDebugStringConvertibleTests {
         "Debug description succeeds",
         arguments: [
             (
-                Measure<Length>(1, .meter),
+                .init(1, .meter),
                 """
                 Measure<Length>(1.0, Length(coefficient: 1.0, constant: 0.0, symbol: "m", dimension: \
                 Dimension(length: 1, mass: 0, time: 0, electricCurrent: 0, thermodynamicTemperature: 0, \
@@ -26,7 +26,7 @@ internal struct LengthMeasureCustomDebugStringConvertibleTests {
                 """
             ),
             (
-                Measure<Length>(-1, .meter),
+                .init(-1, .meter),
                 """
                 Measure<Length>(-1.0, Length(coefficient: 1.0, constant: 0.0, symbol: "m", dimension: \
                 Dimension(length: 1, mass: 0, time: 0, electricCurrent: 0, thermodynamicTemperature: 0, \
@@ -34,14 +34,14 @@ internal struct LengthMeasureCustomDebugStringConvertibleTests {
                 """
             ),
             (
-                Measure<Length>(100, .centimeter),
+                .init(100, .centimeter),
                 """
                 Measure<Length>(100.0, Length(coefficient: 0.01, constant: 0.0, symbol: "cm", dimension: \
                 Dimension(length: 1, mass: 0, time: 0, electricCurrent: 0, thermodynamicTemperature: 0, \
                 substanceAmount: 0, luminousIntensity: 0)))
                 """
             )
-        ]
+        ] as Array<(Measure<Length>, String)>
     )
     internal func debugDescriptionSucceeds(
         value: Measure<Length>,

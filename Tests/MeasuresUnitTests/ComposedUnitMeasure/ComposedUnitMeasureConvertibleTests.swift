@@ -48,15 +48,15 @@ internal struct ComposedUnitMeasureConvertibleTests {
     @Test(
         "Conversion succeeds",
         arguments: [
-            (Measure<ComposedUnit>(1, .meter), .centimeter, Measure<ComposedUnit>(100, .centimeter)),
-            (Measure<ComposedUnit>(100, .centimeter), .meter, Measure<ComposedUnit>(1, .meter)),
-            (Measure<ComposedUnit>(1, .foot), .inch, Measure<ComposedUnit>(12, .inch)),
-            (Measure<ComposedUnit>(1, .yard), .foot, Measure<ComposedUnit>(3, .foot)),
-            (Measure<ComposedUnit>(1, .kilometer), .meter, Measure<ComposedUnit>(1_000, .meter)),
-            (Measure<ComposedUnit>(1, .dimensionless), .dimensionless, Measure<ComposedUnit>(1, .dimensionless)),
-            (Measure<ComposedUnit>(1, .dimensionless), .cancelledMeters, Measure<ComposedUnit>(1, .cancelledMeters)),
-            (Measure<ComposedUnit>(1, .cancelledMeters),  .dimensionless, Measure<ComposedUnit>(1, .dimensionless)),
-            (Measure<ComposedUnit>(1, .cancelledMeters), .cancelledMeters, Measure<ComposedUnit>(1, .cancelledMeters))
+            (.init(1, .meter), .centimeter, .init(100, .centimeter)),
+            (.init(100, .centimeter), .meter, .init(1, .meter)),
+            (.init(1, .foot), .inch, .init(12, .inch)),
+            (.init(1, .yard), .foot, .init(3, .foot)),
+            (.init(1, .kilometer), .meter, .init(1_000, .meter)),
+            (.init(1, .dimensionless), .dimensionless, .init(1, .dimensionless)),
+            (.init(1, .dimensionless), .cancelledMeters, .init(1, .cancelledMeters)),
+            (.init(1, .cancelledMeters),  .dimensionless, .init(1, .dimensionless)),
+            (.init(1, .cancelledMeters), .cancelledMeters, .init(1, .cancelledMeters))
         ] as Array<(Measure<ComposedUnit>, ComposedUnit, Measure<ComposedUnit>)>
     )
     internal func conversionSucceeds(

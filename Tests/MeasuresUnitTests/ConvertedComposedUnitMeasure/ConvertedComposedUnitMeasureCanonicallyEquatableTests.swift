@@ -17,21 +17,21 @@ internal struct ConvertedComposedUnitMeasureCanonicallyEquatableTests {
     @Test(
         "Canonical equality succeeds",
         arguments: [
-            (Measure<ComposedUnit>(1, .meter), Measure<ComposedUnit>(1, .meter), true),
-            (Measure<ComposedUnit>(1, .meter), Measure<ComposedUnit>(100, .centimeter), true),
-            (Measure<ComposedUnit>(100, .centimeter), Measure<ComposedUnit>(1, .meter), true),
-            (Measure<ComposedUnit>(1, .foot), Measure<ComposedUnit>(12, .inch), true),
-            (Measure<ComposedUnit>(12, .inch), Measure<ComposedUnit>(1, .foot), true),
-            (Measure<ComposedUnit>(-1, .meter), Measure<ComposedUnit>(-100, .centimeter), true),
-            (Measure<ComposedUnit>(0, .meter), Measure<ComposedUnit>(0, .foot), true),
-            (Measure<ComposedUnit>(1, .meter), Measure<ComposedUnit>(99, .centimeter), false),
-            (Measure<ComposedUnit>(1, .foot), Measure<ComposedUnit>(13, .inch), false),
-            (Measure<ComposedUnit>(-1, .meter), Measure<ComposedUnit>(100, .centimeter), false),
-            (Measure<ComposedUnit>(1, .dimensionless), Measure<ComposedUnit>(1, .dimensionless), true),
-            (Measure<ComposedUnit>(1, .dimensionless), Measure<ComposedUnit>(2, .dimensionless), false),
-            (Measure<ComposedUnit>(1, .cancelledMeters), Measure<ComposedUnit>(1, .dimensionless), true),
-            (Measure<ComposedUnit>(1, .dimensionless), Measure<ComposedUnit>(1, .cancelledMeters), true)
-        ]
+            (.init(1, .meter), .init(1, .meter), true),
+            (.init(1, .meter), .init(100, .centimeter), true),
+            (.init(100, .centimeter), .init(1, .meter), true),
+            (.init(1, .foot), .init(12, .inch), true),
+            (.init(12, .inch), .init(1, .foot), true),
+            (.init(-1, .meter), .init(-100, .centimeter), true),
+            (.init(0, .meter), .init(0, .foot), true),
+            (.init(1, .meter), .init(99, .centimeter), false),
+            (.init(1, .foot), .init(13, .inch), false),
+            (.init(-1, .meter), .init(100, .centimeter), false),
+            (.init(1, .dimensionless), .init(1, .dimensionless), true),
+            (.init(1, .dimensionless), .init(2, .dimensionless), false),
+            (.init(1, .cancelledMeters), .init(1, .dimensionless), true),
+            (.init(1, .dimensionless), .init(1, .cancelledMeters), true)
+        ] as Array<(Measure<ComposedUnit>, Measure<ComposedUnit>, Bool)>
     )
     internal func canonicalEqualitySucceeds(
         lhs: Measure<ComposedUnit>,

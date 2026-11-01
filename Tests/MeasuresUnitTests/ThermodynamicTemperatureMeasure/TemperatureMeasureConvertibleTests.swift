@@ -20,19 +20,19 @@ internal struct TemperatureMeasureConvertibleTests {
         "Conversion succeeds",
         arguments: [
             (
-                Measure<ThermodynamicTemperature>(0, .celsius),
+                .init(0, .celsius),
                 .kelvin,
-                Measure<ThermodynamicTemperature>(273.15, .kelvin)
+                .init(273.15, .kelvin)
             ),
             (
-                Measure<ThermodynamicTemperature>(273.15, .kelvin),
+                .init(273.15, .kelvin),
                 .celsius,
-                Measure<ThermodynamicTemperature>(0, .celsius)
+                .init(0, .celsius)
             ),
             (
-                Measure<ThermodynamicTemperature>(32, .fahrenheit),
+                .init(32, .fahrenheit),
                 .celsius,
-                Measure<ThermodynamicTemperature>(0, .celsius)
+                .init(0, .celsius)
             )
         ] as Array<(Measure<ThermodynamicTemperature>, ThermodynamicTemperature, Measure<ThermodynamicTemperature>)>
     )

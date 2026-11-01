@@ -20,7 +20,7 @@ internal struct ComposedUnitMeasureTests {
             (-2, -2.0),
             (0, 0.0),
             (2, 2.0)
-        ]
+        ] as Array<(Int, Double)>
     )
     internal func binaryIntegerInitializationSucceeds(
         value: Int,
@@ -34,10 +34,10 @@ internal struct ComposedUnitMeasureTests {
     @Test(
         "Binary floating-point initialization succeeds",
         arguments: [
-            (Float(-1.5), -1.5),
-            (Float(0), 0.0),
-            (Float(1.5), 1.5)
-        ]
+            (.init(-1.5), -1.5),
+            (.init(0), 0.0),
+            (.init(1.5), 1.5)
+        ] as Array<(Float, Double)>
     )
     internal func binaryFloatingPointInitializationSucceeds(
         value: Float,

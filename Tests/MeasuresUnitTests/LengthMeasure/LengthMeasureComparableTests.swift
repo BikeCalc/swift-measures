@@ -15,25 +15,25 @@ internal struct LengthMeasureComparableTests {
     internal init() {}
 
     private static let comparisonArguments: [(Measure<Length>, Measure<Length>, Bool, Bool, Bool, Bool)] = [
-        (Measure<Length>(1, .meter), Measure<Length>(1, .meter), false, true, false, true),
-        (Measure<Length>(1, .meter), Measure<Length>(100, .centimeter), false, true, false, true),
-        (Measure<Length>(1, .meter), Measure<Length>(2, .meter), true, true, false, false),
-        (Measure<Length>(2, .meter), Measure<Length>(1, .meter), false, false, true, true),
-        (Measure<Length>(1, .foot), Measure<Length>(1, .meter), true, true, false, false),
-        (Measure<Length>(1, .meter), Measure<Length>(1, .foot), false, false, true, true)
+        (.init(1, .meter), .init(1, .meter), false, true, false, true),
+        (.init(1, .meter), .init(100, .centimeter), false, true, false, true),
+        (.init(1, .meter), .init(2, .meter), true, true, false, false),
+        (.init(2, .meter), .init(1, .meter), false, false, true, true),
+        (.init(1, .foot), .init(1, .meter), true, true, false, false),
+        (.init(1, .meter), .init(1, .foot), false, false, true, true)
     ]
 
     private static let rangeArguments: [(Measure<Length>, Measure<Length>, Measure<Length>)] = [
-        (Measure<Length>(50, .centimeter), Measure<Length>(1, .meter), Measure<Length>(2, .meter)),
-        (Measure<Length>(1, .meter), Measure<Length>(1, .meter), Measure<Length>(2, .meter)),
-        (Measure<Length>(150, .centimeter), Measure<Length>(1, .meter), Measure<Length>(2, .meter)),
-        (Measure<Length>(2, .meter), Measure<Length>(1, .meter), Measure<Length>(2, .meter)),
-        (Measure<Length>(250, .centimeter), Measure<Length>(1, .meter), Measure<Length>(2, .meter)),
-        (Measure<Length>(1, .foot), Measure<Length>(1, .yard), Measure<Length>(2, .yard)),
-        (Measure<Length>(1, .yard), Measure<Length>(1, .yard), Measure<Length>(2, .yard)),
-        (Measure<Length>(5, .foot), Measure<Length>(1, .yard), Measure<Length>(2, .yard)),
-        (Measure<Length>(2, .yard), Measure<Length>(1, .yard), Measure<Length>(2, .yard)),
-        (Measure<Length>(7, .foot), Measure<Length>(1, .yard), Measure<Length>(2, .yard))
+        (.init(50, .centimeter), .init(1, .meter), .init(2, .meter)),
+        (.init(1, .meter), .init(1, .meter), .init(2, .meter)),
+        (.init(150, .centimeter), .init(1, .meter), .init(2, .meter)),
+        (.init(2, .meter), .init(1, .meter), .init(2, .meter)),
+        (.init(250, .centimeter), .init(1, .meter), .init(2, .meter)),
+        (.init(1, .foot), .init(1, .yard), .init(2, .yard)),
+        (.init(1, .yard), .init(1, .yard), .init(2, .yard)),
+        (.init(5, .foot), .init(1, .yard), .init(2, .yard)),
+        (.init(2, .yard), .init(1, .yard), .init(2, .yard)),
+        (.init(7, .foot), .init(1, .yard), .init(2, .yard))
     ]
 
     @Test(

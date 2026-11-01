@@ -21,10 +21,10 @@ internal struct DimensionEncodableTests {
     @Test(
         "Encode to JSON succeeds",
         arguments: [
-            (Dimension(), #"{}"#),
-            (Dimension(length: 1), #"{"length":1}"#),
+            (.init(), #"{}"#),
+            (.init(length: 1), #"{"length":1}"#),
             (
-                Dimension(
+                .init(
                     length: 1,
                     mass: 0,
                     time: 0,
@@ -36,7 +36,7 @@ internal struct DimensionEncodableTests {
                 #"{"length":1}"#
             ),
             (
-                Dimension(
+                .init(
                     length: 1,
                     mass: -2,
                     time: 3,
@@ -50,7 +50,7 @@ internal struct DimensionEncodableTests {
                 "thermodynamic_temperature":5,"time":3}
                 """
             )
-        ]
+        ] as Array<(Dimension, String)>
     )
     internal func encodeToJSONSucceeds(
         value: Dimension,

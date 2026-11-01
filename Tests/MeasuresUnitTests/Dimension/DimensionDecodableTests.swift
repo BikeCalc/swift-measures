@@ -21,28 +21,28 @@ internal struct DimensionDecodableTests {
     @Test(
         "Decode from JSON succeeds",
         arguments: [
-            (#"{}"#, Dimension()),
+            (#"{}"#, .init()),
             (
                 """
                 {"electric_current":0,"length":0,"luminous_intensity":0,"mass":0,"substance_amount":0,\
                 "thermodynamic_temperature":0,"time":0}
                 """,
-                Dimension()
+                .init()
             ),
-            (#"{"length":1}"#, Dimension(length: 1)),
+            (#"{"length":1}"#, .init(length: 1)),
             (
                 """
                 {"electric_current":0,"length":1,"luminous_intensity":0,"mass":0,"substance_amount":0,\
                 "thermodynamic_temperature":0,"time":0}
                 """,
-                Dimension(length: 1)
+                .init(length: 1)
             ),
             (
                 """
                 {"electric_current":-4,"length":1,"luminous_intensity":7,"mass":-2,"substance_amount":-6,\
                 "thermodynamic_temperature":5,"time":3}
                 """,
-                Dimension(
+                .init(
                     length: 1,
                     mass: -2,
                     time: 3,
@@ -52,7 +52,7 @@ internal struct DimensionDecodableTests {
                     luminousIntensity: 7
                 )
             )
-        ]
+        ] as Array<(String, Dimension)>
     )
     internal func decodeFromJSONSucceeds(
         json: String,
@@ -86,7 +86,7 @@ internal struct DimensionDecodableTests {
             #"{"length":0.5}"#,
             #"[]"#,
             #"true"#
-        ]
+        ] as Array<String>
     )
     internal func decodeFromJSONThrows(json: String) throws {
         let data: Data = try #require(json.data(using: .utf8))

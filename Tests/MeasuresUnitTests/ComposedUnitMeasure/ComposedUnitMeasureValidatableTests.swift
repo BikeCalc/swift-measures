@@ -20,7 +20,7 @@ internal struct ComposedUnitMeasureValidatableTests {
             -1,
              0,
              1
-        ]
+        ] as Array<Int>
     )
     internal func unboundedValidRangeSucceeds(value: Int) {
         let measure: Measure<ComposedUnit> = .init(value, .meter)
@@ -30,18 +30,18 @@ internal struct ComposedUnitMeasureValidatableTests {
     @Test(
         "Unit conversion parameters determine validity",
         arguments: [
-            (Measure<ComposedUnit>(1, .meter), true),
-            (Measure<ComposedUnit>(1, ComposedUnit(coefficient: -1, symbol: "u")), false),
-            (Measure<ComposedUnit>(1, ComposedUnit(coefficient: 1, constant: -1, symbol: "u")), true),
-            (Measure<ComposedUnit>(1, ComposedUnit(coefficient: 0, symbol: "u")), false),
-            (Measure<ComposedUnit>(1, ComposedUnit(coefficient: -0.0, symbol: "u")), false),
-            (Measure<ComposedUnit>(1, ComposedUnit(coefficient: .infinity, symbol: "u")), false),
-            (Measure<ComposedUnit>(1, ComposedUnit(coefficient: .negativeInfinity, symbol: "u")), false),
-            (Measure<ComposedUnit>(1, ComposedUnit(coefficient: .nan, symbol: "u")), false),
-            (Measure<ComposedUnit>(1, ComposedUnit(coefficient: 1, constant: .infinity, symbol: "u")), false),
-            (Measure<ComposedUnit>(1, ComposedUnit(coefficient: 1, constant: .negativeInfinity, symbol: "u")), false),
-            (Measure<ComposedUnit>(1, ComposedUnit(coefficient: 1, constant: .nan, symbol: "u")), false)
-        ]
+            (.init(1, .meter), true),
+            (.init(1, ComposedUnit(coefficient: -1, symbol: "u")), false),
+            (.init(1, ComposedUnit(coefficient: 1, constant: -1, symbol: "u")), true),
+            (.init(1, ComposedUnit(coefficient: 0, symbol: "u")), false),
+            (.init(1, ComposedUnit(coefficient: -0.0, symbol: "u")), false),
+            (.init(1, ComposedUnit(coefficient: .infinity, symbol: "u")), false),
+            (.init(1, ComposedUnit(coefficient: .negativeInfinity, symbol: "u")), false),
+            (.init(1, ComposedUnit(coefficient: .nan, symbol: "u")), false),
+            (.init(1, ComposedUnit(coefficient: 1, constant: .infinity, symbol: "u")), false),
+            (.init(1, ComposedUnit(coefficient: 1, constant: .negativeInfinity, symbol: "u")), false),
+            (.init(1, ComposedUnit(coefficient: 1, constant: .nan, symbol: "u")), false)
+        ] as Array<(Measure<ComposedUnit>, Bool)>
     )
     internal func unitConversionParametersDetermineValidity(
         measure: Measure<ComposedUnit>,
@@ -59,13 +59,13 @@ internal struct ComposedUnitMeasureValidatableTests {
             (-1.0, 0.0, false),
             (0.0, 0.0, false),
             (-0.0, 0.0, false),
-            (Double.infinity, 0.0, false),
-            (Double.negativeInfinity, 0.0, false),
-            (Double.nan, 0.0, false),
-            (1.0, Double.infinity, false),
-            (1.0, Double.negativeInfinity, false),
-            (1.0, Double.nan, false)
-        ]
+            (.infinity, 0.0, false),
+            (.negativeInfinity, 0.0, false),
+            (.nan, 0.0, false),
+            (1.0, .infinity, false),
+            (1.0, .negativeInfinity, false),
+            (1.0, .nan, false)
+        ] as Array<(Double, Double, Bool)>
     )
     internal func capturedUnitConversionParametersDetermineValidity(
         coefficient: Double,
