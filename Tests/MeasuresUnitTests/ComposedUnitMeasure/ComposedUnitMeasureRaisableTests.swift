@@ -120,5 +120,39 @@ internal struct ComposedUnitMeasureRaisableTests {
 // MARK: - NaT
 
 extension ComposedUnitMeasureRaisableTests {
-    // TODO: Implement NaT tests for this suite.
+    @Test(
+        "NaT power predicate returns false",
+        arguments: [
+            .init(1, .meter),
+            .nat,
+            .invalid
+        ] as Array<Measure<ComposedUnit>>
+    )
+    internal func natPowerPredicateReturnsFalse(other: Measure<ComposedUnit>) {
+        let firstResult: Bool = Measure<ComposedUnit>.nat.isPower(of: other)
+        #expect(firstResult == false)
+        let secondResult: Bool = other.isPower(of: Measure<ComposedUnit>.nat)
+        #expect(secondResult == false)
+    }
+
+    @Test(
+        "Raising NaT returns NaT",
+        arguments: [
+            (.nat, -1),
+            (.nat, 0),
+            (.nat, 1),
+            (.nat, 2),
+            (.invalid, -1),
+            (.invalid, 0),
+            (.invalid, 1),
+            (.invalid, 2)
+        ] as Array<(Measure<ComposedUnit>, Int)>
+    )
+    internal func raisingNaTReturnsNaT(
+        base: Measure<ComposedUnit>,
+        exponent: Int
+    ) {
+        let result: Measure<ComposedUnit> = base ** exponent
+        #expect(result.isNaT == true)
+    }
 }

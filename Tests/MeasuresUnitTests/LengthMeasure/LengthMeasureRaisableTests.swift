@@ -110,5 +110,39 @@ internal struct LengthMeasureRaisableTests {
 // MARK: - NaT
 
 extension LengthMeasureRaisableTests {
-    // TODO: Implement NaT tests for this suite.
+    @Test(
+        "NaT power predicate returns false",
+        arguments: [
+            .init(1, .meter),
+            .nat,
+            .invalid
+        ] as Array<Measure<Length>>
+    )
+    internal func natPowerPredicateReturnsFalse(other: Measure<Length>) {
+        let firstResult: Bool = Measure<Length>.nat.isPower(of: other)
+        #expect(firstResult == false)
+        let secondResult: Bool = other.isPower(of: Measure<Length>.nat)
+        #expect(secondResult == false)
+    }
+
+    @Test(
+        "Raising NaT returns NaT",
+        arguments: [
+            (.nat, -1),
+            (.nat, 0),
+            (.nat, 1),
+            (.nat, 2),
+            (.invalid, -1),
+            (.invalid, 0),
+            (.invalid, 1),
+            (.invalid, 2)
+        ] as Array<(Measure<Length>, Int)>
+    )
+    internal func raisingNaTReturnsNaT(
+        base: Measure<Length>,
+        exponent: Int
+    ) {
+        let result: Measure<ComposedUnit> = base ** exponent
+        #expect(result.isNaT == true)
+    }
 }
