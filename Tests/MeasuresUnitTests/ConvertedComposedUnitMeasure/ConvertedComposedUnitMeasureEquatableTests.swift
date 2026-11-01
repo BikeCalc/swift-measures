@@ -115,5 +115,31 @@ internal struct ConvertedComposedUnitMeasureEquatableTests {
 // MARK: - NaT
 
 extension ConvertedComposedUnitMeasureEquatableTests {
-    // TODO: Implement NaT tests for this suite.
+    @Test(
+        "NaT is unequal",
+        arguments: [
+            (.nat, .init(1, .meter)),
+            (.init(1, .meter), .nat),
+            (.nat, .nat),
+            (.init(1, ComposedUnit(Length(coefficient: 0, constant: 0, symbol: "invalid"))), .init(1, .meter)),
+            (.init(1, .meter), .init(1, ComposedUnit(Length(coefficient: 0, constant: 0, symbol: "invalid"))))
+        ] as Array<(Measure<ComposedUnit>, Measure<ComposedUnit>)>
+    )
+    internal func natIsUnequal(
+        lhs: Measure<ComposedUnit>,
+        rhs: Measure<ComposedUnit>
+    ) {
+        let lhsWrapper: Converted<ComposedUnit> = .init(
+            wrappedValue: lhs,
+            to: .meter
+        )
+        let rhsWrapper: Converted<ComposedUnit> = .init(
+            wrappedValue: rhs,
+            to: .meter
+        )
+        let equalityResult: Bool = lhsWrapper == rhsWrapper
+        #expect(equalityResult == false)
+        let inequalityResult: Bool = lhsWrapper != rhsWrapper
+        #expect(inequalityResult == true)
+    }
 }

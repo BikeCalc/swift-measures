@@ -17,54 +17,14 @@ internal struct TemperatureMeasureApproximatelyEquatableTests {
     @Test(
         "Approximate equality succeeds",
         arguments: [
-            (
-                .init(0, .celsius),
-                .init(1, .celsius),
-                0.0,
-                true
-            ),
-            (
-                .init(0, .celsius),
-                .init(0.5, .celsius),
-                0.0,
-                false
-            ),
-            (
-                .init(0, .celsius),
-                .init(1.8, .fahrenheit),
-                0.0,
-                true
-            ),
-            (
-                .init(0, .celsius),
-                .init(0.9, .fahrenheit),
-                0.0,
-                false
-            ),
-            (
-                .init(0, .celsius),
-                .init(0, .celsius),
-                0.01,
-                true
-            ),
-            (
-                .init(273.15, .kelvin),
-                .init(0, .celsius),
-                0.01,
-                true
-            ),
-            (
-                .init(0, .celsius),
-                .init(0, .celsius),
-                0.001,
-                false
-            ),
-            (
-                .init(273.15, .kelvin),
-                .init(0, .celsius),
-                0.001,
-                false
-            )
+            (.init(0, .celsius), .init(1, .celsius), 0.0, true),
+            (.init(0, .celsius), .init(0.5, .celsius), 0.0, false),
+            (.init(0, .celsius), .init(1.8, .fahrenheit), 0.0, true),
+            (.init(0, .celsius), .init(0.9, .fahrenheit), 0.0, false),
+            (.init(0, .celsius), .init(0, .celsius), 0.01, true),
+            (.init(273.15, .kelvin), .init(0, .celsius), 0.01, true),
+            (.init(0, .celsius), .init(0, .celsius), 0.001, false),
+            (.init(273.15, .kelvin), .init(0, .celsius), 0.001, false)
         ] as Array<(Measure<ThermodynamicTemperature>, Measure<ThermodynamicTemperature>, Double, Bool)>
     )
     internal func approximateEqualitySucceeds(

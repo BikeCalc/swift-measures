@@ -16,47 +16,26 @@ internal struct ComposedUnitNormalizableTests {
     internal init() {}
 
     private static let normalizationArguments: [(ComposedUnit, Array<ComposedUnit.Factor>)] = [
-        (
-            ComposedUnit(Time.second) * ComposedUnit.meter,
-            [.init(Length.meter, 1), .init(Time.second, 1)]
-        ),
-        (
-            ComposedUnit.meter * ComposedUnit.centimeter,
-            [.init(Length.centimeter, 1), .init(Length.meter, 1)]
-        ),
-        (
-            ComposedUnit.meter * (ComposedUnit.meter ** -1) * ComposedUnit.meter,
-            [.init(Length.meter, -1), .init(Length.meter, 1), .init(Length.meter, 1)]
-        ),
-        (
-            .meter,
-            [.init(Length.meter, 1)]
-        ),
-        (
-            ComposedUnit.meter * ComposedUnit(Time.second),
-            [.init(Length.meter, 1), .init(Time.second, 1)]
-        ),
-        (
-            ComposedUnit.centimeter * ComposedUnit.meter,
-            [.init(Length.centimeter, 1), .init(Length.meter, 1)]
-        ),
-        (
-            .cancelledMeters,
-            [.init(Length.meter, -1), .init(Length.meter, 1)]
-        ),
+        (.init(Time.second) * .meter, [.init(Length.meter, 1), .init(Time.second, 1)]),
+        (.meter * .centimeter, [.init(Length.centimeter, 1), .init(Length.meter, 1)]),
+        (.meter * (.meter ** -1) * .meter, [.init(Length.meter, -1), .init(Length.meter, 1), .init(Length.meter, 1)]),
+        (.meter, [.init(Length.meter, 1)]),
+        (.meter * .init(Time.second), [.init(Length.meter, 1), .init(Time.second, 1)]),
+        (.centimeter * .meter, [.init(Length.centimeter, 1), .init(Length.meter, 1)]),
+        (.cancelledMeters, [.init(Length.meter, -1), .init(Length.meter, 1)]),
         (.dimensionless, [])
     ]
 
     @Test(
         "Is normalizable",
         arguments: [
-            (ComposedUnit(Time.second) * ComposedUnit.meter, true),
-            (ComposedUnit.meter * ComposedUnit.centimeter, true),
-            (ComposedUnit.meter * (ComposedUnit.meter ** -1) * ComposedUnit.meter, true),
+            (.init(Time.second) * .meter, true),
+            (.meter * .centimeter, true),
+            (.meter * (.meter ** -1) * .meter, true),
             (.meter, true),
             (.dimensionless, true),
-            (ComposedUnit.meter * ComposedUnit(Time.second), true),
-            (ComposedUnit.centimeter * ComposedUnit.meter, true),
+            (.meter * .init(Time.second), true),
+            (.centimeter * .meter, true),
             (.cancelledMeters, true)
         ] as Array<(ComposedUnit, Bool)>
     )
@@ -70,13 +49,13 @@ internal struct ComposedUnitNormalizableTests {
     @Test(
         "Is normalized",
         arguments: [
-            (ComposedUnit(Time.second) * ComposedUnit.meter, false),
-            (ComposedUnit.meter * ComposedUnit.centimeter, false),
-            (ComposedUnit.meter * (ComposedUnit.meter ** -1) * ComposedUnit.meter, false),
+            (.init(Time.second) * .meter, false),
+            (.meter * .centimeter, false),
+            (.meter * (.meter ** -1) * .meter, false),
             (.meter, true),
             (.dimensionless, true),
-            (ComposedUnit.meter * ComposedUnit(Time.second), true),
-            (ComposedUnit.centimeter * ComposedUnit.meter, true),
+            (.meter * .init(Time.second), true),
+            (.centimeter * .meter, true),
             (.cancelledMeters, false)
         ] as Array<(ComposedUnit, Bool)>
     )
@@ -115,9 +94,9 @@ internal struct ComposedUnitNormalizableTests {
     @Test(
         "Normalization is idempotent",
         arguments: [
-            ComposedUnit(Time.second) * ComposedUnit.meter,
-            ComposedUnit.meter * ComposedUnit.centimeter,
-            ComposedUnit.meter * (ComposedUnit.meter ** -1) * ComposedUnit.meter,
+            .init(Time.second) * .meter,
+            .meter * .centimeter,
+            .meter * (.meter ** -1) * .meter,
             .meter
         ] as Array<ComposedUnit>
     )

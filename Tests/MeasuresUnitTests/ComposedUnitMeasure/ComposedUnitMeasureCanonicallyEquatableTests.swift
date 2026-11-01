@@ -46,5 +46,21 @@ internal struct ComposedUnitMeasureCanonicallyEquatableTests {
 // MARK: - NaT
 
 extension ComposedUnitMeasureCanonicallyEquatableTests {
-    // TODO: Implement NaT tests for this suite.
+    @Test(
+        "NaT is unequal",
+        arguments: [
+            (.nat, .init(1, .meter)),
+            (.init(1, .meter), .nat),
+            (.nat, .nat),
+            (.init(1, ComposedUnit(Length(coefficient: 0, constant: 0, symbol: "invalid"))), .init(1, .meter)),
+            (.init(1, .meter), .init(1, ComposedUnit(Length(coefficient: 0, constant: 0, symbol: "invalid"))))
+        ] as Array<(Measure<ComposedUnit>, Measure<ComposedUnit>)>
+    )
+    internal func natIsUnequal(
+        lhs: Measure<ComposedUnit>,
+        rhs: Measure<ComposedUnit>
+    ) {
+        let result: Bool = lhs.isCanonicallyEqual(to: rhs)
+        #expect(result == false)
+    }
 }

@@ -79,5 +79,23 @@ internal struct LengthMeasureEquatableTests {
 // MARK: - NaT
 
 extension LengthMeasureEquatableTests {
-    // TODO: Implement NaT tests for this suite.
+    @Test(
+        "NaT is unequal",
+        arguments: [
+            (.nat, .init(1, .meter)),
+            (.init(1, .meter), .nat),
+            (.nat, .nat),
+            (.init(1, Length(coefficient: 0, constant: 0, symbol: "invalid")), .init(1, .meter)),
+            (.init(1, .meter), .init(1, Length(coefficient: 0, constant: 0, symbol: "invalid")))
+        ] as Array<(Measure<Length>, Measure<Length>)>
+    )
+    internal func natIsUnequal(
+        lhs: Measure<Length>,
+        rhs: Measure<Length>
+    ) {
+        let equalityResult: Bool = lhs == rhs
+        #expect(equalityResult == false)
+        let inequalityResult: Bool = lhs != rhs
+        #expect(inequalityResult == true)
+    }
 }

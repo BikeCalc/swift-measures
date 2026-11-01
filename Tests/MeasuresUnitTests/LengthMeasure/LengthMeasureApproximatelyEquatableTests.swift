@@ -17,62 +17,14 @@ internal struct LengthMeasureApproximatelyEquatableTests {
     @Test(
         "Approximate equality succeeds",
         arguments: [
-            (
-                .init(1, .meter),
-                .init(100, .centimeter),
-                .init(0, .meter),
-                0.0,
-                true
-            ),
-            (
-                .init(100.02, .centimeter),
-                .init(1, .meter),
-                .init(0.5, .millimeter),
-                0.0,
-                true
-            ),
-            (
-                .init(1, .meter),
-                .init(100.02, .centimeter),
-                .init(0.5, .millimeter),
-                0.0,
-                true
-            ),
-            (
-                .init(100.02, .centimeter),
-                .init(1, .meter),
-                .init(0.1, .millimeter),
-                0.0,
-                false
-            ),
-            (
-                .init(100, .centimeter),
-                .init(1.01, .meter),
-                .init(0, .meter),
-                0.01,
-                true
-            ),
-            (
-                .init(100, .centimeter),
-                .init(1.02, .meter),
-                .init(0, .meter),
-                0.01,
-                false
-            ),
-            (
-                .init(0.1 + 0.2, .meter),
-                .init(0.3, .meter),
-                .init(0.001, .millimeter),
-                0.0,
-                true
-            ),
-            (
-                .init(0.1 + 0.2, .meter),
-                .init(0.3, .meter),
-                .init(0, .meter),
-                0.0,
-                false
-            )
+            (.init(1, .meter), .init(100, .centimeter), .init(0, .meter), 0.0, true),
+            (.init(100.02, .centimeter), .init(1, .meter), .init(0.5, .millimeter), 0.0, true),
+            (.init(1, .meter), .init(100.02, .centimeter), .init(0.5, .millimeter), 0.0, true),
+            (.init(100.02, .centimeter), .init(1, .meter), .init(0.1, .millimeter), 0.0, false),
+            (.init(100, .centimeter), .init(1.01, .meter), .init(0, .meter), 0.01, true),
+            (.init(100, .centimeter), .init(1.02, .meter), .init(0, .meter), 0.01, false),
+            (.init(0.1 + 0.2, .meter), .init(0.3, .meter), .init(0.001, .millimeter), 0.0, true),
+            (.init(0.1 + 0.2, .meter), .init(0.3, .meter), .init(0, .meter), 0.0, false)
         ] as Array<(Measure<Length>, Measure<Length>, Measure<Length>, Double, Bool)>
     )
     internal func approximateEqualitySucceeds(
@@ -94,5 +46,36 @@ internal struct LengthMeasureApproximatelyEquatableTests {
 // MARK: - NaT
 
 extension LengthMeasureApproximatelyEquatableTests {
-    // TODO: Implement NaT tests for this suite.
+    @Test(
+        "NaT is not approximately equal",
+        arguments: [
+            (.nat, .init(1, .meter)),
+            (.init(1, .meter), .nat),
+            (.nat, .nat),
+            (.init(1, Length(coefficient: 0, constant: 0, symbol: "invalid")), .init(1, .meter)),
+            (.init(1, .meter), .init(1, Length(coefficient: 0, constant: 0, symbol: "invalid")))
+        ] as Array<(Measure<Length>, Measure<Length>)>
+    )
+    internal func natIsNotApproximatelyEqual(
+        lhs: Measure<Length>,
+        rhs: Measure<Length>
+    ) {
+        let result: Bool = lhs.isApproximatelyEqual(
+            to: rhs,
+            absoluteTolerance: .init(1, .meter),
+            relativeTolerance: 1
+        )
+        #expect(result == false)
+    }
+
+    @Test("NaT absolute tolerance rejects equality")
+    internal func natToleranceRejectsEquality() {
+        let value: Measure<Length> = .init(1, .meter)
+        let result: Bool = value.isApproximatelyEqual(
+            to: value,
+            absoluteTolerance: .nat,
+            relativeTolerance: 0
+        )
+        #expect(result == false)
+    }
 }

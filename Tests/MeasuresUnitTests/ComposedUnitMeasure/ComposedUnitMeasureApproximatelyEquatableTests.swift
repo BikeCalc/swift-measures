@@ -17,90 +17,18 @@ internal struct ComposedUnitMeasureApproximatelyEquatableTests {
     @Test(
         "Approximate equality succeeds",
         arguments: [
-            (
-                .init(1, .meter),
-                .init(100, .centimeter),
-                .init(0, .meter),
-                0.0,
-                true
-            ),
-            (
-                .init(100.02, .centimeter),
-                .init(1, .meter),
-                .init(0.5, .millimeter),
-                0.0,
-                true
-            ),
-            (
-                .init(1, .meter),
-                .init(100.02, .centimeter),
-                .init(0.5, .millimeter),
-                0.0,
-                true
-            ),
-            (
-                .init(100.02, .centimeter),
-                .init(1, .meter),
-                .init(0.1, .millimeter),
-                0.0,
-                false
-            ),
-            (
-                .init(100, .centimeter),
-                .init(1.01, .meter),
-                .init(0, .meter),
-                0.01,
-                true
-            ),
-            (
-                .init(100, .centimeter),
-                .init(1.02, .meter),
-                .init(0, .meter),
-                0.01,
-                false
-            ),
-            (
-                .init(0.1 + 0.2, .meter),
-                .init(0.3, .meter),
-                .init(0.001, .millimeter),
-                0.0,
-                true
-            ),
-            (
-                .init(0.1 + 0.2, .meter),
-                .init(0.3, .meter),
-                .init(0, .meter),
-                0.0,
-                false
-            ),
-            (
-                .init(1, .dimensionless),
-                .init(1, .dimensionless),
-                .init(0, .dimensionless),
-                0.0,
-                true
-            ),
-            (
-                .init(1, .dimensionless),
-                .init(1.01, .dimensionless),
-                .init(0.02, .dimensionless),
-                0.0,
-                true
-            ),
-            (
-                .init(1, .dimensionless),
-                .init(1.02, .dimensionless),
-                .init(0.01, .dimensionless),
-                0.0,
-                false
-            ),
-            (
-                .init(1, .dimensionless),
-                .init(1, .cancelledMeters),
-                .init(0, .dimensionless),
-                0.0,
-                true
-            )
+            (.init(1, .meter), .init(100, .centimeter), .init(0, .meter), 0.0, true),
+            (.init(100.02, .centimeter), .init(1, .meter), .init(0.5, .millimeter), 0.0, true),
+            (.init(1, .meter), .init(100.02, .centimeter), .init(0.5, .millimeter), 0.0, true),
+            (.init(100.02, .centimeter), .init(1, .meter), .init(0.1, .millimeter), 0.0, false),
+            (.init(100, .centimeter), .init(1.01, .meter), .init(0, .meter), 0.01, true),
+            (.init(100, .centimeter), .init(1.02, .meter), .init(0, .meter), 0.01, false),
+            (.init(0.1 + 0.2, .meter), .init(0.3, .meter), .init(0.001, .millimeter), 0.0, true),
+            (.init(0.1 + 0.2, .meter), .init(0.3, .meter), .init(0, .meter), 0.0, false),
+            (.init(1, .dimensionless), .init(1, .dimensionless), .init(0, .dimensionless), 0.0, true),
+            (.init(1, .dimensionless), .init(1.01, .dimensionless), .init(0.02, .dimensionless), 0.0, true),
+            (.init(1, .dimensionless), .init(1.02, .dimensionless), .init(0.01, .dimensionless), 0.0, false),
+            (.init(1, .dimensionless), .init(1, .cancelledMeters), .init(0, .dimensionless), 0.0, true)
         ] as Array<(Measure<ComposedUnit>, Measure<ComposedUnit>, Measure<ComposedUnit>, Double, Bool)>
     )
     internal func approximateEqualitySucceeds(
@@ -122,5 +50,36 @@ internal struct ComposedUnitMeasureApproximatelyEquatableTests {
 // MARK: - NaT
 
 extension ComposedUnitMeasureApproximatelyEquatableTests {
-    // TODO: Implement NaT tests for this suite.
+    @Test(
+        "NaT is not approximately equal",
+        arguments: [
+            (.nat, .init(1, .meter)),
+            (.init(1, .meter), .nat),
+            (.nat, .nat),
+            (.init(1, ComposedUnit(Length(coefficient: 0, constant: 0, symbol: "invalid"))), .init(1, .meter)),
+            (.init(1, .meter), .init(1, ComposedUnit(Length(coefficient: 0, constant: 0, symbol: "invalid"))))
+        ] as Array<(Measure<ComposedUnit>, Measure<ComposedUnit>)>
+    )
+    internal func natIsNotApproximatelyEqual(
+        lhs: Measure<ComposedUnit>,
+        rhs: Measure<ComposedUnit>
+    ) {
+        let result: Bool = lhs.isApproximatelyEqual(
+            to: rhs,
+            absoluteTolerance: .init(1, .meter),
+            relativeTolerance: 1
+        )
+        #expect(result == false)
+    }
+
+    @Test("NaT absolute tolerance rejects equality")
+    internal func natToleranceRejectsEquality() {
+        let value: Measure<ComposedUnit> = .init(1, .meter)
+        let result: Bool = value.isApproximatelyEqual(
+            to: value,
+            absoluteTolerance: .nat,
+            relativeTolerance: 0
+        )
+        #expect(result == false)
+    }
 }

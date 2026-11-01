@@ -50,5 +50,29 @@ internal struct ConvertedLengthMeasureCanonicallyEquatableTests {
 // MARK: - NaT
 
 extension ConvertedLengthMeasureCanonicallyEquatableTests {
-    // TODO: Implement NaT tests for this suite.
+    @Test(
+        "NaT is unequal",
+        arguments: [
+            (.nat, .init(1, .meter)),
+            (.init(1, .meter), .nat),
+            (.nat, .nat),
+            (.init(1, Length(coefficient: 0, constant: 0, symbol: "invalid")), .init(1, .meter)),
+            (.init(1, .meter), .init(1, Length(coefficient: 0, constant: 0, symbol: "invalid")))
+        ] as Array<(Measure<Length>, Measure<Length>)>
+    )
+    internal func natIsUnequal(
+        lhs: Measure<Length>,
+        rhs: Measure<Length>
+    ) {
+        let lhsWrapper: Converted<Length> = .init(
+            wrappedValue: lhs,
+            to: .meter
+        )
+        let rhsWrapper: Converted<Length> = .init(
+            wrappedValue: rhs,
+            to: .meter
+        )
+        let result: Bool = lhsWrapper.isCanonicallyEqual(to: rhsWrapper)
+        #expect(result == false)
+    }
 }

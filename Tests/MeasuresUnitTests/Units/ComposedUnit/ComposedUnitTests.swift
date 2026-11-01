@@ -50,14 +50,7 @@ internal struct ComposedUnitTests {
                 .init(length: 2),
                 "cm·m"
             ),
-            (
-                .meter,
-                .meter,
-                [.init(Length.meter, 1), .init(Length.meter, 1)],
-                1.0,
-                .init(length: 2),
-                "m·m"
-            ),
+            (.meter, .meter, [.init(Length.meter, 1), .init(Length.meter, 1)], 1.0, .init(length: 2), "m·m"),
             (
                 .meter,
                 .init(Time.second),
@@ -86,14 +79,7 @@ internal struct ComposedUnitTests {
     @Test(
         "Division negates every denominator exponent",
         arguments: [
-            (
-                .centimeter,
-                .meter,
-                [.init(Length.centimeter, 1), .init(Length.meter, -1)],
-                0.01,
-                .init(),
-                "cm·m⁻¹"
-            ),
+            (.centimeter, .meter, [.init(Length.centimeter, 1), .init(Length.meter, -1)], 0.01, .init(), "cm·m⁻¹"),
             (
                 .meter,
                 .init(Time.second),
@@ -104,7 +90,7 @@ internal struct ComposedUnitTests {
             ),
             (
                 .centimeter,
-                ComposedUnit.meter / ComposedUnit(Time.second),
+                .meter / .init(Time.second),
                 [.init(Length.centimeter, 1), .init(Length.meter, -1), .init(Time.second, 1)],
                 0.01,
                 .init(time: 1),
@@ -144,7 +130,7 @@ internal struct ComposedUnitTests {
         symbol: String
     ) {
         let length: Length = .init(coefficient: 2, symbol: "u")
-        let source: ComposedUnit = ComposedUnit(length) / ComposedUnit(Time.second)
+        let source: ComposedUnit = .init(length) / .init(Time.second)
         let unit: ComposedUnit = source ** exponent
         #expect(unit.factors.map { $0.exponent } == exponents)
         #expect(unit.coefficient == coefficient)

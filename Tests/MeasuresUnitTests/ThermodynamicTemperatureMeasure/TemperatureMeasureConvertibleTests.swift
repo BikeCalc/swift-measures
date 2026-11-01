@@ -19,21 +19,9 @@ internal struct TemperatureMeasureConvertibleTests {
     @Test(
         "Conversion succeeds",
         arguments: [
-            (
-                .init(0, .celsius),
-                .kelvin,
-                .init(273.15, .kelvin)
-            ),
-            (
-                .init(273.15, .kelvin),
-                .celsius,
-                .init(0, .celsius)
-            ),
-            (
-                .init(32, .fahrenheit),
-                .celsius,
-                .init(0, .celsius)
-            )
+            (.init(0, .celsius), .kelvin, .init(273.15, .kelvin)),
+            (.init(273.15, .kelvin), .celsius, .init(0, .celsius)),
+            (.init(32, .fahrenheit), .celsius, .init(0, .celsius))
         ] as Array<(Measure<ThermodynamicTemperature>, ThermodynamicTemperature, Measure<ThermodynamicTemperature>)>
     )
     internal func conversionSucceeds(
