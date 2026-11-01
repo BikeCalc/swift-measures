@@ -20,25 +20,25 @@ internal struct TemperatureMeasureApproximatelyEquatableTests {
             (
                 .init(0, .celsius),
                 .init(1, .celsius),
-                0,
+                0.0,
                 true
             ),
             (
                 .init(0, .celsius),
                 .init(0.5, .celsius),
-                0,
+                0.0,
                 false
             ),
             (
                 .init(0, .celsius),
                 .init(1.8, .fahrenheit),
-                0,
+                0.0,
                 true
             ),
             (
                 .init(0, .celsius),
                 .init(0.9, .fahrenheit),
-                0,
+                0.0,
                 false
             ),
             (

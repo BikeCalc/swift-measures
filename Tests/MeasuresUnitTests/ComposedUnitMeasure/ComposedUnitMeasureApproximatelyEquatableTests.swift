@@ -21,28 +21,28 @@ internal struct ComposedUnitMeasureApproximatelyEquatableTests {
                 .init(1, .meter),
                 .init(100, .centimeter),
                 .init(0, .meter),
-                0,
+                0.0,
                 true
             ),
             (
                 .init(100.02, .centimeter),
                 .init(1, .meter),
                 .init(0.5, .millimeter),
-                0,
+                0.0,
                 true
             ),
             (
                 .init(1, .meter),
                 .init(100.02, .centimeter),
                 .init(0.5, .millimeter),
-                0,
+                0.0,
                 true
             ),
             (
                 .init(100.02, .centimeter),
                 .init(1, .meter),
                 .init(0.1, .millimeter),
-                0,
+                0.0,
                 false
             ),
             (
@@ -63,42 +63,42 @@ internal struct ComposedUnitMeasureApproximatelyEquatableTests {
                 .init(0.1 + 0.2, .meter),
                 .init(0.3, .meter),
                 .init(0.001, .millimeter),
-                0,
+                0.0,
                 true
             ),
             (
                 .init(0.1 + 0.2, .meter),
                 .init(0.3, .meter),
                 .init(0, .meter),
-                0,
+                0.0,
                 false
             ),
             (
                 .init(1, .dimensionless),
                 .init(1, .dimensionless),
                 .init(0, .dimensionless),
-                0,
+                0.0,
                 true
             ),
             (
                 .init(1, .dimensionless),
                 .init(1.01, .dimensionless),
                 .init(0.02, .dimensionless),
-                0,
+                0.0,
                 true
             ),
             (
                 .init(1, .dimensionless),
                 .init(1.02, .dimensionless),
                 .init(0.01, .dimensionless),
-                0,
+                0.0,
                 false
             ),
             (
                 .init(1, .dimensionless),
                 .init(1, .cancelledMeters),
                 .init(0, .dimensionless),
-                0,
+                0.0,
                 true
             )
         ] as Array<(Measure<ComposedUnit>, Measure<ComposedUnit>, Measure<ComposedUnit>, Double, Bool)>
