@@ -30,9 +30,10 @@ internal struct LengthMeasureEquatableTests {
     internal func equalitySucceeds(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
-        result: Bool
+        expected: Bool
     ) {
-        #expect((lhs == rhs) == result)
+        let result: Bool = lhs == rhs
+        #expect(result == expected)
     }
 
     @Test(
@@ -42,9 +43,10 @@ internal struct LengthMeasureEquatableTests {
     internal func inequalitySucceeds(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
-        result: Bool
+        expected: Bool
     ) {
-        #expect((lhs != rhs) == !result)
+        let result: Bool = lhs != rhs
+        #expect(result == !expected)
     }
 
     @Test(
@@ -54,9 +56,10 @@ internal struct LengthMeasureEquatableTests {
     internal func isEqualSucceeds(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
-        result: Bool
+        expected: Bool
     ) throws {
-        #expect(try lhs.isEqual(to: rhs) == result)
+        let result: Bool = try lhs.isEqual(to: rhs)
+        #expect(result == expected)
     }
 
     @Test(
@@ -66,9 +69,10 @@ internal struct LengthMeasureEquatableTests {
     internal func isUnequalSucceeds(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
-        result: Bool
+        expected: Bool
     ) throws {
-        #expect(try lhs.isUnequal(to: rhs) == !result)
+        let result: Bool = try lhs.isUnequal(to: rhs)
+        #expect(result == !expected)
     }
 }
 

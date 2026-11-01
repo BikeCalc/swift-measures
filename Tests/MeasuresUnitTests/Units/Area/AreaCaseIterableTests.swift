@@ -19,6 +19,7 @@ internal struct AreaCaseIterableTests {
         let units: Array<Area> = Area.allCases
         #expect(units.count == 16)
         #expect(Set(units).count == 16)
-        #expect(units.contains(.base) == true)
+        let result: Bool = units.contains(.base)
+        #expect(result == true)
     }
 }

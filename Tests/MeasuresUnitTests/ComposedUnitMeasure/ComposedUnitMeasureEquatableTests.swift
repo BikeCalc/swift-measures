@@ -34,9 +34,10 @@ internal struct ComposedUnitMeasureEquatableTests {
     internal func equalitySucceeds(
         lhs: Measure<ComposedUnit>,
         rhs: Measure<ComposedUnit>,
-        result: Bool
+        expected: Bool
     ) {
-        #expect((lhs == rhs) == result)
+        let result: Bool = lhs == rhs
+        #expect(result == expected)
     }
 
     @Test(
@@ -46,9 +47,10 @@ internal struct ComposedUnitMeasureEquatableTests {
     internal func inequalitySucceeds(
         lhs: Measure<ComposedUnit>,
         rhs: Measure<ComposedUnit>,
-        result: Bool
+        expected: Bool
     ) {
-        #expect((lhs != rhs) == !result)
+        let result: Bool = lhs != rhs
+        #expect(result == !expected)
     }
 
     @Test(
@@ -58,9 +60,10 @@ internal struct ComposedUnitMeasureEquatableTests {
     internal func isEqualSucceeds(
         lhs: Measure<ComposedUnit>,
         rhs: Measure<ComposedUnit>,
-        result: Bool
+        expected: Bool
     ) throws {
-        #expect(try lhs.isEqual(to: rhs) == result)
+        let result: Bool = try lhs.isEqual(to: rhs)
+        #expect(result == expected)
     }
 
     @Test(
@@ -70,9 +73,10 @@ internal struct ComposedUnitMeasureEquatableTests {
     internal func isUnequalSucceeds(
         lhs: Measure<ComposedUnit>,
         rhs: Measure<ComposedUnit>,
-        result: Bool
+        expected: Bool
     ) throws {
-        #expect(try lhs.isUnequal(to: rhs) == !result)
+        let result: Bool = try lhs.isUnequal(to: rhs)
+        #expect(result == !expected)
     }
 }
 

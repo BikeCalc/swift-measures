@@ -27,9 +27,9 @@ internal struct ComposedUnitMeasureCustomStringConvertibleTests {
     )
     internal func descriptionSucceeds(
         value: Measure<ComposedUnit>,
-        result: String
+        expected: String
     ) {
-        #expect(value.description == result)
+        #expect(value.description == expected)
     }
 }
 

@@ -34,7 +34,7 @@ internal struct ConvertedComposedUnitMeasureEquatableTests {
     internal func equalitySucceeds(
         lhs: Measure<ComposedUnit>,
         rhs: Measure<ComposedUnit>,
-        result: Bool
+        expected: Bool
     ) {
         let lhsWrapper: Converted<ComposedUnit> = .init(
             wrappedValue: lhs,
@@ -44,7 +44,8 @@ internal struct ConvertedComposedUnitMeasureEquatableTests {
             wrappedValue: rhs,
             to: rhs.unit
         )
-        #expect((lhsWrapper == rhsWrapper) == result)
+        let result: Bool = lhsWrapper == rhsWrapper
+        #expect(result == expected)
     }
 
     @Test(
@@ -54,7 +55,7 @@ internal struct ConvertedComposedUnitMeasureEquatableTests {
     internal func inequalitySucceeds(
         lhs: Measure<ComposedUnit>,
         rhs: Measure<ComposedUnit>,
-        result: Bool
+        expected: Bool
     ) {
         let lhsWrapper: Converted<ComposedUnit> = .init(
             wrappedValue: lhs,
@@ -64,7 +65,8 @@ internal struct ConvertedComposedUnitMeasureEquatableTests {
             wrappedValue: rhs,
             to: rhs.unit
         )
-        #expect((lhsWrapper != rhsWrapper) == !result)
+        let result: Bool = lhsWrapper != rhsWrapper
+        #expect(result == !expected)
     }
 
     @Test(
@@ -74,7 +76,7 @@ internal struct ConvertedComposedUnitMeasureEquatableTests {
     internal func isEqualSucceeds(
         lhs: Measure<ComposedUnit>,
         rhs: Measure<ComposedUnit>,
-        result: Bool
+        expected: Bool
     ) throws {
         let lhsWrapper: Converted<ComposedUnit> = .init(
             wrappedValue: lhs,
@@ -84,7 +86,8 @@ internal struct ConvertedComposedUnitMeasureEquatableTests {
             wrappedValue: rhs,
             to: rhs.unit
         )
-        #expect(try lhsWrapper.isEqual(to: rhsWrapper) == result)
+        let result: Bool = try lhsWrapper.isEqual(to: rhsWrapper)
+        #expect(result == expected)
     }
 
     @Test(
@@ -94,7 +97,7 @@ internal struct ConvertedComposedUnitMeasureEquatableTests {
     internal func isUnequalSucceeds(
         lhs: Measure<ComposedUnit>,
         rhs: Measure<ComposedUnit>,
-        result: Bool
+        expected: Bool
     ) throws {
         let lhsWrapper: Converted<ComposedUnit> = .init(
             wrappedValue: lhs,
@@ -104,7 +107,8 @@ internal struct ConvertedComposedUnitMeasureEquatableTests {
             wrappedValue: rhs,
             to: rhs.unit
         )
-        #expect(try lhsWrapper.isUnequal(to: rhsWrapper) == !result)
+        let result: Bool = try lhsWrapper.isUnequal(to: rhsWrapper)
+        #expect(result == !expected)
     }
 }
 

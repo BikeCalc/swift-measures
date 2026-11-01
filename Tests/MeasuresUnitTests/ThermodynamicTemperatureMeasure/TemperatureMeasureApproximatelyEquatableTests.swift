@@ -71,15 +71,14 @@ internal struct TemperatureMeasureApproximatelyEquatableTests {
         lhs: Measure<ThermodynamicTemperature>,
         absoluteTolerance: Measure<ThermodynamicTemperature>,
         relativeTolerance: Double,
-        result: Bool
+        expected: Bool
     ) {
         let rhs: Measure<ThermodynamicTemperature> = .init(274.15, .kelvin)
-        #expect(
-            lhs.isApproximatelyEqual(
-                to: rhs,
-                absoluteTolerance: absoluteTolerance,
-                relativeTolerance: relativeTolerance
-            ) == result
+        let result: Bool = lhs.isApproximatelyEqual(
+            to: rhs,
+            absoluteTolerance: absoluteTolerance,
+            relativeTolerance: relativeTolerance
         )
+        #expect(result == expected)
     }
 }

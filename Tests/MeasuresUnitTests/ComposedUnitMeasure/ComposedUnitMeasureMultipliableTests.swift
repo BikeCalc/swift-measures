@@ -59,9 +59,10 @@ internal struct ComposedUnitMeasureMultipliableTests {
     internal func isMultipleOfSucceeds(
         multiplicand: Measure<ComposedUnit>,
         multiplier: Measure<ComposedUnit>,
-        result: Bool
+        expected: Bool
     ) {
-        #expect(multiplicand.isMultiple(of: multiplier) == result)
+        let result: Bool = multiplicand.isMultiple(of: multiplier)
+        #expect(result == expected)
     }
 
     @Test(
@@ -73,7 +74,8 @@ internal struct ComposedUnitMeasureMultipliableTests {
         multiplier: Measure<ComposedUnit>.Multiplier,
         product: Measure<ComposedUnit>
     ) {
-        #expect(multiplicand * multiplier == product)
+        let result: Measure<ComposedUnit> = multiplicand * multiplier
+        #expect(result == product)
     }
 
     @Test(
@@ -85,9 +87,9 @@ internal struct ComposedUnitMeasureMultipliableTests {
         multiplier: Measure<ComposedUnit>.Multiplier,
         product: Measure<ComposedUnit>
     ) {
-        var runningProduct: Measure<ComposedUnit> = multiplicand
-        runningProduct *= multiplier
-        #expect(runningProduct == product)
+        var result: Measure<ComposedUnit> = multiplicand
+        result *= multiplier
+        #expect(result == product)
     }
 
     @Test(
@@ -99,7 +101,8 @@ internal struct ComposedUnitMeasureMultipliableTests {
         multiplier: Measure<ComposedUnit>.Multiplier,
         product: Measure<ComposedUnit>
     ) throws {
-        #expect(try multiplicand.multiplying(by: multiplier) == product)
+        let result: Measure<ComposedUnit> = try multiplicand.multiplying(by: multiplier)
+        #expect(result == product)
     }
 
     @Test(
@@ -111,9 +114,9 @@ internal struct ComposedUnitMeasureMultipliableTests {
         multiplier: Measure<ComposedUnit>.Multiplier,
         product: Measure<ComposedUnit>
     ) throws {
-        var runningProduct: Measure<ComposedUnit> = multiplicand
-        try runningProduct.multiply(by: multiplier)
-        #expect(runningProduct == product)
+        var result: Measure<ComposedUnit> = multiplicand
+        try result.multiply(by: multiplier)
+        #expect(result == product)
     }
 }
 

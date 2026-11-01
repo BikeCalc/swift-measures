@@ -32,9 +32,10 @@ internal struct LengthMeasureCanonicallyEquatableTests {
     internal func canonicalEqualitySucceeds(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
-        result: Bool
+        expected: Bool
     ) {
-        #expect(lhs.isCanonicallyEqual(to: rhs) == result)
+        let result: Bool = lhs.isCanonicallyEqual(to: rhs)
+        #expect(result == expected)
     }
 }
 

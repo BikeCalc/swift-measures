@@ -38,7 +38,8 @@ internal struct LengthMeasureAddableTests {
         addend: Measure<Length>.Addend,
         sum: Measure<Length>
     ) {
-        #expect(augend + addend == sum)
+        let result: Measure<Length> = augend + addend
+        #expect(result == sum)
     }
 
     @Test(
@@ -50,9 +51,9 @@ internal struct LengthMeasureAddableTests {
         addend: Measure<Length>.Addend,
         sum: Measure<Length>
     ) {
-        var runningSum: Measure<Length> = augend
-        runningSum += addend
-        #expect(runningSum == sum)
+        var result: Measure<Length> = augend
+        result += addend
+        #expect(result == sum)
     }
 
     @Test(
@@ -64,7 +65,8 @@ internal struct LengthMeasureAddableTests {
         addend: Measure<Length>.Addend,
         sum: Measure<Length>
     ) throws {
-        #expect(try augend.adding(addend) == sum)
+        let result: Measure<Length> = try augend.adding(addend)
+        #expect(result == sum)
     }
 
     @Test(
@@ -76,9 +78,9 @@ internal struct LengthMeasureAddableTests {
         addend: Measure<Length>.Addend,
         sum: Measure<Length>
     ) throws {
-        var runningSum: Measure<Length> = augend
-        try runningSum.add(addend)
-        #expect(runningSum == sum)
+        var result: Measure<Length> = augend
+        try result.add(addend)
+        #expect(result == sum)
     }
 }
 
@@ -92,7 +94,8 @@ extension LengthMeasureAddableTests {
         addend: Measure<Length>.Addend,
         sum _: Measure<Length>
     ) {
-        #expect((augend + addend).isCanonicallyEqual(to: addend + augend) == true)
+        let result: Bool = (augend + addend).isCanonicallyEqual(to: addend + augend)
+        #expect(result == true)
     }
 }
 

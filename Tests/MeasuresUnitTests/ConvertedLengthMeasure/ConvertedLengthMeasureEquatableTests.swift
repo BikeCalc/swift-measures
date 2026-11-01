@@ -30,7 +30,7 @@ internal struct ConvertedLengthMeasureEquatableTests {
     internal func equalitySucceeds(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
-        result: Bool
+        expected: Bool
     ) {
         let lhsWrapper: Converted<Length> = .init(
             wrappedValue: lhs,
@@ -40,7 +40,8 @@ internal struct ConvertedLengthMeasureEquatableTests {
             wrappedValue: rhs,
             to: rhs.unit
         )
-        #expect((lhsWrapper == rhsWrapper) == result)
+        let result: Bool = lhsWrapper == rhsWrapper
+        #expect(result == expected)
     }
 
     @Test(
@@ -50,7 +51,7 @@ internal struct ConvertedLengthMeasureEquatableTests {
     internal func inequalitySucceeds(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
-        result: Bool
+        expected: Bool
     ) {
         let lhsWrapper: Converted<Length> = .init(
             wrappedValue: lhs,
@@ -60,7 +61,8 @@ internal struct ConvertedLengthMeasureEquatableTests {
             wrappedValue: rhs,
             to: rhs.unit
         )
-        #expect((lhsWrapper != rhsWrapper) == !result)
+        let result: Bool = lhsWrapper != rhsWrapper
+        #expect(result == !expected)
     }
 
     @Test(
@@ -70,7 +72,7 @@ internal struct ConvertedLengthMeasureEquatableTests {
     internal func isEqualSucceeds(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
-        result: Bool
+        expected: Bool
     ) throws {
         let lhsWrapper: Converted<Length> = .init(
             wrappedValue: lhs,
@@ -80,7 +82,8 @@ internal struct ConvertedLengthMeasureEquatableTests {
             wrappedValue: rhs,
             to: rhs.unit
         )
-        #expect(try lhsWrapper.isEqual(to: rhsWrapper) == result)
+        let result: Bool = try lhsWrapper.isEqual(to: rhsWrapper)
+        #expect(result == expected)
     }
 
     @Test(
@@ -90,7 +93,7 @@ internal struct ConvertedLengthMeasureEquatableTests {
     internal func isUnequalSucceeds(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
-        result: Bool
+        expected: Bool
     ) throws {
         let lhsWrapper: Converted<Length> = .init(
             wrappedValue: lhs,
@@ -100,7 +103,8 @@ internal struct ConvertedLengthMeasureEquatableTests {
             wrappedValue: rhs,
             to: rhs.unit
         )
-        #expect(try lhsWrapper.isUnequal(to: rhsWrapper) == !result)
+        let result: Bool = try lhsWrapper.isUnequal(to: rhsWrapper)
+        #expect(result == !expected)
     }
 }
 

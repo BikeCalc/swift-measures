@@ -31,10 +31,10 @@ internal struct ConvertedLengthMeasureTests {
     )
     internal func initializationConvertsMeasures(
         value: Measure<Length>,
-        result: Measure<Length>
+        expected: Measure<Length>
     ) {
-        @Converted(to: .meter) var convertedValue: Measure<Length> = value
-        #expect(convertedValue == result)
+        @Converted(to: .meter) var result: Measure<Length> = value
+        #expect(result == expected)
     }
 
     @Test(
@@ -43,11 +43,11 @@ internal struct ConvertedLengthMeasureTests {
     )
     internal func assignmentConvertsMeasures(
         value: Measure<Length>,
-        result: Measure<Length>
+        expected: Measure<Length>
     ) {
-        @Converted(to: .meter) var convertedValue: Measure<Length> = .init(0, .base)
-        convertedValue = value
-        #expect(convertedValue == result)
+        @Converted(to: .meter) var result: Measure<Length> = .init(0, .base)
+        result = value
+        #expect(result == expected)
     }
 }
 

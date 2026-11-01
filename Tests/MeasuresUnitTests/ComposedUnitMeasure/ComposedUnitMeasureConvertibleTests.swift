@@ -33,14 +33,16 @@ internal struct ComposedUnitMeasureConvertibleTests {
             )
         )
         let source: Measure<ComposedUnit> = .init(1, sourceUnit)
-        let converted: Measure<ComposedUnit> = source.converted(to: destinationUnit)
-        var mutated: Measure<ComposedUnit> = source
-        mutated.convert(to: destinationUnit)
-        #expect(converted.value == 1)
-        #expect(converted.unit == destinationUnit)
-        #expect(mutated == converted)
-        #expect((source + converted).value == 2)
-        #expect((source - converted).value == 0)
+        let result: Measure<ComposedUnit> = source.converted(to: destinationUnit)
+        var mutatingResult: Measure<ComposedUnit> = source
+        mutatingResult.convert(to: destinationUnit)
+        #expect(result.value == 1)
+        #expect(result.unit == destinationUnit)
+        #expect(mutatingResult == result)
+        let additionResult: Measure<ComposedUnit> = source + result
+        #expect(additionResult.value == 2)
+        let subtractionResult: Measure<ComposedUnit> = source - result
+        #expect(subtractionResult.value == 0)
     }
 
     @Test(
@@ -62,13 +64,13 @@ internal struct ComposedUnitMeasureConvertibleTests {
         unit: ComposedUnit,
         expected: Measure<ComposedUnit>
     ) {
-        let converted: Measure<ComposedUnit> = source.converted(to: unit)
-        var mutated: Measure<ComposedUnit> = source
-        mutated.convert(to: unit)
-        #expect(abs(converted.value - expected.value) < self.absoluteTolerance)
-        #expect(converted.unit == expected.unit)
-        #expect(abs(mutated.value - expected.value) < self.absoluteTolerance)
-        #expect(mutated.unit == expected.unit)
+        let result: Measure<ComposedUnit> = source.converted(to: unit)
+        var mutatingResult: Measure<ComposedUnit> = source
+        mutatingResult.convert(to: unit)
+        #expect(abs(result.value - expected.value) < self.absoluteTolerance)
+        #expect(result.unit == expected.unit)
+        #expect(abs(mutatingResult.value - expected.value) < self.absoluteTolerance)
+        #expect(mutatingResult.unit == expected.unit)
     }
 }
 

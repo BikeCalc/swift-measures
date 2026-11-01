@@ -45,10 +45,10 @@ internal struct ConvertedComposedUnitMeasureTests {
     )
     internal func initializationConvertsMeasures(
         value: Measure<ComposedUnit>,
-        result: Measure<ComposedUnit>
+        expected: Measure<ComposedUnit>
     ) {
-        @Converted(to: result.unit) var convertedValue: Measure<ComposedUnit> = value
-        #expect(convertedValue == result)
+        @Converted(to: expected.unit) var result: Measure<ComposedUnit> = value
+        #expect(result == expected)
     }
 
     @Test(
@@ -57,11 +57,11 @@ internal struct ConvertedComposedUnitMeasureTests {
     )
     internal func assignmentConvertsMeasures(
         value: Measure<ComposedUnit>,
-        result: Measure<ComposedUnit>
+        expected: Measure<ComposedUnit>
     ) {
-        @Converted(to: result.unit) var convertedValue: Measure<ComposedUnit> = .init(0, result.unit)
-        convertedValue = value
-        #expect(convertedValue == result)
+        @Converted(to: expected.unit) var result: Measure<ComposedUnit> = .init(0, expected.unit)
+        result = value
+        #expect(result == expected)
     }
 
     @Test(
@@ -70,10 +70,10 @@ internal struct ConvertedComposedUnitMeasureTests {
     )
     internal func coherentInitializationConvertsMeasures(
         value: Measure<ComposedUnit>,
-        result: Measure<ComposedUnit>
+        expected: Measure<ComposedUnit>
     ) {
-        @Converted(to: .coherent) var convertedValue: Measure<ComposedUnit> = value
-        #expect(convertedValue == result)
+        @Converted(to: .coherent) var result: Measure<ComposedUnit> = value
+        #expect(result == expected)
     }
 
     @Test(
@@ -82,13 +82,13 @@ internal struct ConvertedComposedUnitMeasureTests {
     )
     internal func coherentAssignmentResolvesDestination(
         value: Measure<ComposedUnit>,
-        result: Measure<ComposedUnit>
+        expected: Measure<ComposedUnit>
     ) {
-        @Converted(to: .coherent) var convertedValue: Measure<ComposedUnit> = .init(1, .meter)
-        convertedValue = value
-        #expect(convertedValue == result)
-        convertedValue = .init(200, .centimeter)
-        #expect(convertedValue == .init(2, .meter))
+        @Converted(to: .coherent) var result: Measure<ComposedUnit> = .init(1, .meter)
+        result = value
+        #expect(result == expected)
+        result = .init(200, .centimeter)
+        #expect(result == .init(2, .meter))
     }
 }
 

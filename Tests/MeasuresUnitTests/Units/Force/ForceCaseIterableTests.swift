@@ -19,6 +19,7 @@ internal struct ForceCaseIterableTests {
         let units: Array<Force> = Force.allCases
         #expect(units.count == 28)
         #expect(Set(units).count == 28)
-        #expect(units.contains(.base) == true)
+        let result: Bool = units.contains(.base)
+        #expect(result == true)
     }
 }

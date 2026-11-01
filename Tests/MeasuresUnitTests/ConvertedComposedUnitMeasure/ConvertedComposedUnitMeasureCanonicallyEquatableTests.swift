@@ -36,7 +36,7 @@ internal struct ConvertedComposedUnitMeasureCanonicallyEquatableTests {
     internal func canonicalEqualitySucceeds(
         lhs: Measure<ComposedUnit>,
         rhs: Measure<ComposedUnit>,
-        result: Bool
+        expected: Bool
     ) {
         let lhsWrapper: Converted<ComposedUnit> = .init(
             wrappedValue: lhs,
@@ -46,7 +46,8 @@ internal struct ConvertedComposedUnitMeasureCanonicallyEquatableTests {
             wrappedValue: rhs,
             to: rhs.unit
         )
-        #expect(lhsWrapper.isCanonicallyEqual(to: rhsWrapper) == result)
+        let result: Bool = lhsWrapper.isCanonicallyEqual(to: rhsWrapper)
+        #expect(result == expected)
     }
 }
 

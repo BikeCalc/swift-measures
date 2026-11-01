@@ -19,6 +19,7 @@ internal struct MolarMassCaseIterableTests {
         let units: Array<MolarMass> = MolarMass.allCases
         #expect(units.count == 2)
         #expect(Set(units).count == 2)
-        #expect(units.contains(.base) == true)
+        let result: Bool = units.contains(.base)
+        #expect(result == true)
     }
 }

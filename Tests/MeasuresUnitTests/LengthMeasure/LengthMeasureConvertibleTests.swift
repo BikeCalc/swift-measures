@@ -29,14 +29,16 @@ internal struct LengthMeasureConvertibleTests {
             symbol: "destination"
         )
         let source: Measure<Length> = .init(1, sourceUnit)
-        let converted: Measure<Length> = source.converted(to: destinationUnit)
-        var mutated: Measure<Length> = source
-        mutated.convert(to: destinationUnit)
-        #expect(converted.value == 1)
-        #expect(converted.unit == destinationUnit)
-        #expect(mutated == converted)
-        #expect((source + converted).value == 2)
-        #expect((source - converted).value == 0)
+        let result: Measure<Length> = source.converted(to: destinationUnit)
+        var mutatingResult: Measure<Length> = source
+        mutatingResult.convert(to: destinationUnit)
+        #expect(result.value == 1)
+        #expect(result.unit == destinationUnit)
+        #expect(mutatingResult == result)
+        let additionResult: Measure<Length> = source + result
+        #expect(additionResult.value == 2)
+        let subtractionResult: Measure<Length> = source - result
+        #expect(subtractionResult.value == 0)
     }
 
     @Test(
@@ -54,13 +56,13 @@ internal struct LengthMeasureConvertibleTests {
         unit: Length,
         expected: Measure<Length>
     ) {
-        let converted: Measure<Length> = source.converted(to: unit)
-        var mutated: Measure<Length> = source
-        mutated.convert(to: unit)
-        #expect(abs(converted.value - expected.value) < self.absoluteTolerance)
-        #expect(converted.unit == expected.unit)
-        #expect(abs(mutated.value - expected.value) < self.absoluteTolerance)
-        #expect(mutated.unit == expected.unit)
+        let result: Measure<Length> = source.converted(to: unit)
+        var mutatingResult: Measure<Length> = source
+        mutatingResult.convert(to: unit)
+        #expect(abs(result.value - expected.value) < self.absoluteTolerance)
+        #expect(result.unit == expected.unit)
+        #expect(abs(mutatingResult.value - expected.value) < self.absoluteTolerance)
+        #expect(mutatingResult.unit == expected.unit)
     }
 }
 

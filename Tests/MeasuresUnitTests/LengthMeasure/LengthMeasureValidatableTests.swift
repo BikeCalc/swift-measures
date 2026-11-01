@@ -45,10 +45,10 @@ internal struct LengthMeasureValidatableTests {
     )
     internal func unitConversionParametersDetermineValidity(
         measure: Measure<Length>,
-        result: Bool
+        expected: Bool
     ) {
         let validatable: any Validatable = measure
-        #expect(validatable.isValid == result)
+        #expect(validatable.isValid == expected)
     }
 }
 

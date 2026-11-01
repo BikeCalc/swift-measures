@@ -74,9 +74,10 @@ internal struct ComposedUnitMeasureRaisableTests {
     internal func isPowerOfSucceeds(
         measure: Measure<ComposedUnit>,
         base: Measure<ComposedUnit>,
-        result: Bool
+        expected: Bool
     ) {
-        #expect(measure.isPower(of: base) == result)
+        let result: Bool = measure.isPower(of: base)
+        #expect(result == expected)
     }
 
     @Test(
@@ -89,12 +90,12 @@ internal struct ComposedUnitMeasureRaisableTests {
         value: Double,
         dimension: Dimension
     ) {
-        let power: Measure<ComposedUnit> = base ** exponent
-        #expect(power.isNaT == false)
-        #expect(power.value == value)
-        #expect(power.unit.dimension == dimension)
-        #expect(power.unit.coefficient == 1)
-        #expect(power.unit.constant == 0)
+        let result: Measure<ComposedUnit> = base ** exponent
+        #expect(result.isNaT == false)
+        #expect(result.value == value)
+        #expect(result.unit.dimension == dimension)
+        #expect(result.unit.coefficient == 1)
+        #expect(result.unit.constant == 0)
     }
 
     @Test(
@@ -107,12 +108,12 @@ internal struct ComposedUnitMeasureRaisableTests {
         value: Double,
         dimension: Dimension
     ) throws {
-        let power: Measure<ComposedUnit> = try base.raising(to: exponent)
-        #expect(power.isNaT == false)
-        #expect(power.value == value)
-        #expect(power.unit.dimension == dimension)
-        #expect(power.unit.coefficient == 1)
-        #expect(power.unit.constant == 0)
+        let result: Measure<ComposedUnit> = try base.raising(to: exponent)
+        #expect(result.isNaT == false)
+        #expect(result.value == value)
+        #expect(result.unit.dimension == dimension)
+        #expect(result.unit.coefficient == 1)
+        #expect(result.unit.constant == 0)
     }
 }
 

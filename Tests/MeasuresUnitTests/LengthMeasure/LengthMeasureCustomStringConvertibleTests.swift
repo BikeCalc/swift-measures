@@ -26,9 +26,9 @@ internal struct LengthMeasureCustomStringConvertibleTests {
     )
     internal func descriptionSucceeds(
         value: Measure<Length>,
-        result: String
+        expected: String
     ) {
-        #expect(value.description == result)
+        #expect(value.description == expected)
     }
 }
 

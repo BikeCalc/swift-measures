@@ -41,12 +41,12 @@ internal struct TemperatureMeasureConvertibleTests {
         unit: ThermodynamicTemperature,
         expected: Measure<ThermodynamicTemperature>
     ) {
-        let converted: Measure<ThermodynamicTemperature> = source.converted(to: unit)
-        var mutated: Measure<ThermodynamicTemperature> = source
-        mutated.convert(to: unit)
-        #expect(abs(converted.value - expected.value) < self.absoluteTolerance)
-        #expect(converted.unit == expected.unit)
-        #expect(abs(mutated.value - expected.value) < self.absoluteTolerance)
-        #expect(mutated.unit == expected.unit)
+        let result: Measure<ThermodynamicTemperature> = source.converted(to: unit)
+        var mutatingResult: Measure<ThermodynamicTemperature> = source
+        mutatingResult.convert(to: unit)
+        #expect(abs(result.value - expected.value) < self.absoluteTolerance)
+        #expect(result.unit == expected.unit)
+        #expect(abs(mutatingResult.value - expected.value) < self.absoluteTolerance)
+        #expect(mutatingResult.unit == expected.unit)
     }
 }

@@ -19,6 +19,7 @@ internal struct ElectricCurrentCaseIterableTests {
         let units: Array<ElectricCurrent> = ElectricCurrent.allCases
         #expect(units.count == 26)
         #expect(Set(units).count == 26)
-        #expect(units.contains(.base) == true)
+        let result: Bool = units.contains(.base)
+        #expect(result == true)
     }
 }

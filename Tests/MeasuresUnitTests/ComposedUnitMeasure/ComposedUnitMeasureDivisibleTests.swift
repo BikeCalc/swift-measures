@@ -81,9 +81,10 @@ internal struct ComposedUnitMeasureDivisibleTests {
     internal func isDivisibleBySucceeds(
         dividend: Measure<ComposedUnit>,
         divisor: Measure<ComposedUnit>,
-        result: Bool
+        expected: Bool
     ) {
-        #expect(dividend.isDivisible(by: divisor) == result)
+        let result: Bool = dividend.isDivisible(by: divisor)
+        #expect(result == expected)
     }
 
     @Test(
@@ -95,7 +96,8 @@ internal struct ComposedUnitMeasureDivisibleTests {
         divisor: Measure<ComposedUnit>.Divisor,
         quotient: Measure<ComposedUnit>
     ) {
-        #expect(dividend / divisor == quotient)
+        let result: Measure<ComposedUnit> = dividend / divisor
+        #expect(result == quotient)
     }
 
     @Test(
@@ -107,9 +109,9 @@ internal struct ComposedUnitMeasureDivisibleTests {
         divisor: Measure<ComposedUnit>.Divisor,
         quotient: Measure<ComposedUnit>
     ) {
-        var runningQuotient: Measure<ComposedUnit> = dividend
-        runningQuotient /= divisor
-        #expect(runningQuotient == quotient)
+        var result: Measure<ComposedUnit> = dividend
+        result /= divisor
+        #expect(result == quotient)
     }
 
     @Test(
@@ -121,7 +123,8 @@ internal struct ComposedUnitMeasureDivisibleTests {
         divisor: Measure<ComposedUnit>.Divisor,
         quotient: Measure<ComposedUnit>
     ) throws {
-        #expect(try dividend.dividing(by: divisor) == quotient)
+        let result: Measure<ComposedUnit> = try dividend.dividing(by: divisor)
+        #expect(result == quotient)
     }
 
     @Test(
@@ -133,9 +136,9 @@ internal struct ComposedUnitMeasureDivisibleTests {
         divisor: Measure<ComposedUnit>.Divisor,
         quotient: Measure<ComposedUnit>
     ) throws {
-        var runningQuotient: Measure<ComposedUnit> = dividend
-        try runningQuotient.divide(by: divisor)
-        #expect(runningQuotient == quotient)
+        var result: Measure<ComposedUnit> = dividend
+        try result.divide(by: divisor)
+        #expect(result == quotient)
     }
 
     @Test(
@@ -147,7 +150,8 @@ internal struct ComposedUnitMeasureDivisibleTests {
         divisor: Measure<ComposedUnit>.RemainderDivisor,
         remainder: Measure<ComposedUnit>
     ) {
-        #expect(dividend % divisor == remainder)
+        let result: Measure<ComposedUnit> = dividend % divisor
+        #expect(result == remainder)
     }
 
     @Test(
@@ -159,9 +163,9 @@ internal struct ComposedUnitMeasureDivisibleTests {
         divisor: Measure<ComposedUnit>.RemainderDivisor,
         remainder: Measure<ComposedUnit>
     ) {
-        var runningRemainder: Measure<ComposedUnit> = dividend
-        runningRemainder %= divisor
-        #expect(runningRemainder == remainder)
+        var result: Measure<ComposedUnit> = dividend
+        result %= divisor
+        #expect(result == remainder)
     }
 }
 

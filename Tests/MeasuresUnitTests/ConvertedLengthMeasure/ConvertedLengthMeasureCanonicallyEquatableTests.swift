@@ -32,7 +32,7 @@ internal struct ConvertedLengthMeasureCanonicallyEquatableTests {
     internal func canonicalEqualitySucceeds(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
-        result: Bool
+        expected: Bool
     ) {
         let lhsWrapper: Converted<Length> = .init(
             wrappedValue: lhs,
@@ -42,7 +42,8 @@ internal struct ConvertedLengthMeasureCanonicallyEquatableTests {
             wrappedValue: rhs,
             to: rhs.unit
         )
-        #expect(lhsWrapper.isCanonicallyEqual(to: rhsWrapper) == result)
+        let result: Bool = lhsWrapper.isCanonicallyEqual(to: rhsWrapper)
+        #expect(result == expected)
     }
 }
 

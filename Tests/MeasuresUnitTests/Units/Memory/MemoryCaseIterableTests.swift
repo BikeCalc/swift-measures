@@ -19,6 +19,7 @@ internal struct MemoryCaseIterableTests {
         let units: Array<Memory> = Memory.allCases
         #expect(units.count == 66)
         #expect(Set(units).count == 66)
-        #expect(units.contains(.base) == true)
+        let result: Bool = units.contains(.base)
+        #expect(result == true)
     }
 }

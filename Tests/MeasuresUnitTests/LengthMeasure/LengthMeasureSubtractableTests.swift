@@ -38,7 +38,8 @@ internal struct LengthMeasureSubtractableTests {
         subtrahend: Measure<Length>.Subtrahend,
         difference: Measure<Length>
     ) {
-        #expect(minuend - subtrahend == difference)
+        let result: Measure<Length> = minuend - subtrahend
+        #expect(result == difference)
     }
 
     @Test(
@@ -50,9 +51,9 @@ internal struct LengthMeasureSubtractableTests {
         subtrahend: Measure<Length>.Subtrahend,
         difference: Measure<Length>
     ) {
-        var runningDifference: Measure<Length> = minuend
-        runningDifference -= subtrahend
-        #expect(runningDifference == difference)
+        var result: Measure<Length> = minuend
+        result -= subtrahend
+        #expect(result == difference)
     }
 
     @Test(
@@ -64,7 +65,8 @@ internal struct LengthMeasureSubtractableTests {
         subtrahend: Measure<Length>.Subtrahend,
         difference: Measure<Length>
     ) throws {
-        #expect(try minuend.subtracting(subtrahend) == difference)
+        let result: Measure<Length> = try minuend.subtracting(subtrahend)
+        #expect(result == difference)
     }
 
     @Test(
@@ -76,9 +78,9 @@ internal struct LengthMeasureSubtractableTests {
         subtrahend: Measure<Length>.Subtrahend,
         difference: Measure<Length>
     ) throws {
-        var runningDifference: Measure<Length> = minuend
-        try runningDifference.subtract(subtrahend)
-        #expect(runningDifference == difference)
+        var result: Measure<Length> = minuend
+        try result.subtract(subtrahend)
+        #expect(result == difference)
     }
 }
 
@@ -92,7 +94,8 @@ extension LengthMeasureSubtractableTests {
         subtrahend: Measure<Length>.Subtrahend,
         difference _: Measure<Length>
     ) {
-        #expect((minuend - subtrahend).isCanonicallyEqual(to: subtrahend - minuend) == false)
+        let result: Bool = (minuend - subtrahend).isCanonicallyEqual(to: subtrahend - minuend)
+        #expect(result == false)
     }
 }
 

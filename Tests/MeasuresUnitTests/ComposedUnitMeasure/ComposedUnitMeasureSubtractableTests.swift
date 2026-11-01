@@ -44,7 +44,8 @@ internal struct ComposedUnitMeasureSubtractableTests {
         subtrahend: Measure<ComposedUnit>.Subtrahend,
         difference: Measure<ComposedUnit>
     ) {
-        #expect(minuend - subtrahend == difference)
+        let result: Measure<ComposedUnit> = minuend - subtrahend
+        #expect(result == difference)
     }
 
     @Test(
@@ -56,9 +57,9 @@ internal struct ComposedUnitMeasureSubtractableTests {
         subtrahend: Measure<ComposedUnit>.Subtrahend,
         difference: Measure<ComposedUnit>
     ) {
-        var runningDifference: Measure<ComposedUnit> = minuend
-        runningDifference -= subtrahend
-        #expect(runningDifference == difference)
+        var result: Measure<ComposedUnit> = minuend
+        result -= subtrahend
+        #expect(result == difference)
     }
 
     @Test(
@@ -70,7 +71,8 @@ internal struct ComposedUnitMeasureSubtractableTests {
         subtrahend: Measure<ComposedUnit>.Subtrahend,
         difference: Measure<ComposedUnit>
     ) throws {
-        #expect(try minuend.subtracting(subtrahend) == difference)
+        let result: Measure<ComposedUnit> = try minuend.subtracting(subtrahend)
+        #expect(result == difference)
     }
 
     @Test(
@@ -82,9 +84,9 @@ internal struct ComposedUnitMeasureSubtractableTests {
         subtrahend: Measure<ComposedUnit>.Subtrahend,
         difference: Measure<ComposedUnit>
     ) throws {
-        var runningDifference: Measure<ComposedUnit> = minuend
-        try runningDifference.subtract(subtrahend)
-        #expect(runningDifference == difference)
+        var result: Measure<ComposedUnit> = minuend
+        try result.subtract(subtrahend)
+        #expect(result == difference)
     }
 }
 
@@ -98,7 +100,8 @@ extension ComposedUnitMeasureSubtractableTests {
         subtrahend: Measure<ComposedUnit>.Subtrahend,
         difference _: Measure<ComposedUnit>
     ) {
-        #expect((minuend - subtrahend).isCanonicallyEqual(to: subtrahend - minuend) == false)
+        let result: Bool = (minuend - subtrahend).isCanonicallyEqual(to: subtrahend - minuend)
+        #expect(result == false)
     }
 }
 

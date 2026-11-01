@@ -51,10 +51,10 @@ internal struct ConvertedComposedUnitMeasureComparableTests {
     internal func isLessThan(
         lhs: Measure<ComposedUnit>,
         rhs: Measure<ComposedUnit>,
-        isLess: Bool,
-        isLessThanOrEqual _: Bool,
-        isGreater _: Bool,
-        isGreaterThanOrEqual _: Bool
+        isLessExpected: Bool,
+        isLessThanOrEqualExpected _: Bool,
+        isGreaterExpected _: Bool,
+        isGreaterThanOrEqualExpected _: Bool
     ) throws {
         let lhsWrapper: Converted<ComposedUnit> = .init(
             wrappedValue: lhs,
@@ -64,8 +64,10 @@ internal struct ConvertedComposedUnitMeasureComparableTests {
             wrappedValue: rhs,
             to: rhs.unit
         )
-        #expect((lhsWrapper < rhsWrapper) == isLess)
-        #expect(try lhsWrapper.isLess(than: rhsWrapper) == isLess)
+        let lessThanResult: Bool = lhsWrapper < rhsWrapper
+        #expect(lessThanResult == isLessExpected)
+        let isLessResult: Bool = try lhsWrapper.isLess(than: rhsWrapper)
+        #expect(isLessResult == isLessExpected)
     }
 
     @Test(
@@ -75,10 +77,10 @@ internal struct ConvertedComposedUnitMeasureComparableTests {
     internal func isLessThanOrEqualTo(
         lhs: Measure<ComposedUnit>,
         rhs: Measure<ComposedUnit>,
-        isLess _: Bool,
-        isLessThanOrEqual: Bool,
-        isGreater _: Bool,
-        isGreaterThanOrEqual _: Bool
+        isLessExpected _: Bool,
+        isLessThanOrEqualExpected: Bool,
+        isGreaterExpected _: Bool,
+        isGreaterThanOrEqualExpected _: Bool
     ) throws {
         let lhsWrapper: Converted<ComposedUnit> = .init(
             wrappedValue: lhs,
@@ -88,8 +90,10 @@ internal struct ConvertedComposedUnitMeasureComparableTests {
             wrappedValue: rhs,
             to: rhs.unit
         )
-        #expect((lhsWrapper <= rhsWrapper) == isLessThanOrEqual)
-        #expect(try lhsWrapper.isLessThanOrEqual(to: rhsWrapper) == isLessThanOrEqual)
+        let lessThanOrEqualResult: Bool = lhsWrapper <= rhsWrapper
+        #expect(lessThanOrEqualResult == isLessThanOrEqualExpected)
+        let isLessThanOrEqualResult: Bool = try lhsWrapper.isLessThanOrEqual(to: rhsWrapper)
+        #expect(isLessThanOrEqualResult == isLessThanOrEqualExpected)
     }
 
     @Test(
@@ -99,10 +103,10 @@ internal struct ConvertedComposedUnitMeasureComparableTests {
     internal func isGreaterThan(
         lhs: Measure<ComposedUnit>,
         rhs: Measure<ComposedUnit>,
-        isLess _: Bool,
-        isLessThanOrEqual _: Bool,
-        isGreater: Bool,
-        isGreaterThanOrEqual _: Bool
+        isLessExpected _: Bool,
+        isLessThanOrEqualExpected _: Bool,
+        isGreaterExpected: Bool,
+        isGreaterThanOrEqualExpected _: Bool
     ) throws {
         let lhsWrapper: Converted<ComposedUnit> = .init(
             wrappedValue: lhs,
@@ -112,8 +116,10 @@ internal struct ConvertedComposedUnitMeasureComparableTests {
             wrappedValue: rhs,
             to: rhs.unit
         )
-        #expect((lhsWrapper > rhsWrapper) == isGreater)
-        #expect(try lhsWrapper.isGreater(than: rhsWrapper) == isGreater)
+        let greaterThanResult: Bool = lhsWrapper > rhsWrapper
+        #expect(greaterThanResult == isGreaterExpected)
+        let isGreaterResult: Bool = try lhsWrapper.isGreater(than: rhsWrapper)
+        #expect(isGreaterResult == isGreaterExpected)
     }
 
     @Test(
@@ -123,10 +129,10 @@ internal struct ConvertedComposedUnitMeasureComparableTests {
     internal func isGreaterThanOrEqualTo(
         lhs: Measure<ComposedUnit>,
         rhs: Measure<ComposedUnit>,
-        isLess _: Bool,
-        isLessThanOrEqual _: Bool,
-        isGreater _: Bool,
-        isGreaterThanOrEqual: Bool
+        isLessExpected _: Bool,
+        isLessThanOrEqualExpected _: Bool,
+        isGreaterExpected _: Bool,
+        isGreaterThanOrEqualExpected: Bool
     ) throws {
         let lhsWrapper: Converted<ComposedUnit> = .init(
             wrappedValue: lhs,
@@ -136,8 +142,10 @@ internal struct ConvertedComposedUnitMeasureComparableTests {
             wrappedValue: rhs,
             to: rhs.unit
         )
-        #expect((lhsWrapper >= rhsWrapper) == isGreaterThanOrEqual)
-        #expect(try lhsWrapper.isGreaterThanOrEqual(to: rhsWrapper) == isGreaterThanOrEqual)
+        let greaterThanOrEqualResult: Bool = lhsWrapper >= rhsWrapper
+        #expect(greaterThanOrEqualResult == isGreaterThanOrEqualExpected)
+        let isGreaterThanOrEqualResult: Bool = try lhsWrapper.isGreaterThanOrEqual(to: rhsWrapper)
+        #expect(isGreaterThanOrEqualResult == isGreaterThanOrEqualExpected)
     }
 
     @Test(
@@ -162,7 +170,8 @@ internal struct ConvertedComposedUnitMeasureComparableTests {
             to: upperBound.unit
         )
         let range: ClosedRange<Converted<ComposedUnit>> = lowerBoundWrapper ... upperBoundWrapper
-        #expect(try valueWrapper.isWithin(range) == range.contains(valueWrapper))
+        let result: Bool = try valueWrapper.isWithin(range)
+        #expect(result == range.contains(valueWrapper))
     }
 
     @Test(
@@ -186,8 +195,8 @@ internal struct ConvertedComposedUnitMeasureComparableTests {
             wrappedValue: upperBound,
             to: upperBound.unit
         )
-        let valueIsWithinBounds: Bool = try valueWrapper.isWithin(lowerBoundWrapper, upperBoundWrapper) == true
-        #expect(valueIsWithinBounds == (valueWrapper >= lowerBoundWrapper && valueWrapper <= upperBoundWrapper))
+        let result: Bool = try valueWrapper.isWithin(lowerBoundWrapper, upperBoundWrapper) == true
+        #expect(result == (valueWrapper >= lowerBoundWrapper && valueWrapper <= upperBoundWrapper))
     }
 
     @Test(
@@ -211,8 +220,8 @@ internal struct ConvertedComposedUnitMeasureComparableTests {
             wrappedValue: upperBound,
             to: upperBound.unit
         )
-        let valueIsBetweenBounds: Bool = try valueWrapper.isBetween(lowerBoundWrapper, upperBoundWrapper) == true
-        #expect(valueIsBetweenBounds == (valueWrapper > lowerBoundWrapper && valueWrapper < upperBoundWrapper))
+        let result: Bool = try valueWrapper.isBetween(lowerBoundWrapper, upperBoundWrapper) == true
+        #expect(result == (valueWrapper > lowerBoundWrapper && valueWrapper < upperBoundWrapper))
     }
 }
 

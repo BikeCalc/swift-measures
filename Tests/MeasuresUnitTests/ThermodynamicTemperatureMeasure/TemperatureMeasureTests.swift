@@ -27,8 +27,8 @@ internal struct TemperatureMeasureTests {
     )
     internal func boundedValidRangeSucceeds(
         measure: Measure<ThermodynamicTemperature>,
-        result: Bool
+        expected: Bool
     ) {
-        #expect(measure.isValid == result)
+        #expect(measure.isValid == expected)
     }
 }

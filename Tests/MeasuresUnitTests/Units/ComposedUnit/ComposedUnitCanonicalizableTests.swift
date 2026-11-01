@@ -59,9 +59,9 @@ internal struct ComposedUnitCanonicalizableTests {
     )
     internal func isCanonicalizable(
         value: ComposedUnit,
-        result: Bool
+        expected: Bool
     ) {
-        #expect(value.isCanonicalizable == result)
+        #expect(value.isCanonicalizable == expected)
     }
 
     @Test(
@@ -79,9 +79,9 @@ internal struct ComposedUnitCanonicalizableTests {
     )
     internal func isCanonicalized(
         value: ComposedUnit,
-        result: Bool
+        expected: Bool
     ) {
-        #expect(value.isCanonicalized == result)
+        #expect(value.isCanonicalized == expected)
     }
 
     @Test(
@@ -90,9 +90,10 @@ internal struct ComposedUnitCanonicalizableTests {
     )
     internal func canonicalizationSucceeds(
         value: ComposedUnit,
-        result: Array<ComposedUnit.Factor>
+        expected: Array<ComposedUnit.Factor>
     ) {
-        #expect(value.canonicalized().factors == result)
+        let result: ComposedUnit = value.canonicalized()
+        #expect(result.factors == expected)
     }
 
     @Test(
@@ -101,11 +102,11 @@ internal struct ComposedUnitCanonicalizableTests {
     )
     internal func canonicalizeSucceeds(
         value: ComposedUnit,
-        result: Array<ComposedUnit.Factor>
+        expected: Array<ComposedUnit.Factor>
     ) {
-        var runningValue: ComposedUnit = value
-        runningValue.canonicalize()
-        #expect(runningValue.factors == result)
+        var result: ComposedUnit = value
+        result.canonicalize()
+        #expect(result.factors == expected)
     }
 
     @Test(

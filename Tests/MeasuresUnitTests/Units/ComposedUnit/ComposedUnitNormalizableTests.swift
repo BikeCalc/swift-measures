@@ -62,9 +62,9 @@ internal struct ComposedUnitNormalizableTests {
     )
     internal func isNormalizable(
         value: ComposedUnit,
-        result: Bool
+        expected: Bool
     ) {
-        #expect(value.isNormalizable == result)
+        #expect(value.isNormalizable == expected)
     }
 
     @Test(
@@ -82,9 +82,9 @@ internal struct ComposedUnitNormalizableTests {
     )
     internal func isNormalized(
         value: ComposedUnit,
-        result: Bool
+        expected: Bool
     ) {
-        #expect(value.isNormalized == result)
+        #expect(value.isNormalized == expected)
     }
 
     @Test(
@@ -93,9 +93,10 @@ internal struct ComposedUnitNormalizableTests {
     )
     internal func normalizationSucceeds(
         value: ComposedUnit,
-        result: Array<ComposedUnit.Factor>
+        expected: Array<ComposedUnit.Factor>
     ) {
-        #expect(value.normalized().factors == result)
+        let result: ComposedUnit = value.normalized()
+        #expect(result.factors == expected)
     }
 
     @Test(
@@ -104,11 +105,11 @@ internal struct ComposedUnitNormalizableTests {
     )
     internal func normalizeSucceeds(
         value: ComposedUnit,
-        result: Array<ComposedUnit.Factor>
+        expected: Array<ComposedUnit.Factor>
     ) {
-        var runningValue: ComposedUnit = value
-        runningValue.normalize()
-        #expect(runningValue.factors == result)
+        var result: ComposedUnit = value
+        result.normalize()
+        #expect(result.factors == expected)
     }
 
     @Test(

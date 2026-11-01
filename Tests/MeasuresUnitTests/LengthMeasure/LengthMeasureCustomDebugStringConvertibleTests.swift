@@ -45,9 +45,9 @@ internal struct LengthMeasureCustomDebugStringConvertibleTests {
     )
     internal func debugDescriptionSucceeds(
         value: Measure<Length>,
-        result: String
+        expected: String
     ) {
-        #expect(value.debugDescription == result)
+        #expect(value.debugDescription == expected)
     }
 }
 

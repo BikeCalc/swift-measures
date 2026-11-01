@@ -51,13 +51,15 @@ internal struct ComposedUnitMeasureComparableTests {
     internal func isLessThan(
         lhs: Measure<ComposedUnit>,
         rhs: Measure<ComposedUnit>,
-        isLess: Bool,
-        isLessThanOrEqual _: Bool,
-        isGreater _: Bool,
-        isGreaterThanOrEqual _: Bool
+        isLessExpected: Bool,
+        isLessThanOrEqualExpected _: Bool,
+        isGreaterExpected _: Bool,
+        isGreaterThanOrEqualExpected _: Bool
     ) throws {
-        #expect((lhs < rhs) == isLess)
-        #expect(try lhs.isLess(than: rhs) == isLess)
+        let lessThanResult: Bool = lhs < rhs
+        #expect(lessThanResult == isLessExpected)
+        let isLessResult: Bool = try lhs.isLess(than: rhs)
+        #expect(isLessResult == isLessExpected)
     }
 
     @Test(
@@ -67,13 +69,15 @@ internal struct ComposedUnitMeasureComparableTests {
     internal func isLessThanOrEqualTo(
         lhs: Measure<ComposedUnit>,
         rhs: Measure<ComposedUnit>,
-        isLess _: Bool,
-        isLessThanOrEqual: Bool,
-        isGreater _: Bool,
-        isGreaterThanOrEqual _: Bool
+        isLessExpected _: Bool,
+        isLessThanOrEqualExpected: Bool,
+        isGreaterExpected _: Bool,
+        isGreaterThanOrEqualExpected _: Bool
     ) throws {
-        #expect((lhs <= rhs) == isLessThanOrEqual)
-        #expect(try lhs.isLessThanOrEqual(to: rhs) == isLessThanOrEqual)
+        let lessThanOrEqualResult: Bool = lhs <= rhs
+        #expect(lessThanOrEqualResult == isLessThanOrEqualExpected)
+        let isLessThanOrEqualResult: Bool = try lhs.isLessThanOrEqual(to: rhs)
+        #expect(isLessThanOrEqualResult == isLessThanOrEqualExpected)
     }
 
     @Test(
@@ -83,13 +87,15 @@ internal struct ComposedUnitMeasureComparableTests {
     internal func isGreaterThan(
         lhs: Measure<ComposedUnit>,
         rhs: Measure<ComposedUnit>,
-        isLess _: Bool,
-        isLessThanOrEqual _: Bool,
-        isGreater: Bool,
-        isGreaterThanOrEqual _: Bool
+        isLessExpected _: Bool,
+        isLessThanOrEqualExpected _: Bool,
+        isGreaterExpected: Bool,
+        isGreaterThanOrEqualExpected _: Bool
     ) throws {
-        #expect((lhs > rhs) == isGreater)
-        #expect(try lhs.isGreater(than: rhs) == isGreater)
+        let greaterThanResult: Bool = lhs > rhs
+        #expect(greaterThanResult == isGreaterExpected)
+        let isGreaterResult: Bool = try lhs.isGreater(than: rhs)
+        #expect(isGreaterResult == isGreaterExpected)
     }
 
     @Test(
@@ -99,13 +105,15 @@ internal struct ComposedUnitMeasureComparableTests {
     internal func isGreaterThanOrEqualTo(
         lhs: Measure<ComposedUnit>,
         rhs: Measure<ComposedUnit>,
-        isLess _: Bool,
-        isLessThanOrEqual _: Bool,
-        isGreater _: Bool,
-        isGreaterThanOrEqual: Bool
+        isLessExpected _: Bool,
+        isLessThanOrEqualExpected _: Bool,
+        isGreaterExpected _: Bool,
+        isGreaterThanOrEqualExpected: Bool
     ) throws {
-        #expect((lhs >= rhs) == isGreaterThanOrEqual)
-        #expect(try lhs.isGreaterThanOrEqual(to: rhs) == isGreaterThanOrEqual)
+        let greaterThanOrEqualResult: Bool = lhs >= rhs
+        #expect(greaterThanOrEqualResult == isGreaterThanOrEqualExpected)
+        let isGreaterThanOrEqualResult: Bool = try lhs.isGreaterThanOrEqual(to: rhs)
+        #expect(isGreaterThanOrEqualResult == isGreaterThanOrEqualExpected)
     }
 
     @Test(
@@ -118,7 +126,8 @@ internal struct ComposedUnitMeasureComparableTests {
         upperBound: Measure<ComposedUnit>
     ) throws {
         let range: ClosedRange<Measure<ComposedUnit>> = lowerBound ... upperBound
-        #expect(try value.isWithin(range) == range.contains(value))
+        let result: Bool = try value.isWithin(range)
+        #expect(result == range.contains(value))
     }
 
     @Test(
@@ -130,8 +139,8 @@ internal struct ComposedUnitMeasureComparableTests {
         lowerBound: Measure<ComposedUnit>,
         upperBound: Measure<ComposedUnit>
     ) throws {
-        let valueIsWithinBounds: Bool = try value.isWithin(lowerBound, upperBound) == true
-        #expect(valueIsWithinBounds == (value >= lowerBound && value <= upperBound))
+        let result: Bool = try value.isWithin(lowerBound, upperBound) == true
+        #expect(result == (value >= lowerBound && value <= upperBound))
     }
 
     @Test(
@@ -143,8 +152,8 @@ internal struct ComposedUnitMeasureComparableTests {
         lowerBound: Measure<ComposedUnit>,
         upperBound: Measure<ComposedUnit>
     ) throws {
-        let valueIsBetweenBounds: Bool = try value.isBetween(lowerBound, upperBound) == true
-        #expect(valueIsBetweenBounds == (value > lowerBound && value < upperBound))
+        let result: Bool = try value.isBetween(lowerBound, upperBound) == true
+        #expect(result == (value > lowerBound && value < upperBound))
     }
 }
 

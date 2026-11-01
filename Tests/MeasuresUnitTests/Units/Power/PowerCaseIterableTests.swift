@@ -19,6 +19,7 @@ internal struct PowerCaseIterableTests {
         let units: Array<Power> = Power.allCases
         #expect(units.count == 27)
         #expect(Set(units).count == 27)
-        #expect(units.contains(.base) == true)
+        let result: Bool = units.contains(.base)
+        #expect(result == true)
     }
 }

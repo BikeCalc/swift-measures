@@ -59,9 +59,9 @@ internal struct ComposedUnitSimplifiableTests {
     )
     internal func isSimplifiable(
         value: ComposedUnit,
-        result: Bool
+        expected: Bool
     ) {
-        #expect(value.isSimplifiable == result)
+        #expect(value.isSimplifiable == expected)
     }
 
     @Test(
@@ -79,9 +79,9 @@ internal struct ComposedUnitSimplifiableTests {
     )
     internal func isSimplified(
         value: ComposedUnit,
-        result: Bool
+        expected: Bool
     ) {
-        #expect(value.isSimplified == result)
+        #expect(value.isSimplified == expected)
     }
 
     @Test(
@@ -90,9 +90,10 @@ internal struct ComposedUnitSimplifiableTests {
     )
     internal func simplificationSucceeds(
         value: ComposedUnit,
-        result: Array<ComposedUnit.Factor>
+        expected: Array<ComposedUnit.Factor>
     ) {
-        #expect(value.simplified().factors == result)
+        let result: ComposedUnit = value.simplified()
+        #expect(result.factors == expected)
     }
 
     @Test(
@@ -101,11 +102,11 @@ internal struct ComposedUnitSimplifiableTests {
     )
     internal func simplifySucceeds(
         value: ComposedUnit,
-        result: Array<ComposedUnit.Factor>
+        expected: Array<ComposedUnit.Factor>
     ) {
-        var runningValue: ComposedUnit = value
-        runningValue.simplify()
-        #expect(runningValue.factors == result)
+        var result: ComposedUnit = value
+        result.simplify()
+        #expect(result.factors == expected)
     }
 
     @Test(

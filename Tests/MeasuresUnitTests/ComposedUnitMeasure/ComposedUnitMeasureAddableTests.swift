@@ -44,7 +44,8 @@ internal struct ComposedUnitMeasureAddableTests {
         addend: Measure<ComposedUnit>.Addend,
         sum: Measure<ComposedUnit>
     ) {
-        #expect(augend + addend == sum)
+        let result: Measure<ComposedUnit> = augend + addend
+        #expect(result == sum)
     }
 
     @Test(
@@ -56,9 +57,9 @@ internal struct ComposedUnitMeasureAddableTests {
         addend: Measure<ComposedUnit>.Addend,
         sum: Measure<ComposedUnit>
     ) {
-        var runningSum: Measure<ComposedUnit> = augend
-        runningSum += addend
-        #expect(runningSum == sum)
+        var result: Measure<ComposedUnit> = augend
+        result += addend
+        #expect(result == sum)
     }
 
     @Test(
@@ -70,7 +71,8 @@ internal struct ComposedUnitMeasureAddableTests {
         addend: Measure<ComposedUnit>.Addend,
         sum: Measure<ComposedUnit>
     ) throws {
-        #expect(try augend.adding(addend) == sum)
+        let result: Measure<ComposedUnit> = try augend.adding(addend)
+        #expect(result == sum)
     }
 
     @Test(
@@ -82,9 +84,9 @@ internal struct ComposedUnitMeasureAddableTests {
         addend: Measure<ComposedUnit>.Addend,
         sum: Measure<ComposedUnit>
     ) throws {
-        var runningSum: Measure<ComposedUnit> = augend
-        try runningSum.add(addend)
-        #expect(runningSum == sum)
+        var result: Measure<ComposedUnit> = augend
+        try result.add(addend)
+        #expect(result == sum)
     }
 }
 
@@ -98,7 +100,8 @@ extension ComposedUnitMeasureAddableTests {
         addend: Measure<ComposedUnit>.Addend,
         sum _: Measure<ComposedUnit>
     ) {
-        #expect((augend + addend).isCanonicallyEqual(to: addend + augend) == true)
+        let result: Bool = (augend + addend).isCanonicallyEqual(to: addend + augend)
+        #expect(result == true)
     }
 }
 

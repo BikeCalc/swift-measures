@@ -65,9 +65,10 @@ internal struct LengthMeasureDivisibleTests {
     internal func isDivisibleBySucceeds(
         dividend: Measure<Length>,
         divisor: Measure<Length>,
-        result: Bool
+        expected: Bool
     ) {
-        #expect(dividend.isDivisible(by: divisor) == result)
+        let result: Bool = dividend.isDivisible(by: divisor)
+        #expect(result == expected)
     }
 
     @Test(
@@ -79,7 +80,8 @@ internal struct LengthMeasureDivisibleTests {
         divisor: Measure<Length>.Divisor,
         quotient: Measure<Length>
     ) {
-        #expect(dividend / divisor == quotient)
+        let result: Measure<Length> = dividend / divisor
+        #expect(result == quotient)
     }
 
     @Test(
@@ -91,9 +93,9 @@ internal struct LengthMeasureDivisibleTests {
         divisor: Measure<Length>.Divisor,
         quotient: Measure<Length>
     ) {
-        var runningQuotient: Measure<Length> = dividend
-        runningQuotient /= divisor
-        #expect(runningQuotient == quotient)
+        var result: Measure<Length> = dividend
+        result /= divisor
+        #expect(result == quotient)
     }
 
     @Test(
@@ -105,7 +107,8 @@ internal struct LengthMeasureDivisibleTests {
         divisor: Measure<Length>.Divisor,
         quotient: Measure<Length>
     ) throws {
-        #expect(try dividend.dividing(by: divisor) == quotient)
+        let result: Measure<Length> = try dividend.dividing(by: divisor)
+        #expect(result == quotient)
     }
 
     @Test(
@@ -117,9 +120,9 @@ internal struct LengthMeasureDivisibleTests {
         divisor: Measure<Length>.Divisor,
         quotient: Measure<Length>
     ) throws {
-        var runningQuotient: Measure<Length> = dividend
-        try runningQuotient.divide(by: divisor)
-        #expect(runningQuotient == quotient)
+        var result: Measure<Length> = dividend
+        try result.divide(by: divisor)
+        #expect(result == quotient)
     }
 
     @Test(
@@ -131,7 +134,8 @@ internal struct LengthMeasureDivisibleTests {
         divisor: Measure<Length>.RemainderDivisor,
         remainder: Measure<Length>
     ) {
-        #expect(dividend % divisor == remainder)
+        let result: Measure<Length> = dividend % divisor
+        #expect(result == remainder)
     }
 
     @Test(
@@ -143,9 +147,9 @@ internal struct LengthMeasureDivisibleTests {
         divisor: Measure<Length>.RemainderDivisor,
         remainder: Measure<Length>
     ) {
-        var runningRemainder: Measure<Length> = dividend
-        runningRemainder %= divisor
-        #expect(runningRemainder == remainder)
+        var result: Measure<Length> = dividend
+        result %= divisor
+        #expect(result == remainder)
     }
 }
 

@@ -108,15 +108,14 @@ internal struct ComposedUnitMeasureApproximatelyEquatableTests {
         rhs: Measure<ComposedUnit>,
         absoluteTolerance: Measure<ComposedUnit>,
         relativeTolerance: Double,
-        result: Bool
+        expected: Bool
     ) {
-        #expect(
-            lhs.isApproximatelyEqual(
-                to: rhs,
-                absoluteTolerance: absoluteTolerance,
-                relativeTolerance: relativeTolerance
-            ) == result
+        let result: Bool = lhs.isApproximatelyEqual(
+            to: rhs,
+            absoluteTolerance: absoluteTolerance,
+            relativeTolerance: relativeTolerance
         )
+        #expect(result == expected)
     }
 }
 

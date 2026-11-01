@@ -19,6 +19,7 @@ internal struct AbsorbedDoseCaseIterableTests {
         let units: Array<AbsorbedDose> = AbsorbedDose.allCases
         #expect(units.count == 26)
         #expect(Set(units).count == 26)
-        #expect(units.contains(.base) == true)
+        let result: Bool = units.contains(.base)
+        #expect(result == true)
     }
 }

@@ -49,9 +49,10 @@ internal struct LengthMeasureMultipliableTests {
     internal func isMultipleOfSucceeds(
         multiplicand: Measure<Length>,
         multiplier: Measure<Length>,
-        result: Bool
+        expected: Bool
     ) {
-        #expect(multiplicand.isMultiple(of: multiplier) == result)
+        let result: Bool = multiplicand.isMultiple(of: multiplier)
+        #expect(result == expected)
     }
 
     @Test(
@@ -63,7 +64,8 @@ internal struct LengthMeasureMultipliableTests {
         multiplier: Measure<Length>.Multiplier,
         product: Measure<Length>
     ) {
-        #expect(multiplicand * multiplier == product)
+        let result: Measure<Length> = multiplicand * multiplier
+        #expect(result == product)
     }
 
     @Test(
@@ -75,9 +77,9 @@ internal struct LengthMeasureMultipliableTests {
         multiplier: Measure<Length>.Multiplier,
         product: Measure<Length>
     ) {
-        var runningProduct: Measure<Length> = multiplicand
-        runningProduct *= multiplier
-        #expect(runningProduct == product)
+        var result: Measure<Length> = multiplicand
+        result *= multiplier
+        #expect(result == product)
     }
 
     @Test(
@@ -89,7 +91,8 @@ internal struct LengthMeasureMultipliableTests {
         multiplier: Measure<Length>.Multiplier,
         product: Measure<Length>
     ) throws {
-        #expect(try multiplicand.multiplying(by: multiplier) == product)
+        let result: Measure<Length> = try multiplicand.multiplying(by: multiplier)
+        #expect(result == product)
     }
 
     @Test(
@@ -101,9 +104,9 @@ internal struct LengthMeasureMultipliableTests {
         multiplier: Measure<Length>.Multiplier,
         product: Measure<Length>
     ) throws {
-        var runningProduct: Measure<Length> = multiplicand
-        try runningProduct.multiply(by: multiplier)
-        #expect(runningProduct == product)
+        var result: Measure<Length> = multiplicand
+        try result.multiply(by: multiplier)
+        #expect(result == product)
     }
 }
 

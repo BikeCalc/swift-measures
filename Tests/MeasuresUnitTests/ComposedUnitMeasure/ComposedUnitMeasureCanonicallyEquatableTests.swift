@@ -36,9 +36,10 @@ internal struct ComposedUnitMeasureCanonicallyEquatableTests {
     internal func canonicalEqualitySucceeds(
         lhs: Measure<ComposedUnit>,
         rhs: Measure<ComposedUnit>,
-        result: Bool
+        expected: Bool
     ) {
-        #expect(lhs.isCanonicallyEqual(to: rhs) == result)
+        let result: Bool = lhs.isCanonicallyEqual(to: rhs)
+        #expect(result == expected)
     }
 }
 

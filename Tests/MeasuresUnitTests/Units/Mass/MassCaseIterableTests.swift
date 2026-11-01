@@ -19,6 +19,7 @@ internal struct MassCaseIterableTests {
         let units: Array<Mass> = Mass.allCases
         #expect(units.count == 44)
         #expect(Set(units).count == 44)
-        #expect(units.contains(.base) == true)
+        let result: Bool = units.contains(.base)
+        #expect(result == true)
     }
 }

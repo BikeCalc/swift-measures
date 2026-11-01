@@ -45,10 +45,10 @@ internal struct ComposedUnitMeasureValidatableTests {
     )
     internal func unitConversionParametersDetermineValidity(
         measure: Measure<ComposedUnit>,
-        result: Bool
+        expected: Bool
     ) {
         let validatable: any Validatable = measure
-        #expect(validatable.isValid == result)
+        #expect(validatable.isValid == expected)
     }
 
     @Test(
@@ -70,7 +70,7 @@ internal struct ComposedUnitMeasureValidatableTests {
     internal func capturedUnitConversionParametersDetermineValidity(
         coefficient: Double,
         constant: Double,
-        result: Bool
+        expected: Bool
     ) {
         let namedUnit: Length = .init(
             coefficient: coefficient,
@@ -79,7 +79,7 @@ internal struct ComposedUnitMeasureValidatableTests {
         )
         let capturedUnit: ComposedUnit = .init(namedUnit)
         let measure: Measure<ComposedUnit> = .init(1, capturedUnit)
-        #expect(measure.isValid == result)
+        #expect(measure.isValid == expected)
     }
 }
 

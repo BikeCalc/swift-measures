@@ -19,6 +19,7 @@ internal struct SpeedCaseIterableTests {
         let units: Array<Speed> = Speed.allCases
         #expect(units.count == 6)
         #expect(Set(units).count == 6)
-        #expect(units.contains(.base) == true)
+        let result: Bool = units.contains(.base)
+        #expect(result == true)
     }
 }

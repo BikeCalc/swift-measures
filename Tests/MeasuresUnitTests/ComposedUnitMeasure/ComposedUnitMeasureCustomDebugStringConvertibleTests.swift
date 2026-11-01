@@ -53,9 +53,9 @@ internal struct ComposedUnitMeasureCustomDebugStringConvertibleTests {
     )
     internal func debugDescriptionSucceeds(
         value: Measure<ComposedUnit>,
-        result: String
+        expected: String
     ) {
-        #expect(value.debugDescription == result)
+        #expect(value.debugDescription == expected)
     }
 }
 
