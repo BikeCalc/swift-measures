@@ -69,5 +69,30 @@ internal struct LengthMeasureConvertibleTests {
 // MARK: - NaT
 
 extension LengthMeasureConvertibleTests {
-    // TODO: Implement NaT tests for this suite.
+    @Test(
+        "Converting NaT produces NaT",
+        arguments: [
+            .nat,
+            .init(Double.nan, .meter),
+            .init(Double.infinity, .meter),
+            .init(Double.negativeInfinity, .meter),
+            .init(1, Length(coefficient: 0, constant: 0, symbol: "invalid"))
+        ] as Array<Measure<Length>>
+    )
+    internal func convertingNaTProducesNaT(value: Measure<Length>) {
+        let result: Measure<Length> = value.converted(to: .centimeter)
+        #expect(result.isNaT == true)
+    }
+
+    @Test("Invalid destination produces NaT")
+    internal func invalidDestinationProducesNaT() {
+        let value: Measure<Length> = .init(1, .meter)
+        let destination: Length = .init(
+            coefficient: 0,
+            constant: 0,
+            symbol: "invalid"
+        )
+        let result: Measure<Length> = value.converted(to: destination)
+        #expect(result.isNaT == true)
+    }
 }

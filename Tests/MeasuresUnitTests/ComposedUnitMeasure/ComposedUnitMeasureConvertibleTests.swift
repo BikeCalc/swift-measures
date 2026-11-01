@@ -77,5 +77,30 @@ internal struct ComposedUnitMeasureConvertibleTests {
 // MARK: - NaT
 
 extension ComposedUnitMeasureConvertibleTests {
-    // TODO: Implement NaT tests for this suite.
+    @Test(
+        "Converting NaT produces NaT",
+        arguments: [
+            .nat,
+            .init(Double.nan, .meter),
+            .init(Double.infinity, .meter),
+            .init(Double.negativeInfinity, .meter),
+            .init(1, ComposedUnit(Length(coefficient: 0, constant: 0, symbol: "invalid")))
+        ] as Array<Measure<ComposedUnit>>
+    )
+    internal func convertingNaTProducesNaT(value: Measure<ComposedUnit>) {
+        let result: Measure<ComposedUnit> = value.converted(to: .centimeter)
+        #expect(result.isNaT == true)
+    }
+
+    @Test("Invalid destination produces NaT")
+    internal func invalidDestinationProducesNaT() {
+        let value: Measure<ComposedUnit> = .init(1, .meter)
+        let destination: ComposedUnit = .init(
+            coefficient: 0,
+            constant: 0,
+            symbol: "invalid"
+        )
+        let result: Measure<ComposedUnit> = value.converted(to: destination)
+        #expect(result.isNaT == true)
+    }
 }
