@@ -82,7 +82,6 @@ extension MeasureFormattableTests {
     )
     internal func formattingNaT(measure: Measure<Length>) {
         #expect(measure.formatted() == "NaT")
-        #expect(measure.description == "NaT")
     }
 
     @Test(
@@ -106,9 +105,7 @@ extension MeasureFormattableTests {
             symbol: ""
         )
         let measure: Measure<Length> = .init(12, unit)
-        #expect(measure.isNaT == true)
         #expect(measure.formatted() == "NaT")
-        #expect(measure.description == "NaT")
     }
 }
 #endif

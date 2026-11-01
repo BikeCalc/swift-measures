@@ -36,5 +36,17 @@ internal struct ComposedUnitMeasureCustomStringConvertibleTests {
 // MARK: - NaT
 
 extension ComposedUnitMeasureCustomStringConvertibleTests {
-    // TODO: Implement NaT tests for this suite.
+    @Test(
+        "NaT description succeeds",
+        arguments: [
+            .nat,
+            .init(Double.nan, .meter),
+            .init(Double.infinity, .meter),
+            .init(Double.negativeInfinity, .meter),
+            .init(1, ComposedUnit(Length(coefficient: 0, constant: 0, symbol: "invalid")))
+        ] as Array<Measure<ComposedUnit>>
+    )
+    internal func natDescriptionSucceeds(value: Measure<ComposedUnit>) {
+        #expect(value.description == "NaT")
+    }
 }

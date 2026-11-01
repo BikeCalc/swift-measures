@@ -35,5 +35,17 @@ internal struct LengthMeasureCustomStringConvertibleTests {
 // MARK: - NaT
 
 extension LengthMeasureCustomStringConvertibleTests {
-    // TODO: Implement NaT tests for this suite.
+    @Test(
+        "NaT description succeeds",
+        arguments: [
+            .nat,
+            .init(Double.nan, .meter),
+            .init(Double.infinity, .meter),
+            .init(Double.negativeInfinity, .meter),
+            .init(1, Length(coefficient: 0, constant: 0, symbol: "invalid"))
+        ] as Array<Measure<Length>>
+    )
+    internal func natDescriptionSucceeds(value: Measure<Length>) {
+        #expect(value.description == "NaT")
+    }
 }

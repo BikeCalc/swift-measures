@@ -62,5 +62,14 @@ internal struct ComposedUnitMeasureCustomDebugStringConvertibleTests {
 // MARK: - NaT
 
 extension ComposedUnitMeasureCustomDebugStringConvertibleTests {
-    // TODO: Implement NaT tests for this suite.
+    @Test("NaT debug description preserves diagnostics")
+    internal func natDebugDescriptionPreservesDiagnostics() {
+        let value: Measure<ComposedUnit> = .nat
+        let expected: String = """
+        Measure<ComposedUnit>(nan, ComposedUnit(coefficient: nan, constant: nan, symbol: "NaT", dimension: \
+        Dimension(length: 0, mass: 0, time: 0, electricCurrent: 0, thermodynamicTemperature: 0, \
+        substanceAmount: 0, luminousIntensity: 0)))
+        """
+        #expect(value.debugDescription == expected)
+    }
 }
