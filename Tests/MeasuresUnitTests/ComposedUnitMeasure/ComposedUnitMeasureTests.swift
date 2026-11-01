@@ -48,3 +48,69 @@ internal struct ComposedUnitMeasureTests {
         #expect(measure.unit == .centimeter)
     }
 }
+
+// MARK: - Composition - NaT
+
+extension ComposedUnitMeasureTests {
+    @Test(
+        "Multiplying a NaT measure returns NaT",
+        arguments: [
+            (.nat, .init(1, .meter)),
+            (.nat, .nat),
+            (.invalid, .init(1, .meter))
+        ] as Array<(Measure<ComposedUnit>, Measure<ComposedUnit>)>
+    )
+    internal func multiplyingNaTMeasureReturnsNaT(
+        multiplicand: Measure<ComposedUnit>,
+        multiplier: Measure<ComposedUnit>
+    ) {
+        let result: Measure<ComposedUnit> = multiplicand * multiplier
+        #expect(result.isNaT == true)
+    }
+
+    @Test(
+        "Multiplying by a NaT measure returns NaT",
+        arguments: [
+            (.init(1, .meter), .nat),
+            (.init(1, .meter), .invalid)
+        ] as Array<(Measure<ComposedUnit>, Measure<ComposedUnit>)>
+    )
+    internal func multiplyingByNaTMeasureReturnsNaT(
+        multiplicand: Measure<ComposedUnit>,
+        multiplier: Measure<ComposedUnit>
+    ) {
+        let result: Measure<ComposedUnit> = multiplicand * multiplier
+        #expect(result.isNaT == true)
+    }
+
+    @Test(
+        "Dividing a NaT measure returns NaT",
+        arguments: [
+            (.nat, .init(1, .meter)),
+            (.nat, .nat),
+            (.invalid, .init(1, .meter))
+        ] as Array<(Measure<ComposedUnit>, Measure<ComposedUnit>)>
+    )
+    internal func dividingNaTMeasureReturnsNaT(
+        dividend: Measure<ComposedUnit>,
+        divisor: Measure<ComposedUnit>
+    ) {
+        let result: Measure<ComposedUnit> = dividend / divisor
+        #expect(result.isNaT == true)
+    }
+
+    @Test(
+        "Dividing by a NaT measure returns NaT",
+        arguments: [
+            (.init(1, .meter), .nat),
+            (.init(1, .meter), .invalid)
+        ] as Array<(Measure<ComposedUnit>, Measure<ComposedUnit>)>
+    )
+    internal func dividingByNaTMeasureReturnsNaT(
+        dividend: Measure<ComposedUnit>,
+        divisor: Measure<ComposedUnit>
+    ) {
+        let result: Measure<ComposedUnit> = dividend / divisor
+        #expect(result.isNaT == true)
+    }
+}

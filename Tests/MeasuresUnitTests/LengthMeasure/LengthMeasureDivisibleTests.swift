@@ -156,5 +156,114 @@ internal struct LengthMeasureDivisibleTests {
 // MARK: - NaT
 
 extension LengthMeasureDivisibleTests {
-    // TODO: Implement NaT tests for this suite.
+    @Test(
+        "NaT divisibility predicate returns false",
+        arguments: [
+            .init(1, .meter),
+            .nat,
+            .invalid
+        ] as Array<Measure<Length>>
+    )
+    internal func natDivisibilityPredicateReturnsFalse(other: Measure<Length>) {
+        let isDivisibleResult: Bool = Measure<Length>.nat.isDivisible(by: other)
+        #expect(isDivisibleResult == false)
+        let isFactorResult: Bool = Measure<Length>.nat.isFactor(of: other)
+        #expect(isFactorResult == false)
+    }
+
+    @Test(
+        "Dividing NaT by a scalar returns NaT",
+        arguments: [
+            (.nat, 2.0),
+            (.init(Double.nan, .meter), 2.0),
+            (.init(Double.infinity, .meter), 2.0),
+            (.init(Double.negativeInfinity, .meter), 2.0),
+            (.invalid, 2.0)
+        ] as Array<(Measure<Length>, Double)>
+    )
+    internal func dividingNaTByScalarReturnsNaT(
+        dividend: Measure<Length>,
+        divisor: Double
+    ) {
+        let result: Measure<Length> = dividend / divisor
+        #expect(result.isNaT == true)
+    }
+
+    @Test(
+        "Dividing by a non-finite scalar returns NaT",
+        arguments: [
+            (.init(1, .meter), .nan),
+            (.init(1, .meter), .infinity),
+            (.init(1, .meter), -.infinity)
+        ] as Array<(Measure<Length>, Double)>
+    )
+    internal func dividingByNonfiniteScalarReturnsNaT(
+        dividend: Measure<Length>,
+        divisor: Double
+    ) {
+        let result: Measure<Length> = dividend / divisor
+        #expect(result.isNaT == true)
+    }
+
+    @Test(
+        "Dividing by zero returns NaT",
+        arguments: [
+            (.init(1, .meter), 0.0)
+        ] as Array<(Measure<Length>, Double)>
+    )
+    internal func dividingByZeroReturnsNaT(
+        dividend: Measure<Length>,
+        divisor: Double
+    ) {
+        let result: Measure<Length> = dividend / divisor
+        #expect(result.isNaT == true)
+    }
+
+    @Test(
+        "Remainder of NaT returns NaT",
+        arguments: [
+            (.nat, 2.0),
+            (.init(Double.nan, .meter), 2.0),
+            (.init(Double.infinity, .meter), 2.0),
+            (.init(Double.negativeInfinity, .meter), 2.0),
+            (.invalid, 2.0)
+        ] as Array<(Measure<Length>, Double)>
+    )
+    internal func remainderOfNaTReturnsNaT(
+        dividend: Measure<Length>,
+        divisor: Double
+    ) {
+        let result: Measure<Length> = dividend % divisor
+        #expect(result.isNaT == true)
+    }
+
+    @Test(
+        "Remainder with a non-finite divisor returns NaT",
+        arguments: [
+            (.init(1, .meter), .nan),
+            (.init(1, .meter), .infinity),
+            (.init(1, .meter), -.infinity)
+        ] as Array<(Measure<Length>, Double)>
+    )
+    internal func remainderWithNonfiniteDivisorReturnsNaT(
+        dividend: Measure<Length>,
+        divisor: Double
+    ) {
+        let result: Measure<Length> = dividend % divisor
+        #expect(result.isNaT == true)
+    }
+
+    @Test(
+        "Remainder with a zero divisor returns NaT",
+        arguments: [
+            (.init(1, .meter), 0.0)
+        ] as Array<(Measure<Length>, Double)>
+    )
+    internal func remainderWithZeroDivisorReturnsNaT(
+        dividend: Measure<Length>,
+        divisor: Double
+    ) {
+        let result: Measure<Length> = dividend % divisor
+        #expect(result.isNaT == true)
+    }
 }

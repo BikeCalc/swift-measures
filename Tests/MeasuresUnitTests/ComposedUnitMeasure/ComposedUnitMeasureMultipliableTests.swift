@@ -123,5 +123,52 @@ internal struct ComposedUnitMeasureMultipliableTests {
 // MARK: - NaT
 
 extension ComposedUnitMeasureMultipliableTests {
-    // TODO: Implement NaT tests for this suite.
+    @Test(
+        "NaT multiple predicate returns false",
+        arguments: [
+            .init(1, .meter),
+            .nat,
+            .invalid
+        ] as Array<Measure<ComposedUnit>>
+    )
+    internal func natMultiplePredicateReturnsFalse(other: Measure<ComposedUnit>) {
+        let firstResult: Bool = Measure<ComposedUnit>.nat.isMultiple(of: other)
+        #expect(firstResult == false)
+        let secondResult: Bool = other.isMultiple(of: .nat)
+        #expect(secondResult == false)
+    }
+
+    @Test(
+        "Multiplying NaT by a scalar returns NaT",
+        arguments: [
+            (.nat, 2.0),
+            (.init(Double.nan, .meter), 2.0),
+            (.init(Double.infinity, .meter), 2.0),
+            (.init(Double.negativeInfinity, .meter), 2.0),
+            (.invalid, 2.0)
+        ] as Array<(Measure<ComposedUnit>, Double)>
+    )
+    internal func multiplyingNaTByScalarReturnsNaT(
+        multiplicand: Measure<ComposedUnit>,
+        multiplier: Double
+    ) {
+        let result: Measure<ComposedUnit> = multiplicand * multiplier
+        #expect(result.isNaT == true)
+    }
+
+    @Test(
+        "Multiplying by a non-finite scalar returns NaT",
+        arguments: [
+            (.init(1, .meter), .nan),
+            (.init(1, .meter), .infinity),
+            (.init(1, .meter), .negativeInfinity)
+        ] as Array<(Measure<ComposedUnit>, Double)>
+    )
+    internal func multiplyingByNonfiniteScalarReturnsNaT(
+        multiplicand: Measure<ComposedUnit>,
+        multiplier: Double
+    ) {
+        let result: Measure<ComposedUnit> = multiplicand * multiplier
+        #expect(result.isNaT == true)
+    }
 }
