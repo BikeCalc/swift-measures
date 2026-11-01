@@ -152,5 +152,48 @@ internal struct LengthMeasureComparableTests {
 // MARK: - NaT
 
 extension LengthMeasureComparableTests {
-    // TODO: Implement NaT tests for this suite.
+    @Test(
+        "NaT is unordered",
+        arguments: [
+            (.nat, .init(1, .meter)),
+            (.init(1, .meter), .nat),
+            (.nat, .nat),
+            (.init(1, Length(coefficient: 0, constant: 0, symbol: "invalid")), .init(1, .meter)),
+            (.init(1, .meter), .init(1, Length(coefficient: 0, constant: 0, symbol: "invalid")))
+        ] as Array<(Measure<Length>, Measure<Length>)>
+    )
+    internal func natIsUnordered(
+        lhs: Measure<Length>,
+        rhs: Measure<Length>
+    ) throws {
+        let lessThanResult: Bool = lhs < rhs
+        #expect(lessThanResult == false)
+        let isLessResult: Bool = try lhs.isLess(than: rhs)
+        #expect(isLessResult == false)
+        let lessThanOrEqualResult: Bool = lhs <= rhs
+        #expect(lessThanOrEqualResult == false)
+        let isLessThanOrEqualResult: Bool = try lhs.isLessThanOrEqual(to: rhs)
+        #expect(isLessThanOrEqualResult == false)
+        let greaterThanResult: Bool = lhs > rhs
+        #expect(greaterThanResult == false)
+        let isGreaterResult: Bool = try lhs.isGreater(than: rhs)
+        #expect(isGreaterResult == false)
+        let greaterThanOrEqualResult: Bool = lhs >= rhs
+        #expect(greaterThanOrEqualResult == false)
+        let isGreaterThanOrEqualResult: Bool = try lhs.isGreaterThanOrEqual(to: rhs)
+        #expect(isGreaterThanOrEqualResult == false)
+    }
+
+    @Test("NaT lies outside valid bounds")
+    internal func natLiesOutsideBounds() throws {
+        let value: Measure<Length> = .nat
+        let lowerBound: Measure<Length> = .init(0, .meter)
+        let upperBound: Measure<Length> = .init(2, .meter)
+        let isWithinResult: Bool = try value.isWithin(lowerBound ... upperBound)
+        #expect(isWithinResult == false)
+        let isWithinResult2: Bool = try value.isWithin(lowerBound, upperBound)
+        #expect(isWithinResult2 == false)
+        let isBetweenResult: Bool = try value.isBetween(lowerBound, upperBound)
+        #expect(isBetweenResult == false)
+    }
 }

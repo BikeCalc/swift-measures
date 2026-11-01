@@ -228,5 +228,56 @@ internal struct ConvertedComposedUnitMeasureComparableTests {
 // MARK: - NaT
 
 extension ConvertedComposedUnitMeasureComparableTests {
-    // TODO: Implement NaT tests for this suite.
+    @Test(
+        "NaT is unordered",
+        arguments: [
+            (.nat, .init(1, .meter)),
+            (.init(1, .meter), .nat),
+            (.nat, .nat),
+            (.init(1, ComposedUnit(Length(coefficient: 0, constant: 0, symbol: "invalid"))), .init(1, .meter)),
+            (.init(1, .meter), .init(1, ComposedUnit(Length(coefficient: 0, constant: 0, symbol: "invalid"))))
+        ] as Array<(Measure<ComposedUnit>, Measure<ComposedUnit>)>
+    )
+    internal func natIsUnordered(
+        lhs: Measure<ComposedUnit>,
+        rhs: Measure<ComposedUnit>
+    ) throws {
+        let lhsWrapper: Converted<ComposedUnit> = .init(
+            wrappedValue: lhs,
+            to: .meter
+        )
+        let rhsWrapper: Converted<ComposedUnit> = .init(
+            wrappedValue: rhs,
+            to: .meter
+        )
+        let lessThanResult: Bool = lhsWrapper < rhsWrapper
+        #expect(lessThanResult == false)
+        let isLessResult: Bool = try lhsWrapper.isLess(than: rhsWrapper)
+        #expect(isLessResult == false)
+        let lessThanOrEqualResult: Bool = lhsWrapper <= rhsWrapper
+        #expect(lessThanOrEqualResult == false)
+        let isLessThanOrEqualResult: Bool = try lhsWrapper.isLessThanOrEqual(to: rhsWrapper)
+        #expect(isLessThanOrEqualResult == false)
+        let greaterThanResult: Bool = lhsWrapper > rhsWrapper
+        #expect(greaterThanResult == false)
+        let isGreaterResult: Bool = try lhsWrapper.isGreater(than: rhsWrapper)
+        #expect(isGreaterResult == false)
+        let greaterThanOrEqualResult: Bool = lhsWrapper >= rhsWrapper
+        #expect(greaterThanOrEqualResult == false)
+        let isGreaterThanOrEqualResult: Bool = try lhsWrapper.isGreaterThanOrEqual(to: rhsWrapper)
+        #expect(isGreaterThanOrEqualResult == false)
+    }
+
+    @Test("NaT lies outside valid bounds")
+    internal func natLiesOutsideBounds() throws {
+        let value: Converted<ComposedUnit> = .init(wrappedValue: .nat, to: .meter)
+        let lowerBound: Converted<ComposedUnit> = .init(wrappedValue: .init(0, .meter), to: .meter)
+        let upperBound: Converted<ComposedUnit> = .init(wrappedValue: .init(2, .meter), to: .meter)
+        let isWithinResult: Bool = try value.isWithin(lowerBound ... upperBound)
+        #expect(isWithinResult == false)
+        let isWithinResult2: Bool = try value.isWithin(lowerBound, upperBound)
+        #expect(isWithinResult2 == false)
+        let isBetweenResult: Bool = try value.isBetween(lowerBound, upperBound)
+        #expect(isBetweenResult == false)
+    }
 }
