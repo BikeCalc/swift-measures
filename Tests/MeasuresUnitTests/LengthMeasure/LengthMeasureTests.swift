@@ -24,10 +24,10 @@ internal struct LengthMeasureTests {
     )
     internal func binaryIntegerInitializationSucceeds(
         value: Int,
-        expectedValue: Double
+        expected: Double
     ) {
         let measure: Measure<Length> = .init(value, .meter)
-        #expect(measure.value == expectedValue)
+        #expect(measure.value == expected)
         #expect(measure.unit == .meter)
     }
 
@@ -41,10 +41,10 @@ internal struct LengthMeasureTests {
     )
     internal func binaryFloatingPointInitializationSucceeds(
         value: Float,
-        expectedValue: Double
+        expected: Double
     ) {
         let measure: Measure<Length> = .init(value, .centimeter)
-        #expect(measure.value == expectedValue)
+        #expect(measure.value == expected)
         #expect(measure.unit == .centimeter)
     }
 }
