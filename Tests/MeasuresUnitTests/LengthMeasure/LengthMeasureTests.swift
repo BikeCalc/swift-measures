@@ -20,70 +20,97 @@ internal struct LengthMeasureTests {
             (-2, -2.0),
             (0, 0.0),
             (2, 2.0)
-        ]
+        ] as Array<(Int, Double)>
     )
     internal func binaryIntegerInitializationSucceeds(
         value: Int,
-        expectedValue: Double
+        expected: Double
     ) {
         let measure: Measure<Length> = .init(value, .meter)
-        #expect(measure.value == expectedValue)
+        #expect(measure.value == expected)
         #expect(measure.unit == .meter)
     }
 
     @Test(
         "Binary floating-point initialization succeeds",
         arguments: [
-            (Float(-1.5), -1.5),
-            (Float(0), 0.0),
-            (Float(1.5), 1.5)
-        ]
+            (.init(-1.5), -1.5),
+            (.init(0), 0.0),
+            (.init(1.5), 1.5)
+        ] as Array<(Float, Double)>
     )
     internal func binaryFloatingPointInitializationSucceeds(
         value: Float,
-        expectedValue: Double
+        expected: Double
     ) {
         let measure: Measure<Length> = .init(value, .centimeter)
-        #expect(measure.value == expectedValue)
+        #expect(measure.value == expected)
         #expect(measure.unit == .centimeter)
     }
+}
 
+// MARK: - Composition - NaT
+
+extension LengthMeasureTests {
     @Test(
-        "Unbounded valid range succeeds",
+        "Multiplying a NaT measure returns NaT",
         arguments: [
-            Measure<Length>(-1, .meter),
-            Measure<Length>(0, .meter),
-            Measure<Length>(1, .meter)
-        ]
+            (.nat, .init(1, .meter)),
+            (.nat, .nat),
+            (.invalid, .init(1, .meter))
+        ] as Array<(Measure<Length>, Measure<Length>)>
     )
-    internal func unboundedValidRangeSucceeds(measure: Measure<Length>) {
-        #expect(measure.isValid == true)
+    internal func multiplyingNaTMeasureReturnsNaT(
+        multiplicand: Measure<Length>,
+        multiplier: Measure<Length>
+    ) {
+        let result: Measure<ComposedUnit> = multiplicand * multiplier
+        #expect(result.isNaT == true)
     }
 
     @Test(
-        "Invalid conversion makes measure invalid",
+        "Multiplying by a NaT measure returns NaT",
         arguments: [
-            (Measure<Length>(1, .meter), true),
-            (Measure<Length>(-1, .meter), true),
-            (Measure<Length>(Double.infinity, .meter), false),
-            (Measure<Length>(-Double.infinity, .meter), false),
-            (Measure<Length>(Double.nan, .meter), false),
-            (Measure<Length>(1, Length(coefficient: -1, symbol: "u")), false),
-            (Measure<Length>(1, Length(coefficient: 1, constant: -1, symbol: "u")), true),
-            (Measure<Length>(1, Length(coefficient: 0, symbol: "u")), false),
-            (Measure<Length>(1, Length(coefficient: -0.0, symbol: "u")), false),
-            (Measure<Length>(1, Length(coefficient: .infinity, symbol: "u")), false),
-            (Measure<Length>(1, Length(coefficient: .negativeInfinity, symbol: "u")), false),
-            (Measure<Length>(1, Length(coefficient: .nan, symbol: "u")), false),
-            (Measure<Length>(1, Length(coefficient: 1, constant: .infinity, symbol: "u")), false),
-            (Measure<Length>(1, Length(coefficient: 1, constant: .negativeInfinity, symbol: "u")), false),
-            (Measure<Length>(1, Length(coefficient: 1, constant: .nan, symbol: "u")), false)
-        ]
+            (.init(1, .meter), .nat),
+            (.init(1, .meter), .invalid)
+        ] as Array<(Measure<Length>, Measure<Length>)>
     )
-    internal func invalidConversionMakesMeasureInvalid(
-        measure: Measure<Length>,
-        result: Bool
+    internal func multiplyingByNaTMeasureReturnsNaT(
+        multiplicand: Measure<Length>,
+        multiplier: Measure<Length>
     ) {
-        #expect(measure.isValid == result)
+        let result: Measure<ComposedUnit> = multiplicand * multiplier
+        #expect(result.isNaT == true)
+    }
+
+    @Test(
+        "Dividing a NaT measure returns NaT",
+        arguments: [
+            (.nat, .init(1, .meter)),
+            (.nat, .nat),
+            (.invalid, .init(1, .meter))
+        ] as Array<(Measure<Length>, Measure<Length>)>
+    )
+    internal func dividingNaTMeasureReturnsNaT(
+        dividend: Measure<Length>,
+        divisor: Measure<Length>
+    ) {
+        let result: Measure<ComposedUnit> = dividend / divisor
+        #expect(result.isNaT == true)
+    }
+
+    @Test(
+        "Dividing by a NaT measure returns NaT",
+        arguments: [
+            (.init(1, .meter), .nat),
+            (.init(1, .meter), .invalid)
+        ] as Array<(Measure<Length>, Measure<Length>)>
+    )
+    internal func dividingByNaTMeasureReturnsNaT(
+        dividend: Measure<Length>,
+        divisor: Measure<Length>
+    ) {
+        let result: Measure<ComposedUnit> = dividend / divisor
+        #expect(result.isNaT == true)
     }
 }

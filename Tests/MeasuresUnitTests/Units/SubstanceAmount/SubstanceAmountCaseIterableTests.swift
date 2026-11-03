@@ -19,6 +19,7 @@ internal struct SubstanceAmountCaseIterableTests {
         let units: Array<SubstanceAmount> = SubstanceAmount.allCases
         #expect(units.count == 25)
         #expect(Set(units).count == 25)
-        #expect(units.contains(.base) == true)
+        let result: Bool = units.contains(.base)
+        #expect(result == true)
     }
 }

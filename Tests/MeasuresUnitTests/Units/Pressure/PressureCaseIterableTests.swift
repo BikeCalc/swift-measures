@@ -19,6 +19,7 @@ internal struct PressureCaseIterableTests {
         let units: Array<Pressure> = Pressure.allCases
         #expect(units.count == 33)
         #expect(Set(units).count == 33)
-        #expect(units.contains(.base) == true)
+        let result: Bool = units.contains(.base)
+        #expect(result == true)
     }
 }

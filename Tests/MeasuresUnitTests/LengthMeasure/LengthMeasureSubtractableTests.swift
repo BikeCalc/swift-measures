@@ -15,18 +15,18 @@ internal struct LengthMeasureSubtractableTests {
     internal init() {}
 
     private static let subtractionArguments: [(Measure<Length>, Measure<Length>.Subtrahend, Measure<Length>)] = [
-        (Measure<Length>(3.0, .meter), Measure<Length>(2.0, .meter), Measure<Length>(1.0, .meter)),
-        (Measure<Length>(5.0, .meter), Measure<Length>(3.0, .meter), Measure<Length>(2.0, .meter)),
-        (Measure<Length>(-3.0, .meter), Measure<Length>(2.0, .meter), Measure<Length>(-5.0, .meter)),
-        (Measure<Length>(-5.0, .meter), Measure<Length>(-3.0, .meter), Measure<Length>(-2.0, .meter)),
-        (Measure<Length>(1.5, .meter), Measure<Length>(0.5, .meter), Measure<Length>(1.0, .meter)),
-        (Measure<Length>(3.5, .meter), Measure<Length>(1.5, .meter), Measure<Length>(2.0, .meter)),
-        (Measure<Length>(-1.5, .meter), Measure<Length>(0.5, .meter), Measure<Length>(-2.0, .meter)),
-        (Measure<Length>(-3.5, .meter), Measure<Length>(-1.5, .meter), Measure<Length>(-2.0, .meter)),
-        (Measure<Length>(3.0, .meter), Measure<Length>(200.0, .centimeter), Measure<Length>(1.0, .meter)),
-        (Measure<Length>(300.0, .centimeter), Measure<Length>(2.0, .meter), Measure<Length>(100.0, .centimeter)),
-        (Measure<Length>(-3.0, .meter), Measure<Length>(200.0, .centimeter), Measure<Length>(-5.0, .meter)),
-        (Measure<Length>(-300.0, .centimeter), Measure<Length>(2.0, .meter), Measure<Length>(-500.0, .centimeter))
+        (.init(3.0, .meter), .init(2.0, .meter), .init(1.0, .meter)),
+        (.init(5.0, .meter), .init(3.0, .meter), .init(2.0, .meter)),
+        (.init(-3.0, .meter), .init(2.0, .meter), .init(-5.0, .meter)),
+        (.init(-5.0, .meter), .init(-3.0, .meter), .init(-2.0, .meter)),
+        (.init(1.5, .meter), .init(0.5, .meter), .init(1.0, .meter)),
+        (.init(3.5, .meter), .init(1.5, .meter), .init(2.0, .meter)),
+        (.init(-1.5, .meter), .init(0.5, .meter), .init(-2.0, .meter)),
+        (.init(-3.5, .meter), .init(-1.5, .meter), .init(-2.0, .meter)),
+        (.init(3.0, .meter), .init(200.0, .centimeter), .init(1.0, .meter)),
+        (.init(300.0, .centimeter), .init(2.0, .meter), .init(100.0, .centimeter)),
+        (.init(-3.0, .meter), .init(200.0, .centimeter), .init(-5.0, .meter)),
+        (.init(-300.0, .centimeter), .init(2.0, .meter), .init(-500.0, .centimeter))
     ]
 
     @Test(
@@ -38,7 +38,8 @@ internal struct LengthMeasureSubtractableTests {
         subtrahend: Measure<Length>.Subtrahend,
         difference: Measure<Length>
     ) {
-        #expect(minuend - subtrahend == difference)
+        let result: Measure<Length> = minuend - subtrahend
+        #expect(result == difference)
     }
 
     @Test(
@@ -50,9 +51,9 @@ internal struct LengthMeasureSubtractableTests {
         subtrahend: Measure<Length>.Subtrahend,
         difference: Measure<Length>
     ) {
-        var runningDifference: Measure<Length> = minuend
-        runningDifference -= subtrahend
-        #expect(runningDifference == difference)
+        var result: Measure<Length> = minuend
+        result -= subtrahend
+        #expect(result == difference)
     }
 
     @Test(
@@ -64,7 +65,8 @@ internal struct LengthMeasureSubtractableTests {
         subtrahend: Measure<Length>.Subtrahend,
         difference: Measure<Length>
     ) throws {
-        #expect(try minuend.subtracting(subtrahend) == difference)
+        let result: Measure<Length> = try minuend.subtracting(subtrahend)
+        #expect(result == difference)
     }
 
     @Test(
@@ -76,9 +78,9 @@ internal struct LengthMeasureSubtractableTests {
         subtrahend: Measure<Length>.Subtrahend,
         difference: Measure<Length>
     ) throws {
-        var runningDifference: Measure<Length> = minuend
-        try runningDifference.subtract(subtrahend)
-        #expect(runningDifference == difference)
+        var result: Measure<Length> = minuend
+        try result.subtract(subtrahend)
+        #expect(result == difference)
     }
 }
 
@@ -92,10 +94,42 @@ extension LengthMeasureSubtractableTests {
         subtrahend: Measure<Length>.Subtrahend,
         difference _: Measure<Length>
     ) {
-        #expect((minuend - subtrahend).isCanonicallyEqual(to: subtrahend - minuend) == false)
+        let result: Bool = (minuend - subtrahend).isCanonicallyEqual(to: subtrahend - minuend)
+        #expect(result == false)
     }
 }
 
 // MARK: - NaT
 
-extension LengthMeasureSubtractableTests {}
+extension LengthMeasureSubtractableTests {
+    @Test(
+        "Subtracting from NaT returns NaT",
+        arguments: [
+            (.nat, .init(1, .meter)),
+            (.nat, .nat),
+            (.invalid, .init(1, .meter))
+        ] as Array<(Measure<Length>, Measure<Length>)>
+    )
+    internal func subtractingFromNaTReturnsNaT(
+        minuend: Measure<Length>,
+        subtrahend: Measure<Length>
+    ) {
+        let result: Measure<Length> = minuend - subtrahend
+        #expect(result.isNaT == true)
+    }
+
+    @Test(
+        "Subtracting NaT returns NaT",
+        arguments: [
+            (.init(1, .meter), .nat),
+            (.init(1, .meter), .invalid)
+        ] as Array<(Measure<Length>, Measure<Length>)>
+    )
+    internal func subtractingNaTReturnsNaT(
+        minuend: Measure<Length>,
+        subtrahend: Measure<Length>
+    ) {
+        let result: Measure<Length> = minuend - subtrahend
+        #expect(result.isNaT == true)
+    }
+}

@@ -14,6 +14,8 @@ import Testing
 internal struct LengthMeasureConvertibleTests {
     internal init() {}
 
+    private let absoluteTolerance: Double = 1e-10
+
     @Test("Identical conversions preserve the value and use the destination unit")
     internal func identicalConversionsPreserveValue() {
         let sourceUnit: Length = .init(
@@ -27,24 +29,26 @@ internal struct LengthMeasureConvertibleTests {
             symbol: "destination"
         )
         let source: Measure<Length> = .init(1, sourceUnit)
-        let converted: Measure<Length> = source.converted(to: destinationUnit)
-        var mutated: Measure<Length> = source
-        mutated.convert(to: destinationUnit)
-        #expect(converted.value == 1)
-        #expect(converted.unit == destinationUnit)
-        #expect(mutated == converted)
-        #expect((source + converted).value == 2)
-        #expect((source - converted).value == 0)
+        let result: Measure<Length> = source.converted(to: destinationUnit)
+        var mutatingResult: Measure<Length> = source
+        mutatingResult.convert(to: destinationUnit)
+        #expect(result.value == 1)
+        #expect(result.unit == destinationUnit)
+        #expect(mutatingResult == result)
+        let additionResult: Measure<Length> = source + result
+        #expect(additionResult.value == 2)
+        let subtractionResult: Measure<Length> = source - result
+        #expect(subtractionResult.value == 0)
     }
 
     @Test(
         "Conversion succeeds",
         arguments: [
-            (Measure<Length>(1, .meter), .centimeter, Measure<Length>(100, .centimeter)),
-            (Measure<Length>(100, .centimeter), .meter, Measure<Length>(1, .meter)),
-            (Measure<Length>(1, .foot), .inch, Measure<Length>(12, .inch)),
-            (Measure<Length>(1, .yard), .foot, Measure<Length>(3, .foot)),
-            (Measure<Length>(1, .kilometer), .meter, Measure<Length>(1_000, .meter))
+            (.init(1, .meter), .centimeter, .init(100, .centimeter)),
+            (.init(100, .centimeter), .meter, .init(1, .meter)),
+            (.init(1, .foot), .inch, .init(12, .inch)),
+            (.init(1, .yard), .foot, .init(3, .foot)),
+            (.init(1, .kilometer), .meter, .init(1_000, .meter))
         ] as Array<(Measure<Length>, Length, Measure<Length>)>
     )
     internal func conversionSucceeds(
@@ -52,16 +56,43 @@ internal struct LengthMeasureConvertibleTests {
         unit: Length,
         expected: Measure<Length>
     ) {
-        let converted: Measure<Length> = source.converted(to: unit)
-        var mutated: Measure<Length> = source
-        mutated.convert(to: unit)
-        #expect(abs(converted.value - expected.value) < 1e-10)
-        #expect(converted.unit == expected.unit)
-        #expect(abs(mutated.value - expected.value) < 1e-10)
-        #expect(mutated.unit == expected.unit)
+        let result: Measure<Length> = source.converted(to: unit)
+        var mutatingResult: Measure<Length> = source
+        mutatingResult.convert(to: unit)
+        #expect(abs(result.value - expected.value) < self.absoluteTolerance)
+        #expect(result.unit == expected.unit)
+        #expect(abs(mutatingResult.value - expected.value) < self.absoluteTolerance)
+        #expect(mutatingResult.unit == expected.unit)
     }
 }
 
 // MARK: - NaT
 
-extension LengthMeasureConvertibleTests {}
+extension LengthMeasureConvertibleTests {
+    @Test(
+        "Converting NaT produces NaT",
+        arguments: [
+            .nat,
+            .init(Double.nan, .meter),
+            .init(Double.infinity, .meter),
+            .init(Double.negativeInfinity, .meter),
+            .invalid
+        ] as Array<Measure<Length>>
+    )
+    internal func convertingNaTProducesNaT(value: Measure<Length>) {
+        let result: Measure<Length> = value.converted(to: .centimeter)
+        #expect(result.isNaT == true)
+    }
+
+    @Test("Invalid destination produces NaT")
+    internal func invalidDestinationProducesNaT() {
+        let value: Measure<Length> = .init(1, .meter)
+        let destination: Length = .init(
+            coefficient: 0,
+            constant: 0,
+            symbol: "invalid"
+        )
+        let result: Measure<Length> = value.converted(to: destination)
+        #expect(result.isNaT == true)
+    }
+}

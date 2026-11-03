@@ -19,6 +19,7 @@ internal struct LengthCaseIterableTests {
         let units: Array<Length> = Length.allCases
         #expect(units.count == 44)
         #expect(Set(units).count == 44)
-        #expect(units.contains(.base) == true)
+        let result: Bool = units.contains(.base)
+        #expect(result == true)
     }
 }

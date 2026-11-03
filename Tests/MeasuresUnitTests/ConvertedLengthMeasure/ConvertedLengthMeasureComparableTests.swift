@@ -15,25 +15,25 @@ internal struct ConvertedLengthMeasureComparableTests {
     internal init() {}
 
     private static let comparisonArguments: [(Measure<Length>, Measure<Length>, Bool, Bool, Bool, Bool)] = [
-        (Measure<Length>(1, .meter), Measure<Length>(1, .meter), false, true, false, true),
-        (Measure<Length>(1, .meter), Measure<Length>(100, .centimeter), false, true, false, true),
-        (Measure<Length>(1, .meter), Measure<Length>(2, .meter), true, true, false, false),
-        (Measure<Length>(2, .meter), Measure<Length>(1, .meter), false, false, true, true),
-        (Measure<Length>(1, .foot), Measure<Length>(1, .meter), true, true, false, false),
-        (Measure<Length>(1, .meter), Measure<Length>(1, .foot), false, false, true, true)
+        (.init(1, .meter), .init(1, .meter), false, true, false, true),
+        (.init(1, .meter), .init(100, .centimeter), false, true, false, true),
+        (.init(1, .meter), .init(2, .meter), true, true, false, false),
+        (.init(2, .meter), .init(1, .meter), false, false, true, true),
+        (.init(1, .foot), .init(1, .meter), true, true, false, false),
+        (.init(1, .meter), .init(1, .foot), false, false, true, true)
     ]
 
     private static let rangeArguments: [(Measure<Length>, Measure<Length>, Measure<Length>)] = [
-        (Measure<Length>(50, .centimeter), Measure<Length>(1, .meter), Measure<Length>(2, .meter)),
-        (Measure<Length>(1, .meter), Measure<Length>(1, .meter), Measure<Length>(2, .meter)),
-        (Measure<Length>(150, .centimeter), Measure<Length>(1, .meter), Measure<Length>(2, .meter)),
-        (Measure<Length>(2, .meter), Measure<Length>(1, .meter), Measure<Length>(2, .meter)),
-        (Measure<Length>(250, .centimeter), Measure<Length>(1, .meter), Measure<Length>(2, .meter)),
-        (Measure<Length>(1, .foot), Measure<Length>(1, .yard), Measure<Length>(2, .yard)),
-        (Measure<Length>(1, .yard), Measure<Length>(1, .yard), Measure<Length>(2, .yard)),
-        (Measure<Length>(5, .foot), Measure<Length>(1, .yard), Measure<Length>(2, .yard)),
-        (Measure<Length>(2, .yard), Measure<Length>(1, .yard), Measure<Length>(2, .yard)),
-        (Measure<Length>(7, .foot), Measure<Length>(1, .yard), Measure<Length>(2, .yard))
+        (.init(50, .centimeter), .init(1, .meter), .init(2, .meter)),
+        (.init(1, .meter), .init(1, .meter), .init(2, .meter)),
+        (.init(150, .centimeter), .init(1, .meter), .init(2, .meter)),
+        (.init(2, .meter), .init(1, .meter), .init(2, .meter)),
+        (.init(250, .centimeter), .init(1, .meter), .init(2, .meter)),
+        (.init(1, .foot), .init(1, .yard), .init(2, .yard)),
+        (.init(1, .yard), .init(1, .yard), .init(2, .yard)),
+        (.init(5, .foot), .init(1, .yard), .init(2, .yard)),
+        (.init(2, .yard), .init(1, .yard), .init(2, .yard)),
+        (.init(7, .foot), .init(1, .yard), .init(2, .yard))
     ]
 
     @Test(
@@ -43,10 +43,10 @@ internal struct ConvertedLengthMeasureComparableTests {
     internal func isLessThan(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
-        isLess: Bool,
-        isLessThanOrEqual _: Bool,
-        isGreater _: Bool,
-        isGreaterThanOrEqual _: Bool
+        isLessExpected: Bool,
+        isLessThanOrEqualExpected _: Bool,
+        isGreaterExpected _: Bool,
+        isGreaterThanOrEqualExpected _: Bool
     ) throws {
         let lhsWrapper: Converted<Length> = .init(
             wrappedValue: lhs,
@@ -56,8 +56,10 @@ internal struct ConvertedLengthMeasureComparableTests {
             wrappedValue: rhs,
             to: rhs.unit
         )
-        #expect((lhsWrapper < rhsWrapper) == isLess)
-        #expect(try lhsWrapper.isLess(than: rhsWrapper) == isLess)
+        let lessThanResult: Bool = lhsWrapper < rhsWrapper
+        #expect(lessThanResult == isLessExpected)
+        let isLessResult: Bool = try lhsWrapper.isLess(than: rhsWrapper)
+        #expect(isLessResult == isLessExpected)
     }
 
     @Test(
@@ -67,10 +69,10 @@ internal struct ConvertedLengthMeasureComparableTests {
     internal func isLessThanOrEqualTo(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
-        isLess _: Bool,
-        isLessThanOrEqual: Bool,
-        isGreater _: Bool,
-        isGreaterThanOrEqual _: Bool
+        isLessExpected _: Bool,
+        isLessThanOrEqualExpected: Bool,
+        isGreaterExpected _: Bool,
+        isGreaterThanOrEqualExpected _: Bool
     ) throws {
         let lhsWrapper: Converted<Length> = .init(
             wrappedValue: lhs,
@@ -80,8 +82,10 @@ internal struct ConvertedLengthMeasureComparableTests {
             wrappedValue: rhs,
             to: rhs.unit
         )
-        #expect((lhsWrapper <= rhsWrapper) == isLessThanOrEqual)
-        #expect(try lhsWrapper.isLessThanOrEqual(to: rhsWrapper) == isLessThanOrEqual)
+        let lessThanOrEqualResult: Bool = lhsWrapper <= rhsWrapper
+        #expect(lessThanOrEqualResult == isLessThanOrEqualExpected)
+        let isLessThanOrEqualResult: Bool = try lhsWrapper.isLessThanOrEqual(to: rhsWrapper)
+        #expect(isLessThanOrEqualResult == isLessThanOrEqualExpected)
     }
 
     @Test(
@@ -91,10 +95,10 @@ internal struct ConvertedLengthMeasureComparableTests {
     internal func isGreaterThan(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
-        isLess _: Bool,
-        isLessThanOrEqual _: Bool,
-        isGreater: Bool,
-        isGreaterThanOrEqual _: Bool
+        isLessExpected _: Bool,
+        isLessThanOrEqualExpected _: Bool,
+        isGreaterExpected: Bool,
+        isGreaterThanOrEqualExpected _: Bool
     ) throws {
         let lhsWrapper: Converted<Length> = .init(
             wrappedValue: lhs,
@@ -104,8 +108,10 @@ internal struct ConvertedLengthMeasureComparableTests {
             wrappedValue: rhs,
             to: rhs.unit
         )
-        #expect((lhsWrapper > rhsWrapper) == isGreater)
-        #expect(try lhsWrapper.isGreater(than: rhsWrapper) == isGreater)
+        let greaterThanResult: Bool = lhsWrapper > rhsWrapper
+        #expect(greaterThanResult == isGreaterExpected)
+        let isGreaterResult: Bool = try lhsWrapper.isGreater(than: rhsWrapper)
+        #expect(isGreaterResult == isGreaterExpected)
     }
 
     @Test(
@@ -115,10 +121,10 @@ internal struct ConvertedLengthMeasureComparableTests {
     internal func isGreaterThanOrEqualTo(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
-        isLess _: Bool,
-        isLessThanOrEqual _: Bool,
-        isGreater _: Bool,
-        isGreaterThanOrEqual: Bool
+        isLessExpected _: Bool,
+        isLessThanOrEqualExpected _: Bool,
+        isGreaterExpected _: Bool,
+        isGreaterThanOrEqualExpected: Bool
     ) throws {
         let lhsWrapper: Converted<Length> = .init(
             wrappedValue: lhs,
@@ -128,8 +134,10 @@ internal struct ConvertedLengthMeasureComparableTests {
             wrappedValue: rhs,
             to: rhs.unit
         )
-        #expect((lhsWrapper >= rhsWrapper) == isGreaterThanOrEqual)
-        #expect(try lhsWrapper.isGreaterThanOrEqual(to: rhsWrapper) == isGreaterThanOrEqual)
+        let greaterThanOrEqualResult: Bool = lhsWrapper >= rhsWrapper
+        #expect(greaterThanOrEqualResult == isGreaterThanOrEqualExpected)
+        let isGreaterThanOrEqualResult: Bool = try lhsWrapper.isGreaterThanOrEqual(to: rhsWrapper)
+        #expect(isGreaterThanOrEqualResult == isGreaterThanOrEqualExpected)
     }
 
     @Test(
@@ -154,7 +162,8 @@ internal struct ConvertedLengthMeasureComparableTests {
             to: upperBound.unit
         )
         let range: ClosedRange<Converted<Length>> = lowerBoundWrapper ... upperBoundWrapper
-        #expect(try valueWrapper.isWithin(range) == range.contains(valueWrapper))
+        let result: Bool = try valueWrapper.isWithin(range)
+        #expect(result == range.contains(valueWrapper))
     }
 
     @Test(
@@ -178,8 +187,8 @@ internal struct ConvertedLengthMeasureComparableTests {
             wrappedValue: upperBound,
             to: upperBound.unit
         )
-        let valueIsWithinBounds: Bool = try valueWrapper.isWithin(lowerBoundWrapper, upperBoundWrapper) == true
-        #expect(valueIsWithinBounds == (valueWrapper >= lowerBoundWrapper && valueWrapper <= upperBoundWrapper))
+        let result: Bool = try valueWrapper.isWithin(lowerBoundWrapper, upperBoundWrapper) == true
+        #expect(result == (valueWrapper >= lowerBoundWrapper && valueWrapper <= upperBoundWrapper))
     }
 
     @Test(
@@ -203,11 +212,64 @@ internal struct ConvertedLengthMeasureComparableTests {
             wrappedValue: upperBound,
             to: upperBound.unit
         )
-        let valueIsBetweenBounds: Bool = try valueWrapper.isBetween(lowerBoundWrapper, upperBoundWrapper) == true
-        #expect(valueIsBetweenBounds == (valueWrapper > lowerBoundWrapper && valueWrapper < upperBoundWrapper))
+        let result: Bool = try valueWrapper.isBetween(lowerBoundWrapper, upperBoundWrapper) == true
+        #expect(result == (valueWrapper > lowerBoundWrapper && valueWrapper < upperBoundWrapper))
     }
 }
 
 // MARK: - NaT
 
-extension ConvertedLengthMeasureComparableTests {}
+extension ConvertedLengthMeasureComparableTests {
+    @Test(
+        "NaT is unordered",
+        arguments: [
+            (.nat, .init(1, .meter)),
+            (.init(1, .meter), .nat),
+            (.nat, .nat),
+            (.invalid, .init(1, .meter)),
+            (.init(1, .meter), .invalid)
+        ] as Array<(Measure<Length>, Measure<Length>)>
+    )
+    internal func natIsUnordered(
+        lhs: Measure<Length>,
+        rhs: Measure<Length>
+    ) throws {
+        let lhsWrapper: Converted<Length> = .init(
+            wrappedValue: lhs,
+            to: .meter
+        )
+        let rhsWrapper: Converted<Length> = .init(
+            wrappedValue: rhs,
+            to: .meter
+        )
+        let lessThanResult: Bool = lhsWrapper < rhsWrapper
+        #expect(lessThanResult == false)
+        let isLessResult: Bool = try lhsWrapper.isLess(than: rhsWrapper)
+        #expect(isLessResult == false)
+        let lessThanOrEqualResult: Bool = lhsWrapper <= rhsWrapper
+        #expect(lessThanOrEqualResult == false)
+        let isLessThanOrEqualResult: Bool = try lhsWrapper.isLessThanOrEqual(to: rhsWrapper)
+        #expect(isLessThanOrEqualResult == false)
+        let greaterThanResult: Bool = lhsWrapper > rhsWrapper
+        #expect(greaterThanResult == false)
+        let isGreaterResult: Bool = try lhsWrapper.isGreater(than: rhsWrapper)
+        #expect(isGreaterResult == false)
+        let greaterThanOrEqualResult: Bool = lhsWrapper >= rhsWrapper
+        #expect(greaterThanOrEqualResult == false)
+        let isGreaterThanOrEqualResult: Bool = try lhsWrapper.isGreaterThanOrEqual(to: rhsWrapper)
+        #expect(isGreaterThanOrEqualResult == false)
+    }
+
+    @Test("NaT lies outside valid bounds")
+    internal func natLiesOutsideBounds() throws {
+        let value: Converted<Length> = .init(wrappedValue: .nat, to: .meter)
+        let lowerBound: Converted<Length> = .init(wrappedValue: .init(0, .meter), to: .meter)
+        let upperBound: Converted<Length> = .init(wrappedValue: .init(2, .meter), to: .meter)
+        let isWithinResult: Bool = try value.isWithin(lowerBound ... upperBound)
+        #expect(isWithinResult == false)
+        let isWithinResult2: Bool = try value.isWithin(lowerBound, upperBound)
+        #expect(isWithinResult2 == false)
+        let isBetweenResult: Bool = try value.isBetween(lowerBound, upperBound)
+        #expect(isBetweenResult == false)
+    }
+}

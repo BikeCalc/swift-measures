@@ -14,7 +14,7 @@ import Testing
 internal struct MagneticFluxTests {
     internal init() {}
 
-    private let accuracy: Double = 1e-12
+    private let relativeTolerance: Double = 1e-12
 
     @Test(
         "Dividing by Area returns MagneticFluxDensity",
@@ -30,7 +30,7 @@ internal struct MagneticFluxTests {
         expected: MagneticFluxDensity
     ) {
         let result: MagneticFluxDensity = lhs / rhs
-        #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.accuracy)
+        #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.relativeTolerance)
         #expect(result.constant == expected.constant)
         #expect(result.symbol == expected.symbol)
     }
@@ -49,7 +49,7 @@ internal struct MagneticFluxTests {
         expected: ElectricalInductance
     ) {
         let result: ElectricalInductance = lhs / rhs
-        #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.accuracy)
+        #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.relativeTolerance)
         #expect(result.constant == expected.constant)
         #expect(result.symbol == expected.symbol)
     }

@@ -42,6 +42,17 @@ import NumericsExtended
 public struct ComposedUnit {
     /// A snapshot of a defined unit, independent of its concrete Swift type.
     internal struct AnyDefinedUnit: Codable, Hashable, Sendable {
+        /// The keys used to encode and decode a captured unit.
+        private enum CodingKeys: String, CodingKey {
+            case coefficient
+
+            case constant
+
+            case symbol
+
+            case dimension
+        }
+
         /// The physical dimension of the captured unit.
         internal let dimension: Dimension
 
@@ -70,7 +81,7 @@ public struct ComposedUnit {
         /// Captures the conversion and dimension information of a defined unit.
         ///
         /// - Parameter unit: A defined unit, including a developer-defined unit of an existing dimension.
-        internal init<UnitType>(_ unit: UnitType)
+        fileprivate init<UnitType>(_ unit: UnitType)
         where UnitType: ComposableUnit & DefinedUnit {
             self.dimension = unit.dimension
             self.coefficient = unit.coefficient
@@ -78,11 +89,66 @@ public struct ComposedUnit {
             self.symbol = unit.symbol
         }
 
+        /// Decodes a captured unit, restoring omitted constants and dimension exponents as zero.
+        ///
+        /// - Parameter decoder: The decoder supplying the captured unit.
+        /// - Throws: A decoding error if required fields are missing or present fields have invalid types.
+        internal init(from decoder: any Decoder) throws {
+            let container: KeyedDecodingContainer<Self.CodingKeys> = try decoder.container(
+                keyedBy: Self.CodingKeys.self
+            )
+            self.coefficient = try container.decode(
+                Double.self,
+                forKey: .coefficient
+            )
+            self.constant = try container.decode(
+                Double.self,
+                forKey: .constant,
+                defaultValue: 0
+            )
+            self.symbol = try container.decode(
+                String.self,
+                forKey: .symbol
+            )
+            self.dimension = try container.decode(
+                Dimension.self,
+                forKey: .dimension
+            )
+        }
+
         /// A boolean value indicating whether the conversion values are finite and the coefficient is positive.
         internal var hasValidConversion: Bool {
             return self.coefficient.isFinite == true
                 && self.coefficient > 0
                 && self.constant.isFinite == true
+        }
+
+        /// Encodes a captured unit, omitting zero constants and dimension exponents.
+        ///
+        /// - Parameter encoder: The encoder receiving the captured unit.
+        /// - Throws: An encoding error if a value cannot be encoded.
+        internal func encode(to encoder: any Encoder) throws {
+            var container: KeyedEncodingContainer<Self.CodingKeys> = encoder.container(keyedBy: Self.CodingKeys.self)
+            try container.encode(
+                self.coefficient,
+                forKey: .coefficient
+            )
+
+            if self.constant != 0 {
+                try container.encode(
+                    self.constant,
+                    forKey: .constant
+                )
+            }
+
+            try container.encode(
+                self.symbol,
+                forKey: .symbol
+            )
+            try container.encode(
+                self.dimension,
+                forKey: .dimension
+            )
         }
     }
 
@@ -100,11 +166,23 @@ public struct ComposedUnit {
         ///   - unit: The complete unit representation used for matching factors.
         ///   - exponent: The power applied to this unit.
         internal init(
-            unit: ComposedUnit.AnyDefinedUnit,
-            exponent: Int = 1
+            _ unit: ComposedUnit.AnyDefinedUnit,
+            _ exponent: Int = 1
         ) {
             self.unit = unit
             self.exponent = exponent
+        }
+
+        /// Creates a factor by capturing a defined unit and its exponent.
+        ///
+        /// - Parameters:
+        ///   - unit: The defined unit whose conversion parameters, symbol, and dimension are preserved.
+        ///   - exponent: The power applied to this unit, defaulting to one.
+        internal init<UnitType>(
+            _ unit: UnitType,
+            _ exponent: Int = 1
+        ) where UnitType: ComposableUnit & DefinedUnit {
+            self.init(ComposedUnit.AnyDefinedUnit(unit), exponent)
         }
 
         /// The unit's coefficient raised to this factor's exponent.
@@ -114,10 +192,7 @@ public struct ComposedUnit {
 
         /// The same unit representation with its exponent negated.
         internal var inverted: Self {
-            return .init(
-                unit: self.unit,
-                exponent: -self.exponent
-            )
+            return .init(self.unit, -self.exponent)
         }
 
         /// Returns a boolean value indicating whether the value of the first argument is less than that of the second
@@ -160,15 +235,15 @@ public struct ComposedUnit {
 
     /// Creates a composed unit from one defined unit, retaining its offset.
     ///
-    /// The unit must have a finite positive coefficient and a finite constant. Its symbol and dimension are captured
-    /// without conversion to a coherent SI unit.
+    /// Captures conversion parameters, symbol, and dimension without validation or conversion to a coherent SI unit.
+    /// Invalid conversion parameters are preserved, matching direct construction from conversion parameters. Measures
+    /// using them report `isNaT` as `true` and `isValid` as `false`. Unit composition still requires valid factors.
     ///
     /// - Parameter unit: The defined unit to capture.
-    /// - Precondition: The unit has a finite positive coefficient and a finite constant.
     public init<UnitType>(_ unit: UnitType)
     where UnitType: ComposableUnit & DefinedUnit {
-        let factor: Self.Factor = .init(unit: ComposedUnit.AnyDefinedUnit(unit))
-        self.init(factors: [factor])
+        let factor: Self.Factor = .init(unit)
+        self.factors = [factor]
     }
 
     /// Creates a composed unit preserving the supplied factors and their order.
@@ -178,7 +253,7 @@ public struct ComposedUnit {
     /// exponents are evaluated only when needed.
     ///
     /// - Parameter factors: The factors to compose. An empty collection represents the dimensionless identity.
-    internal init(factors: Array<Self.Factor>) {
+    private init(factors: Array<Self.Factor>) {
         let validator: ComposedUnitFactorValidator = .init(factors: factors)
         precondition(
             validator.validate() == true,
@@ -194,39 +269,20 @@ public struct ComposedUnit {
 
     /// Creates a coherent SI reference directly from a physical dimension.
     ///
+    /// Only nonzero dimension exponents produce factors. A dimensionless reference has no factors.
+    ///
     /// - Parameter dimension: The exponents of the seven base quantities.
     internal init(dimension: Dimension) {
         let factors: Array<Self.Factor> = [
-            .init(
-                unit: Self.AnyDefinedUnit(Length.base),
-                exponent: dimension.length
-            ),
-            .init(
-                unit: Self.AnyDefinedUnit(Mass.base),
-                exponent: dimension.mass
-            ),
-            .init(
-                unit: Self.AnyDefinedUnit(Time.base),
-                exponent: dimension.time
-            ),
-            .init(
-                unit: Self.AnyDefinedUnit(ElectricCurrent.base),
-                exponent: dimension.electricCurrent
-            ),
-            .init(
-                unit: Self.AnyDefinedUnit(ThermodynamicTemperature.base),
-                exponent: dimension.thermodynamicTemperature
-            ),
-            .init(
-                unit: Self.AnyDefinedUnit(SubstanceAmount.base),
-                exponent: dimension.substanceAmount
-            ),
-            .init(
-                unit: Self.AnyDefinedUnit(LuminousIntensity.base),
-                exponent: dimension.luminousIntensity
-            )
+            .init(Length.base, dimension.length),
+            .init(Mass.base, dimension.mass),
+            .init(Time.base, dimension.time),
+            .init(ElectricCurrent.base, dimension.electricCurrent),
+            .init(ThermodynamicTemperature.base, dimension.thermodynamicTemperature),
+            .init(SubstanceAmount.base, dimension.substanceAmount),
+            .init(LuminousIntensity.base, dimension.luminousIntensity)
         ]
-        self.init(factors: factors)
+        self.init(factors: factors.filter { $0.exponent != 0 })
     }
 
     /// Multiplies units by combining their structured factors.
@@ -287,10 +343,7 @@ public struct ComposedUnit {
                 "Exponentiation requires a zero constant unless the exponent is zero or one."
             )
             let factors: Array<Self.Factor> = lhs.factors.map { factor in
-                return .init(
-                    unit: factor.unit,
-                    exponent: factor.exponent * rhs
-                )
+                return .init(factor.unit, factor.exponent * rhs)
             }
             return .init(factors: factors)
         }
@@ -353,7 +406,7 @@ extension ComposedUnit: ComposableUnit {
             symbol: symbol,
             dimension: .init()
         )
-        let factor: Self.Factor = .init(unit: unit)
+        let factor: Self.Factor = .init(unit)
         self.factors = [factor]
     }
 
@@ -407,13 +460,25 @@ extension ComposedUnit: ComposableUnit {
     }
 }
 
+// MARK: - CustomDebugStringConvertible
+
+extension ComposedUnit: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        return """
+            ComposedUnit(coefficient: \(self.coefficient), constant: \(self.constant), symbol: \
+            \(self.symbol.debugDescription), dimension: \(self.dimension))
+            """
+    }
+}
+
 // MARK: - Decodable
 
 extension ComposedUnit: Decodable {
     /// Decodes factors and validates their conversion definitions and constant combinations.
     ///
     /// The wire format is simply an array of factors; no redundant aggregate properties are encoded. Factors retain
-    /// their order, duplicates, and zero exponents. The single dimensionless NaT factor is also accepted when the
+    /// their order, duplicates, and zero exponents. Omitted constants and dimension entries default to zero;
+    /// explicit zeros remain accepted. The single dimensionless NaT factor is also accepted when the
     /// decoder supports its NaN parameters. Derived coefficients and dimensions are not evaluated.
     ///
     /// - Parameter decoder: The decoder supplying the factor array.
@@ -423,8 +488,7 @@ extension ComposedUnit: Decodable {
         let container: any SingleValueDecodingContainer = try decoder.singleValueContainer()
         let factors: Array<Self.Factor> = try container.decode(Array<Self.Factor>.self)
         let validator: ComposedUnitFactorValidator = .init(factors: factors)
-        let isNaTRepresentation: Bool =
-            factors.count == 1
+        let isNaTRepresentation: Bool = factors.count == 1
             && factors[0].exponent == 1
             && factors[0].unit.dimension.isDimensionless == true
             && factors[0].unit.coefficient.isNaN == true
@@ -446,6 +510,9 @@ extension ComposedUnit: Decodable {
 
 extension ComposedUnit: Encodable {
     /// Encodes the captured unit definitions and their exponents as an array of factors.
+    ///
+    /// Zero constants and zero dimension entries are omitted. Factor order, duplicates, and zero factor exponents
+    /// are preserved, and every factor retains its dimension object even when that object is empty.
     ///
     /// - Parameter encoder: The encoder receiving the factors in their stored order.
     /// - Throws: Any error encountered while encoding the factors.
@@ -595,10 +662,7 @@ extension ComposedUnit: Simplifiable {
                 continue
             }
 
-            let simplifiedFactor: Self.Factor = .init(
-                unit: factor.unit,
-                exponent: exponent
-            )
+            let simplifiedFactor: Self.Factor = .init(factor.unit, exponent)
             simplifiedFactors.append(simplifiedFactor)
         }
 

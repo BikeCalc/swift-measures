@@ -19,6 +19,7 @@ internal struct VolumeCaseIterableTests {
         let units: Array<Volume> = Volume.allCases
         #expect(units.count == 64)
         #expect(Set(units).count == 64)
-        #expect(units.contains(.base) == true)
+        let result: Bool = units.contains(.base)
+        #expect(result == true)
     }
 }

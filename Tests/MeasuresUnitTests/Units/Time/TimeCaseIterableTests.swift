@@ -19,6 +19,7 @@ internal struct TimeCaseIterableTests {
         let units: Array<Time> = Time.allCases
         #expect(units.count == 35)
         #expect(Set(units).count == 35)
-        #expect(units.contains(.base) == true)
+        let result: Bool = units.contains(.base)
+        #expect(result == true)
     }
 }

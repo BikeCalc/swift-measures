@@ -19,6 +19,7 @@ internal struct ConcentrationCaseIterableTests {
         let units: Array<Concentration> = Concentration.allCases
         #expect(units.count == 3)
         #expect(Set(units).count == 3)
-        #expect(units.contains(.base) == true)
+        let result: Bool = units.contains(.base)
+        #expect(result == true)
     }
 }

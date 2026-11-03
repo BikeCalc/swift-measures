@@ -17,11 +17,11 @@ internal struct ConvertedLengthMeasureHashableTests {
     @Test(
         "Equivalent representations produce equal hashes",
         arguments: [
-            (Measure<Length>(1, .meter), Measure<Length>(100, .centimeter)),
-            (Measure<Length>(1, .meter), Measure<Length>(1_000, .millimeter)),
-            (Measure<Length>(1, .meter), Measure<Length>(0.001, .kilometer)),
-            (Measure<Length>(1, .foot), Measure<Length>(12, .inch))
-        ]
+            (.init(1, .meter), .init(100, .centimeter)),
+            (.init(1, .meter), .init(1_000, .millimeter)),
+            (.init(1, .meter), .init(0.001, .kilometer)),
+            (.init(1, .foot), .init(12, .inch))
+        ] as Array<(Measure<Length>, Measure<Length>)>
     )
     internal func equivalentRepresentationsProduceEqualHashes(
         lhs: Measure<Length>,

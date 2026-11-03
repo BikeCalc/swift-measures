@@ -17,22 +17,22 @@ internal struct ConvertedLengthMeasureCanonicallyEquatableTests {
     @Test(
         "Canonical equality succeeds",
         arguments: [
-            (Measure<Length>(1, .meter), Measure<Length>(1, .meter), true),
-            (Measure<Length>(1, .meter), Measure<Length>(100, .centimeter), true),
-            (Measure<Length>(100, .centimeter), Measure<Length>(1, .meter), true),
-            (Measure<Length>(1, .foot), Measure<Length>(12, .inch), true),
-            (Measure<Length>(12, .inch), Measure<Length>(1, .foot), true),
-            (Measure<Length>(-1, .meter), Measure<Length>(-100, .centimeter), true),
-            (Measure<Length>(0, .meter), Measure<Length>(0, .foot), true),
-            (Measure<Length>(1, .meter), Measure<Length>(99, .centimeter), false),
-            (Measure<Length>(1, .foot), Measure<Length>(13, .inch), false),
-            (Measure<Length>(-1, .meter), Measure<Length>(100, .centimeter), false)
-        ]
+            (.init(1, .meter), .init(1, .meter), true),
+            (.init(1, .meter), .init(100, .centimeter), true),
+            (.init(100, .centimeter), .init(1, .meter), true),
+            (.init(1, .foot), .init(12, .inch), true),
+            (.init(12, .inch), .init(1, .foot), true),
+            (.init(-1, .meter), .init(-100, .centimeter), true),
+            (.init(0, .meter), .init(0, .foot), true),
+            (.init(1, .meter), .init(99, .centimeter), false),
+            (.init(1, .foot), .init(13, .inch), false),
+            (.init(-1, .meter), .init(100, .centimeter), false)
+        ] as Array<(Measure<Length>, Measure<Length>, Bool)>
     )
     internal func canonicalEqualitySucceeds(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
-        result: Bool
+        expected: Bool
     ) {
         let lhsWrapper: Converted<Length> = .init(
             wrappedValue: lhs,
@@ -42,10 +42,37 @@ internal struct ConvertedLengthMeasureCanonicallyEquatableTests {
             wrappedValue: rhs,
             to: rhs.unit
         )
-        #expect(lhsWrapper.isCanonicallyEqual(to: rhsWrapper) == result)
+        let result: Bool = lhsWrapper.isCanonicallyEqual(to: rhsWrapper)
+        #expect(result == expected)
     }
 }
 
 // MARK: - NaT
 
-extension ConvertedLengthMeasureCanonicallyEquatableTests {}
+extension ConvertedLengthMeasureCanonicallyEquatableTests {
+    @Test(
+        "NaT is unequal",
+        arguments: [
+            (.nat, .init(1, .meter)),
+            (.init(1, .meter), .nat),
+            (.nat, .nat),
+            (.invalid, .init(1, .meter)),
+            (.init(1, .meter), .invalid)
+        ] as Array<(Measure<Length>, Measure<Length>)>
+    )
+    internal func natIsUnequal(
+        lhs: Measure<Length>,
+        rhs: Measure<Length>
+    ) {
+        let lhsWrapper: Converted<Length> = .init(
+            wrappedValue: lhs,
+            to: .meter
+        )
+        let rhsWrapper: Converted<Length> = .init(
+            wrappedValue: rhs,
+            to: .meter
+        )
+        let result: Bool = lhsWrapper.isCanonicallyEqual(to: rhsWrapper)
+        #expect(result == false)
+    }
+}

@@ -14,7 +14,7 @@ import Testing
 internal struct SpeedTests {
     internal init() {}
 
-    private let accuracy: Double = 1e-12
+    private let relativeTolerance: Double = 1e-12
 
     @Test(
         "Dividing by Time returns Acceleration",
@@ -30,7 +30,7 @@ internal struct SpeedTests {
         expected: Acceleration
     ) {
         let result: Acceleration = lhs / rhs
-        #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.accuracy)
+        #expect(abs(result.coefficient - expected.coefficient) <= abs(expected.coefficient) * self.relativeTolerance)
         #expect(result.constant == expected.constant)
         #expect(result.symbol == expected.symbol)
     }

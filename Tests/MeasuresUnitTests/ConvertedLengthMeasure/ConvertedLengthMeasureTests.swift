@@ -15,14 +15,14 @@ internal struct ConvertedLengthMeasureTests {
     internal init() {}
 
     private static let conversionArguments: [(Measure<Length>, Measure<Length>)] = [
-        (Measure<Length>(1, .meter), Measure<Length>(1, .meter)),
-        (Measure<Length>(100, .centimeter), Measure<Length>(1, .meter)),
-        (Measure<Length>(1_000, .millimeter), Measure<Length>(1, .meter)),
-        (Measure<Length>(10, .decimeter), Measure<Length>(1, .meter)),
-        (Measure<Length>(0.1, .decameter), Measure<Length>(1, .meter)),
-        (Measure<Length>(0.01, .hectometer), Measure<Length>(1, .meter)),
-        (Measure<Length>(0.001, .kilometer), Measure<Length>(1, .meter)),
-        (Measure<Length>(1_000_000, .micrometer), Measure<Length>(1, .meter))
+        (.init(1, .meter), .init(1, .meter)),
+        (.init(100, .centimeter), .init(1, .meter)),
+        (.init(1_000, .millimeter), .init(1, .meter)),
+        (.init(10, .decimeter), .init(1, .meter)),
+        (.init(0.1, .decameter), .init(1, .meter)),
+        (.init(0.01, .hectometer), .init(1, .meter)),
+        (.init(0.001, .kilometer), .init(1, .meter)),
+        (.init(1_000_000, .micrometer), .init(1, .meter))
     ]
 
     @Test(
@@ -31,10 +31,10 @@ internal struct ConvertedLengthMeasureTests {
     )
     internal func initializationConvertsMeasures(
         value: Measure<Length>,
-        result: Measure<Length>
+        expected: Measure<Length>
     ) {
-        @Converted(to: .meter) var convertedValue: Measure<Length> = value
-        #expect(convertedValue == result)
+        @Converted(to: .meter) var result: Measure<Length> = value
+        #expect(result == expected)
     }
 
     @Test(
@@ -43,14 +43,10 @@ internal struct ConvertedLengthMeasureTests {
     )
     internal func assignmentConvertsMeasures(
         value: Measure<Length>,
-        result: Measure<Length>
+        expected: Measure<Length>
     ) {
-        @Converted(to: .meter) var convertedValue: Measure<Length> = .init(0, .base)
-        convertedValue = value
-        #expect(convertedValue == result)
+        @Converted(to: .meter) var result: Measure<Length> = .init(0, .base)
+        result = value
+        #expect(result == expected)
     }
 }
-
-// MARK: - NaT
-
-extension ConvertedLengthMeasureTests {}

@@ -14,5 +14,43 @@ import Testing
 internal struct ComposedUnitMeasureHashableTests {
     internal init() {}
 
-    // TODO: Implement tests for this suite.
+    @Test(
+        "Equal stored values produce equal hashes",
+        arguments: [
+            (.init(1, .meter), .init(1, .meter)),
+            (.init(-1, .meter), .init(-1, .meter)),
+            (.init(100, .centimeter), .init(100, .centimeter)),
+            (.init(1, .foot), .init(1, .foot)),
+            (.init(1, .dimensionless), .init(1, .dimensionless)),
+            (.init(-1, .dimensionless), .init(-1, .dimensionless)),
+            (.init(0, .dimensionless), .init(0, .dimensionless)),
+            (.init(0.5, .dimensionless), .init(0.5, .dimensionless))
+        ] as Array<(Measure<ComposedUnit>, Measure<ComposedUnit>)>
+    )
+    internal func equalStoredValuesProduceEqualHashes(
+        lhs: Measure<ComposedUnit>,
+        rhs: Measure<ComposedUnit>
+    ) {
+        #expect(lhs == rhs)
+        #expect(lhs.hashValue == rhs.hashValue)
+        #expect(Set([lhs, rhs]).count == 1)
+    }
+
+    @Test(
+        "Equivalent representations remain distinct hash keys",
+        arguments: [
+            (.init(1, .meter), .init(100, .centimeter)),
+            (.init(1, .meter), .init(1_000, .millimeter)),
+            (.init(1, .meter), .init(0.001, .kilometer)),
+            (.init(1, .foot), .init(12, .inch)),
+            (.init(1, .dimensionless), .init(1, .cancelledMeters))
+        ] as Array<(Measure<ComposedUnit>, Measure<ComposedUnit>)>
+    )
+    internal func equivalentRepresentationsRemainDistinctHashKeys(
+        lhs: Measure<ComposedUnit>,
+        rhs: Measure<ComposedUnit>
+    ) {
+        #expect(lhs != rhs)
+        #expect(Set([lhs, rhs]).count == 2)
+    }
 }

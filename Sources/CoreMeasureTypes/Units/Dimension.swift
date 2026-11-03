@@ -198,10 +198,6 @@ public struct Dimension {
     }
 }
 
-// MARK: - Codable
-
-extension Dimension: Codable {}
-
 // MARK: - CustomDebugStringConvertible
 
 extension Dimension: CustomDebugStringConvertible {
@@ -211,6 +207,118 @@ extension Dimension: CustomDebugStringConvertible {
             \(self.electricCurrent), thermodynamicTemperature: \(self.thermodynamicTemperature), substanceAmount: \
             \(self.substanceAmount), luminousIntensity: \(self.luminousIntensity))
             """
+    }
+}
+
+// MARK: - Decodable
+
+extension Dimension: Decodable {
+    /// Decodes SI dimension exponents, restoring omitted entries as zero.
+    ///
+    /// Explicit zero entries are accepted. Present null values and values that are not integers are rejected.
+    ///
+    /// - Parameter decoder: The decoder supplying the dimension.
+    /// - Throws: A decoding error if the dimension is not a keyed container or a present exponent is invalid.
+    public init(from decoder: any Decoder) throws {
+        let container: KeyedDecodingContainer<Self.CodingKeys> = try decoder.container(keyedBy: Self.CodingKeys.self)
+        self.length = try container.decode(
+            Int.self,
+            forKey: .length,
+            defaultValue: 0
+        )
+        self.mass = try container.decode(
+            Int.self,
+            forKey: .mass,
+            defaultValue: 0
+        )
+        self.time = try container.decode(
+            Int.self,
+            forKey: .time,
+            defaultValue: 0
+        )
+        self.electricCurrent = try container.decode(
+            Int.self,
+            forKey: .electricCurrent,
+            defaultValue: 0
+        )
+        self.thermodynamicTemperature = try container.decode(
+            Int.self,
+            forKey: .thermodynamicTemperature,
+            defaultValue: 0
+        )
+        self.substanceAmount = try container.decode(
+            Int.self,
+            forKey: .substanceAmount,
+            defaultValue: 0
+        )
+        self.luminousIntensity = try container.decode(
+            Int.self,
+            forKey: .luminousIntensity,
+            defaultValue: 0
+        )
+    }
+}
+
+// MARK: - Encodable
+
+extension Dimension: Encodable {
+    /// Encodes only nonzero SI dimension exponents.
+    ///
+    /// A dimensionless value is encoded as an empty keyed container.
+    ///
+    /// - Parameter encoder: The encoder receiving the dimension.
+    /// - Throws: Any error thrown while encoding the exponents.
+    public func encode(to encoder: any Encoder) throws {
+        var container: KeyedEncodingContainer<Self.CodingKeys> = encoder.container(keyedBy: Self.CodingKeys.self)
+
+        if self.length != 0 {
+            try container.encode(
+                self.length,
+                forKey: .length
+            )
+        }
+
+        if self.mass != 0 {
+            try container.encode(
+                self.mass,
+                forKey: .mass
+            )
+        }
+
+        if self.time != 0 {
+            try container.encode(
+                self.time,
+                forKey: .time
+            )
+        }
+
+        if self.electricCurrent != 0 {
+            try container.encode(
+                self.electricCurrent,
+                forKey: .electricCurrent
+            )
+        }
+
+        if self.thermodynamicTemperature != 0 {
+            try container.encode(
+                self.thermodynamicTemperature,
+                forKey: .thermodynamicTemperature
+            )
+        }
+
+        if self.substanceAmount != 0 {
+            try container.encode(
+                self.substanceAmount,
+                forKey: .substanceAmount
+            )
+        }
+
+        if self.luminousIntensity != 0 {
+            try container.encode(
+                self.luminousIntensity,
+                forKey: .luminousIntensity
+            )
+        }
     }
 }
 

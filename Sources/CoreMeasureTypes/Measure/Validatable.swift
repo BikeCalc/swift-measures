@@ -6,13 +6,8 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-import Testing
-
-@testable import Measures
-
-@Suite("ComposedUnit Unit Tests")
-internal struct ComposedUnitUnitTests {
-    internal init() {}
-
-    // TODO: Implement tests for this suite.
+/// A type whose instances can be checked against its validity rules.
+public protocol Validatable {
+    /// A boolean value indicating whether this instance satisfies the type's validity rules.
+    var isValid: Bool { get }
 }

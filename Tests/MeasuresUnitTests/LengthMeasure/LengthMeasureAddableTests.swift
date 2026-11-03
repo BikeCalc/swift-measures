@@ -15,18 +15,18 @@ internal struct LengthMeasureAddableTests {
     internal init() {}
 
     private static let additionArguments: [(Measure<Length>, Measure<Length>.Addend, Measure<Length>)] = [
-        (Measure<Length>(2.0, .meter), Measure<Length>(3.0, .meter), Measure<Length>(5.0, .meter)),
-        (Measure<Length>(3.0, .meter), Measure<Length>(4.0, .meter), Measure<Length>(7.0, .meter)),
-        (Measure<Length>(-2.0, .meter), Measure<Length>(3.0, .meter), Measure<Length>(1.0, .meter)),
-        (Measure<Length>(-3.0, .meter), Measure<Length>(-4.0, .meter), Measure<Length>(-7.0, .meter)),
-        (Measure<Length>(0.5, .meter), Measure<Length>(1.5, .meter), Measure<Length>(2.0, .meter)),
-        (Measure<Length>(1.5, .meter), Measure<Length>(2.5, .meter), Measure<Length>(4.0, .meter)),
-        (Measure<Length>(-0.5, .meter), Measure<Length>(1.5, .meter), Measure<Length>(1.0, .meter)),
-        (Measure<Length>(-1.5, .meter), Measure<Length>(-2.5, .meter), Measure<Length>(-4.0, .meter)),
-        (Measure<Length>(2.0, .meter), Measure<Length>(300.0, .centimeter), Measure<Length>(5.0, .meter)),
-        (Measure<Length>(200.0, .centimeter), Measure<Length>(3.0, .meter), Measure<Length>(500.0, .centimeter)),
-        (Measure<Length>(-2.0, .meter), Measure<Length>(300.0, .centimeter), Measure<Length>(1.0, .meter)),
-        (Measure<Length>(-200.0, .centimeter), Measure<Length>(3.0, .meter), Measure<Length>(100.0, .centimeter))
+        (.init(2.0, .meter), .init(3.0, .meter), .init(5.0, .meter)),
+        (.init(3.0, .meter), .init(4.0, .meter), .init(7.0, .meter)),
+        (.init(-2.0, .meter), .init(3.0, .meter), .init(1.0, .meter)),
+        (.init(-3.0, .meter), .init(-4.0, .meter), .init(-7.0, .meter)),
+        (.init(0.5, .meter), .init(1.5, .meter), .init(2.0, .meter)),
+        (.init(1.5, .meter), .init(2.5, .meter), .init(4.0, .meter)),
+        (.init(-0.5, .meter), .init(1.5, .meter), .init(1.0, .meter)),
+        (.init(-1.5, .meter), .init(-2.5, .meter), .init(-4.0, .meter)),
+        (.init(2.0, .meter), .init(300.0, .centimeter), .init(5.0, .meter)),
+        (.init(200.0, .centimeter), .init(3.0, .meter), .init(500.0, .centimeter)),
+        (.init(-2.0, .meter), .init(300.0, .centimeter), .init(1.0, .meter)),
+        (.init(-200.0, .centimeter), .init(3.0, .meter), .init(100.0, .centimeter))
     ]
 
     @Test(
@@ -38,7 +38,8 @@ internal struct LengthMeasureAddableTests {
         addend: Measure<Length>.Addend,
         sum: Measure<Length>
     ) {
-        #expect(augend + addend == sum)
+        let result: Measure<Length> = augend + addend
+        #expect(result == sum)
     }
 
     @Test(
@@ -50,9 +51,9 @@ internal struct LengthMeasureAddableTests {
         addend: Measure<Length>.Addend,
         sum: Measure<Length>
     ) {
-        var runningSum: Measure<Length> = augend
-        runningSum += addend
-        #expect(runningSum == sum)
+        var result: Measure<Length> = augend
+        result += addend
+        #expect(result == sum)
     }
 
     @Test(
@@ -64,7 +65,8 @@ internal struct LengthMeasureAddableTests {
         addend: Measure<Length>.Addend,
         sum: Measure<Length>
     ) throws {
-        #expect(try augend.adding(addend) == sum)
+        let result: Measure<Length> = try augend.adding(addend)
+        #expect(result == sum)
     }
 
     @Test(
@@ -76,9 +78,9 @@ internal struct LengthMeasureAddableTests {
         addend: Measure<Length>.Addend,
         sum: Measure<Length>
     ) throws {
-        var runningSum: Measure<Length> = augend
-        try runningSum.add(addend)
-        #expect(runningSum == sum)
+        var result: Measure<Length> = augend
+        try result.add(addend)
+        #expect(result == sum)
     }
 }
 
@@ -92,10 +94,42 @@ extension LengthMeasureAddableTests {
         addend: Measure<Length>.Addend,
         sum _: Measure<Length>
     ) {
-        #expect((augend + addend).isCanonicallyEqual(to: addend + augend) == true)
+        let result: Bool = (augend + addend).isCanonicallyEqual(to: addend + augend)
+        #expect(result == true)
     }
 }
 
 // MARK: - NaT
 
-extension LengthMeasureAddableTests {}
+extension LengthMeasureAddableTests {
+    @Test(
+        "Adding to NaT returns NaT",
+        arguments: [
+            (.nat, .init(1, .meter)),
+            (.nat, .nat),
+            (.invalid, .init(1, .meter))
+        ] as Array<(Measure<Length>, Measure<Length>)>
+    )
+    internal func addingToNaTReturnsNaT(
+        augend: Measure<Length>,
+        addend: Measure<Length>
+    ) {
+        let result: Measure<Length> = augend + addend
+        #expect(result.isNaT == true)
+    }
+
+    @Test(
+        "Adding NaT returns NaT",
+        arguments: [
+            (.init(1, .meter), .nat),
+            (.init(1, .meter), .invalid)
+        ] as Array<(Measure<Length>, Measure<Length>)>
+    )
+    internal func addingNaTReturnsNaT(
+        augend: Measure<Length>,
+        addend: Measure<Length>
+    ) {
+        let result: Measure<Length> = augend + addend
+        #expect(result.isNaT == true)
+    }
+}

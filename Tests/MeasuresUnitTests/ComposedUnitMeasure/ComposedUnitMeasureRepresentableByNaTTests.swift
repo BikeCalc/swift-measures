@@ -37,12 +37,12 @@ extension ComposedUnitMeasureRepresentableByNaTTests {
 extension ComposedUnitMeasureRepresentableByNaTTests {
     @Test(
         "Finite values with valid conversion parameters are not NaT",
-        arguments: [-1.0, -0.0, 0.0, 1.0],
+        arguments: [-1.0, -0.0, 0.0, 1.0] as Array<Double>,
         [
             (1.0, 0.0),
             (2.0, -1.0),
             (0.5, 1.0)
-        ]
+        ] as Array<(Double, Double)>
     )
     internal func finiteValuesAreNotNaT(
         value: Double,
@@ -75,10 +75,10 @@ extension ComposedUnitMeasureRepresentableByNaTTests {
     @Test(
         "Nonfinite values are NaT",
         arguments: [
-            Double.nan,
-            Double.infinity,
-            Double.negativeInfinity
-        ]
+            .nan,
+            .infinity,
+            .negativeInfinity
+        ] as Array<Double>
     )
     internal func nonfiniteValuesAreNaT(value: Double) {
         let measure: Measure<ComposedUnit> = .init(value, ComposedUnit(Length.meter))
@@ -88,16 +88,16 @@ extension ComposedUnitMeasureRepresentableByNaTTests {
     @Test(
         "Invalid conversion parameters are NaT",
         arguments: [
-            (Double.nan, 0.0),
-            (Double.infinity, 0.0),
-            (Double.negativeInfinity, 0.0),
+            (.nan, 0.0),
+            (.infinity, 0.0),
+            (.negativeInfinity, 0.0),
             (0.0, 0.0),
             (-0.0, 0.0),
             (-1.0, 0.0),
-            (1.0, Double.nan),
-            (1.0, Double.infinity),
-            (1.0, Double.negativeInfinity)
-        ]
+            (1.0, .nan),
+            (1.0, .infinity),
+            (1.0, .negativeInfinity)
+        ] as Array<(Double, Double)>
     )
     internal func invalidConversionParametersAreNaT(
         coefficient: Double,

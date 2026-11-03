@@ -14,38 +14,68 @@ import Testing
 internal struct LengthMeasureApproximatelyEquatableTests {
     internal init() {}
 
-    private typealias LengthMeasure = Measure<Length>
-
     @Test(
         "Approximate equality succeeds",
         arguments: [
-            (LengthMeasure(1, .meter), LengthMeasure(100, .centimeter), LengthMeasure(0, .meter), 0, true),
-            (LengthMeasure(100.02, .centimeter), LengthMeasure(1, .meter), LengthMeasure(0.5, .millimeter), 0, true),
-            (LengthMeasure(1, .meter), LengthMeasure(100.02, .centimeter), LengthMeasure(0.5, .millimeter), 0, true),
-            (LengthMeasure(100.02, .centimeter), LengthMeasure(1, .meter), LengthMeasure(0.1, .millimeter), 0, false),
-            (LengthMeasure(100, .centimeter), LengthMeasure(1.01, .meter), LengthMeasure(0, .meter), 0.01, true),
-            (LengthMeasure(100, .centimeter), LengthMeasure(1.02, .meter), LengthMeasure(0, .meter), 0.01, false),
-            (LengthMeasure(0.1 + 0.2, .meter), LengthMeasure(0.3, .meter), LengthMeasure(0.001, .millimeter), 0, true),
-            (LengthMeasure(0.1 + 0.2, .meter), LengthMeasure(0.3, .meter), LengthMeasure(0, .meter), 0, false)
-        ]
+            (.init(1, .meter), .init(100, .centimeter), .init(0, .meter), 0.0, true),
+            (.init(100.02, .centimeter), .init(1, .meter), .init(0.5, .millimeter), 0.0, true),
+            (.init(1, .meter), .init(100.02, .centimeter), .init(0.5, .millimeter), 0.0, true),
+            (.init(100.02, .centimeter), .init(1, .meter), .init(0.1, .millimeter), 0.0, false),
+            (.init(100, .centimeter), .init(1.01, .meter), .init(0, .meter), 0.01, true),
+            (.init(100, .centimeter), .init(1.02, .meter), .init(0, .meter), 0.01, false),
+            (.init(0.1 + 0.2, .meter), .init(0.3, .meter), .init(0.001, .millimeter), 0.0, true),
+            (.init(0.1 + 0.2, .meter), .init(0.3, .meter), .init(0, .meter), 0.0, false)
+        ] as Array<(Measure<Length>, Measure<Length>, Measure<Length>, Double, Bool)>
     )
     internal func approximateEqualitySucceeds(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
         absoluteTolerance: Measure<Length>,
         relativeTolerance: Double,
-        result: Bool
+        expected: Bool
     ) {
-        #expect(
-            lhs.isApproximatelyEqual(
-                to: rhs,
-                absoluteTolerance: absoluteTolerance,
-                relativeTolerance: relativeTolerance
-            ) == result
+        let result: Bool = lhs.isApproximatelyEqual(
+            to: rhs,
+            absoluteTolerance: absoluteTolerance,
+            relativeTolerance: relativeTolerance
         )
+        #expect(result == expected)
     }
 }
 
 // MARK: - NaT
 
-extension LengthMeasureApproximatelyEquatableTests {}
+extension LengthMeasureApproximatelyEquatableTests {
+    @Test(
+        "NaT is not approximately equal",
+        arguments: [
+            (.nat, .init(1, .meter)),
+            (.init(1, .meter), .nat),
+            (.nat, .nat),
+            (.invalid, .init(1, .meter)),
+            (.init(1, .meter), .invalid)
+        ] as Array<(Measure<Length>, Measure<Length>)>
+    )
+    internal func natIsNotApproximatelyEqual(
+        lhs: Measure<Length>,
+        rhs: Measure<Length>
+    ) {
+        let result: Bool = lhs.isApproximatelyEqual(
+            to: rhs,
+            absoluteTolerance: .init(1, .meter),
+            relativeTolerance: 1
+        )
+        #expect(result == false)
+    }
+
+    @Test("NaT absolute tolerance rejects equality")
+    internal func natToleranceRejectsEquality() {
+        let value: Measure<Length> = .init(1, .meter)
+        let result: Bool = value.isApproximatelyEqual(
+            to: value,
+            absoluteTolerance: .nat,
+            relativeTolerance: 0
+        )
+        #expect(result == false)
+    }
+}

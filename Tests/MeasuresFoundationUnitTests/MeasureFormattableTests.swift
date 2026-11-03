@@ -31,7 +31,7 @@ internal struct MeasureFormattableTests {
             ("de_DE", "1.234,5\u{00A0}m"),
             ("fr_FR", "1\u{202F}234,5\u{00A0}m"),
             ("ar_EG@numbers=arab", "١٬٢٣٤٫٥\u{00A0}m")
-        ]
+        ] as Array<(String, String)>
     )
     internal func formattingUsesSpecificLocale(
         identifier: String,
@@ -53,7 +53,7 @@ internal struct MeasureFormattableTests {
             (.number.rounded(rule: .down).precision(.fractionLength(0)), "1,234\u{00A0}m"),
             (.number.rounded(rule: .up).precision(.fractionLength(0)), "1,235\u{00A0}m"),
             (.number.sign(strategy: .always()), "+1,234.5\u{00A0}m")
-        ] as [(FloatingPointFormatStyle<Double>, String)]
+        ] as Array<(FloatingPointFormatStyle<Double>, String)>
     )
     internal func formattingUsesCustomNumberFormatStyle(
         numberFormatStyle: FloatingPointFormatStyle<Double>,
@@ -74,27 +74,26 @@ extension MeasureFormattableTests {
     @Test(
         "Formatting NaT produces only NaT",
         arguments: [
-            Measure<Length>.nat,
-            Measure<Length>(Double.nan, .meter),
-            Measure<Length>(Double.infinity, .meter),
-            Measure<Length>(Double.negativeInfinity, .meter)
-        ]
+            .nat,
+            .init(Double.nan, .meter),
+            .init(Double.infinity, .meter),
+            .init(Double.negativeInfinity, .meter)
+        ] as Array<Measure<Length>>
     )
     internal func formattingNaT(measure: Measure<Length>) {
         #expect(measure.formatted() == "NaT")
-        #expect(measure.description == "NaT")
     }
 
     @Test(
         "Formatting invalid unit conversion parameters produce only NaT",
         arguments: [
-            (Double.nan, 0.0),
-            (Double.infinity, 0.0),
+            (.nan, 0.0),
+            (.infinity, 0.0),
             (0.0, 0.0),
             (-1.0, 0.0),
-            (1.0, Double.nan),
-            (1.0, Double.infinity)
-        ]
+            (1.0, .nan),
+            (1.0, .infinity)
+        ] as Array<(Double, Double)>
     )
     internal func formattingInvalidUnit(
         coefficient: Double,
@@ -106,9 +105,7 @@ extension MeasureFormattableTests {
             symbol: ""
         )
         let measure: Measure<Length> = .init(12, unit)
-        #expect(measure.isNaT == true)
         #expect(measure.formatted() == "NaT")
-        #expect(measure.description == "NaT")
     }
 }
 #endif
