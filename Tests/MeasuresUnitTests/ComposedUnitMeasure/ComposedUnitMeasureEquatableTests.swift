@@ -24,7 +24,7 @@ internal struct ComposedUnitMeasureEquatableTests {
         (.init(1, .dimensionless), .init(1, .dimensionless), true),
         (.init(1, .dimensionless), .init(2, .dimensionless), false),
         (.init(-1, .dimensionless), .init(-1, .dimensionless), true),
-        (.init(1, .dimensionless),.init(1, .cancelledMeters), false)
+        (.init(1, .dimensionless), .init(1, .cancelledMeters), false)
     ]
 
     @Test(

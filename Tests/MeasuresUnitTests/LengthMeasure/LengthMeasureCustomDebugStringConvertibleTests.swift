@@ -58,10 +58,10 @@ extension LengthMeasureCustomDebugStringConvertibleTests {
     internal func natDebugDescriptionPreservesDiagnostics() {
         let value: Measure<Length> = .nat
         let expected: String = """
-        Measure<Length>(nan, Length(coefficient: nan, constant: nan, symbol: "NaT", dimension: \
-        Dimension(length: 1, mass: 0, time: 0, electricCurrent: 0, thermodynamicTemperature: 0, \
-        substanceAmount: 0, luminousIntensity: 0)))
-        """
+            Measure<Length>(nan, Length(coefficient: nan, constant: nan, symbol: "NaT", dimension: \
+            Dimension(length: 1, mass: 0, time: 0, electricCurrent: 0, thermodynamicTemperature: 0, \
+            substanceAmount: 0, luminousIntensity: 0)))
+            """
         #expect(value.debugDescription == expected)
     }
 }

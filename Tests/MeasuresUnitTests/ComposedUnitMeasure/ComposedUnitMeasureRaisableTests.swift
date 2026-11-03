@@ -14,38 +14,37 @@ import Testing
 internal struct ComposedUnitMeasureRaisableTests {
     internal init() {}
 
-    private static let exponentiationArguments: [
-        (Measure<ComposedUnit>, Measure<ComposedUnit>.Exponent, Double, Dimension)
-    ] = [
-        (.init(2.0, .meter), 2, 4.0, .init(length: 2)),
-        (.init(2.0, .meter), 3, 8.0, .init(length: 3)),
-        (.init(2.0, .meter), -2, 0.25, .init(length: -2)),
-        (.init(2.0, .meter), -3, 0.125, .init(length: -3)),
-        (.init(-2.0, .meter), 2, 4.0, .init(length: 2)),
-        (.init(-2.0, .meter), 3, -8.0, .init(length: 3)),
-        (.init(-2.0, .meter), -2, 0.25, .init(length: -2)),
-        (.init(-2.0, .meter), -3, -0.125, .init(length: -3)),
-        (.init(1.0, .meter), -2, 1.0, .init(length: -2)),
-        (.init(1.0, .meter), -3, 1.0, .init(length: -3)),
-        (.init(-1.0, .meter), -2, 1.0, .init(length: -2)),
-        (.init(-1.0, .meter), -3, -1.0, .init(length: -3)),
-        (.init(0.5, .meter), 2, 0.25, .init(length: 2)),
-        (.init(0.5, .meter), 3, 0.125, .init(length: 3)),
-        (.init(0.5, .meter), -2, 4.0, .init(length: -2)),
-        (.init(0.5, .meter), -3, 8.0, .init(length: -3)),
-        (.init(-0.5, .meter), 2, 0.25, .init(length: 2)),
-        (.init(-0.5, .meter), 3, -0.125, .init(length: 3)),
-        (.init(-0.5, .meter), -2, 4.0, .init(length: -2)),
-        (.init(-0.5, .meter), -3, -8.0, .init(length: -3)),
-        (.init(200.0, .centimeter), 2, 4.0, .init(length: 2)),
-        (.init(200.0, .centimeter), 3, 8.0, .init(length: 3)),
-        (.init(-200.0, .centimeter), 2, 4.0, .init(length: 2)),
-        (.init(-200.0, .centimeter), 3, -8.0, .init(length: 3)),
-        (.init(2.0, .dimensionless), 2, 4.0, .init()),
-        (.init(2.0, .dimensionless), 3, 8.0, .init()),
-        (.init(2.0, .dimensionless), -2, 0.25, .init()),
-        (.init(2.0, .dimensionless), -3, 0.125, .init())
-    ]
+    private static let exponentiationArguments:
+        [(Measure<ComposedUnit>, Measure<ComposedUnit>.Exponent, Double, Dimension)] = [
+            (.init(2.0, .meter), 2, 4.0, .init(length: 2)),
+            (.init(2.0, .meter), 3, 8.0, .init(length: 3)),
+            (.init(2.0, .meter), -2, 0.25, .init(length: -2)),
+            (.init(2.0, .meter), -3, 0.125, .init(length: -3)),
+            (.init(-2.0, .meter), 2, 4.0, .init(length: 2)),
+            (.init(-2.0, .meter), 3, -8.0, .init(length: 3)),
+            (.init(-2.0, .meter), -2, 0.25, .init(length: -2)),
+            (.init(-2.0, .meter), -3, -0.125, .init(length: -3)),
+            (.init(1.0, .meter), -2, 1.0, .init(length: -2)),
+            (.init(1.0, .meter), -3, 1.0, .init(length: -3)),
+            (.init(-1.0, .meter), -2, 1.0, .init(length: -2)),
+            (.init(-1.0, .meter), -3, -1.0, .init(length: -3)),
+            (.init(0.5, .meter), 2, 0.25, .init(length: 2)),
+            (.init(0.5, .meter), 3, 0.125, .init(length: 3)),
+            (.init(0.5, .meter), -2, 4.0, .init(length: -2)),
+            (.init(0.5, .meter), -3, 8.0, .init(length: -3)),
+            (.init(-0.5, .meter), 2, 0.25, .init(length: 2)),
+            (.init(-0.5, .meter), 3, -0.125, .init(length: 3)),
+            (.init(-0.5, .meter), -2, 4.0, .init(length: -2)),
+            (.init(-0.5, .meter), -3, -8.0, .init(length: -3)),
+            (.init(200.0, .centimeter), 2, 4.0, .init(length: 2)),
+            (.init(200.0, .centimeter), 3, 8.0, .init(length: 3)),
+            (.init(-200.0, .centimeter), 2, 4.0, .init(length: 2)),
+            (.init(-200.0, .centimeter), 3, -8.0, .init(length: 3)),
+            (.init(2.0, .dimensionless), 2, 4.0, .init()),
+            (.init(2.0, .dimensionless), 3, 8.0, .init()),
+            (.init(2.0, .dimensionless), -2, 0.25, .init()),
+            (.init(2.0, .dimensionless), -3, 0.125, .init())
+        ]
 
     @Test(
         "Is power of",

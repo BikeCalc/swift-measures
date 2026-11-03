@@ -18,8 +18,8 @@ internal struct LengthMeasureValidatableTests {
         "Unbounded valid range succeeds",
         arguments: [
             -1,
-             0,
-             1
+            0,
+            1
         ] as Array<Int>
     )
     internal func unboundedValidRangeSucceeds(value: Int) {

@@ -14,48 +14,46 @@ import Testing
 internal struct ComposedUnitMeasureDivisibleTests {
     internal init() {}
 
-    private static let divisionArguments: [
-        (Measure<ComposedUnit>, Measure<ComposedUnit>.Divisor, Measure<ComposedUnit>)
-    ] = [
-        (.init(6.0, .meter), 2.0, .init(3.0, .meter)),
-        (.init(6.0, .meter), 3.0, .init(2.0, .meter)),
-        (.init(-6.0, .meter), 2.0, .init(-3.0, .meter)),
-        (.init(-6.0, .meter), -3.0, .init(2.0, .meter)),
-        (.init(1.5, .meter), 0.5, .init(3.0, .meter)),
-        (.init(3.75, .meter), 1.5, .init(2.5, .meter)),
-        (.init(-1.5, .meter), 0.5, .init(-3.0, .meter)),
-        (.init(-3.75, .meter), -1.5, .init(2.5, .meter)),
-        (.init(600.0, .centimeter), 2.0, .init(300.0, .centimeter)),
-        (.init(600.0, .centimeter), 3.0, .init(200.0, .centimeter)),
-        (.init(-600.0, .centimeter), 2.0, .init(-300.0, .centimeter)),
-        (.init(-600.0, .centimeter), -3.0, .init(200.0, .centimeter)),
-        (.init(6.0, .dimensionless), 2.0, .init(3.0, .dimensionless)),
-        (.init(6.0, .dimensionless), 3.0, .init(2.0, .dimensionless)),
-        (.init(-6.0, .dimensionless), 2.0, .init(-3.0, .dimensionless)),
-        (.init(-6.0, .dimensionless), -3.0, .init(2.0, .dimensionless))
-    ]
+    private static let divisionArguments:
+        [(Measure<ComposedUnit>, Measure<ComposedUnit>.Divisor, Measure<ComposedUnit>)] = [
+            (.init(6.0, .meter), 2.0, .init(3.0, .meter)),
+            (.init(6.0, .meter), 3.0, .init(2.0, .meter)),
+            (.init(-6.0, .meter), 2.0, .init(-3.0, .meter)),
+            (.init(-6.0, .meter), -3.0, .init(2.0, .meter)),
+            (.init(1.5, .meter), 0.5, .init(3.0, .meter)),
+            (.init(3.75, .meter), 1.5, .init(2.5, .meter)),
+            (.init(-1.5, .meter), 0.5, .init(-3.0, .meter)),
+            (.init(-3.75, .meter), -1.5, .init(2.5, .meter)),
+            (.init(600.0, .centimeter), 2.0, .init(300.0, .centimeter)),
+            (.init(600.0, .centimeter), 3.0, .init(200.0, .centimeter)),
+            (.init(-600.0, .centimeter), 2.0, .init(-300.0, .centimeter)),
+            (.init(-600.0, .centimeter), -3.0, .init(200.0, .centimeter)),
+            (.init(6.0, .dimensionless), 2.0, .init(3.0, .dimensionless)),
+            (.init(6.0, .dimensionless), 3.0, .init(2.0, .dimensionless)),
+            (.init(-6.0, .dimensionless), 2.0, .init(-3.0, .dimensionless)),
+            (.init(-6.0, .dimensionless), -3.0, .init(2.0, .dimensionless))
+        ]
 
-    private static let remainderArguments: [
-        (Measure<ComposedUnit>, Measure<ComposedUnit>.RemainderDivisor, Measure<ComposedUnit>)
-    ] = [
-        (.init(4.0, .meter), 2.0, .init(0.0, .meter)),
-        (.init(5.0, .meter), 2.0, .init(1.0, .meter)),
-        (.init(5.0, .meter), -2.0, .init(1.0, .meter)),
-        (.init(-5.0, .meter), 2.0, .init(-1.0, .meter)),
-        (.init(-5.0, .meter), -2.0, .init(-1.0, .meter)),
-        (.init(1.5, .meter), 0.5, .init(0.0, .meter)),
-        (.init(1.75, .meter), 0.5, .init(0.25, .meter)),
-        (.init(-1.75, .meter), 0.5, .init(-0.25, .meter)),
-        (.init(-1.75, .meter), -0.5, .init(-0.25, .meter)),
-        (.init(500.0, .centimeter), 200.0, .init(100.0, .centimeter)),
-        (.init(500.0, .centimeter), -200.0, .init(100.0, .centimeter)),
-        (.init(-500.0, .centimeter), 200.0, .init(-100.0, .centimeter)),
-        (.init(-500.0, .centimeter), -200.0, .init(-100.0, .centimeter)),
-        (.init(4.0, .dimensionless), 2.0, .init(0.0, .dimensionless)),
-        (.init(5.0, .dimensionless), 2.0, .init(1.0, .dimensionless)),
-        (.init(5.0, .dimensionless), -2.0, .init(1.0, .dimensionless)),
-        (.init(-5.0, .dimensionless), 2.0, .init(-1.0, .dimensionless))
-    ]
+    private static let remainderArguments:
+        [(Measure<ComposedUnit>, Measure<ComposedUnit>.RemainderDivisor, Measure<ComposedUnit>)] = [
+            (.init(4.0, .meter), 2.0, .init(0.0, .meter)),
+            (.init(5.0, .meter), 2.0, .init(1.0, .meter)),
+            (.init(5.0, .meter), -2.0, .init(1.0, .meter)),
+            (.init(-5.0, .meter), 2.0, .init(-1.0, .meter)),
+            (.init(-5.0, .meter), -2.0, .init(-1.0, .meter)),
+            (.init(1.5, .meter), 0.5, .init(0.0, .meter)),
+            (.init(1.75, .meter), 0.5, .init(0.25, .meter)),
+            (.init(-1.75, .meter), 0.5, .init(-0.25, .meter)),
+            (.init(-1.75, .meter), -0.5, .init(-0.25, .meter)),
+            (.init(500.0, .centimeter), 200.0, .init(100.0, .centimeter)),
+            (.init(500.0, .centimeter), -200.0, .init(100.0, .centimeter)),
+            (.init(-500.0, .centimeter), 200.0, .init(-100.0, .centimeter)),
+            (.init(-500.0, .centimeter), -200.0, .init(-100.0, .centimeter)),
+            (.init(4.0, .dimensionless), 2.0, .init(0.0, .dimensionless)),
+            (.init(5.0, .dimensionless), 2.0, .init(1.0, .dimensionless)),
+            (.init(5.0, .dimensionless), -2.0, .init(1.0, .dimensionless)),
+            (.init(-5.0, .dimensionless), 2.0, .init(-1.0, .dimensionless))
+        ]
 
     @Test(
         "Is divisible by",

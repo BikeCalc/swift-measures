@@ -55,7 +55,7 @@ internal struct ComposedUnitMeasureConvertibleTests {
             (.init(1, .kilometer), .meter, .init(1_000, .meter)),
             (.init(1, .dimensionless), .dimensionless, .init(1, .dimensionless)),
             (.init(1, .dimensionless), .cancelledMeters, .init(1, .cancelledMeters)),
-            (.init(1, .cancelledMeters),  .dimensionless, .init(1, .dimensionless)),
+            (.init(1, .cancelledMeters), .dimensionless, .init(1, .dimensionless)),
             (.init(1, .cancelledMeters), .cancelledMeters, .init(1, .cancelledMeters))
         ] as Array<(Measure<ComposedUnit>, ComposedUnit, Measure<ComposedUnit>)>
     )

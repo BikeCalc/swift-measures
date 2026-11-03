@@ -14,26 +14,25 @@ import Testing
 internal struct ComposedUnitMeasureMultipliableTests {
     internal init() {}
 
-    private static let multiplicationArguments: [
-        (Measure<ComposedUnit>, Measure<ComposedUnit>.Multiplier, Measure<ComposedUnit>)
-    ] = [
-        (.init(2.0, .meter), 3.0, .init(6.0, .meter)),
-        (.init(3.0, .meter), 4.0, .init(12.0, .meter)),
-        (.init(-2.0, .meter), 3.0, .init(-6.0, .meter)),
-        (.init(-3.0, .meter), -4.0, .init(12.0, .meter)),
-        (.init(0.5, .meter), 1.5, .init(0.75, .meter)),
-        (.init(1.5, .meter), 2.5, .init(3.75, .meter)),
-        (.init(-0.5, .meter), 1.5, .init(-0.75, .meter)),
-        (.init(-1.5, .meter), -2.5, .init(3.75, .meter)),
-        (.init(200.0, .centimeter), 3.0, .init(600.0, .centimeter)),
-        (.init(300.0, .centimeter), 4.0, .init(1_200.0, .centimeter)),
-        (.init(-200.0, .centimeter), 3.0, .init(-600.0, .centimeter)),
-        (.init(-300.0, .centimeter), -4.0, .init(1_200.0, .centimeter)),
-        (.init(2.0, .dimensionless), 3.0, .init(6.0, .dimensionless)),
-        (.init(3.0, .dimensionless), 4.0, .init(12.0, .dimensionless)),
-        (.init(-2.0, .dimensionless), 3.0, .init(-6.0, .dimensionless)),
-        (.init(-3.0, .dimensionless), -4.0, .init(12.0, .dimensionless))
-    ]
+    private static let multiplicationArguments:
+        [(Measure<ComposedUnit>, Measure<ComposedUnit>.Multiplier, Measure<ComposedUnit>)] = [
+            (.init(2.0, .meter), 3.0, .init(6.0, .meter)),
+            (.init(3.0, .meter), 4.0, .init(12.0, .meter)),
+            (.init(-2.0, .meter), 3.0, .init(-6.0, .meter)),
+            (.init(-3.0, .meter), -4.0, .init(12.0, .meter)),
+            (.init(0.5, .meter), 1.5, .init(0.75, .meter)),
+            (.init(1.5, .meter), 2.5, .init(3.75, .meter)),
+            (.init(-0.5, .meter), 1.5, .init(-0.75, .meter)),
+            (.init(-1.5, .meter), -2.5, .init(3.75, .meter)),
+            (.init(200.0, .centimeter), 3.0, .init(600.0, .centimeter)),
+            (.init(300.0, .centimeter), 4.0, .init(1_200.0, .centimeter)),
+            (.init(-200.0, .centimeter), 3.0, .init(-600.0, .centimeter)),
+            (.init(-300.0, .centimeter), -4.0, .init(1_200.0, .centimeter)),
+            (.init(2.0, .dimensionless), 3.0, .init(6.0, .dimensionless)),
+            (.init(3.0, .dimensionless), 4.0, .init(12.0, .dimensionless)),
+            (.init(-2.0, .dimensionless), 3.0, .init(-6.0, .dimensionless)),
+            (.init(-3.0, .dimensionless), -4.0, .init(12.0, .dimensionless))
+        ]
 
     @Test(
         "Is multiple of",

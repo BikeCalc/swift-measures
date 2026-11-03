@@ -14,26 +14,25 @@ import Testing
 internal struct ComposedUnitMeasureSubtractableTests {
     internal init() {}
 
-    private static let subtractionArguments: [
-        (Measure<ComposedUnit>, Measure<ComposedUnit>.Subtrahend, Measure<ComposedUnit>)
-    ] = [
-        (.init(3.0, .meter), .init(2.0, .meter), .init(1.0, .meter)),
-        (.init(5.0, .meter), .init(3.0, .meter), .init(2.0, .meter)),
-        (.init(-3.0, .meter), .init(2.0, .meter), .init(-5.0, .meter)),
-        (.init(-5.0, .meter), .init(-3.0, .meter), .init(-2.0, .meter)),
-        (.init(1.5, .meter), .init(0.5, .meter), .init(1.0, .meter)),
-        (.init(3.5, .meter), .init(1.5, .meter), .init(2.0, .meter)),
-        (.init(-1.5, .meter), .init(0.5, .meter), .init(-2.0, .meter)),
-        (.init(-3.5, .meter), .init(-1.5, .meter), .init(-2.0, .meter)),
-        (.init(3.0, .meter), .init(200.0, .centimeter), .init(1.0, .meter)),
-        (.init(300.0, .centimeter), .init(2.0, .meter), .init(100.0, .centimeter)),
-        (.init(-3.0, .meter), .init(200.0, .centimeter), .init(-5.0, .meter)),
-        (.init(-300.0, .centimeter), .init(2.0, .meter), .init(-500.0, .centimeter)),
-        (.init(3.0, .dimensionless), .init(2.0, .dimensionless), .init(1.0, .dimensionless)),
-        (.init(5.0, .dimensionless), .init(3.0, .dimensionless), .init(2.0, .dimensionless)),
-        (.init(-3.0, .dimensionless), .init(2.0, .dimensionless), .init(-5.0, .dimensionless)),
-        (.init(-5.0, .dimensionless), .init(-3.0, .dimensionless), .init(-2.0, .dimensionless))
-    ]
+    private static let subtractionArguments:
+        [(Measure<ComposedUnit>, Measure<ComposedUnit>.Subtrahend, Measure<ComposedUnit>)] = [
+            (.init(3.0, .meter), .init(2.0, .meter), .init(1.0, .meter)),
+            (.init(5.0, .meter), .init(3.0, .meter), .init(2.0, .meter)),
+            (.init(-3.0, .meter), .init(2.0, .meter), .init(-5.0, .meter)),
+            (.init(-5.0, .meter), .init(-3.0, .meter), .init(-2.0, .meter)),
+            (.init(1.5, .meter), .init(0.5, .meter), .init(1.0, .meter)),
+            (.init(3.5, .meter), .init(1.5, .meter), .init(2.0, .meter)),
+            (.init(-1.5, .meter), .init(0.5, .meter), .init(-2.0, .meter)),
+            (.init(-3.5, .meter), .init(-1.5, .meter), .init(-2.0, .meter)),
+            (.init(3.0, .meter), .init(200.0, .centimeter), .init(1.0, .meter)),
+            (.init(300.0, .centimeter), .init(2.0, .meter), .init(100.0, .centimeter)),
+            (.init(-3.0, .meter), .init(200.0, .centimeter), .init(-5.0, .meter)),
+            (.init(-300.0, .centimeter), .init(2.0, .meter), .init(-500.0, .centimeter)),
+            (.init(3.0, .dimensionless), .init(2.0, .dimensionless), .init(1.0, .dimensionless)),
+            (.init(5.0, .dimensionless), .init(3.0, .dimensionless), .init(2.0, .dimensionless)),
+            (.init(-3.0, .dimensionless), .init(2.0, .dimensionless), .init(-5.0, .dimensionless)),
+            (.init(-5.0, .dimensionless), .init(-3.0, .dimensionless), .init(-2.0, .dimensionless))
+        ]
 
     @Test(
         "Subtraction succeeds",
