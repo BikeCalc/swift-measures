@@ -56,10 +56,55 @@ internal struct ConvertedLengthMeasureDecodableTests {
         }
     }
 }
-#endif
 
 // MARK: - NaT
 
 extension ConvertedLengthMeasureDecodableTests {
-    // TODO: Implement NaT tests for this suite.
+    @Test(
+        "Default JSON decoding rejects nonfinite strings",
+        arguments: [
+            #"{"unit":{"coefficient":"NaN","constant":"NaN","symbol":"NaT"},"value":"NaN"}"#,
+            #"{"unit":{"coefficient":1,"constant":0,"symbol":"m"},"value":"NaN"}"#,
+            #"{"unit":{"coefficient":1,"constant":0,"symbol":"m"},"value":"Infinity"}"#,
+            #"{"unit":{"coefficient":1,"constant":0,"symbol":"m"},"value":"-Infinity"}"#
+        ] as Array<String>
+    )
+    internal func defaultJSONDecodingRejectsNonfiniteStrings(json: String) throws {
+        let data: Data = try #require(json.data(using: .utf8))
+        #expect(throws: DecodingError.self) {
+            try JSONDecoder().decode(
+                Converted<Length>.self,
+                from: data
+            )
+        }
+    }
+
+    @Test(
+        "Configured JSON decoding produces the NaT sentinel",
+        arguments: [
+            #"{"unit":{"coefficient":"NaN","constant":"NaN","symbol":"NaT"},"value":"NaN"}"#,
+            #"{"unit":{"coefficient":1,"constant":0,"symbol":"m"},"value":"NaN"}"#,
+            #"{"unit":{"coefficient":1,"constant":0,"symbol":"m"},"value":"Infinity"}"#,
+            #"{"unit":{"coefficient":1,"constant":0,"symbol":"m"},"value":"-Infinity"}"#
+        ] as Array<String>
+    )
+    internal func configuredJSONDecodingPreservesNaT(json: String) throws {
+        let data: Data = try #require(json.data(using: .utf8))
+        let decoder: JSONDecoder = .init()
+        decoder.nonConformingFloatDecodingStrategy = .convertFromString(
+            positiveInfinity: "Infinity",
+            negativeInfinity: "-Infinity",
+            nan: "NaN"
+        )
+        let result: Converted<Length> = try decoder.decode(
+            Converted<Length>.self,
+            from: data
+        )
+        #expect(result.wrappedValue.isNaT == true)
+        #expect(result.wrappedValue.value.isNaN == true)
+        #expect(result.wrappedValue.unit.coefficient.isNaN == true)
+        #expect(result.wrappedValue.unit.constant.isNaN == true)
+        #expect(result.wrappedValue.unit.symbol == "NaT")
+    }
 }
+#endif

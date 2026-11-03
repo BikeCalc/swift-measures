@@ -10,6 +10,7 @@
 import Foundation
 import Testing
 
+@testable import CoreMeasureUnits
 @testable import Measures
 
 @Suite("ComposedUnit Measure Decodable Tests")
@@ -39,10 +40,7 @@ internal struct ComposedUnitMeasureDecodableTests {
                 """,
                 .init(1_000, .millimeter)
             ),
-            (
-                #"{"unit":[],"value":1}"#,
-                .init(1, .dimensionless)
-            ),
+            (#"{"unit":[],"value":1}"#, .init(1, .dimensionless)),
             (
                 """
                 {"unit":[{"exponent":1,"unit":{"coefficient":1,"constant":273.15,\
@@ -111,6 +109,104 @@ internal struct ComposedUnitMeasureDecodableTests {
 // MARK: - NaT
 
 extension ComposedUnitMeasureDecodableTests {
-    // TODO: Implement NaT tests for this suite.
+    @Test(
+        "Default JSON decoding rejects nonfinite strings",
+        arguments: [
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":"NaN","constant":"NaN","dimension":{},\
+            "symbol":"NaT"}}],"value":"NaN"}
+            """,
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}],\
+            "value":"NaN"}
+            """,
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}],\
+            "value":"Infinity"}
+            """,
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}],\
+            "value":"-Infinity"}
+            """
+        ] as Array<String>
+    )
+    internal func defaultJSONDecodingRejectsNonfiniteStrings(json: String) throws {
+        let data: Data = try #require(json.data(using: .utf8))
+        #expect(throws: DecodingError.self) {
+            try JSONDecoder().decode(
+                Measure<ComposedUnit>.self,
+                from: data
+            )
+        }
+    }
+
+    @Test(
+        "Configured JSON decoding preserves NaT representation",
+        arguments: [
+            (
+                """
+                {"unit":[{"exponent":1,"unit":{"coefficient":"NaN","constant":"NaN","dimension":{},\
+                "symbol":"NaT"}}],"value":"NaN"}
+                """,
+                .nat
+            ),
+            (
+                """
+                {"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}],\
+                "value":"NaN"}
+                """,
+                .init(Double.nan, .meter)
+            ),
+            (
+                """
+                {"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}],\
+                "value":"Infinity"}
+                """,
+                .init(Double.infinity, .meter)
+            ),
+            (
+                """
+                {"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}],\
+                "value":"-Infinity"}
+                """,
+                .init(Double.negativeInfinity, .meter)
+            )
+        ] as Array<(String, Measure<ComposedUnit>)>
+    )
+    internal func configuredJSONDecodingPreservesNaT(
+        json: String,
+        expected: Measure<ComposedUnit>
+    ) throws {
+        let data: Data = try #require(json.data(using: .utf8))
+        let decoder: JSONDecoder = .init()
+        decoder.nonConformingFloatDecodingStrategy = .convertFromString(
+            positiveInfinity: "Infinity",
+            negativeInfinity: "-Infinity",
+            nan: "NaN"
+        )
+        let result: Measure<ComposedUnit> = try decoder.decode(
+            Measure<ComposedUnit>.self,
+            from: data
+        )
+        #expect(result.isNaT == true)
+
+        if expected.value.isNaN == true {
+            #expect(result.value.isNaN == true)
+        } else {
+            #expect(result.value == expected.value)
+        }
+
+        if expected.unit.coefficient.isNaN == true {
+            #expect(result.unit.coefficient.isNaN == true)
+            #expect(result.unit.constant.isNaN == true)
+            #expect(result.unit.symbol == expected.unit.symbol)
+        } else {
+            #expect(result.unit == expected.unit)
+        }
+
+        #expect(result.unit.factors.count == expected.unit.factors.count)
+        #expect(result.unit.factors.first?.exponent == expected.unit.factors.first?.exponent)
+        #expect(result.unit.dimension == expected.unit.dimension)
+    }
 }
 #endif

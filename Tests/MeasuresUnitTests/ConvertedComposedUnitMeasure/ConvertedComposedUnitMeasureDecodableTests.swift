@@ -10,6 +10,7 @@
 import Foundation
 import Testing
 
+@testable import CoreMeasureUnits
 @testable import Measures
 
 @Suite("Converted ComposedUnit Measure Decodable Tests")
@@ -39,10 +40,7 @@ internal struct ConvertedComposedUnitMeasureDecodableTests {
                 """,
                 .init(1_000, .millimeter)
             ),
-            (
-                #"{"unit":[],"value":1}"#,
-                .init(1, .dimensionless)
-            )
+            (#"{"unit":[],"value":1}"#, .init(1, .dimensionless))
         ] as Array<(String, Measure<ComposedUnit>)>
     )
     internal func decodeFromJSONSucceeds(
@@ -97,6 +95,78 @@ internal struct ConvertedComposedUnitMeasureDecodableTests {
 // MARK: - NaT
 
 extension ConvertedComposedUnitMeasureDecodableTests {
-    // TODO: Implement NaT tests for this suite.
+    @Test(
+        "Default JSON decoding rejects nonfinite strings",
+        arguments: [
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":"NaN","constant":"NaN","dimension":{},\
+            "symbol":"NaT"}}],"value":"NaN"}
+            """,
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}],\
+            "value":"NaN"}
+            """,
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}],\
+            "value":"Infinity"}
+            """,
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}],\
+            "value":"-Infinity"}
+            """
+        ] as Array<String>
+    )
+    internal func defaultJSONDecodingRejectsNonfiniteStrings(json: String) throws {
+        let data: Data = try #require(json.data(using: .utf8))
+        #expect(throws: DecodingError.self) {
+            try JSONDecoder().decode(
+                Converted<ComposedUnit>.self,
+                from: data
+            )
+        }
+    }
+
+    @Test(
+        "Configured JSON decoding produces the NaT sentinel",
+        arguments: [
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":"NaN","constant":"NaN","dimension":{},\
+            "symbol":"NaT"}}],"value":"NaN"}
+            """,
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}],\
+            "value":"NaN"}
+            """,
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}],\
+            "value":"Infinity"}
+            """,
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}],\
+            "value":"-Infinity"}
+            """
+        ] as Array<String>
+    )
+    internal func configuredJSONDecodingPreservesNaT(json: String) throws {
+        let data: Data = try #require(json.data(using: .utf8))
+        let decoder: JSONDecoder = .init()
+        decoder.nonConformingFloatDecodingStrategy = .convertFromString(
+            positiveInfinity: "Infinity",
+            negativeInfinity: "-Infinity",
+            nan: "NaN"
+        )
+        let result: Converted<ComposedUnit> = try decoder.decode(
+            Converted<ComposedUnit>.self,
+            from: data
+        )
+        #expect(result.wrappedValue.isNaT == true)
+        #expect(result.wrappedValue.value.isNaN == true)
+        #expect(result.wrappedValue.unit.coefficient.isNaN == true)
+        #expect(result.wrappedValue.unit.constant.isNaN == true)
+        #expect(result.wrappedValue.unit.symbol == "NaT")
+        #expect(result.wrappedValue.unit.factors.count == 1)
+        #expect(result.wrappedValue.unit.factors.first?.exponent == 1)
+        #expect(result.wrappedValue.unit.dimension.isDimensionless == true)
+    }
 }
 #endif

@@ -60,10 +60,80 @@ internal struct LengthMeasureDecodableTests {
         }
     }
 }
-#endif
 
 // MARK: - NaT
 
 extension LengthMeasureDecodableTests {
-    // TODO: Implement NaT tests for this suite.
+    @Test(
+        "Default JSON decoding rejects nonfinite strings",
+        arguments: [
+            #"{"unit":{"coefficient":"NaN","constant":"NaN","symbol":"NaT"},"value":"NaN"}"#,
+            #"{"unit":{"coefficient":1,"constant":0,"symbol":"m"},"value":"NaN"}"#,
+            #"{"unit":{"coefficient":1,"constant":0,"symbol":"m"},"value":"Infinity"}"#,
+            #"{"unit":{"coefficient":1,"constant":0,"symbol":"m"},"value":"-Infinity"}"#
+        ] as Array<String>
+    )
+    internal func defaultJSONDecodingRejectsNonfiniteStrings(json: String) throws {
+        let data: Data = try #require(json.data(using: .utf8))
+        #expect(throws: DecodingError.self) {
+            try JSONDecoder().decode(
+                Measure<Length>.self,
+                from: data
+            )
+        }
+    }
+
+    @Test(
+        "Configured JSON decoding preserves NaT representation",
+        arguments: [
+            (
+                #"{"unit":{"coefficient":"NaN","constant":"NaN","symbol":"NaT"},"value":"NaN"}"#,
+                .nat
+            ),
+            (
+                #"{"unit":{"coefficient":1,"constant":0,"symbol":"m"},"value":"NaN"}"#,
+                .init(Double.nan, .meter)
+            ),
+            (
+                #"{"unit":{"coefficient":1,"constant":0,"symbol":"m"},"value":"Infinity"}"#,
+                .init(Double.infinity, .meter)
+            ),
+            (
+                #"{"unit":{"coefficient":1,"constant":0,"symbol":"m"},"value":"-Infinity"}"#,
+                .init(Double.negativeInfinity, .meter)
+            )
+        ] as Array<(String, Measure<Length>)>
+    )
+    internal func configuredJSONDecodingPreservesNaT(
+        json: String,
+        expected: Measure<Length>
+    ) throws {
+        let data: Data = try #require(json.data(using: .utf8))
+        let decoder: JSONDecoder = .init()
+        decoder.nonConformingFloatDecodingStrategy = .convertFromString(
+            positiveInfinity: "Infinity",
+            negativeInfinity: "-Infinity",
+            nan: "NaN"
+        )
+        let result: Measure<Length> = try decoder.decode(
+            Measure<Length>.self,
+            from: data
+        )
+        #expect(result.isNaT == true)
+
+        if expected.value.isNaN == true {
+            #expect(result.value.isNaN == true)
+        } else {
+            #expect(result.value == expected.value)
+        }
+
+        if expected.unit.coefficient.isNaN == true {
+            #expect(result.unit.coefficient.isNaN == true)
+            #expect(result.unit.constant.isNaN == true)
+            #expect(result.unit.symbol == expected.unit.symbol)
+        } else {
+            #expect(result.unit == expected.unit)
+        }
+    }
 }
+#endif
