@@ -38,4 +38,22 @@ internal struct TemperatureMeasureDivisibleTests {
             #expect(result.unit.constant == 0.0)
         }
     }
+
+    @Test(
+        "Is invertible",
+        arguments: [
+            (.init(0.0, .celsius), true),
+            (.init(273.15, .kelvin), true),
+            (.init(0.0, .kelvin), false),
+            (.init(-273.15, .celsius), false),
+            (.init(-1.0, .kelvin), true)
+        ] as Array<(Measure<ThermodynamicTemperature>, Bool)>
+    )
+    internal func isInvertible(
+        dividend: Measure<ThermodynamicTemperature>,
+        expected: Bool
+    ) {
+        let result: Bool = dividend.isInvertible
+        #expect(result == expected)
+    }
 }
