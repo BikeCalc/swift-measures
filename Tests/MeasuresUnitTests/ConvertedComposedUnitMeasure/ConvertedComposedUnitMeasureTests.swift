@@ -91,9 +91,3 @@ internal struct ConvertedComposedUnitMeasureTests {
         #expect(result == .init(2, .meter))
     }
 }
-
-// MARK: - NaT
-
-extension ConvertedComposedUnitMeasureTests {
-    // TODO: Implement NaT tests for this suite.
-}

@@ -50,9 +50,3 @@ internal struct ConvertedLengthMeasureTests {
         #expect(result == expected)
     }
 }
-
-// MARK: - NaT
-
-extension ConvertedLengthMeasureTests {
-    // TODO: Implement NaT tests for this suite.
-}
