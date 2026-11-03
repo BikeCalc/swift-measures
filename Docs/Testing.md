@@ -10,7 +10,7 @@ exercised; it does not establish assertion quality.
 
 ## Requirements
 
-Use Swift 6.3 or later; CI runs on macOS 26. Run commands from the repository root. Package resolution needs network
+Use Swift 6.3 or later; CI runs on `macos-latest`. Run commands from the repository root. Package resolution needs network
 access when dependencies are not cached.
 
 ## Continuous Integration
