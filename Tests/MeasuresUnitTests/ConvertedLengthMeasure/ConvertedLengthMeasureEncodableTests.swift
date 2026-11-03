@@ -36,10 +36,65 @@ internal struct ConvertedLengthMeasureEncodableTests {
         #expect(result == expected)
     }
 }
-#endif
 
 // MARK: - NaT
 
 extension ConvertedLengthMeasureEncodableTests {
-    // TODO: Implement NaT tests for this suite.
+    @Test(
+        "Default JSON encoding rejects NaT",
+        arguments: [
+            .nat,
+            .init(Double.nan, .meter),
+            .init(Double.infinity, .meter),
+            .init(Double.negativeInfinity, .meter)
+        ] as Array<Measure<Length>>
+    )
+    internal func defaultJSONEncodingRejectsNaT(value: Measure<Length>) {
+        let encoded: Converted<Length> = .init(
+            wrappedValue: value,
+            to: .meter
+        )
+        #expect(throws: EncodingError.self) {
+            try JSONEncoder().encode(encoded)
+        }
+    }
+
+    @Test(
+        "Configured JSON encoding preserves NaT representation",
+        arguments: [
+            (.nat, #"{"unit":{"coefficient":"NaN","constant":"NaN","symbol":"NaT"},"value":"NaN"}"#),
+            (
+                .init(Double.nan, .meter),
+                #"{"unit":{"coefficient":"NaN","constant":"NaN","symbol":"NaT"},"value":"NaN"}"#
+            ),
+            (
+                .init(Double.infinity, .meter),
+                #"{"unit":{"coefficient":"NaN","constant":"NaN","symbol":"NaT"},"value":"NaN"}"#
+            ),
+            (
+                .init(Double.negativeInfinity, .meter),
+                #"{"unit":{"coefficient":"NaN","constant":"NaN","symbol":"NaT"},"value":"NaN"}"#
+            )
+        ] as Array<(Measure<Length>, String)>
+    )
+    internal func configuredJSONEncodingPreservesNaT(
+        value: Measure<Length>,
+        json: String
+    ) throws {
+        let encoded: Converted<Length> = .init(
+            wrappedValue: value,
+            to: .meter
+        )
+        let encoder: JSONEncoder = .init()
+        encoder.outputFormatting = .sortedKeys
+        encoder.nonConformingFloatEncodingStrategy = .convertToString(
+            positiveInfinity: "Infinity",
+            negativeInfinity: "-Infinity",
+            nan: "NaN"
+        )
+        let result: Data = try encoder.encode(encoded)
+        let expected: Data = try #require(json.data(using: .utf8))
+        #expect(result == expected)
+    }
 }
+#endif
