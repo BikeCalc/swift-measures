@@ -83,6 +83,32 @@ internal struct ComposedUnitMeasureDecodableTests {
             #"[1,"m"]"#,
             #"true"#,
             """
+            {"unit":[{"exponent":1,"unit":{"coefficient":0,"constant":0,\
+            "dimension":{"thermodynamic_temperature":1},"symbol":"K"}}],"value":1}
+            """,
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":-1,"constant":0,\
+            "dimension":{"thermodynamic_temperature":1},"symbol":"K"}}],"value":1}
+            """,
+            """
+            {"unit":[{"exponent":2,"unit":{"coefficient":1,"constant":273.15,\
+            "dimension":{"thermodynamic_temperature":1},"symbol":"K"}}],"value":1}
+            """,
+            """
+            {"unit":[{"exponent":-1,"unit":{"coefficient":1,"constant":273.15,\
+            "dimension":{"thermodynamic_temperature":1},"symbol":"K"}}],"value":1}
+            """,
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":1,"constant":273.15,\
+            "dimension":{"thermodynamic_temperature":1},"symbol":"K"}},\
+            {"exponent":1,"unit":{"coefficient":1,\
+            "dimension":{"length":1},"symbol":"m"}}],"value":1}
+            """,
+            """
+            {"unit":[{"exponent":0,"unit":{"coefficient":0,"constant":0,\
+            "dimension":{"thermodynamic_temperature":1},"symbol":"K"}}],"value":1}
+            """,
+            """
             {"unit":[{"exponent":1,"unit":{"coefficient":1,"constant":"0","dimension":{"length":1},\
             "symbol":"m"}}],"value":1}
             """,
