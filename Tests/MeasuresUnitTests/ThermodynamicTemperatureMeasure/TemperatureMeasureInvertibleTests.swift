@@ -10,8 +10,8 @@ import Testing
 
 @testable import Measures
 
-@Suite("ThermodynamicTemperature Measure Divisible Tests")
-internal struct TemperatureMeasureDivisibleTests {
+@Suite("ThermodynamicTemperature Measure Invertible Tests")
+internal struct TemperatureMeasureInvertibleTests {
     internal init() {}
 
     @Test(

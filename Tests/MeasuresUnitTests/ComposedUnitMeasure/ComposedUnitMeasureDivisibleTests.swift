@@ -56,20 +56,6 @@ internal struct ComposedUnitMeasureDivisibleTests {
         ]
 
     @Test(
-        "Is invertible",
-        arguments: [
-            .init(2.0, .meter),
-            .init(-2.0, .meter),
-            .init(200.0, .centimeter),
-            .init(-200.0, .centimeter)
-        ] as Array<Measure<ComposedUnit>>
-    )
-    internal func isInvertible(dividend: Measure<ComposedUnit>) {
-        let result: Bool = dividend.isInvertible
-        #expect(result == true)
-    }
-
-    @Test(
         "Is divisible by",
         arguments: [
             (.init(6.0, .meter), .init(3.0, .meter), true),

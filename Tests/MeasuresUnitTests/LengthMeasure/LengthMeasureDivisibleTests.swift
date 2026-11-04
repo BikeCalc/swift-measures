@@ -46,41 +46,6 @@ internal struct LengthMeasureDivisibleTests {
     ]
 
     @Test(
-        "Reciprocal",
-        arguments: [
-            (.init(2.0, .meter), 0.5),
-            (.init(-2.0, .meter), -0.5),
-            (.init(200.0, .centimeter), 0.5),
-            (.init(-200.0, .centimeter), -0.5)
-        ] as Array<(Measure<Length>, Double)>
-    )
-    internal func reciprocal(
-        value: Measure<Length>,
-        expected: Double
-    ) throws {
-        let result: Measure<Length>.Reciprocal = try #require(value.reciprocal)
-        #expect(result.value == expected)
-        #expect(result.unit.dimension == .init(length: -1))
-        #expect(result.unit.coefficient == 1.0)
-        #expect(result.unit.constant == 0.0)
-        #expect(value.isInvertible == true)
-    }
-
-    @Test(
-        "Is invertible",
-        arguments: [
-            .init(2.0, .meter),
-            .init(-2.0, .meter),
-            .init(200.0, .centimeter),
-            .init(-200.0, .centimeter)
-        ] as Array<Measure<Length>>
-    )
-    internal func isInvertible(dividend: Measure<Length>) {
-        let result: Bool = dividend.isInvertible
-        #expect(result == true)
-    }
-
-    @Test(
         "Is divisible by",
         arguments: [
             (.init(6.0, .meter), .init(3.0, .meter), true),
@@ -207,22 +172,6 @@ extension LengthMeasureDivisibleTests {
     }
 
     @Test(
-        "Reciprocal of NaT returns nil",
-        arguments: [.nat, .init(Double.nan, .meter)] as Array<Measure<Length>>
-    )
-    internal func reciprocalOfNaTReturnsNil(value: Measure<Length>) {
-        #expect(value.reciprocal == nil)
-    }
-
-    @Test(
-        "NaT is not invertible",
-        arguments: [.nat, .init(Double.nan, .meter)] as Array<Measure<Length>>
-    )
-    internal func natIsNotInvertible(value: Measure<Length>) {
-        #expect(value.isInvertible == false)
-    }
-
-    @Test(
         "Dividing NaT by a scalar returns NaT",
         arguments: [
             (.nat, 2.0),
@@ -316,80 +265,5 @@ extension LengthMeasureDivisibleTests {
     ) {
         let result: Measure<Length> = dividend % divisor
         #expect(result.isNaT == true)
-    }
-}
-
-// MARK: - Negative Infinity
-
-extension LengthMeasureDivisibleTests {
-    @Test("Reciprocal of negative infinity returns nil")
-    internal func reciprocalOfNegativeInfinityReturnsNil() {
-        let value: Measure<Length> = .init(Double.negativeInfinity, .meter)
-        #expect(value.reciprocal == nil)
-    }
-
-    @Test("Negative infinity is not invertible")
-    internal func negativeInfinityIsNotInvertible() {
-        let value: Measure<Length> = .init(Double.negativeInfinity, .meter)
-        #expect(value.isInvertible == false)
-    }
-}
-
-// MARK: - Negative Zero
-
-extension LengthMeasureDivisibleTests {
-    @Test("Reciprocal of negative zero returns nil")
-    internal func reciprocalOfNegativeZeroReturnsNil() {
-        let value: Measure<Length> = .init(-0.0, .meter)
-        #expect(value.reciprocal == nil)
-    }
-
-    @Test("Negative zero is not invertible")
-    internal func negativeZeroIsNotInvertible() {
-        let value: Measure<Length> = .init(-0.0, .meter)
-        #expect(value.isInvertible == false)
-    }
-}
-
-// MARK: - Least Nonzero Magnitude
-
-extension LengthMeasureDivisibleTests {
-    @Test("Overflowing reciprocal returns nil")
-    internal func overflowingReciprocalReturnsNil() {
-        let value: Measure<Length> = .init(Double.leastNonzeroMagnitude, .meter)
-        #expect(value.reciprocal == nil)
-        #expect(value.isInvertible == false)
-    }
-}
-
-// MARK: - Positive Infinity
-
-extension LengthMeasureDivisibleTests {
-    @Test("Reciprocal of positive infinity returns nil")
-    internal func reciprocalOfPositiveInfinityReturnsNil() {
-        let value: Measure<Length> = .init(Double.infinity, .meter)
-        #expect(value.reciprocal == nil)
-    }
-
-    @Test("Positive infinity is not invertible")
-    internal func positiveInfinityIsNotInvertible() {
-        let value: Measure<Length> = .init(Double.infinity, .meter)
-        #expect(value.isInvertible == false)
-    }
-}
-
-// MARK: - Positive Zero
-
-extension LengthMeasureDivisibleTests {
-    @Test("Reciprocal of positive zero returns nil")
-    internal func reciprocalOfPositiveZeroReturnsNil() {
-        let value: Measure<Length> = .init(0.0, .meter)
-        #expect(value.reciprocal == nil)
-    }
-
-    @Test("Positive zero is not invertible")
-    internal func positiveZeroIsNotInvertible() {
-        let value: Measure<Length> = .init(0.0, .meter)
-        #expect(value.isInvertible == false)
     }
 }
