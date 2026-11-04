@@ -55,7 +55,10 @@ internal struct LengthMeasureInvertibleTests {
 extension LengthMeasureInvertibleTests {
     @Test(
         "Reciprocal of NaT returns nil",
-        arguments: [.nat, .init(Double.nan, .meter)] as Array<Measure<Length>>
+        arguments: [
+            .nat,
+            .init(Double.nan, .meter)
+        ] as Array<Measure<Length>>
     )
     internal func reciprocalOfNaTReturnsNil(value: Measure<Length>) {
         #expect(value.reciprocal == nil)
@@ -63,7 +66,10 @@ extension LengthMeasureInvertibleTests {
 
     @Test(
         "NaT is not invertible",
-        arguments: [.nat, .init(Double.nan, .meter)] as Array<Measure<Length>>
+        arguments: [
+            .nat,
+            .init(Double.nan, .meter)
+        ] as Array<Measure<Length>>
     )
     internal func natIsNotInvertible(value: Measure<Length>) {
         #expect(value.isInvertible == false)

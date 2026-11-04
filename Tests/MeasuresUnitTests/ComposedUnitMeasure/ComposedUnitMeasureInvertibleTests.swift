@@ -51,12 +51,43 @@ internal struct ComposedUnitMeasureInvertibleTests {
     }
 }
 
+// MARK: - Greatest Finite Magnitude
+
+extension ComposedUnitMeasureInvertibleTests {
+    @Test("Reciprocal returns nil when coherent conversion overflows")
+    internal func reciprocalReturnsNilWhenCoherentConversionOverflows() {
+        let unit: ComposedUnit = .init(
+            coefficient: .greatestFiniteMagnitude,
+            constant: 0.0,
+            symbol: "w"
+        )
+        let value: Measure<ComposedUnit> = .init(2.0, unit)
+        #expect(value.reciprocal == nil)
+        #expect(value.isInvertible == false)
+    }
+}
+
+// MARK: - IntMin
+
+extension ComposedUnitMeasureInvertibleTests {
+    @Test("Reciprocal with Int.min dimension exponent returns nil")
+    internal func reciprocalWithIntMinDimensionExponentReturnsNil() {
+        let unit: ComposedUnit = .init(dimension: .init(length: Int.min))
+        let value: Measure<ComposedUnit> = .init(1.0, unit)
+        #expect(value.reciprocal == nil)
+        #expect(value.isInvertible == false)
+    }
+}
+
 // MARK: - NaT
 
 extension ComposedUnitMeasureInvertibleTests {
     @Test(
         "Reciprocal of NaT returns nil",
-        arguments: [.nat, .init(Double.nan, .meter)] as Array<Measure<ComposedUnit>>
+        arguments: [
+            .nat,
+            .init(Double.nan, .meter)
+        ] as Array<Measure<ComposedUnit>>
     )
     internal func reciprocalOfNaTReturnsNil(value: Measure<ComposedUnit>) {
         #expect(value.reciprocal == nil)
@@ -64,7 +95,10 @@ extension ComposedUnitMeasureInvertibleTests {
 
     @Test(
         "NaT is not invertible",
-        arguments: [.nat, .init(Double.nan, .meter)] as Array<Measure<ComposedUnit>>
+        arguments: [
+            .nat,
+            .init(Double.nan, .meter)
+        ] as Array<Measure<ComposedUnit>>
     )
     internal func natIsNotInvertible(value: Measure<ComposedUnit>) {
         #expect(value.isInvertible == false)
