@@ -117,9 +117,9 @@ internal struct ComposedUnitTests {
         "Exponentiation scales factor exponents",
         arguments: [
             (0, [], 1.0, .init(), ""),
-            (1, [1, -1], 2.0, .init(length: 1, time: -1), "u·s⁻¹"),
-            (2, [2, -2], 4.0, .init(length: 2, time: -2), "u²·s⁻²"),
-            (-1, [-1, 1], 0.5, .init(length: -1, time: 1), "u⁻¹·s")
+            (1, [1, -1], 2.0, .init(length: 1, time: -1), "w·s⁻¹"),
+            (2, [2, -2], 4.0, .init(length: 2, time: -2), "w²·s⁻²"),
+            (-1, [-1, 1], 0.5, .init(length: -1, time: 1), "w⁻¹·s")
         ] as Array<(Int, Array<Int>, Double, Dimension, String)>
     )
     internal func exponentiationScalesFactorExponents(
@@ -129,7 +129,7 @@ internal struct ComposedUnitTests {
         dimension: Dimension,
         symbol: String
     ) {
-        let length: Length = .init(coefficient: 2, symbol: "u")
+        let length: Length = .init(coefficient: 2, symbol: "w")
         let source: ComposedUnit = .init(length) / .init(Time.second)
         let unit: ComposedUnit = source ** exponent
         #expect(unit.factors.map { $0.exponent } == exponents)

@@ -90,7 +90,7 @@ extension LengthMeasureConvertibleTests {
         let destination: Length = .init(
             coefficient: 0,
             constant: 0,
-            symbol: "invalid"
+            symbol: "w"
         )
         let result: Measure<Length> = value.converted(to: destination)
         #expect(result.isNaT == true)

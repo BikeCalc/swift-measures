@@ -31,16 +31,16 @@ internal struct LengthMeasureValidatableTests {
         "Unit conversion parameters determine validity",
         arguments: [
             (.init(1, .meter), true),
-            (.init(1, Length(coefficient: -1, symbol: "u")), false),
-            (.init(1, Length(coefficient: 1, constant: -1, symbol: "u")), true),
-            (.init(1, Length(coefficient: 0, symbol: "u")), false),
-            (.init(1, Length(coefficient: -0.0, symbol: "u")), false),
-            (.init(1, Length(coefficient: .infinity, symbol: "u")), false),
-            (.init(1, Length(coefficient: .negativeInfinity, symbol: "u")), false),
-            (.init(1, Length(coefficient: .nan, symbol: "u")), false),
-            (.init(1, Length(coefficient: 1, constant: .infinity, symbol: "u")), false),
-            (.init(1, Length(coefficient: 1, constant: .negativeInfinity, symbol: "u")), false),
-            (.init(1, Length(coefficient: 1, constant: .nan, symbol: "u")), false)
+            (.init(1, Length(coefficient: -1, symbol: "w")), false),
+            (.init(1, Length(coefficient: 1, constant: -1, symbol: "w")), true),
+            (.init(1, Length(coefficient: 0, symbol: "w")), false),
+            (.init(1, Length(coefficient: -0.0, symbol: "w")), false),
+            (.init(1, Length(coefficient: .infinity, symbol: "w")), false),
+            (.init(1, Length(coefficient: .negativeInfinity, symbol: "w")), false),
+            (.init(1, Length(coefficient: .nan, symbol: "w")), false),
+            (.init(1, Length(coefficient: 1, constant: .infinity, symbol: "w")), false),
+            (.init(1, Length(coefficient: 1, constant: .negativeInfinity, symbol: "w")), false),
+            (.init(1, Length(coefficient: 1, constant: .nan, symbol: "w")), false)
         ] as Array<(Measure<Length>, Bool)>
     )
     internal func unitConversionParametersDetermineValidity(

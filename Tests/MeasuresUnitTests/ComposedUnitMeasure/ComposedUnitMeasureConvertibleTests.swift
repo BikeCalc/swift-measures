@@ -98,7 +98,7 @@ extension ComposedUnitMeasureConvertibleTests {
         let destination: ComposedUnit = .init(
             coefficient: 0,
             constant: 0,
-            symbol: "invalid"
+            symbol: "w"
         )
         let result: Measure<ComposedUnit> = value.converted(to: destination)
         #expect(result.isNaT == true)

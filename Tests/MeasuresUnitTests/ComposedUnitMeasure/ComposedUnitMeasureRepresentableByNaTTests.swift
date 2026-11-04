@@ -51,7 +51,7 @@ extension ComposedUnitMeasureRepresentableByNaTTests {
         let unit: ComposedUnit = .init(
             coefficient: conversion.0,
             constant: conversion.1,
-            symbol: "u"
+            symbol: "w"
         )
         let measure: Measure<ComposedUnit> = .init(value, unit)
         #expect(measure.isNaT == false)
@@ -106,7 +106,7 @@ extension ComposedUnitMeasureRepresentableByNaTTests {
         let unit: ComposedUnit = .init(
             coefficient: coefficient,
             constant: constant,
-            symbol: "u"
+            symbol: "w"
         )
         let measure: Measure<ComposedUnit> = .init(1, unit)
         #expect(measure.isNaT == true)

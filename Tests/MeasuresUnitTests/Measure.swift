@@ -14,7 +14,7 @@ where UnitType == Length {
         let unit: Length = .init(
             coefficient: 0,
             constant: 0,
-            symbol: "invalid"
+            symbol: "w"
         )
         return .init(1, unit)
     }
@@ -26,7 +26,7 @@ where UnitType == ComposedUnit {
         let unit: Length = .init(
             coefficient: 0,
             constant: 0,
-            symbol: "invalid"
+            symbol: "w"
         )
         return .init(1, ComposedUnit(unit))
     }

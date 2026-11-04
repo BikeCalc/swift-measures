@@ -39,7 +39,7 @@ extension LengthMeasureRepresentableByNaTTests {
         let unit: Length = .init(
             coefficient: conversion.0,
             constant: conversion.1,
-            symbol: "u"
+            symbol: "w"
         )
         let measure: Measure<Length> = .init(value, unit)
         #expect(measure.isNaT == false)
@@ -94,7 +94,7 @@ extension LengthMeasureRepresentableByNaTTests {
         let unit: Length = .init(
             coefficient: coefficient,
             constant: constant,
-            symbol: "u"
+            symbol: "w"
         )
         let measure: Measure<Length> = .init(1, unit)
         #expect(measure.isNaT == true)
