@@ -488,7 +488,8 @@ extension ComposedUnit: Decodable {
         let container: any SingleValueDecodingContainer = try decoder.singleValueContainer()
         let factors: Array<Self.Factor> = try container.decode(Array<Self.Factor>.self)
         let validator: ComposedUnitFactorValidator = .init(factors: factors)
-        let isNaTRepresentation: Bool = factors.count == 1
+        let isNaTRepresentation: Bool =
+            factors.count == 1
             && factors[0].exponent == 1
             && factors[0].unit.dimension.isDimensionless == true
             && factors[0].unit.coefficient.isNaN == true

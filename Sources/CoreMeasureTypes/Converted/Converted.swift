@@ -37,10 +37,11 @@ where UnitType: Unit {
 
     /// Creates a wrapper containing the specified measure converted to the specified unit.
     ///
+    /// Incompatible conversions produce NaT on initialization and subsequent assignments.
+    ///
     /// - Parameters:
     ///   - wrappedValue: The measure to convert and store.
     ///   - unit: The unit in which to store the measure.
-    /// - Precondition: The source and destination units are compatible on initialization and every assignment.
     public init(
         wrappedValue: Measure<UnitType>,
         to unit: UnitType

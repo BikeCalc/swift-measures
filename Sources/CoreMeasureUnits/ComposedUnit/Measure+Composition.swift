@@ -120,148 +120,6 @@ where UnitType: ComposableUnit {
 
 // MARK: - Divisible
 
-extension Measure: Divisible
-where UnitType: ComposableUnit & Equatable {
-    public typealias Reciprocal = Measure<ComposedUnit>
-
-    public typealias Divisor = Double
-
-    public typealias Quotient = Self
-
-    public typealias RemainderDivisor = Double
-
-    public typealias Remainder = Self
-
-    /// Returns the reciprocal in coherent SI units with inverted dimensions.
-    ///
-    /// The coefficient and constant are applied before inversion. NaT, zero coherent values, nonfinite conversions,
-    /// and nonfinite or zero reciprocals return `nil`. A dimension exponent that cannot be negated also returns `nil`.
-    /// Valid ranges are not enforced.
-    ///
-    /// For example:
-    ///
-    /// ```swift
-    /// let distance: Measure<Length> = .init(200, .centimeter)
-    ///
-    /// print(distance.reciprocal?.description ?? "nil")
-    /// // Prints "0.5 m⁻¹"
-    /// ```
-    public var reciprocal: Self.Reciprocal? {
-        guard self.isNaT == false else {
-            return nil
-        }
-
-        let value: Double = self.value * self.unit.coefficient + self.unit.constant
-
-        guard value.isFinite == true, value != 0 else {
-            return nil
-        }
-
-        let result: Double = 1 / value
-
-        guard result.isFinite == true, result != 0 else {
-            return nil
-        }
-
-        let dimension: Dimension = self.unit.dimension
-
-        guard dimension.exponents.contains(Int.min) == false else {
-            return nil
-        }
-
-        let unit: ComposedUnit = .init(dimension: dimension ** -1)
-        return .init(result, unit)
-    }
-
-    /// A boolean value indicating whether a finite, nonzero coherent reciprocal can be represented.
-    ///
-    /// Offsets apply before inversion, so zero Celsius is invertible while zero Kelvin is not.
-    public var isInvertible: Bool {
-        return self.reciprocal != nil
-    }
-
-    public func isDivisible(by other: Self) -> Bool {
-        guard self.unit.isCompatible(with: other.unit) == true,
-            self.isNaT == false,
-            other.isNaT == false
-        else {
-            return false
-        }
-
-        // Equal scales cancel when neither unit has an offset; avoid introducing conversion rounding.
-        if self.unit.coefficient == other.unit.coefficient,
-            self.unit.constant == 0,
-            other.unit.constant == 0
-        {
-            return self.value.isDivisible(by: other.value)
-        }
-
-        let lhsValue: Double = self.value * self.unit.coefficient + self.unit.constant
-        let rhsValue: Double = other.value * other.unit.coefficient + other.unit.constant
-
-        guard lhsValue.isFinite == true, rhsValue.isFinite == true else {
-            return false
-        }
-
-        return lhsValue.isDivisible(by: rhsValue)
-    }
-
-    /// Returns the quotient by dividing the stored reading by a scalar.
-    ///
-    /// The unit is preserved without applying its coefficient or constant. For offset units, this scales the reading,
-    /// not the absolute reference value. Finite results are not clamped to the valid range. NaT operands, nonfinite
-    /// scalars, and nonfinite results produce NaT.
-    ///
-    /// - Parameters:
-    ///   - lhs: The measure whose reading is scaled.
-    ///   - rhs: The scalar used to scale the reading.
-    /// - Returns: The finite quotient in the original unit, or NaT, including when the divisor is zero.
-    public static func / (
-        _ lhs: Self,
-        _ rhs: Self.Divisor
-    ) -> Self.Quotient {
-        guard lhs.isNaT == false, rhs.isFinite == true else {
-            return .nat
-        }
-
-        let lhsValue: Double = lhs.value
-        let newValue: Double = lhsValue / rhs
-
-        guard newValue.isFinite == true else {
-            return .nat
-        }
-
-        return .init(newValue, lhs.unit)
-    }
-
-    /// Returns the truncating remainder of the stored reading divided by a scalar.
-    ///
-    /// Finite results retain the original unit without applying its coefficient or constant. NaT operands, nonfinite
-    /// scalars, and nonfinite results produce NaT. Valid ranges are not enforced.
-    ///
-    /// - Parameters:
-    ///   - lhs: The measure whose reading is divided.
-    ///   - rhs: The scalar divisor.
-    /// - Returns: The finite remainder in the original unit, or NaT, including when the divisor is zero.
-    public static func % (
-        _ lhs: Self,
-        _ rhs: Self.RemainderDivisor
-    ) -> Self.Remainder {
-        guard lhs.isNaT == false, rhs.isFinite == true else {
-            return .nat
-        }
-
-        let lhsValue: Double = lhs.value
-        let newValue: Double = lhsValue.truncatingRemainder(dividingBy: rhs)
-
-        guard newValue.isFinite == true else {
-            return .nat
-        }
-
-        return .init(newValue, lhs.unit)
-    }
-}
-
 extension Measure
 where UnitType: ComposableUnit {
     /// Returns the quotient of two measures in a composed coherent SI unit.
@@ -331,6 +189,61 @@ where UnitType == ComposedUnit {
     public mutating func divide<Other>(by divisor: Measure<Other>) throws
     where Other: ComposableUnit {
         self = try self.dividing(by: divisor)
+    }
+}
+
+// MARK: - Invertible
+
+extension Measure: Invertible
+where UnitType: ComposableUnit {
+    public typealias Reciprocal = Measure<ComposedUnit>
+
+    /// Returns the reciprocal in coherent SI units with inverted dimensions.
+    ///
+    /// The coefficient and constant are applied before inversion. NaT, zero coherent values, nonfinite conversions,
+    /// and nonfinite or zero reciprocals return `nil`. A dimension exponent that cannot be negated also returns `nil`.
+    /// Valid ranges are not enforced.
+    ///
+    /// For example:
+    ///
+    /// ```swift
+    /// let distance: Measure<Length> = .init(200, .centimeter)
+    ///
+    /// print(distance.reciprocal?.description ?? "nil")
+    /// // Prints "0.5 m⁻¹"
+    /// ```
+    public var reciprocal: Self.Reciprocal? {
+        guard self.isNaT == false else {
+            return nil
+        }
+
+        let value: Double = self.value * self.unit.coefficient + self.unit.constant
+
+        guard value.isFinite == true, value != 0 else {
+            return nil
+        }
+
+        let result: Double = 1 / value
+
+        guard result.isFinite == true, result != 0 else {
+            return nil
+        }
+
+        let dimension: Dimension = self.unit.dimension
+
+        guard dimension.exponents.contains(Int.min) == false else {
+            return nil
+        }
+
+        let unit: ComposedUnit = .init(dimension: dimension ** -1)
+        return .init(result, unit)
+    }
+
+    /// A boolean value indicating whether a finite, nonzero coherent reciprocal can be represented.
+    ///
+    /// Offsets apply before inversion, so zero Celsius is invertible while zero Kelvin is not.
+    public var isInvertible: Bool {
+        return self.reciprocal != nil
     }
 }
 
