@@ -1,5 +1,5 @@
 @Tutorial(time: 10) {
-    @Intro(title: "Calculating with Composed Units") {
+    @Intro(title: "Calculating Composed Units") {
         Calculate a room's area and volume, return to the original length, and introduce property wrappers as you
         convert and canonicalize the results.
     }
