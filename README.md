@@ -29,7 +29,7 @@ Measures is written in Swift and avoids platform-specific APIs where possible.
 1. Add Measures to the dependencies in your `Package.swift` file:
 
     ```swift
-    internal let package: Package = .init(
+    let package: Package = .init(
         ...
         dependencies: [
             .package(
@@ -45,7 +45,7 @@ Measures is written in Swift and avoids platform-specific APIs where possible.
    of that target:
 
     ```swift
-    internal let package: Package = .init(
+    let package: Package = .init(
         ...
         targets: [
             .target(
@@ -73,7 +73,7 @@ Measures is written in Swift and avoids platform-specific APIs where possible.
 - Keep a `Measure` in one unit while calculating with another:
 
   ```swift
-  @Converted(to: .metersPerSecond) internal var speed: Measure<Speed> = .init(36, .kilometersPerHour)
+  @Converted(to: .metersPerSecond) var speed: Measure<Speed> = .init(36, .kilometersPerHour)
   print(speed)
   // Prints "10.0 m/s"
 
