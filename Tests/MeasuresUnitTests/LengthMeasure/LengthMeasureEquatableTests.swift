@@ -7,17 +7,20 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import Testing
+
 @testable import Measures
 
 @Suite("Length Measure Equatable Tests")
 internal struct LengthMeasureEquatableTests {
+    internal init() {}
+
     private static let equalityArguments: [(Measure<Length>, Measure<Length>, Bool)] = [
-        (Measure<Length>(1, .meter), Measure<Length>(1, .meter), true),
-        (Measure<Length>(1, .meter), Measure<Length>(2, .meter), false),
-        (Measure<Length>(1, .meter), Measure<Length>(100, .centimeter), false),
-        (Measure<Length>(1, .foot), Measure<Length>(1, .foot), true),
-        (Measure<Length>(1, .foot), Measure<Length>(2, .foot), false),
-        (Measure<Length>(1, .foot), Measure<Length>(12, .inch), false)
+        (.init(1, .meter), .init(1, .meter), true),
+        (.init(1, .meter), .init(2, .meter), false),
+        (.init(1, .meter), .init(100, .centimeter), false),
+        (.init(1, .foot), .init(1, .foot), true),
+        (.init(1, .foot), .init(2, .foot), false),
+        (.init(1, .foot), .init(12, .inch), false)
     ]
 
     @Test(
@@ -27,9 +30,10 @@ internal struct LengthMeasureEquatableTests {
     internal func equalitySucceeds(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
-        result: Bool
+        expected: Bool
     ) {
-        #expect((lhs == rhs) == result)
+        let result: Bool = lhs == rhs
+        #expect(result == expected)
     }
 
     @Test(
@@ -39,9 +43,10 @@ internal struct LengthMeasureEquatableTests {
     internal func inequalitySucceeds(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
-        result: Bool
+        expected: Bool
     ) {
-        #expect((lhs != rhs) == !result)
+        let result: Bool = lhs != rhs
+        #expect(result == !expected)
     }
 
     @Test(
@@ -51,9 +56,10 @@ internal struct LengthMeasureEquatableTests {
     internal func isEqualSucceeds(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
-        result: Bool
-    ) {
-        #expect(lhs.isEqual(to: rhs) == result)
+        expected: Bool
+    ) throws {
+        let result: Bool = try lhs.isEqual(to: rhs)
+        #expect(result == expected)
     }
 
     @Test(
@@ -63,8 +69,33 @@ internal struct LengthMeasureEquatableTests {
     internal func isUnequalSucceeds(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
-        result: Bool
+        expected: Bool
+    ) throws {
+        let result: Bool = try lhs.isUnequal(to: rhs)
+        #expect(result == !expected)
+    }
+}
+
+// MARK: - NaT
+
+extension LengthMeasureEquatableTests {
+    @Test(
+        "NaT is unequal",
+        arguments: [
+            (.nat, .init(1, .meter)),
+            (.init(1, .meter), .nat),
+            (.nat, .nat),
+            (.invalid, .init(1, .meter)),
+            (.init(1, .meter), .invalid)
+        ] as Array<(Measure<Length>, Measure<Length>)>
+    )
+    internal func natIsUnequal(
+        lhs: Measure<Length>,
+        rhs: Measure<Length>
     ) {
-        #expect(lhs.isUnequal(to: rhs) == !result)
+        let equalityResult: Bool = lhs == rhs
+        #expect(equalityResult == false)
+        let inequalityResult: Bool = lhs != rhs
+        #expect(inequalityResult == true)
     }
 }

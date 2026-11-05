@@ -20,6 +20,7 @@ extension MeasuresMacroPlugin: CompilerPlugin {
     package var providingMacros: Array<Macro.Type> {
         return [
             BinaryUnitsMacro.self,
+            CaseIterableUnitsMacro.self,
             MetricUnitsMacro.self
         ]
     }

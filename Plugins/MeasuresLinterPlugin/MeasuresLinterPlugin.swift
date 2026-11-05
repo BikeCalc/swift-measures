@@ -11,7 +11,9 @@ import PackagePlugin
 
 /// Lints every Swift source file in the Measures package.
 @main
-internal struct MeasuresLinterPlugin {}
+internal struct MeasuresLinterPlugin {
+    internal init() {}
+}
 
 // MARK: - CommandPlugin
 
@@ -47,13 +49,18 @@ extension MeasuresLinterPlugin: CommandPlugin {
         }
 
         let sourcePaths: Array<String> = Set(
-            String(decoding: data, as: UTF8.self)
-                .split(separator: "\0")
-                .map { packageURL.appendingPathComponent(String($0)).path }
-                .filter { FileManager.default.fileExists(atPath: $0) }
+            String(
+                decoding: data,
+                as: UTF8.self
+            )
+            .split(separator: "\0")
+            .map { packageURL.appendingPathComponent(String($0)).path }
+            .filter { FileManager.default.fileExists(atPath: $0) }
         ).sorted()
 
-        guard !sourcePaths.isEmpty else { return }
+        guard sourcePaths.isEmpty == false else {
+            return
+        }
 
         let lintArguments: Array<String> =
             ["lint"] + sourcePaths + [
@@ -65,12 +72,10 @@ extension MeasuresLinterPlugin: CommandPlugin {
             swiftFormat.url,
             arguments: lintArguments
         )
-
         process.waitUntilExit()
 
         guard process.terminationReason == .exit && process.terminationStatus == 0 else {
             let problem: String = "\(process.terminationReason):\(process.terminationStatus)"
-
             Diagnostics.error(
                 "Swift Format could not complete: \(problem)"
             )

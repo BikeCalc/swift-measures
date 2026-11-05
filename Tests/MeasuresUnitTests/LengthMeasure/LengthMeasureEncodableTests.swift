@@ -9,26 +9,20 @@
 #if canImport(Foundation)
 import Foundation
 import Testing
+
 @testable import Measures
 
 @Suite("Length Measure Encodable Tests")
 internal struct LengthMeasureEncodableTests {
+    internal init() {}
+
     @Test(
         "Encode to JSON succeeds",
         arguments: [
-            (
-                Measure<Length>(1, .meter),
-                #"{"unit":{"coefficient":1,"constant":0,"symbol":"m"},"value":1}"#
-            ),
-            (
-                Measure<Length>(100, .centimeter),
-                #"{"unit":{"coefficient":0.01,"constant":0,"symbol":"cm"},"value":100}"#
-            ),
-            (
-                Measure<Length>(-2, .yard),
-                #"{"unit":{"coefficient":0.9144,"constant":0,"symbol":"yd"},"value":-2}"#
-            )
-        ]
+            (.init(1, .meter), #"{"unit":{"coefficient":1,"constant":0,"symbol":"m"},"value":1}"#),
+            (.init(100, .centimeter), #"{"unit":{"coefficient":0.01,"constant":0,"symbol":"cm"},"value":100}"#),
+            (.init(-2, .yard), #"{"unit":{"coefficient":0.9144,"constant":0,"symbol":"yd"},"value":-2}"#)
+        ] as Array<(Measure<Length>, String)>
     )
     internal func encodeToJSONSucceeds(
         value: Measure<Length>,
@@ -36,10 +30,64 @@ internal struct LengthMeasureEncodableTests {
     ) throws {
         let encoder: JSONEncoder = .init()
         encoder.outputFormatting = .sortedKeys
-
         let result: Data = try encoder.encode(value)
         let expected: Data = try #require(json.data(using: .utf8))
+        #expect(result == expected)
+    }
+}
 
+// MARK: - NaT
+
+extension LengthMeasureEncodableTests {
+    @Test(
+        "Default JSON encoding rejects NaT",
+        arguments: [
+            .nat,
+            .init(Double.nan, .meter),
+            .init(Double.infinity, .meter),
+            .init(Double.negativeInfinity, .meter)
+        ] as Array<Measure<Length>>
+    )
+    internal func defaultJSONEncodingRejectsNaT(value: Measure<Length>) {
+        #expect(throws: EncodingError.self) {
+            try JSONEncoder().encode(value)
+        }
+    }
+
+    @Test(
+        "Configured JSON encoding preserves NaT representation",
+        arguments: [
+            (
+                .nat,
+                #"{"unit":{"coefficient":"NaN","constant":"NaN","symbol":"NaT"},"value":"NaN"}"#
+            ),
+            (
+                .init(Double.nan, .meter),
+                #"{"unit":{"coefficient":1,"constant":0,"symbol":"m"},"value":"NaN"}"#
+            ),
+            (
+                .init(Double.infinity, .meter),
+                #"{"unit":{"coefficient":1,"constant":0,"symbol":"m"},"value":"Infinity"}"#
+            ),
+            (
+                .init(Double.negativeInfinity, .meter),
+                #"{"unit":{"coefficient":1,"constant":0,"symbol":"m"},"value":"-Infinity"}"#
+            )
+        ] as Array<(Measure<Length>, String)>
+    )
+    internal func configuredJSONEncodingPreservesNaT(
+        value: Measure<Length>,
+        json: String
+    ) throws {
+        let encoder: JSONEncoder = .init()
+        encoder.outputFormatting = .sortedKeys
+        encoder.nonConformingFloatEncodingStrategy = .convertToString(
+            positiveInfinity: "Infinity",
+            negativeInfinity: "-Infinity",
+            nan: "NaN"
+        )
+        let result: Data = try encoder.encode(value)
+        let expected: Data = try #require(json.data(using: .utf8))
         #expect(result == expected)
     }
 }

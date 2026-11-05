@@ -1,0 +1,273 @@
+@Tutorial(time: 10) {
+    @Intro(title: "Calculating with Composed Units") {
+        Calculate a room's area and volume, return to the original length, and introduce property wrappers as you
+        convert and canonicalize the results.
+    }
+
+    @Section(title: "Calculate area and volume") {
+        @ContentAndMedia {
+            Calculate with lengths expressed in different units, inspect composed symbols, and use conversion and
+            canonicalization wrappers while following the round trip between defined and composed measures.
+        }
+
+        @Steps {
+            @Step {
+                Start a new file by importing `Measures`.
+
+                @Code(name: "main.swift", file: "02-01-01.swift")
+            }
+
+            @Step {
+                Create a length of four meters.
+
+                @Code(name: "main.swift", file: "02-01-02.swift")
+            }
+
+            @Step {
+                Create a width of 300 centimeters. The operands do not need to use the same unit.
+
+                @Code(name: "main.swift", file: "02-01-03.swift")
+            }
+
+            @Step {
+                Multiply the length by the width. The result is a `Measure<ComposedUnit>` whose dimension is area.
+                Measure multiplication first converts each operand to its coherent SI unit.
+
+                @Code(name: "main.swift", file: "02-01-04.swift")
+            }
+
+            @Step {
+                Print the area. Its value is in square meters, but the symbol retains the two meter factors because
+                composition does not automatically simplify them.
+
+                @Code(name: "main.swift", file: "02-01-05.swift")
+            }
+
+            @Step {
+                Copy the area's unit into `areaUnit`. Canonicalization applies to a `ComposedUnit`, not to a `Measure`.
+
+                @Code(name: "main.swift", file: "02-01-06.swift")
+            }
+
+            @Step {
+                Print the unit symbol to see the repeated meter factors.
+
+                @Code(name: "main.swift", file: "02-01-07.swift")
+            }
+
+            @Step {
+                Add `@Canonicalized` to `areaUnit`. It combines matching factors and orders them on initialization and
+                assignment, so the earlier print now shows `m²`. The original area measure is unchanged.
+
+                @Code(name: "main.swift", file: "02-01-08.swift")
+            }
+
+            @Step {
+                Compare the canonical and original units structurally. The factor representations differ even though
+                they describe the same area unit.
+
+                @Code(name: "main.swift", file: "02-01-09.swift")
+            }
+
+            @Step {
+                Compare the units canonically instead. Their dimension, coefficient, and constant match.
+                Canonicalization combines matching factors while preserving their unit scales. It does not convert
+                different scales, such as centimeters and meters, into a common scale.
+
+                @Code(name: "main.swift", file: "02-01-10.swift")
+            }
+
+            @Step {
+                Convert the composed area to a defined area unit. Matching dimensions allow the result to become a
+                `Measure<Area>`.
+
+                @Code(name: "main.swift", file: "02-01-11.swift")
+            }
+
+            @Step {
+                Print the defined area to see its square-meter symbol.
+
+                @Code(name: "main.swift", file: "02-01-12.swift")
+            }
+
+            @Step {
+                Create a height of 2.5 meters.
+
+                @Code(name: "main.swift", file: "02-01-13.swift")
+            }
+
+            @Step {
+                Multiply the composed area by the height. The result still has the Swift type `Measure<ComposedUnit>`,
+                but its dimension is now volume.
+
+                @Code(name: "main.swift", file: "02-01-14.swift")
+            }
+
+            @Step {
+                Print the composed volume before converting it. Multiplication converts the area to its coherent square-
+                meter unit, then retains that factor alongside the height's meter factor.
+
+                @Code(name: "main.swift", file: "02-01-15.swift")
+            }
+
+            @Step {
+                Change `volume` to a variable before adding a conversion policy.
+
+                @Code(name: "main.swift", file: "02-01-16.swift")
+            }
+
+            @Step {
+                Add `@Converted(to: .coherent)` to `volume`. The earlier print now shows `30.0 m³`. Unlike the fixed
+                destination in chapter one, this policy selects the coherent unit for the assigned measure's dimension.
+                It converts the measure's value and unit; `@Canonicalized` only reorganizes a composed unit's factors.
+
+                @Code(name: "main.swift", file: "02-01-17.swift")
+            }
+
+            @Step {
+                Convert the volume to a defined cubic-meter unit.
+
+                @Code(name: "main.swift", file: "02-01-18.swift")
+            }
+
+            @Step {
+                Print the volume of the room.
+
+                @Code(name: "main.swift", file: "02-01-19.swift")
+            }
+
+            @Step {
+                Divide the volume by the height to recover an area.
+
+                @Code(name: "main.swift", file: "02-01-20.swift")
+            }
+
+            @Step {
+                Print the recovered composed area. Its symbol retains the cubic-meter factor and the inverse meter from
+                division.
+
+                @Code(name: "main.swift", file: "02-01-21.swift")
+            }
+
+            @Step {
+                Compare the recovered area canonically with the original composed area. Their stored factors differ, but
+                they represent the same quantity.
+
+                @Code(name: "main.swift", file: "02-01-22.swift")
+            }
+
+            @Step {
+                Convert the composed result to square meters and store it as `recoveredNamedArea`. The explicit
+                `Measure<Area>` type shows the return to a defined unit.
+
+                @Code(name: "main.swift", file: "02-01-23.swift")
+            }
+
+            @Step {
+                Print the recovered named area. The round trip returns the original area.
+
+                @Code(name: "main.swift", file: "02-01-24.swift")
+            }
+
+            @Step {
+                Compare the recovered named area with the original named area using equality. Both the stored value and
+                defined unit match.
+
+                @Code(name: "main.swift", file: "02-01-25.swift")
+            }
+
+            @Step {
+                Divide the recovered area by the width to recover the original length. The width is converted from
+                centimeters before division.
+
+                @Code(name: "main.swift", file: "02-01-26.swift")
+            }
+
+            @Step {
+                Print the composed length to inspect the square-meter and inverse-meter factors before conversion.
+
+                @Code(name: "main.swift", file: "02-01-27.swift")
+            }
+
+            @Step {
+                Compare the recovered composed length canonically with the original defined length. Canonical equality
+                works across these different measure types because their dimensions and reference values match.
+                Reference values are compared exactly; floating-point rounding can affect equality in other examples.
+
+                @Code(name: "main.swift", file: "02-01-28.swift")
+            }
+
+            @Step {
+                Convert the composed result to meters and store it as `recoveredNamedLength`. The explicit
+                `Measure<Length>` type shows the return to a defined unit.
+
+                @Code(name: "main.swift", file: "02-01-29.swift")
+            }
+
+            @Step {
+                Print the recovered named length. The calculation has returned from volume through area to the original
+                length.
+
+                @Code(name: "main.swift", file: "02-01-30.swift")
+            }
+
+            @Step {
+                Compare the recovered named length with the original length using equality to complete the round trip.
+
+                @Code(name: "main.swift", file: "02-01-31.swift")
+            }
+
+            @Step {
+                Raise the original length to the second power and store it as `squaredLength`. The result is a composed
+                measure whose dimension is area.
+
+                @Code(name: "main.swift", file: "02-01-32.swift")
+            }
+
+            @Step {
+                Print the squared length. Exponentiation produces the square-meter symbol directly.
+
+                @Code(name: "main.swift", file: "02-01-33.swift")
+            }
+
+            @Step {
+                Convert the squared length to a defined area unit. The explicit `Measure<Area>` type makes the type
+                change visible.
+
+                @Code(name: "main.swift", file: "02-01-34.swift")
+            }
+
+            @Step {
+                Print the named result. Its value and symbol are unchanged, but it now uses the defined area type.
+
+                @Code(name: "main.swift", file: "02-01-35.swift")
+            }
+
+            @Step {
+                Raise the original length to the third power and store it as `cubedLength`. The result is a composed
+                measure whose dimension is volume.
+
+                @Code(name: "main.swift", file: "02-01-36.swift")
+            }
+
+            @Step {
+                Print the cubed length. Exponentiation produces the cubic-meter symbol directly.
+
+                @Code(name: "main.swift", file: "02-01-37.swift")
+            }
+
+            @Step {
+                Convert the cubed length to a defined volume unit. The explicit `Measure<Volume>` type makes the type
+                change visible.
+
+                @Code(name: "main.swift", file: "02-01-38.swift")
+            }
+
+            @Step {
+                Print the named result. Its value and symbol are unchanged, but it now uses the defined volume type.
+
+                @Code(name: "main.swift", file: "02-01-39.swift")
+            }
+        }
+    }
+}

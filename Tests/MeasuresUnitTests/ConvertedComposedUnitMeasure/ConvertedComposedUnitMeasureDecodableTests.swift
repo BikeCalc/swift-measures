@@ -1,0 +1,198 @@
+// This source file is part of the Measures open source project
+//
+// Copyright (c) 2021-2026 A. H. de Quatre Ltd. and the Measures project authors
+// Licensed under Apache License v2.0 with Runtime Library Exception
+//
+// See LICENSE.md for license information
+// See CONTRIBUTORS.txt for the list of Measures project authors
+
+#if canImport(Foundation)
+import Foundation
+import Testing
+
+@testable import CoreMeasureUnits
+@testable import Measures
+
+@Suite("Converted ComposedUnit Measure Decodable Tests")
+internal struct ConvertedComposedUnitMeasureDecodableTests {
+    internal init() {}
+
+    @Test(
+        "Decode from JSON succeeds",
+        arguments: [
+            (
+                """
+                {"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}],"value":1}
+                """,
+                .init(1, .meter)
+            ),
+            (
+                """
+                {"unit":[{"exponent":1,"unit":{"coefficient":0.01,"dimension":{"length":1},"symbol":"cm"}}],\
+                "value":100}
+                """,
+                .init(100, .centimeter)
+            ),
+            (
+                """
+                {"unit":[{"exponent":1,"unit":{"coefficient":0.001,"dimension":{"length":1},"symbol":"mm"}}],\
+                "value":1000}
+                """,
+                .init(1_000, .millimeter)
+            ),
+            (#"{"unit":[],"value":1}"#, .init(1, .dimensionless))
+        ] as Array<(String, Measure<ComposedUnit>)>
+    )
+    internal func decodeFromJSONSucceeds(
+        json: String,
+        value: Measure<ComposedUnit>
+    ) throws {
+        let data: Data = try #require(json.data(using: .utf8))
+        let result: Converted<ComposedUnit> = try JSONDecoder().decode(
+            Converted<ComposedUnit>.self,
+            from: data
+        )
+        #expect(result.wrappedValue == value)
+    }
+
+    @Test(
+        "Decode from JSON throws",
+        arguments: [
+            #"{"value":1}"#,
+            #"{"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}]}"#,
+            #"{"unit":[{"exponent":1,"unit":{"dimension":{"length":1},"symbol":"m"}}],"value":1}"#,
+            #"{"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1}}}],"value":1}"#,
+            #"{"unit":[{"exponent":1,"unit":{"coefficient":1,"symbol":"m"}}],"value":1}"#,
+            #"{"unit":[{"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}],"value":1}"#,
+            #"{"unit":"m","value":1}"#,
+            #"{"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}],"value":"1"}"#,
+            #"[1,"m"]"#,
+            #"true"#,
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":0,"constant":0,\
+            "dimension":{"thermodynamic_temperature":1},"symbol":"K"}}],"value":1}
+            """,
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":-1,"constant":0,\
+            "dimension":{"thermodynamic_temperature":1},"symbol":"K"}}],"value":1}
+            """,
+            """
+            {"unit":[{"exponent":2,"unit":{"coefficient":1,"constant":273.15,\
+            "dimension":{"thermodynamic_temperature":1},"symbol":"K"}}],"value":1}
+            """,
+            """
+            {"unit":[{"exponent":-1,"unit":{"coefficient":1,"constant":273.15,\
+            "dimension":{"thermodynamic_temperature":1},"symbol":"K"}}],"value":1}
+            """,
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":1,"constant":273.15,\
+            "dimension":{"thermodynamic_temperature":1},"symbol":"K"}},\
+            {"exponent":1,"unit":{"coefficient":1,\
+            "dimension":{"length":1},"symbol":"m"}}],"value":1}
+            """,
+            """
+            {"unit":[{"exponent":0,"unit":{"coefficient":0,"constant":0,\
+            "dimension":{"thermodynamic_temperature":1},"symbol":"K"}}],"value":1}
+            """,
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":1,"constant":"0","dimension":{"length":1},\
+            "symbol":"m"}}],"value":1}
+            """,
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":1,"constant":null,"dimension":{"length":1},\
+            "symbol":"m"}}],"value":1}
+            """,
+            #"{"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":"1"},"symbol":"m"}}],"value":1}"#,
+            #"{"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":null},"symbol":"m"}}],"value":1}"#,
+            #"{"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":0.5},"symbol":"m"}}],"value":1}"#
+        ] as Array<String>
+    )
+    internal func decodeFromJSONThrows(json: String) throws {
+        let data: Data = try #require(json.data(using: .utf8))
+        #expect(throws: DecodingError.self) {
+            try JSONDecoder().decode(
+                Converted<ComposedUnit>.self,
+                from: data
+            )
+        }
+    }
+}
+
+// MARK: - NaT
+
+extension ConvertedComposedUnitMeasureDecodableTests {
+    @Test(
+        "Default JSON decoding rejects nonfinite strings",
+        arguments: [
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":"NaN","constant":"NaN","dimension":{},\
+            "symbol":"NaT"}}],"value":"NaN"}
+            """,
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}],\
+            "value":"NaN"}
+            """,
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}],\
+            "value":"Infinity"}
+            """,
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}],\
+            "value":"-Infinity"}
+            """
+        ] as Array<String>
+    )
+    internal func defaultJSONDecodingRejectsNonfiniteStrings(json: String) throws {
+        let data: Data = try #require(json.data(using: .utf8))
+        #expect(throws: DecodingError.self) {
+            try JSONDecoder().decode(
+                Converted<ComposedUnit>.self,
+                from: data
+            )
+        }
+    }
+
+    @Test(
+        "Configured JSON decoding produces the NaT sentinel",
+        arguments: [
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":"NaN","constant":"NaN","dimension":{},\
+            "symbol":"NaT"}}],"value":"NaN"}
+            """,
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}],\
+            "value":"NaN"}
+            """,
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}],\
+            "value":"Infinity"}
+            """,
+            """
+            {"unit":[{"exponent":1,"unit":{"coefficient":1,"dimension":{"length":1},"symbol":"m"}}],\
+            "value":"-Infinity"}
+            """
+        ] as Array<String>
+    )
+    internal func configuredJSONDecodingPreservesNaT(json: String) throws {
+        let data: Data = try #require(json.data(using: .utf8))
+        let decoder: JSONDecoder = .init()
+        decoder.nonConformingFloatDecodingStrategy = .convertFromString(
+            positiveInfinity: "Infinity",
+            negativeInfinity: "-Infinity",
+            nan: "NaN"
+        )
+        let result: Converted<ComposedUnit> = try decoder.decode(
+            Converted<ComposedUnit>.self,
+            from: data
+        )
+        #expect(result.wrappedValue.isNaT == true)
+        #expect(result.wrappedValue.value.isNaN == true)
+        #expect(result.wrappedValue.unit.coefficient.isNaN == true)
+        #expect(result.wrappedValue.unit.constant.isNaN == true)
+        #expect(result.wrappedValue.unit.symbol == "NaT")
+        #expect(result.wrappedValue.unit.factors.count == 1)
+        #expect(result.wrappedValue.unit.factors.first?.exponent == 1)
+        #expect(result.wrappedValue.unit.dimension.isDimensionless == true)
+    }
+}
+#endif

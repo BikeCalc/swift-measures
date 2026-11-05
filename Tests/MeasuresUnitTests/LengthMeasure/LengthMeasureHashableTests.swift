@@ -7,18 +7,21 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import Testing
+
 @testable import Measures
 
 @Suite("Length Measure Hashable Tests")
 internal struct LengthMeasureHashableTests {
+    internal init() {}
+
     @Test(
         "Equal stored values produce equal hashes",
         arguments: [
-            (Measure<Length>(1, .meter), Measure<Length>(1, .meter)),
-            (Measure<Length>(-1, .meter), Measure<Length>(-1, .meter)),
-            (Measure<Length>(100, .centimeter), Measure<Length>(100, .centimeter)),
-            (Measure<Length>(1, .foot), Measure<Length>(1, .foot))
-        ]
+            (.init(1, .meter), .init(1, .meter)),
+            (.init(-1, .meter), .init(-1, .meter)),
+            (.init(100, .centimeter), .init(100, .centimeter)),
+            (.init(1, .foot), .init(1, .foot))
+        ] as Array<(Measure<Length>, Measure<Length>)>
     )
     internal func equalStoredValuesProduceEqualHashes(
         lhs: Measure<Length>,
@@ -32,11 +35,11 @@ internal struct LengthMeasureHashableTests {
     @Test(
         "Equivalent representations remain distinct hash keys",
         arguments: [
-            (Measure<Length>(1, .meter), Measure<Length>(100, .centimeter)),
-            (Measure<Length>(1, .meter), Measure<Length>(1_000, .millimeter)),
-            (Measure<Length>(1, .meter), Measure<Length>(0.001, .kilometer)),
-            (Measure<Length>(1, .foot), Measure<Length>(12, .inch))
-        ]
+            (.init(1, .meter), .init(100, .centimeter)),
+            (.init(1, .meter), .init(1_000, .millimeter)),
+            (.init(1, .meter), .init(0.001, .kilometer)),
+            (.init(1, .foot), .init(12, .inch))
+        ] as Array<(Measure<Length>, Measure<Length>)>
     )
     internal func equivalentRepresentationsRemainDistinctHashKeys(
         lhs: Measure<Length>,

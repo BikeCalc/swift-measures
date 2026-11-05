@@ -7,24 +7,45 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import Testing
+
 @testable import Measures
 
 @Suite("Length Measure CustomStringConvertible Tests")
 internal struct LengthMeasureCustomStringConvertibleTests {
+    internal init() {}
+
     @Test(
         "Description succeeds",
         arguments: [
-            (Measure<Length>(1, .meter), "1.0 m"),
-            (Measure<Length>(-1, .meter), "-1.0 m"),
-            (Measure<Length>(0, .meter), "0.0 m"),
-            (Measure<Length>(100, .centimeter), "100.0 cm"),
-            (Measure<Length>(1.5, .foot), "1.5 ft")
-        ]
+            (.init(1, .meter), "1.0 m"),
+            (.init(-1, .meter), "-1.0 m"),
+            (.init(0, .meter), "0.0 m"),
+            (.init(100, .centimeter), "100.0 cm"),
+            (.init(1.5, .foot), "1.5 ft")
+        ] as Array<(Measure<Length>, String)>
     )
     internal func descriptionSucceeds(
         value: Measure<Length>,
-        result: String
+        expected: String
     ) {
-        #expect(value.description == result)
+        #expect(value.description == expected)
+    }
+}
+
+// MARK: - NaT
+
+extension LengthMeasureCustomStringConvertibleTests {
+    @Test(
+        "NaT description succeeds",
+        arguments: [
+            .nat,
+            .init(Double.nan, .meter),
+            .init(Double.infinity, .meter),
+            .init(Double.negativeInfinity, .meter),
+            .invalid
+        ] as Array<Measure<Length>>
+    )
+    internal func natDescriptionSucceeds(value: Measure<Length>) {
+        #expect(value.description == "NaT")
     }
 }

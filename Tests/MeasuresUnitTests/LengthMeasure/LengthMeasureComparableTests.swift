@@ -7,30 +7,33 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import Testing
+
 @testable import Measures
 
 @Suite("Length Measure Comparable Tests")
 internal struct LengthMeasureComparableTests {
+    internal init() {}
+
     private static let comparisonArguments: [(Measure<Length>, Measure<Length>, Bool, Bool, Bool, Bool)] = [
-        (Measure<Length>(1, .meter), Measure<Length>(1, .meter), false, true, false, true),
-        (Measure<Length>(1, .meter), Measure<Length>(100, .centimeter), false, true, false, true),
-        (Measure<Length>(1, .meter), Measure<Length>(2, .meter), true, true, false, false),
-        (Measure<Length>(2, .meter), Measure<Length>(1, .meter), false, false, true, true),
-        (Measure<Length>(1, .foot), Measure<Length>(1, .meter), true, true, false, false),
-        (Measure<Length>(1, .meter), Measure<Length>(1, .foot), false, false, true, true)
+        (.init(1, .meter), .init(1, .meter), false, true, false, true),
+        (.init(1, .meter), .init(100, .centimeter), false, true, false, true),
+        (.init(1, .meter), .init(2, .meter), true, true, false, false),
+        (.init(2, .meter), .init(1, .meter), false, false, true, true),
+        (.init(1, .foot), .init(1, .meter), true, true, false, false),
+        (.init(1, .meter), .init(1, .foot), false, false, true, true)
     ]
 
     private static let rangeArguments: [(Measure<Length>, Measure<Length>, Measure<Length>)] = [
-        (Measure<Length>(50, .centimeter), Measure<Length>(1, .meter), Measure<Length>(2, .meter)),
-        (Measure<Length>(1, .meter), Measure<Length>(1, .meter), Measure<Length>(2, .meter)),
-        (Measure<Length>(150, .centimeter), Measure<Length>(1, .meter), Measure<Length>(2, .meter)),
-        (Measure<Length>(2, .meter), Measure<Length>(1, .meter), Measure<Length>(2, .meter)),
-        (Measure<Length>(250, .centimeter), Measure<Length>(1, .meter), Measure<Length>(2, .meter)),
-        (Measure<Length>(1, .foot), Measure<Length>(1, .yard), Measure<Length>(2, .yard)),
-        (Measure<Length>(1, .yard), Measure<Length>(1, .yard), Measure<Length>(2, .yard)),
-        (Measure<Length>(5, .foot), Measure<Length>(1, .yard), Measure<Length>(2, .yard)),
-        (Measure<Length>(2, .yard), Measure<Length>(1, .yard), Measure<Length>(2, .yard)),
-        (Measure<Length>(7, .foot), Measure<Length>(1, .yard), Measure<Length>(2, .yard))
+        (.init(50, .centimeter), .init(1, .meter), .init(2, .meter)),
+        (.init(1, .meter), .init(1, .meter), .init(2, .meter)),
+        (.init(150, .centimeter), .init(1, .meter), .init(2, .meter)),
+        (.init(2, .meter), .init(1, .meter), .init(2, .meter)),
+        (.init(250, .centimeter), .init(1, .meter), .init(2, .meter)),
+        (.init(1, .foot), .init(1, .yard), .init(2, .yard)),
+        (.init(1, .yard), .init(1, .yard), .init(2, .yard)),
+        (.init(5, .foot), .init(1, .yard), .init(2, .yard)),
+        (.init(2, .yard), .init(1, .yard), .init(2, .yard)),
+        (.init(7, .foot), .init(1, .yard), .init(2, .yard))
     ]
 
     @Test(
@@ -40,13 +43,15 @@ internal struct LengthMeasureComparableTests {
     internal func isLessThan(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
-        isLess: Bool,
-        isLessThanOrEqual _: Bool,
-        isGreater _: Bool,
-        isGreaterThanOrEqual _: Bool
-    ) {
-        #expect((lhs < rhs) == isLess)
-        #expect(lhs.isLess(than: rhs) == isLess)
+        isLessExpected: Bool,
+        isLessThanOrEqualExpected _: Bool,
+        isGreaterExpected _: Bool,
+        isGreaterThanOrEqualExpected _: Bool
+    ) throws {
+        let lessThanResult: Bool = lhs < rhs
+        #expect(lessThanResult == isLessExpected)
+        let isLessResult: Bool = try lhs.isLess(than: rhs)
+        #expect(isLessResult == isLessExpected)
     }
 
     @Test(
@@ -56,13 +61,15 @@ internal struct LengthMeasureComparableTests {
     internal func isLessThanOrEqualTo(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
-        isLess _: Bool,
-        isLessThanOrEqual: Bool,
-        isGreater _: Bool,
-        isGreaterThanOrEqual _: Bool
-    ) {
-        #expect((lhs <= rhs) == isLessThanOrEqual)
-        #expect(lhs.isLessThanOrEqual(to: rhs) == isLessThanOrEqual)
+        isLessExpected _: Bool,
+        isLessThanOrEqualExpected: Bool,
+        isGreaterExpected _: Bool,
+        isGreaterThanOrEqualExpected _: Bool
+    ) throws {
+        let lessThanOrEqualResult: Bool = lhs <= rhs
+        #expect(lessThanOrEqualResult == isLessThanOrEqualExpected)
+        let isLessThanOrEqualResult: Bool = try lhs.isLessThanOrEqual(to: rhs)
+        #expect(isLessThanOrEqualResult == isLessThanOrEqualExpected)
     }
 
     @Test(
@@ -72,13 +79,15 @@ internal struct LengthMeasureComparableTests {
     internal func isGreaterThan(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
-        isLess _: Bool,
-        isLessThanOrEqual _: Bool,
-        isGreater: Bool,
-        isGreaterThanOrEqual _: Bool
-    ) {
-        #expect((lhs > rhs) == isGreater)
-        #expect(lhs.isGreater(than: rhs) == isGreater)
+        isLessExpected _: Bool,
+        isLessThanOrEqualExpected _: Bool,
+        isGreaterExpected: Bool,
+        isGreaterThanOrEqualExpected _: Bool
+    ) throws {
+        let greaterThanResult: Bool = lhs > rhs
+        #expect(greaterThanResult == isGreaterExpected)
+        let isGreaterResult: Bool = try lhs.isGreater(than: rhs)
+        #expect(isGreaterResult == isGreaterExpected)
     }
 
     @Test(
@@ -88,13 +97,15 @@ internal struct LengthMeasureComparableTests {
     internal func isGreaterThanOrEqualTo(
         lhs: Measure<Length>,
         rhs: Measure<Length>,
-        isLess _: Bool,
-        isLessThanOrEqual _: Bool,
-        isGreater _: Bool,
-        isGreaterThanOrEqual: Bool
-    ) {
-        #expect((lhs >= rhs) == isGreaterThanOrEqual)
-        #expect(lhs.isGreaterThanOrEqual(to: rhs) == isGreaterThanOrEqual)
+        isLessExpected _: Bool,
+        isLessThanOrEqualExpected _: Bool,
+        isGreaterExpected _: Bool,
+        isGreaterThanOrEqualExpected: Bool
+    ) throws {
+        let greaterThanOrEqualResult: Bool = lhs >= rhs
+        #expect(greaterThanOrEqualResult == isGreaterThanOrEqualExpected)
+        let isGreaterThanOrEqualResult: Bool = try lhs.isGreaterThanOrEqual(to: rhs)
+        #expect(isGreaterThanOrEqualResult == isGreaterThanOrEqualExpected)
     }
 
     @Test(
@@ -105,10 +116,10 @@ internal struct LengthMeasureComparableTests {
         value: Measure<Length>,
         lowerBound: Measure<Length>,
         upperBound: Measure<Length>
-    ) {
+    ) throws {
         let range: ClosedRange<Measure<Length>> = lowerBound ... upperBound
-
-        #expect(value.isWithin(range) == range.contains(value))
+        let result: Bool = try value.isWithin(range)
+        #expect(result == range.contains(value))
     }
 
     @Test(
@@ -119,10 +130,9 @@ internal struct LengthMeasureComparableTests {
         value: Measure<Length>,
         lowerBound: Measure<Length>,
         upperBound: Measure<Length>
-    ) {
-        let valueIsWithinBounds: Bool = value.isWithin(lowerBound, upperBound) == true
-
-        #expect(valueIsWithinBounds == (value >= lowerBound && value <= upperBound))
+    ) throws {
+        let result: Bool = try value.isWithin(lowerBound, upperBound) == true
+        #expect(result == (value >= lowerBound && value <= upperBound))
     }
 
     @Test(
@@ -133,9 +143,57 @@ internal struct LengthMeasureComparableTests {
         value: Measure<Length>,
         lowerBound: Measure<Length>,
         upperBound: Measure<Length>
-    ) {
-        let valueIsBetweenBounds: Bool = value.isBetween(lowerBound, upperBound) == true
+    ) throws {
+        let result: Bool = try value.isBetween(lowerBound, upperBound) == true
+        #expect(result == (value > lowerBound && value < upperBound))
+    }
+}
 
-        #expect(valueIsBetweenBounds == (value > lowerBound && value < upperBound))
+// MARK: - NaT
+
+extension LengthMeasureComparableTests {
+    @Test(
+        "NaT is unordered",
+        arguments: [
+            (.nat, .init(1, .meter)),
+            (.init(1, .meter), .nat),
+            (.nat, .nat),
+            (.invalid, .init(1, .meter)),
+            (.init(1, .meter), .invalid)
+        ] as Array<(Measure<Length>, Measure<Length>)>
+    )
+    internal func natIsUnordered(
+        lhs: Measure<Length>,
+        rhs: Measure<Length>
+    ) throws {
+        let lessThanResult: Bool = lhs < rhs
+        #expect(lessThanResult == false)
+        let isLessResult: Bool = try lhs.isLess(than: rhs)
+        #expect(isLessResult == false)
+        let lessThanOrEqualResult: Bool = lhs <= rhs
+        #expect(lessThanOrEqualResult == false)
+        let isLessThanOrEqualResult: Bool = try lhs.isLessThanOrEqual(to: rhs)
+        #expect(isLessThanOrEqualResult == false)
+        let greaterThanResult: Bool = lhs > rhs
+        #expect(greaterThanResult == false)
+        let isGreaterResult: Bool = try lhs.isGreater(than: rhs)
+        #expect(isGreaterResult == false)
+        let greaterThanOrEqualResult: Bool = lhs >= rhs
+        #expect(greaterThanOrEqualResult == false)
+        let isGreaterThanOrEqualResult: Bool = try lhs.isGreaterThanOrEqual(to: rhs)
+        #expect(isGreaterThanOrEqualResult == false)
+    }
+
+    @Test("NaT lies outside valid bounds")
+    internal func natLiesOutsideBounds() throws {
+        let value: Measure<Length> = .nat
+        let lowerBound: Measure<Length> = .init(0, .meter)
+        let upperBound: Measure<Length> = .init(2, .meter)
+        let isWithinResult: Bool = try value.isWithin(lowerBound ... upperBound)
+        #expect(isWithinResult == false)
+        let isWithinResult2: Bool = try value.isWithin(lowerBound, upperBound)
+        #expect(isWithinResult2 == false)
+        let isBetweenResult: Bool = try value.isBetween(lowerBound, upperBound)
+        #expect(isBetweenResult == false)
     }
 }

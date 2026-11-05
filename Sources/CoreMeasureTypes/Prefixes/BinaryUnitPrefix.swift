@@ -94,7 +94,10 @@ extension BinaryUnitPrefix: CaseIterable {}
 // MARK: - Comparable
 
 extension BinaryUnitPrefix: Comparable {
-    package static func < (_ lhs: Self, _ rhs: Self) -> Bool {
+    package static func < (
+        _ lhs: Self,
+        _ rhs: Self
+    ) -> Bool {
         return lhs.coefficient < rhs.coefficient
     }
 }
@@ -102,7 +105,10 @@ extension BinaryUnitPrefix: Comparable {
 // MARK: - Equatable
 
 extension BinaryUnitPrefix: Equatable {
-    package static func == (_ lhs: Self, _ rhs: Self) -> Bool {
+    package static func == (
+        _ lhs: Self,
+        _ rhs: Self
+    ) -> Bool {
         return lhs.rawValue == rhs.rawValue
     }
 }

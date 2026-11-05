@@ -6,40 +6,39 @@
 // See LICENSE.md for license information
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
-import Measures
 import Testing
 
-@Suite("Temperature Measure ApproximatelyEquatable Tests")
+@testable import Measures
+
+@Suite("ThermodynamicTemperature Measure ApproximatelyEquatable Tests")
 internal struct TemperatureMeasureApproximatelyEquatableTests {
-    private typealias TemperatureMeasure = Measure<ThermodynamicTemperature>
+    internal init() {}
 
     @Test(
         "Approximate equality succeeds",
         arguments: [
-            (TemperatureMeasure(0, .celsius), TemperatureMeasure(1, .celsius), 0, true),
-            (TemperatureMeasure(0, .celsius), TemperatureMeasure(0.5, .celsius), 0, false),
-            (TemperatureMeasure(0, .celsius), TemperatureMeasure(1.8, .fahrenheit), 0, true),
-            (TemperatureMeasure(0, .celsius), TemperatureMeasure(0.9, .fahrenheit), 0, false),
-            (TemperatureMeasure(0, .celsius), TemperatureMeasure(0, .celsius), 0.01, true),
-            (TemperatureMeasure(273.15, .kelvin), TemperatureMeasure(0, .celsius), 0.01, true),
-            (TemperatureMeasure(0, .celsius), TemperatureMeasure(0, .celsius), 0.001, false),
-            (TemperatureMeasure(273.15, .kelvin), TemperatureMeasure(0, .celsius), 0.001, false)
-        ]
+            (.init(0, .celsius), .init(1, .celsius), 0.0, true),
+            (.init(0, .celsius), .init(0.5, .celsius), 0.0, false),
+            (.init(0, .celsius), .init(1.8, .fahrenheit), 0.0, true),
+            (.init(0, .celsius), .init(0.9, .fahrenheit), 0.0, false),
+            (.init(0, .celsius), .init(0, .celsius), 0.01, true),
+            (.init(273.15, .kelvin), .init(0, .celsius), 0.01, true),
+            (.init(0, .celsius), .init(0, .celsius), 0.001, false),
+            (.init(273.15, .kelvin), .init(0, .celsius), 0.001, false)
+        ] as Array<(Measure<ThermodynamicTemperature>, Measure<ThermodynamicTemperature>, Double, Bool)>
     )
     internal func approximateEqualitySucceeds(
         lhs: Measure<ThermodynamicTemperature>,
         absoluteTolerance: Measure<ThermodynamicTemperature>,
         relativeTolerance: Double,
-        result: Bool
+        expected: Bool
     ) {
         let rhs: Measure<ThermodynamicTemperature> = .init(274.15, .kelvin)
-
-        #expect(
-            lhs.isApproximatelyEqual(
-                to: rhs,
-                absoluteTolerance: absoluteTolerance,
-                relativeTolerance: relativeTolerance
-            ) == result
+        let result: Bool = lhs.isApproximatelyEqual(
+            to: rhs,
+            absoluteTolerance: absoluteTolerance,
+            relativeTolerance: relativeTolerance
         )
+        #expect(result == expected)
     }
 }

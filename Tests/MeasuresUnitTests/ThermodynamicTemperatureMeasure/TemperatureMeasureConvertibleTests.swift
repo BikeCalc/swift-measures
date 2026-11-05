@@ -7,28 +7,21 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import Testing
+
 @testable import Measures
 
-@Suite("Temperature Measure Convertible Tests")
+@Suite("ThermodynamicTemperature Measure Convertible Tests")
 internal struct TemperatureMeasureConvertibleTests {
+    internal init() {}
+
+    private let absoluteTolerance: Double = 1e-10
+
     @Test(
         "Conversion succeeds",
         arguments: [
-            (
-                Measure<ThermodynamicTemperature>(0, .celsius),
-                .kelvin,
-                Measure<ThermodynamicTemperature>(273.15, .kelvin)
-            ),
-            (
-                Measure<ThermodynamicTemperature>(273.15, .kelvin),
-                .celsius,
-                Measure<ThermodynamicTemperature>(0, .celsius)
-            ),
-            (
-                Measure<ThermodynamicTemperature>(32, .fahrenheit),
-                .celsius,
-                Measure<ThermodynamicTemperature>(0, .celsius)
-            )
+            (.init(0, .celsius), .kelvin, .init(273.15, .kelvin)),
+            (.init(273.15, .kelvin), .celsius, .init(0, .celsius)),
+            (.init(32, .fahrenheit), .celsius, .init(0, .celsius))
         ] as Array<(Measure<ThermodynamicTemperature>, ThermodynamicTemperature, Measure<ThermodynamicTemperature>)>
     )
     internal func conversionSucceeds(
@@ -36,13 +29,12 @@ internal struct TemperatureMeasureConvertibleTests {
         unit: ThermodynamicTemperature,
         expected: Measure<ThermodynamicTemperature>
     ) {
-        let converted: Measure<ThermodynamicTemperature> = source.converted(to: unit)
-        var mutated: Measure<ThermodynamicTemperature> = source
-        mutated.convert(to: unit)
-
-        #expect(abs(converted.value - expected.value) < 1e-10)
-        #expect(converted.unit == expected.unit)
-        #expect(abs(mutated.value - expected.value) < 1e-10)
-        #expect(mutated.unit == expected.unit)
+        let result: Measure<ThermodynamicTemperature> = source.converted(to: unit)
+        var mutatingResult: Measure<ThermodynamicTemperature> = source
+        mutatingResult.convert(to: unit)
+        #expect(abs(result.value - expected.value) < self.absoluteTolerance)
+        #expect(result.unit == expected.unit)
+        #expect(abs(mutatingResult.value - expected.value) < self.absoluteTolerance)
+        #expect(mutatingResult.unit == expected.unit)
     }
 }

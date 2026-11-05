@@ -183,13 +183,15 @@ fileprivate struct ContributorValidator {
 
         // Compare UTF-8 bytes to preserve the workflow's LC_ALL=C sorting and uniqueness rules.
         let authors: Array<Array<UInt8>> = Set(
-            String(decoding: data, as: UTF8.self)
-                .split(separator: "\n")
-                .filter { $0.hasSuffix("[bot]@users.noreply.github.com>") == false }
-                .map { Array($0.utf8) }
+            String(
+                decoding: data,
+                as: UTF8.self
+            )
+            .split(separator: "\n")
+            .filter { $0.hasSuffix("[bot]@users.noreply.github.com>") == false }
+            .map { Array($0.utf8) }
         )
         .sorted { $0.lexicographicallyPrecedes($1) }
-
         return Data(authors.flatMap { $0 + [10] })
     }
 
@@ -200,6 +202,7 @@ fileprivate struct ContributorValidator {
     /// - Throws: `ContributorValidationError` if temporary files cannot be created or the comparison cannot run.
     private func contributorDifference(expected: Data) throws(ContributorValidationError) -> String {
         let temporaryURL: URL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+
         do {
             try FileManager.default.createDirectory(
                 at: temporaryURL,
@@ -218,6 +221,7 @@ fileprivate struct ContributorValidator {
         }
 
         let expectedURL: URL = temporaryURL.appendingPathComponent(self.contributorsFileName)
+
         do {
             try expected.write(to: expectedURL)
         } catch let error {
@@ -254,7 +258,10 @@ fileprivate struct ContributorValidator {
             )
         }
 
-        return String(decoding: data, as: UTF8.self)
+        return String(
+            decoding: data,
+            as: UTF8.self
+        )
     }
 }
 

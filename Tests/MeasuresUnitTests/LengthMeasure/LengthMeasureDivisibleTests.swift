@@ -7,51 +7,68 @@
 // See CONTRIBUTORS.txt for the list of Measures project authors
 
 import Testing
+
 @testable import Measures
 
 @Suite("Length Measure Divisible Tests")
 internal struct LengthMeasureDivisibleTests {
-    private static let divisionArguments: [(Measure<Length>, Double, Measure<Length>)] = [
-        (Measure<Length>(2, .meter), 2, Measure<Length>(1, .meter)),
-        (Measure<Length>(3, .meter), 2, Measure<Length>(1.5, .meter)),
-        (Measure<Length>(-2, .meter), 2, Measure<Length>(-1, .meter)),
-        (Measure<Length>(-2, .meter), -2, Measure<Length>(1, .meter)),
-        (Measure<Length>(150, .centimeter), 3, Measure<Length>(50, .centimeter))
+    internal init() {}
+
+    private static let divisionArguments: [(Measure<Length>, Measure<Length>.Divisor, Measure<Length>)] = [
+        (.init(6.0, .meter), 2.0, .init(3.0, .meter)),
+        (.init(6.0, .meter), 3.0, .init(2.0, .meter)),
+        (.init(-6.0, .meter), 2.0, .init(-3.0, .meter)),
+        (.init(-6.0, .meter), -3.0, .init(2.0, .meter)),
+        (.init(1.5, .meter), 0.5, .init(3.0, .meter)),
+        (.init(3.75, .meter), 1.5, .init(2.5, .meter)),
+        (.init(-1.5, .meter), 0.5, .init(-3.0, .meter)),
+        (.init(-3.75, .meter), -1.5, .init(2.5, .meter)),
+        (.init(600.0, .centimeter), 2.0, .init(300.0, .centimeter)),
+        (.init(600.0, .centimeter), 3.0, .init(200.0, .centimeter)),
+        (.init(-600.0, .centimeter), 2.0, .init(-300.0, .centimeter)),
+        (.init(-600.0, .centimeter), -3.0, .init(200.0, .centimeter))
     ]
 
-    private static let halvingArguments: [(Measure<Length>, Measure<Length>)] = [
-        (Measure<Length>(2, .meter), Measure<Length>(1, .meter)),
-        (Measure<Length>(3, .meter), Measure<Length>(1.5, .meter)),
-        (Measure<Length>(-2, .meter), Measure<Length>(-1, .meter)),
-        (Measure<Length>(100, .centimeter), Measure<Length>(50, .centimeter))
-    ]
-
-    private static let remainderArguments: [(Measure<Length>, Double, Measure<Length>)] = [
-        (Measure<Length>(10, .meter), 3, Measure<Length>(1, .meter)),
-        (Measure<Length>(10.5, .meter), 3, Measure<Length>(1.5, .meter)),
-        (Measure<Length>(-10, .meter), 3, Measure<Length>(-1, .meter)),
-        (Measure<Length>(10, .meter), -3, Measure<Length>(1, .meter)),
-        (Measure<Length>(150, .centimeter), 40, Measure<Length>(30, .centimeter))
+    private static let remainderArguments: [(Measure<Length>, Measure<Length>.RemainderDivisor, Measure<Length>)] = [
+        (.init(4.0, .meter), 2.0, .init(0.0, .meter)),
+        (.init(5.0, .meter), 2.0, .init(1.0, .meter)),
+        (.init(5.0, .meter), -2.0, .init(1.0, .meter)),
+        (.init(-5.0, .meter), 2.0, .init(-1.0, .meter)),
+        (.init(-5.0, .meter), -2.0, .init(-1.0, .meter)),
+        (.init(1.5, .meter), 0.5, .init(0.0, .meter)),
+        (.init(1.75, .meter), 0.5, .init(0.25, .meter)),
+        (.init(-1.75, .meter), 0.5, .init(-0.25, .meter)),
+        (.init(-1.75, .meter), -0.5, .init(-0.25, .meter)),
+        (.init(500.0, .centimeter), 200.0, .init(100.0, .centimeter)),
+        (.init(500.0, .centimeter), -200.0, .init(100.0, .centimeter)),
+        (.init(-500.0, .centimeter), 200.0, .init(-100.0, .centimeter)),
+        (.init(-500.0, .centimeter), -200.0, .init(-100.0, .centimeter))
     ]
 
     @Test(
-        "Is divisible by succeeds",
+        "Is divisible by",
         arguments: [
-            (Measure<Length>(10, .meter), 2, true),
-            (Measure<Length>(10, .meter), 3, false),
-            (Measure<Length>(-10, .meter), 2, true),
-            (Measure<Length>(10.5, .meter), 0.5, true),
-            (Measure<Length>(0, .meter), 2, true),
-            (Measure<Length>(10, .meter), 0, false),
-            (Measure<Length>(100, .centimeter), 2, true)
-        ]
+            (.init(6.0, .meter), .init(3.0, .meter), true),
+            (.init(7.0, .meter), .init(3.0, .meter), false),
+            (.init(-6.0, .meter), .init(3.0, .meter), true),
+            (.init(-7.0, .meter), .init(3.0, .meter), false),
+            (.init(1.5, .meter), .init(0.5, .meter), true),
+            (.init(1.5, .meter), .init(2.5, .meter), false),
+            (.init(-1.5, .meter), .init(0.5, .meter), true),
+            (.init(-1.5, .meter), .init(2.5, .meter), false),
+            (.init(6.0, .meter), .init(300.0, .centimeter), true),
+            (.init(600.0, .centimeter), .init(3.0, .meter), true),
+            (.init(7.0, .meter), .init(300.0, .centimeter), false),
+            (.init(700.0, .centimeter), .init(3.0, .meter), false)
+        ] as Array<(Measure<Length>, Measure<Length>, Bool)>
     )
     internal func isDivisibleBySucceeds(
         dividend: Measure<Length>,
-        divisor: Double,
-        result: Bool
+        divisor: Measure<Length>,
+        expected: Bool
     ) {
-        #expect(dividend.isDivisible(by: divisor) == result)
+        let result: Bool = dividend.isDivisible(by: divisor)
+        #expect(result == expected)
     }
 
     @Test(
@@ -60,10 +77,11 @@ internal struct LengthMeasureDivisibleTests {
     )
     internal func divisionSucceeds(
         dividend: Measure<Length>,
-        divisor: Double,
+        divisor: Measure<Length>.Divisor,
         quotient: Measure<Length>
     ) {
-        #expect(dividend / divisor == quotient)
+        let result: Measure<Length> = dividend / divisor
+        #expect(result == quotient)
     }
 
     @Test(
@@ -72,12 +90,12 @@ internal struct LengthMeasureDivisibleTests {
     )
     internal func divisionEqualSucceeds(
         dividend: Measure<Length>,
-        divisor: Double,
+        divisor: Measure<Length>.Divisor,
         quotient: Measure<Length>
     ) {
-        var runningQuotient: Measure<Length> = dividend
-        runningQuotient /= divisor
-        #expect(runningQuotient == quotient)
+        var result: Measure<Length> = dividend
+        result /= divisor
+        #expect(result == quotient)
     }
 
     @Test(
@@ -86,10 +104,11 @@ internal struct LengthMeasureDivisibleTests {
     )
     internal func dividingBySucceeds(
         dividend: Measure<Length>,
-        divisor: Double,
+        divisor: Measure<Length>.Divisor,
         quotient: Measure<Length>
-    ) {
-        #expect(dividend.dividing(by: divisor) == quotient)
+    ) throws {
+        let result: Measure<Length> = try dividend.dividing(by: divisor)
+        #expect(result == quotient)
     }
 
     @Test(
@@ -98,12 +117,12 @@ internal struct LengthMeasureDivisibleTests {
     )
     internal func divideBySucceeds(
         dividend: Measure<Length>,
-        divisor: Double,
+        divisor: Measure<Length>.Divisor,
         quotient: Measure<Length>
-    ) {
-        var runningQuotient: Measure<Length> = dividend
-        runningQuotient.divide(by: divisor)
-        #expect(runningQuotient == quotient)
+    ) throws {
+        var result: Measure<Length> = dividend
+        try result.divide(by: divisor)
+        #expect(result == quotient)
     }
 
     @Test(
@@ -112,10 +131,11 @@ internal struct LengthMeasureDivisibleTests {
     )
     internal func remainderSucceeds(
         dividend: Measure<Length>,
-        divisor: Double,
+        divisor: Measure<Length>.RemainderDivisor,
         remainder: Measure<Length>
     ) {
-        #expect(dividend % divisor == remainder)
+        let result: Measure<Length> = dividend % divisor
+        #expect(result == remainder)
     }
 
     @Test(
@@ -124,35 +144,126 @@ internal struct LengthMeasureDivisibleTests {
     )
     internal func remainderEqualSucceeds(
         dividend: Measure<Length>,
-        divisor: Double,
+        divisor: Measure<Length>.RemainderDivisor,
         remainder: Measure<Length>
     ) {
-        var runningRemainder: Measure<Length> = dividend
-        runningRemainder %= divisor
-        #expect(runningRemainder == remainder)
+        var result: Measure<Length> = dividend
+        result %= divisor
+        #expect(result == remainder)
+    }
+}
+
+// MARK: - NaT
+
+extension LengthMeasureDivisibleTests {
+    @Test(
+        "NaT divisibility predicate returns false",
+        arguments: [
+            .init(1, .meter),
+            .nat,
+            .invalid
+        ] as Array<Measure<Length>>
+    )
+    internal func natDivisibilityPredicateReturnsFalse(other: Measure<Length>) {
+        let isDivisibleResult: Bool = Measure<Length>.nat.isDivisible(by: other)
+        #expect(isDivisibleResult == false)
+        let isFactorResult: Bool = Measure<Length>.nat.isFactor(of: other)
+        #expect(isFactorResult == false)
     }
 
     @Test(
-        "Halved succeeds",
-        arguments: Self.halvingArguments
+        "Dividing NaT by a scalar returns NaT",
+        arguments: [
+            (.nat, 2.0),
+            (.init(Double.nan, .meter), 2.0),
+            (.init(Double.infinity, .meter), 2.0),
+            (.init(Double.negativeInfinity, .meter), 2.0),
+            (.invalid, 2.0)
+        ] as Array<(Measure<Length>, Double)>
     )
-    internal func halvedSucceeds(
+    internal func dividingNaTByScalarReturnsNaT(
         dividend: Measure<Length>,
-        quotient: Measure<Length>
+        divisor: Double
     ) {
-        #expect(dividend.halved() == quotient)
+        let result: Measure<Length> = dividend / divisor
+        #expect(result.isNaT == true)
     }
 
     @Test(
-        "Halve succeeds",
-        arguments: Self.halvingArguments
+        "Dividing by a non-finite scalar returns NaT",
+        arguments: [
+            (.init(1, .meter), .nan),
+            (.init(1, .meter), .infinity),
+            (.init(1, .meter), -.infinity)
+        ] as Array<(Measure<Length>, Double)>
     )
-    internal func halveSucceeds(
+    internal func dividingByNonfiniteScalarReturnsNaT(
         dividend: Measure<Length>,
-        quotient: Measure<Length>
+        divisor: Double
     ) {
-        var runningQuotient: Measure<Length> = dividend
-        runningQuotient.halve()
-        #expect(runningQuotient == quotient)
+        let result: Measure<Length> = dividend / divisor
+        #expect(result.isNaT == true)
+    }
+
+    @Test(
+        "Dividing by zero returns NaT",
+        arguments: [
+            (.init(1, .meter), 0.0)
+        ] as Array<(Measure<Length>, Double)>
+    )
+    internal func dividingByZeroReturnsNaT(
+        dividend: Measure<Length>,
+        divisor: Double
+    ) {
+        let result: Measure<Length> = dividend / divisor
+        #expect(result.isNaT == true)
+    }
+
+    @Test(
+        "Remainder of NaT returns NaT",
+        arguments: [
+            (.nat, 2.0),
+            (.init(Double.nan, .meter), 2.0),
+            (.init(Double.infinity, .meter), 2.0),
+            (.init(Double.negativeInfinity, .meter), 2.0),
+            (.invalid, 2.0)
+        ] as Array<(Measure<Length>, Double)>
+    )
+    internal func remainderOfNaTReturnsNaT(
+        dividend: Measure<Length>,
+        divisor: Double
+    ) {
+        let result: Measure<Length> = dividend % divisor
+        #expect(result.isNaT == true)
+    }
+
+    @Test(
+        "Remainder with a non-finite divisor returns NaT",
+        arguments: [
+            (.init(1, .meter), .nan),
+            (.init(1, .meter), .infinity),
+            (.init(1, .meter), -.infinity)
+        ] as Array<(Measure<Length>, Double)>
+    )
+    internal func remainderWithNonfiniteDivisorReturnsNaT(
+        dividend: Measure<Length>,
+        divisor: Double
+    ) {
+        let result: Measure<Length> = dividend % divisor
+        #expect(result.isNaT == true)
+    }
+
+    @Test(
+        "Remainder with a zero divisor returns NaT",
+        arguments: [
+            (.init(1, .meter), 0.0)
+        ] as Array<(Measure<Length>, Double)>
+    )
+    internal func remainderWithZeroDivisorReturnsNaT(
+        dividend: Measure<Length>,
+        divisor: Double
+    ) {
+        let result: Measure<Length> = dividend % divisor
+        #expect(result.isNaT == true)
     }
 }

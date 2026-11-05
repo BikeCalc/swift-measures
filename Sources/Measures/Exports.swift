@@ -11,3 +11,7 @@
 @_exported import CoreMeasureUnits
 @_exported import MeasuresMacro
 @_exported import NumericsExtended
+
+#if canImport(Foundation)
+@_exported import MeasuresFoundation
+#endif

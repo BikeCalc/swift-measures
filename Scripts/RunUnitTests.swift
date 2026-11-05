@@ -90,7 +90,7 @@ fileprivate struct Arguments {
     /// - Parameter arguments: The arguments following the script name.
     /// - Throws: `UnitTestRunnerError.invalidArguments` if any arguments are supplied.
     fileprivate init(_ arguments: Array<String>) throws(UnitTestRunnerError) {
-        guard arguments.isEmpty else {
+        guard arguments.isEmpty == true else {
             throw UnitTestRunnerError.invalidArguments
         }
     }
@@ -98,7 +98,7 @@ fileprivate struct Arguments {
 
 // MARK: - UnitTestRunner
 
-/// Runs unit tests and generates coverage artifacts for local use and continuous integration.
+/// Runs library and demo tests and generates separate coverage artifacts for local use and continuous integration.
 fileprivate struct UnitTestRunner {
     /// Creates a unit test runner.
     fileprivate init() {}
@@ -109,7 +109,7 @@ fileprivate struct UnitTestRunner {
         isDirectory: true
     )
 
-    /// Runs the tests with coverage enabled and prints the generated Markdown report.
+    /// Runs both packages with coverage and prints their separate coverage reports.
     ///
     /// Test output is directed to standard error so standard output contains only the report.
     /// Subprocess failures terminate the script with the same exit status; signals result in a failure status.
@@ -117,19 +117,51 @@ fileprivate struct UnitTestRunner {
     /// - Throws: `UnitTestRunnerError` if a command fails or coverage artifacts cannot be exported.
     fileprivate func run() throws(UnitTestRunnerError) {
         try self.runSwift(arguments: ["test", "--enable-code-coverage"])
+        try self.runSwift(arguments: ["test", "--package-path", "Demos/MeasuresCalc", "--enable-code-coverage"])
+        try self.exportCoverage(
+            packagePath: ".",
+            sourcesPath: "Sources",
+            reportName: "Measures"
+        )
+        try self.exportCoverage(
+            packagePath: "Demos/MeasuresCalc",
+            sourcesPath: "Demos/MeasuresCalc/Sources",
+            reportName: "Measures Calc"
+        )
+    }
 
+    /// Exports one package's coverage and prints its labelled Markdown report.
+    ///
+    /// - Parameters:
+    ///   - packagePath: The package directory relative to the repository root.
+    ///   - sourcesPath: The source directory included in the Markdown report.
+    ///   - reportName: The report heading, also used for lowercase filenames with spaces replaced by hyphens.
+    /// - Throws: `UnitTestRunnerError` if coverage cannot be located, generated, or saved.
+    private func exportCoverage(
+        packagePath: String,
+        sourcesPath: String,
+        reportName: String
+    ) throws(UnitTestRunnerError) {
+        let filename: String = reportName.lowercased().replacingOccurrences(
+            of: " ",
+            with: "-"
+        )
         let pathData: Data = try self.runSwift(
-            arguments: ["test", "--show-codecov-path"],
+            arguments: ["test", "--package-path", packagePath, "--show-codecov-path"],
             captureOutput: true
         )
-        let reportPath: String = String(decoding: pathData, as: UTF8.self)
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+        let reportPath: String = String(
+            decoding: pathData,
+            as: UTF8.self
+        )
+        .trimmingCharacters(in: .whitespacesAndNewlines)
 
-        guard reportPath.isEmpty == false && FileManager.default.fileExists(atPath: reportPath) else {
+        guard reportPath.isEmpty == false && FileManager.default.fileExists(atPath: reportPath) == true else {
             throw UnitTestRunnerError.missingCoverageReport(path: reportPath)
         }
 
         let coverageData: Data
+
         do {
             coverageData = try .init(contentsOf: URL(fileURLWithPath: reportPath))
         } catch let error {
@@ -140,7 +172,7 @@ fileprivate struct UnitTestRunner {
             arguments: [
                 "Scripts/GenerateCodeCoverageReport.swift",
                 "--report", reportPath,
-                "--sources", "Sources"
+                "--sources", sourcesPath
             ],
             captureOutput: true
         )
@@ -151,25 +183,28 @@ fileprivate struct UnitTestRunner {
                 withIntermediateDirectories: true
             )
             try coverageData.write(
-                to: self.reportDirectory.appendingPathComponent("code-coverage.json"),
+                to: self.reportDirectory.appendingPathComponent("\(filename).json"),
                 options: .atomic
             )
             try markdown.write(
-                to: self.reportDirectory.appendingPathComponent("code-coverage.md"),
+                to: self.reportDirectory.appendingPathComponent("\(filename).md"),
                 options: .atomic
             )
         } catch let error {
             throw UnitTestRunnerError.coverageExportFailed(underlyingError: error)
         }
 
+        FileHandle.standardOutput.write(Data("# \(reportName)\n\n".utf8))
         FileHandle.standardOutput.write(markdown)
+        FileHandle.standardOutput.write(Data("\n".utf8))
     }
 
     /// Runs Swift, optionally capturing standard output for the next reporting step.
     ///
     /// - Parameters:
     ///   - arguments: The arguments passed to Swift.
-    ///   - captureOutput: Whether to capture standard output instead of forwarding it to standard error.
+    ///   - captureOutput: A boolean value indicating whether to capture standard output instead of forwarding it to
+    ///   standard error.
     /// - Returns: The captured output, or empty data when output is forwarded.
     /// - Throws: `UnitTestRunnerError` if the Swift process cannot start or does not complete successfully.
     @discardableResult
@@ -181,6 +216,7 @@ fileprivate struct UnitTestRunner {
         let process: Process = .init()
         process.executableURL = .init(fileURLWithPath: "/usr/bin/env")
         process.arguments = ["swift"] + arguments
+
         if let output {
             process.standardOutput = output
         } else {
@@ -200,6 +236,7 @@ fileprivate struct UnitTestRunner {
         guard process.terminationReason == .exit else {
             throw UnitTestRunnerError.commandInterrupted(signal: process.terminationStatus)
         }
+
         guard process.terminationStatus == EXIT_SUCCESS else {
             throw UnitTestRunnerError.commandFailed(
                 arguments: arguments,

@@ -9,16 +9,15 @@
 import SwiftSyntax
 
 extension DeclGroupSyntax {
-    /// A Boolean value indicating whether this declaration contains the initializer required by a unit macro.
+    /// A boolean value indicating whether this declaration contains the initializer required by a unit macro.
     internal var hasUnitInitializer: Bool {
         return self.memberBlock.members.contains { member in
-            guard let initializer = member.decl.as(InitializerDeclSyntax.self) else {
+            guard let initializer: InitializerDeclSyntax = member.decl.as(InitializerDeclSyntax.self) else {
                 return false
             }
 
-            let parameters = initializer.signature.parameterClause.parameters
-            let labels = parameters.map(\.firstName.text)
-
+            let parameters: FunctionParameterListSyntax = initializer.signature.parameterClause.parameters
+            let labels: Array<String> = parameters.map(\.firstName.text)
             return labels == [
                 "coefficient",
                 "constant",
@@ -30,14 +29,14 @@ extension DeclGroupSyntax {
     /// The names of the static properties declared directly by this declaration.
     internal var staticPropertyNames: Set<String> {
         return self.memberBlock.members.reduce(into: Set<String>()) { result, member in
-            guard let variable = member.decl.as(VariableDeclSyntax.self),
-                variable.modifiers.contains(where: { $0.name.text == "static" })
+            guard let variable: VariableDeclSyntax = member.decl.as(VariableDeclSyntax.self),
+                variable.modifiers.contains(where: { $0.name.text == "static" }) == true
             else {
                 return
             }
 
             for binding in variable.bindings {
-                guard let identifier = binding.pattern.as(IdentifierPatternSyntax.self) else {
+                guard let identifier: IdentifierPatternSyntax = binding.pattern.as(IdentifierPatternSyntax.self) else {
                     continue
                 }
 

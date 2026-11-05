@@ -10,15 +10,17 @@ import SwiftSyntaxMacroExpansion
 import SwiftSyntaxMacros
 import SwiftSyntaxMacrosGenericTestSupport
 import Testing
+
 @testable import CoreMeasureTypes
 @testable import MeasuresMacroPlugin
 
-@Suite("MetricUnitsMacro")
+@Suite("MetricUnitsMacro Tests")
 internal struct MetricUnitsMacroTests {
+    internal init() {}
+
     @Test("Expands metric units")
     internal func expansion() {
         var failures: Array<TestFailureSpec> = []
-
         // swift-format-ignore
         assertMacroExpansion(
             """
@@ -36,7 +38,7 @@ internal struct MetricUnitsMacroTests {
                 /// - Parameter prefix: The prefix to apply.
                 /// - Returns: The prefixed unit.
                 private static func wibble(_ prefix: MetricUnitPrefix) -> Self {
-                    return self.init(
+                    return .init(
                         coefficient: prefix.coefficient * 1,
                         constant: 0,
                         symbol: prefix.symbol + "w"
@@ -126,7 +128,6 @@ internal struct MetricUnitsMacroTests {
                 failures.append(failure)
             }
         )
-
-        #expect(failures.isEmpty)
+        #expect(failures.isEmpty == true)
     }
 }
