@@ -201,7 +201,8 @@ where UnitType: ComposableUnit {
     /// Returns the reciprocal in coherent SI units with inverted dimensions.
     ///
     /// The coefficient and constant are applied before inversion. NaT, zero coherent values, nonfinite conversions,
-    /// and nonfinite or zero reciprocals return `nil`. A dimension exponent that cannot be negated also returns `nil`.
+    /// and nonnormal reciprocals (including subnormal results) return `nil`. A dimension exponent that cannot be negated
+    /// also returns `nil`.
     /// Valid ranges are not enforced.
     ///
     /// For example:
@@ -225,7 +226,7 @@ where UnitType: ComposableUnit {
 
         let result: Double = 1 / value
 
-        guard result.isFinite == true, result != 0 else {
+        guard result.isNormal == true else {
             return nil
         }
 
@@ -239,7 +240,7 @@ where UnitType: ComposableUnit {
         return .init(result, unit)
     }
 
-    /// A boolean value indicating whether a finite, nonzero coherent reciprocal can be represented.
+    /// A boolean value indicating whether a normal coherent reciprocal with inverted dimensions can be represented.
     ///
     /// Offsets apply before inversion, so zero Celsius is invertible while zero Kelvin is not.
     public var isInvertible: Bool {

@@ -54,6 +54,30 @@ internal struct ComposedUnitMeasureInvertibleTests {
 // MARK: - Greatest Finite Magnitude
 
 extension ComposedUnitMeasureInvertibleTests {
+    @Test(
+        "Reciprocal of greatest finite magnitude returns nil",
+        arguments: [
+            .greatestFiniteMagnitude,
+            -.greatestFiniteMagnitude
+        ] as Array<Double>
+    )
+    internal func reciprocalOfGreatestFiniteMagnitudeReturnsNil(magnitude: Double) {
+        let value: Measure<ComposedUnit> = .init(magnitude, .meter)
+        #expect(value.reciprocal == nil)
+    }
+
+    @Test(
+        "Greatest finite magnitude is not invertible",
+        arguments: [
+            .greatestFiniteMagnitude,
+            -.greatestFiniteMagnitude
+        ] as Array<Double>
+    )
+    internal func greatestFiniteMagnitudeIsNotInvertible(magnitude: Double) {
+        let value: Measure<ComposedUnit> = .init(magnitude, .meter)
+        #expect(value.isInvertible == false)
+    }
+
     @Test("Reciprocal returns nil when coherent conversion overflows")
     internal func reciprocalReturnsNilWhenCoherentConversionOverflows() {
         let unit: ComposedUnit = .init(
