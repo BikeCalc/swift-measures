@@ -18,8 +18,8 @@ without becoming part of the public library product.
 The linter plugin invokes Swift Format, while each test target checks its corresponding library and macro behavior.
 
 ```text
-MeasuresFoundationUnitTests
-└─> depends on Measures and MeasuresFoundation
+FoundationIntegrationTests
+└─> depends on Measures and FoundationIntegration
 
 MeasuresLinterPlugin
 └─> invokes swift-format
@@ -36,7 +36,7 @@ MeasuresUnitTests
 `Measures` collects the public source targets into the package's library, while the individual targets preserve those
 architectural boundaries internally. The macro plugin remains a build-time implementation detail.
 
-`Measures` re-exports `MeasuresFoundation` when `canImport(Foundation)` succeeds. Foundation itself is not re-exported,
+`Measures` re-exports `FoundationIntegration` when `canImport(Foundation)` succeeds. Foundation itself is not re-exported,
 so applications import Foundation explicitly when referring to its types.
 
 ```text
@@ -48,7 +48,7 @@ so applications import Foundation explicitly when referring to its types.
                            |                           |
                            v                           v
               +-------------------------+ +-------------------------+
-              | AdditionalMeasureUnits  | |   MeasuresFoundation    |
+              | AdditionalMeasureUnits  | |  FoundationIntegration  |
               +------------+------------+ +------------+------------+
                            |                           |
                            v                           |

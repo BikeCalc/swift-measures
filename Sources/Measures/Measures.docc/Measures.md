@@ -43,8 +43,8 @@ matching factors and order their representations.
 
 ### Formatting Values
 
-- ``/MeasuresFoundation/Formattable``
-- ``/MeasuresFoundation/MeasureFormatStyle``
+- ``/FoundationIntegration/Formattable``
+- ``/FoundationIntegration/MeasureFormatStyle``
 
 ### Defining Units
 

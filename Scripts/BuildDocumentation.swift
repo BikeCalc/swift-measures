@@ -138,7 +138,7 @@ fileprivate struct DocumentationBuilder {
             "--target", "CoreMeasureUnits",
             "--target", "AdditionalMeasureUnits",
             "--target", "Measures",
-            "--target", "MeasuresFoundation",
+            "--target", "FoundationIntegration",
             "--output-path", ".build/github-pages",
             "--transform-for-static-hosting",
             "--hosting-base-path", "swift-measures"

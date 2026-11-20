@@ -102,23 +102,23 @@ let package: Package = .init(
             ]
         ),
         .target(
+            name: "FoundationIntegration",
+            dependencies: [
+                "CoreMeasureTypes"
+            ]
+        ),
+        .target(
             name: "Measures",
             dependencies: [
                 "AdditionalMeasureUnits",
                 "CoreMeasureTypes",
                 "CoreMeasureUnits",
-                "MeasuresFoundation",
+                "FoundationIntegration",
                 "MeasuresMacro",
                 .product(
                     name: "NumericsExtended",
                     package: "swift-numerics-extended"
                 )
-            ]
-        ),
-        .target(
-            name: "MeasuresFoundation",
-            dependencies: [
-                "CoreMeasureTypes"
             ]
         ),
         .target(
@@ -128,10 +128,10 @@ let package: Package = .init(
             ]
         ),
         .testTarget(
-            name: "MeasuresFoundationUnitTests",
+            name: "FoundationIntegrationTests",
             dependencies: [
-                "Measures",
-                "MeasuresFoundation"
+                "FoundationIntegration",
+                "Measures"
             ]
         ),
         .testTarget(

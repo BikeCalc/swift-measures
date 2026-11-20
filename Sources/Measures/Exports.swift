@@ -13,5 +13,5 @@
 @_exported import NumericsExtended
 
 #if canImport(Foundation)
-@_exported import MeasuresFoundation
+@_exported import FoundationIntegration
 #endif
