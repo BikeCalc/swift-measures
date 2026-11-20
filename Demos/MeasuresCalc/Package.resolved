@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/bikecalc/swift-numerics-extended.git",
       "state" : {
-        "revision" : "9adcbeff87ad4b39897f3ebf56fde51ced605961",
-        "version" : "3.2.0"
+        "revision" : "adc21ccec65b6f96b768cf64e56800f00fa7a29b",
+        "version" : "3.3.0"
       }
     },
     {
