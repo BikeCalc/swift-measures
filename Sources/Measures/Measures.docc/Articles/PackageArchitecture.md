@@ -36,9 +36,6 @@ MeasuresUnitTests
 `Measures` collects the public source targets into the package's library, while the individual targets preserve those
 architectural boundaries internally. The macro plugin remains a build-time implementation detail.
 
-`Measures` re-exports `FoundationIntegration` when `canImport(Foundation)` succeeds. Foundation itself is not re-exported,
-so applications import Foundation explicitly when referring to its types.
-
 ```text
                             +-------------------------+
                             |        Measures         |
@@ -76,7 +73,15 @@ so applications import Foundation explicitly when referring to its types.
               +-------------------------+
 ```
 
-Read each arrow from a target to one of its direct dependencies. Some direct edges are omitted to keep the routes
+Follow each arrow from a target to one of its direct dependencies. Some direct edges are omitted to keep the routes
 readable, so the absence of an arrow does not prove that two targets are unrelated. Vertical placement keeps the
 dependency flow clear rather than assigning targets to semantic tiers; consult the package manifest for the complete,
 authoritative definitions.
+
+## Foundation Integration
+
+`FoundationIntegration` connects the types in `CoreMeasureTypes` to Foundation's formatting APIs. It depends on that
+target and uses the external Foundation framework. `Measures` depends on `FoundationIntegration` and re-exports it when
+`canImport(Foundation)` succeeds.
+
+See <doc:FoundationIntegration> for setup, supported capabilities, and behavior.

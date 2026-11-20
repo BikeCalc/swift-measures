@@ -25,6 +25,7 @@ matching factors and order their representations.
 
 ### Articles
 
+- <doc:FoundationIntegration>
 - <doc:UnderstandingTheInternationalSystemOfUnits>
 
 ### Tutorials
