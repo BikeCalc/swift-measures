@@ -22,10 +22,10 @@ matching factors and order their representations.
 
 - <doc:Installation>
 - <doc:PackageArchitecture>
+- <doc:FoundationIntegration>
 
 ### Articles
 
-- <doc:FoundationIntegration>
 - <doc:UnderstandingTheInternationalSystemOfUnits>
 
 ### Tutorials
