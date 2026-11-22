@@ -61,8 +61,8 @@ internal struct ComposedUnitMeasureEquatableTests {
         lhs: Measure<ComposedUnit>,
         rhs: Measure<ComposedUnit>,
         expected: Bool
-    ) throws {
-        let result: Bool = try lhs.isEqual(to: rhs)
+    ) {
+        let result: Bool = lhs.isEqual(to: rhs)
         #expect(result == expected)
     }
 
@@ -74,8 +74,8 @@ internal struct ComposedUnitMeasureEquatableTests {
         lhs: Measure<ComposedUnit>,
         rhs: Measure<ComposedUnit>,
         expected: Bool
-    ) throws {
-        let result: Bool = try lhs.isUnequal(to: rhs)
+    ) {
+        let result: Bool = lhs.isUnequal(to: rhs)
         #expect(result == !expected)
     }
 }

@@ -73,7 +73,7 @@ internal struct ConvertedLengthMeasureEquatableTests {
         lhs: Measure<Length>,
         rhs: Measure<Length>,
         expected: Bool
-    ) throws {
+    ) {
         let lhsWrapper: Converted<Length> = .init(
             wrappedValue: lhs,
             to: lhs.unit
@@ -82,7 +82,7 @@ internal struct ConvertedLengthMeasureEquatableTests {
             wrappedValue: rhs,
             to: rhs.unit
         )
-        let result: Bool = try lhsWrapper.isEqual(to: rhsWrapper)
+        let result: Bool = lhsWrapper.isEqual(to: rhsWrapper)
         #expect(result == expected)
     }
 
@@ -94,7 +94,7 @@ internal struct ConvertedLengthMeasureEquatableTests {
         lhs: Measure<Length>,
         rhs: Measure<Length>,
         expected: Bool
-    ) throws {
+    ) {
         let lhsWrapper: Converted<Length> = .init(
             wrappedValue: lhs,
             to: lhs.unit
@@ -103,7 +103,7 @@ internal struct ConvertedLengthMeasureEquatableTests {
             wrappedValue: rhs,
             to: rhs.unit
         )
-        let result: Bool = try lhsWrapper.isUnequal(to: rhsWrapper)
+        let result: Bool = lhsWrapper.isUnequal(to: rhsWrapper)
         #expect(result == !expected)
     }
 }

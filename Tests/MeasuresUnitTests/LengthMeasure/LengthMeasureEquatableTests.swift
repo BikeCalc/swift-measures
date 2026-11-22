@@ -57,8 +57,8 @@ internal struct LengthMeasureEquatableTests {
         lhs: Measure<Length>,
         rhs: Measure<Length>,
         expected: Bool
-    ) throws {
-        let result: Bool = try lhs.isEqual(to: rhs)
+    ) {
+        let result: Bool = lhs.isEqual(to: rhs)
         #expect(result == expected)
     }
 
@@ -70,8 +70,8 @@ internal struct LengthMeasureEquatableTests {
         lhs: Measure<Length>,
         rhs: Measure<Length>,
         expected: Bool
-    ) throws {
-        let result: Bool = try lhs.isUnequal(to: rhs)
+    ) {
+        let result: Bool = lhs.isUnequal(to: rhs)
         #expect(result == !expected)
     }
 }

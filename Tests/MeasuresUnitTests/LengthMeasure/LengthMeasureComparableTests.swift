@@ -47,10 +47,10 @@ internal struct LengthMeasureComparableTests {
         isLessThanOrEqualExpected _: Bool,
         isGreaterExpected _: Bool,
         isGreaterThanOrEqualExpected _: Bool
-    ) throws {
+    ) {
         let lessThanResult: Bool = lhs < rhs
         #expect(lessThanResult == isLessExpected)
-        let isLessResult: Bool = try lhs.isLess(than: rhs)
+        let isLessResult: Bool = lhs.isLess(than: rhs)
         #expect(isLessResult == isLessExpected)
     }
 
@@ -65,10 +65,10 @@ internal struct LengthMeasureComparableTests {
         isLessThanOrEqualExpected: Bool,
         isGreaterExpected _: Bool,
         isGreaterThanOrEqualExpected _: Bool
-    ) throws {
+    ) {
         let lessThanOrEqualResult: Bool = lhs <= rhs
         #expect(lessThanOrEqualResult == isLessThanOrEqualExpected)
-        let isLessThanOrEqualResult: Bool = try lhs.isLessThanOrEqual(to: rhs)
+        let isLessThanOrEqualResult: Bool = lhs.isLessThanOrEqual(to: rhs)
         #expect(isLessThanOrEqualResult == isLessThanOrEqualExpected)
     }
 
@@ -83,10 +83,10 @@ internal struct LengthMeasureComparableTests {
         isLessThanOrEqualExpected _: Bool,
         isGreaterExpected: Bool,
         isGreaterThanOrEqualExpected _: Bool
-    ) throws {
+    ) {
         let greaterThanResult: Bool = lhs > rhs
         #expect(greaterThanResult == isGreaterExpected)
-        let isGreaterResult: Bool = try lhs.isGreater(than: rhs)
+        let isGreaterResult: Bool = lhs.isGreater(than: rhs)
         #expect(isGreaterResult == isGreaterExpected)
     }
 
@@ -101,10 +101,10 @@ internal struct LengthMeasureComparableTests {
         isLessThanOrEqualExpected _: Bool,
         isGreaterExpected _: Bool,
         isGreaterThanOrEqualExpected: Bool
-    ) throws {
+    ) {
         let greaterThanOrEqualResult: Bool = lhs >= rhs
         #expect(greaterThanOrEqualResult == isGreaterThanOrEqualExpected)
-        let isGreaterThanOrEqualResult: Bool = try lhs.isGreaterThanOrEqual(to: rhs)
+        let isGreaterThanOrEqualResult: Bool = lhs.isGreaterThanOrEqual(to: rhs)
         #expect(isGreaterThanOrEqualResult == isGreaterThanOrEqualExpected)
     }
 
@@ -116,9 +116,9 @@ internal struct LengthMeasureComparableTests {
         value: Measure<Length>,
         lowerBound: Measure<Length>,
         upperBound: Measure<Length>
-    ) throws {
+    ) {
         let range: ClosedRange<Measure<Length>> = lowerBound ... upperBound
-        let result: Bool = try value.isWithin(range)
+        let result: Bool = value.isWithin(range)
         #expect(result == range.contains(value))
     }
 
@@ -130,8 +130,8 @@ internal struct LengthMeasureComparableTests {
         value: Measure<Length>,
         lowerBound: Measure<Length>,
         upperBound: Measure<Length>
-    ) throws {
-        let result: Bool = try value.isWithin(lowerBound, upperBound) == true
+    ) {
+        let result: Bool = value.isWithin(lowerBound, upperBound) == true
         #expect(result == (value >= lowerBound && value <= upperBound))
     }
 
@@ -143,8 +143,8 @@ internal struct LengthMeasureComparableTests {
         value: Measure<Length>,
         lowerBound: Measure<Length>,
         upperBound: Measure<Length>
-    ) throws {
-        let result: Bool = try value.isBetween(lowerBound, upperBound) == true
+    ) {
+        let result: Bool = value.isBetween(lowerBound, upperBound) == true
         #expect(result == (value > lowerBound && value < upperBound))
     }
 }
@@ -165,35 +165,35 @@ extension LengthMeasureComparableTests {
     internal func natIsUnordered(
         lhs: Measure<Length>,
         rhs: Measure<Length>
-    ) throws {
+    ) {
         let lessThanResult: Bool = lhs < rhs
         #expect(lessThanResult == false)
-        let isLessResult: Bool = try lhs.isLess(than: rhs)
+        let isLessResult: Bool = lhs.isLess(than: rhs)
         #expect(isLessResult == false)
         let lessThanOrEqualResult: Bool = lhs <= rhs
         #expect(lessThanOrEqualResult == false)
-        let isLessThanOrEqualResult: Bool = try lhs.isLessThanOrEqual(to: rhs)
+        let isLessThanOrEqualResult: Bool = lhs.isLessThanOrEqual(to: rhs)
         #expect(isLessThanOrEqualResult == false)
         let greaterThanResult: Bool = lhs > rhs
         #expect(greaterThanResult == false)
-        let isGreaterResult: Bool = try lhs.isGreater(than: rhs)
+        let isGreaterResult: Bool = lhs.isGreater(than: rhs)
         #expect(isGreaterResult == false)
         let greaterThanOrEqualResult: Bool = lhs >= rhs
         #expect(greaterThanOrEqualResult == false)
-        let isGreaterThanOrEqualResult: Bool = try lhs.isGreaterThanOrEqual(to: rhs)
+        let isGreaterThanOrEqualResult: Bool = lhs.isGreaterThanOrEqual(to: rhs)
         #expect(isGreaterThanOrEqualResult == false)
     }
 
     @Test("NaT lies outside valid bounds")
-    internal func natLiesOutsideBounds() throws {
+    internal func natLiesOutsideBounds() {
         let value: Measure<Length> = .nat
         let lowerBound: Measure<Length> = .init(0, .meter)
         let upperBound: Measure<Length> = .init(2, .meter)
-        let isWithinResult: Bool = try value.isWithin(lowerBound ... upperBound)
+        let isWithinResult: Bool = value.isWithin(lowerBound ... upperBound)
         #expect(isWithinResult == false)
-        let isWithinResult2: Bool = try value.isWithin(lowerBound, upperBound)
+        let isWithinResult2: Bool = value.isWithin(lowerBound, upperBound)
         #expect(isWithinResult2 == false)
-        let isBetweenResult: Bool = try value.isBetween(lowerBound, upperBound)
+        let isBetweenResult: Bool = value.isBetween(lowerBound, upperBound)
         #expect(isBetweenResult == false)
     }
 }

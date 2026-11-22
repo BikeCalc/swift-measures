@@ -1,5 +1,5 @@
 {
-  "originHash" : "d796715bdb498362662b160a14d5419ad7139ab4f27a6b9a7d19905c19f0e53e",
+  "originHash" : "3b8e9044dc8a85dbeed6bb41b805c75d4531f9a247b090ebb825f2283bbea96e",
   "pins" : [
     {
       "identity" : "swift-argument-parser",
@@ -56,12 +56,21 @@
       }
     },
     {
+      "identity" : "swift-numerics",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-numerics.git",
+      "state" : {
+        "revision" : "0c0290ff6b24942dadb83a929ffaaa1481df04a2",
+        "version" : "1.1.1"
+      }
+    },
+    {
       "identity" : "swift-numerics-extended",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/bikecalc/swift-numerics-extended.git",
       "state" : {
-        "revision" : "adc21ccec65b6f96b768cf64e56800f00fa7a29b",
-        "version" : "3.3.0"
+        "revision" : "118803fae754a5bafe8264c2a5eee17c0d5b17d0",
+        "version" : "3.5.0"
       }
     },
     {
