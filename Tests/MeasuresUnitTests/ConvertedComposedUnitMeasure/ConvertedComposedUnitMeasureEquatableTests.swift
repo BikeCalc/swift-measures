@@ -77,7 +77,7 @@ internal struct ConvertedComposedUnitMeasureEquatableTests {
         lhs: Measure<ComposedUnit>,
         rhs: Measure<ComposedUnit>,
         expected: Bool
-    ) throws {
+    ) {
         let lhsWrapper: Converted<ComposedUnit> = .init(
             wrappedValue: lhs,
             to: lhs.unit
@@ -86,7 +86,7 @@ internal struct ConvertedComposedUnitMeasureEquatableTests {
             wrappedValue: rhs,
             to: rhs.unit
         )
-        let result: Bool = try lhsWrapper.isEqual(to: rhsWrapper)
+        let result: Bool = lhsWrapper.isEqual(to: rhsWrapper)
         #expect(result == expected)
     }
 
@@ -98,7 +98,7 @@ internal struct ConvertedComposedUnitMeasureEquatableTests {
         lhs: Measure<ComposedUnit>,
         rhs: Measure<ComposedUnit>,
         expected: Bool
-    ) throws {
+    ) {
         let lhsWrapper: Converted<ComposedUnit> = .init(
             wrappedValue: lhs,
             to: lhs.unit
@@ -107,7 +107,7 @@ internal struct ConvertedComposedUnitMeasureEquatableTests {
             wrappedValue: rhs,
             to: rhs.unit
         )
-        let result: Bool = try lhsWrapper.isUnequal(to: rhsWrapper)
+        let result: Bool = lhsWrapper.isUnequal(to: rhsWrapper)
         #expect(result == !expected)
     }
 }
